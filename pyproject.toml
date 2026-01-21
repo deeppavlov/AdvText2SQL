@@ -1,0 +1,24 @@
+[project]
+name = "partial-mcp"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai",
+    "logfire",
+    "pydantic-evals[logfire]",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pyrefly",
+    "pre-commit",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/partial_mcp"]
