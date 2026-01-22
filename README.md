@@ -32,3 +32,17 @@ If you want to chat with the agent, run the web client via:
 ```bash
 uv run --env-file .env uvicorn partial_mcp.web:app --port 8000
 ```
+
+## Installing the Spider Database
+
+First, you need to install the public Spider Database
+
+## Text2SQL tool
+
+Before launching the `text2sql_tool` which is already in this repo, you need to set LLM credentials in the `.env` file, namely `LLM_BASE_URL` and `LLM_API_KEY`.
+It's a working MCP tool, but proper integration with the PydanticAI `Agent` isn't done yet. For now, it will be called as a normal Python function.
+
+## Benchmark and Evaluation
+
+The baseline tool will be available for launch with the spider_benchmark.py file. Instructions on how to run your tool instead will be provided shortly.
+This repo is using the `Spider 1.0` benchmark. A migration to `UNITE` or `Spider 2.0` will be possible later, in case we want a more robust benchmark, the APIs are mostly similar.

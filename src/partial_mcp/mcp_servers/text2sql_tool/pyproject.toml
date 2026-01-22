@@ -1,12 +1,11 @@
 [project]
-name = "partial-mcp"
-version = "0.1.0"
-description = "Add your description here"
+name = "text2sql-tool"
+version = "0.1.1"
+description = "text2sql tool for db querying"
+readme = "README.md"
 requires-python = ">=3.11"
+
 dependencies = [
-    "pydantic-ai",
-    "logfire",
-    "pydantic-evals[logfire]",
     "autogen-agentchat",
     "autogen-ext",
     "openai",
@@ -23,11 +22,6 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "ruff",
-    "pyrefly",
-    "pre-commit",
-]
 test = [
     "pytest",
 ]
@@ -35,9 +29,8 @@ client = [
     "autogen-agentchat",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/partial_mcp"]
+[tool.uv]
+default-groups = "all"
