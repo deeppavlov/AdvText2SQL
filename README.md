@@ -32,10 +32,14 @@ If you want to chat with the agent, run the web client via:
 ```bash
 uv run --env-file .env uvicorn partial_mcp.web:app --port 8000
 ```
+## Installing the BIRD dev database
 
-## Installing the Spider Database
+For doing the BIRD benchmark, you can install their dev dataset from their official website (1.5 GB).
 
-First, you need to install the public Spider Database (1.8 GB).
+
+## Installing the Spider 1.0 Database
+
+For doing the Spider 1.0 benchmark you'll need to install the public Spider Database (1.8 GB).
 You can either download it manually from [this link](https://drive.google.com/file/d/1403EGqzIDoHMdQF4c9Bkyl7dZLZ5Wt6J/view?usp=sharing), in that case, remember to place it into the `data`.
 
 Or you can run the following script in the `data` directory (`curl` didn't work for me, cause it's Google Drive):

@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
+    "pydantic",
     "pydantic-ai",
     "logfire",
     "pydantic-evals[logfire]",
@@ -20,6 +21,7 @@ dependencies = [
     "pandas",
     "python-docx",
     "openpyxl",
+    "func_timeout",
 ]
 
 [dependency-groups]
