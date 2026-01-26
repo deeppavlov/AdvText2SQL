@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
+
 from benchmarks.bird import BenchmarkBIRD
 from partial_mcp.mcp_servers.text2sql_tool.src.text2sql_implementation import (
     Text2SQLGenerator,
