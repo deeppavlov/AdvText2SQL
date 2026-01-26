@@ -41,6 +41,14 @@ class Text2SQLGenerator:
         self.system_prompt = self._create_system_prompt()
         logger.info(f"Initialized with DB: {db_path}")
 
+    # TODO: think if getting db_schema and system_prompt is actually just the build() function
+    def build(self):
+        """
+        self.db_schema = self._get_db_schema()
+        self.system_prompt = self._create_system_prompt()
+        """
+        pass
+
     def _update_db_schema(self, db_path):
         self.db_path = db_path
         self.db_schema = self._get_db_schema()
