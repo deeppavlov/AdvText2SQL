@@ -10,7 +10,7 @@ class BenchmarkBIRD(Benchmark):
         with open(self.query_file, "r") as f:
             return json.load(f)
 
-    def run_tool(self) -> Dict[str, str]:
+    def run(self, Text2SQL) -> Dict[str, str]:
         """Returns predictions in BIRD's expected format."""
         queries = self._load_queries()
         predictions: Dict[str, str] = {}

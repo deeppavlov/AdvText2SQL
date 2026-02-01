@@ -7,6 +7,8 @@ from typing import Any
 
 from autogen_core.models import SystemMessage, UserMessage
 from autogen_ext.models.openai import OpenAIChatCompletionClient
+from sqlalchemy import inspect
+from sqlalchemy.engine import Engine
 from sqlglot import Dialects, exp, parse_one
 from sqlglot.errors import ParseError
 
@@ -53,6 +55,29 @@ class Text2SQLGenerator:
         self.db_path = db_path
         self.db_schema = self._get_db_schema()
         self.system_prompt = self._create_system_prompt()
+
+    def get_db_schema_pg(engine: Engine) -> str:
+        """
+        Lightweight schema extraction for LLM prompts.
+        Focuses on tables, columns, and types — not DDL.
+        """
+
+        inspector = inspect(engine)
+        schema_parts = []
+
+        tables = inspector.get_table_names(schema="public")
+
+        for table in tables:
+            schema_parts.append(f"TABLE {table}")
+
+            columns = inspector.get_columns(table, schema="public")
+            for col in columns:
+                col_type = str(col["type"])
+                schema_parts.append(f"- {col['name']} ({col_type})")
+
+            schema_parts.append("")  # empty line between tables
+
+        return "\n".join(schema_parts).strip()
 
     def _get_db_schema(self) -> str:
         """
