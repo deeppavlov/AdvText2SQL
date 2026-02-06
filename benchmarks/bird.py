@@ -2,7 +2,7 @@ import json
 from typing import Dict, List
 
 from .base import Benchmark
-from .evaluation import run_evaluation
+from .evaluate import run_evaluation
 
 
 class BenchmarkBIRD(Benchmark):
@@ -10,20 +10,35 @@ class BenchmarkBIRD(Benchmark):
         with open(self.query_file, "r") as f:
             return json.load(f)
 
-    def run(self, Text2SQL) -> Dict[str, str]:
+    def predict(self, tool_dict: Dict[str, Any]) -> Dict[str, str]:
         """Returns predictions in BIRD's expected format."""
         queries = self._load_queries()
-        predictions: Dict[str, str] = {}
+        predictions = {}
 
         for item in queries:
             qid = item["question_id"]
             db_id = item["db_id"]
             question = item["question"]
 
-            tool = self.tool_dict[db_id]
-            sql = tool.query(question)
+            tool = tool_dict[db_id]
 
-            predictions[str(qid)] = f"{sql}\t----- bird -----\t{db_id}"
+            result = await tool.query(question)
+
+            sql_query = "error"
+
+            if "params" in result:
+                data = result["params"].get("data", {})
+                status = data.get("status")
+
+                if status == "ambiguous_query":
+                    sql_query = "ambiguous"
+                else:
+                    sql_query = "error"
+
+            elif result.get("status") == "success":
+                sql_query = result["sql_query"]
+
+            predictions[str(qid)] = f"{sql_query}\t----- bird -----\t{db_id}"
 
         return predictions
 
@@ -31,7 +46,6 @@ class BenchmarkBIRD(Benchmark):
         with open(output_path, "w") as f:
             json.dump(predictions, f, indent=2)
 
-    # TODO: connect BIRD's evaluation.py programmatically (could even change it)
-    def evaluate(self, predictions: List[str]):
-        self._save_predictions(predictions, "./predict_dev.json")
-        run_evaluation()
+    def evaluate(self, predictions: Dict[str, str]):
+        self._save_predictions(predictions, "./query_results.json")
+        run_evaluation(predictions)
