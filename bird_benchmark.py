@@ -9,7 +9,7 @@ from partial_mcp.mcp_servers.text2sql_tool.src.text2sql_implementation import (
     Text2SQLGenerator,
 )
 
-# Place this into env, remove 
+# Place this into env, remove
 db_url = os.getenv("BENCHMARK_DB_URL")
 
 benchmark = BenchmarkBIRD(
