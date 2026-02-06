@@ -8,9 +8,7 @@ def run_evaluation(self, predictions: Dict[str, str]):
     with open(self.answer_file, "r") as f:
         answer_file = json.load(f)
 
-    gold_queries = {
-        str(item["question_id"]): item for item in answer_file
-    }
+    gold_queries = {str(item["question_id"]): item for item in answer_file}
 
     results = []
 
@@ -43,7 +41,9 @@ def run_evaluation(self, predictions: Dict[str, str]):
             continue
 
         # ---- SQL execution and comparison with gold results ----
-        db_uri = f"postgresql+psycopg://{db_username}:{db_password}@{self.db_url}/{db_id}"
+        db_uri = (
+            f"postgresql+psycopg://{db_username}:{db_password}@{self.db_url}/{db_id}"
+        )
 
         try:
             engine = create_engine(db_uri)
@@ -65,7 +65,9 @@ def run_evaluation(self, predictions: Dict[str, str]):
             )
 
         except SQLAlchemyError as e:
-            logger.info(f"Failed to process sql query for question {question_id}: '{predicted_sql}'")
+            logger.info(
+                f"Failed to process sql query for question {question_id}: '{predicted_sql}'"
+            )
             results.append(
                 {
                     "question_id": question_id,
@@ -143,14 +145,10 @@ def print_evaluation_report(report: dict):
     gold_neri = [r for r in results if r["gold_sql"] == "NERI"]
     gold_sql = [r for r in results if r["gold_sql"] != "NERI"]
 
-    neri_correct = sum(
-        1 for r in gold_neri if r["pred_sql"] == "AMBIGUOUS"
-    )
+    neri_correct = sum(1 for r in gold_neri if r["pred_sql"] == "AMBIGUOUS")
     neri_missed = len(gold_neri) - neri_correct
 
-    false_ambiguous = sum(
-        1 for r in gold_sql if r["pred_sql"] == "AMBIGUOUS"
-    )
+    false_ambiguous = sum(1 for r in gold_sql if r["pred_sql"] == "AMBIGUOUS")
 
     print("NERI behavior:")
     print(f"  Correctly flagged ambiguous : {neri_correct}")

@@ -221,9 +221,7 @@ class Text2SQLGenerator:
     def _get_accessed_tables(self, sql: str) -> list[str]:
         try:
             parsed = parse_one(sql, dialect=Dialects.POSTGRES)
-            return sorted(
-                {table.name.lower() for table in parsed.find_all(exp.Table)}
-            )
+            return sorted({table.name.lower() for table in parsed.find_all(exp.Table)})
         except Exception:
             return []
 
@@ -369,7 +367,7 @@ class Text2SQLGenerator:
                 logger.info("Соответствие подтверждено!")
             else:
                 verification_result = "skipped"
-            
+
             final_result = get_info(
                 message="Успешно",
                 details={**generation_result, "verification": verification_result},
