@@ -1,14 +1,13 @@
 import logging
 import os
 import re
-import sqlite3
 from textwrap import dedent
 from typing import Any
 
 from autogen_core.models import SystemMessage, UserMessage
 from autogen_ext.models.openai import OpenAIChatCompletionClient
-from sqlalchemy import inspect
-from sqlalchemy.engine import Engine
+from sqlalchemy import create_engine, inspect, text
+from sqlalchemy.engine import Engine, Result
 from sqlglot import Dialects, exp, parse_one
 from sqlglot.errors import ParseError
 
@@ -28,44 +27,54 @@ logger = logging.getLogger("text2sql_tool")
 
 
 class Text2SQLGenerator:
-    def __init__(self, db_path: str, llm_client: OpenAIChatCompletionClient):
+    def __init__(self, db_uri: str, llm_client: OpenAIChatCompletionClient):
         """
-        Initializes the Text2SQL generator with a pre-existing async LLM client.
+        Initializes the Text2SQL generator with a database URI.
 
         Args:
-            db_path (str): Path to the SQLite database file.
+            db_uri (str): SQL database URI.
             llm_client (openai.AsyncOpenAI): An initialized asynchronous OpenAI client.
-            model_name (str): The name of the language model to use.
         """
-        self.db_path = db_path
+        self.db_uri = db_uri
+        self.engine: Engine = create_engine(
+            db_uri,
+            pool_pre_ping=True,
+        )
+
         self.llm_client = llm_client
-        self.db_schema = self._get_db_schema()
-        self.system_prompt = self._create_system_prompt()
-        logger.info(f"Initialized with DB: {db_path}")
+        # self.db_schema = self._get_db_schema()
+        # self.system_prompt = self._create_system_prompt()
 
-    # TODO: think if getting db_schema and system_prompt is actually just the build() function
+        logger.info("Initialized Text2SQLGenerator")
+
+    # TODO: think if getting db_schema and system_prompt is really the build() function
     def build(self):
-        """
-        self.db_schema = self._get_db_schema()
-        self.system_prompt = self._create_system_prompt()
-        """
-        pass
-
-    def _update_db_schema(self, db_path):
-        self.db_path = db_path
         self.db_schema = self._get_db_schema()
         self.system_prompt = self._create_system_prompt()
 
-    def get_db_schema_pg(engine: Engine) -> str:
+    def _update_db_schema(self, db_uri):
+        self.db_uri = db_uri
+        self.engine.dispose()
+        self.engine = create_engine(db_uri, pool_pre_ping=True)
+        self.build()
+
+    # TODO: Consider adding unique values hints, like in the older sqlite3 version of this tool
+    def _get_db_schema(self) -> str:
         """
         Lightweight schema extraction for LLM prompts.
-        Focuses on tables, columns, and types — not DDL.
-        """
 
-        inspector = inspect(engine)
+        Includes:
+        - table names
+        - column names
+        - column types
+        """
+        inspector = inspect(self.engine)
         schema_parts = []
 
+        # Default schema for PostgreSQL
         tables = inspector.get_table_names(schema="public")
+        if not tables:
+            raise RuntimeError("No tables found in public schema")
 
         for table in tables:
             schema_parts.append(f"TABLE {table}")
@@ -73,125 +82,11 @@ class Text2SQLGenerator:
             columns = inspector.get_columns(table, schema="public")
             for col in columns:
                 col_type = str(col["type"])
-                schema_parts.append(f"- {col['name']} ({col_type})")
+                schema_parts.append(f"  - {col['name']} ({col_type})")
 
-            schema_parts.append("")  # empty line between tables
+            schema_parts.append("")
 
         return "\n".join(schema_parts).strip()
-
-    def _get_db_schema(self) -> str:
-        """
-        Получает схему базы данных, включая CREATE TABLE statements и примеры данных,
-        а также уникальные значения для столбцов aggregated_data с малым количеством уникальных значений.
-        """
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-
-        # Получаем все таблицы, кроме системных
-        cursor.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
-        )
-        tables = cursor.fetchall()
-
-        schema_info_parts = []
-
-        # Список для хранения описаний уникальных значений, которые будут добавлены в самом конце
-        unique_values_descriptions = []
-
-        for table_name_tuple in tables:
-            table_name = table_name_tuple[0]
-
-            # 1. Получаем CREATE TABLE statement
-            # cursor.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name=?;", (table_name,))
-            cursor.execute(
-                f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table_name}';"
-            )
-            create_table_sql = cursor.fetchone()[0]
-            schema_info_parts.append(create_table_sql)
-
-            # 2. Получаем примеры строк в зависимости от имени таблицы
-            try:
-                limit_rows = 3  # Значение по умолчанию для других таблиц
-                if table_name == "tables_info":
-                    limit_rows = None  # Без ограничения, выбираем все строки
-                elif table_name == "aggregated_data":
-                    limit_rows = 5  # Первые 5 строк для aggregated_data
-
-                if limit_rows is None:
-                    # cursor.execute("SELECT * FROM ?;", (table_name,))
-                    cursor.execute(f'SELECT * FROM "{table_name}";')
-                else:
-                    # cursor.execute("SELECT * FROM ? LIMIT ?;", (table_name, limit_rows))
-                    cursor.execute(f'SELECT * FROM "{table_name}" LIMIT {limit_rows};')
-
-                sample_rows = cursor.fetchall()
-
-                if sample_rows:
-                    # Получаем имена столбцов
-                    column_names = [
-                        description[0] for description in cursor.description
-                    ]
-
-                    # Форматируем примеры данных
-                    sample_data_str = "/*\n"
-                    sample_data_str += "\t".join(column_names) + "\n"
-                    for row in sample_rows:
-                        sample_data_str += "\t".join(map(str, row)) + "\n"
-                    sample_data_str += "*/"
-                    schema_info_parts.append(sample_data_str)
-
-            except sqlite3.Error:
-                logger.exception(f"Could not fetch sample data for table {table_name}.")
-
-            schema_info_parts.append(
-                "\n\n"
-            )  # Добавляем пустые строки между таблицами для читаемости
-
-        # --- Дополнительная логика: подсчет уникальных значений для aggregated_data ---
-        # Проверяем, существует ли таблица aggregated_data
-        if "aggregated_data" in [t[0] for t in tables]:
-            try:
-                # Получаем имена столбцов для таблицы aggregated_data
-                cursor.execute("PRAGMA table_info(aggregated_data);")
-                agg_data_columns_info = cursor.fetchall()
-                # Исключаем столбцы 'id' и 'table_id', так как они обычно не требуют перечисления уникальных значений
-                agg_data_column_names = [
-                    col_info[1]
-                    for col_info in agg_data_columns_info
-                    if col_info[1] not in ["id", "table_id"]
-                ]
-
-                for col_name in agg_data_column_names:
-                    # Выбираем уникальные значения для текущего столбца
-                    cursor.execute(
-                        f'SELECT DISTINCT "{col_name}" FROM "aggregated_data";'
-                    )
-                    unique_values = [row[0] for row in cursor.fetchall()]
-
-                    # Если количество уникальных значений меньше 15, добавляем их описание
-                    if len(unique_values) < 15:  # TODO: расхардкодить
-                        # Форматируем список уникальных значений, заключая каждое в одинарные кавычки
-                        formatted_values = [f"'{str(val)}'" for val in unique_values]
-                        unique_values_descriptions.append(
-                            f'Возможные значения атрибута "{col_name}": [{", ".join(formatted_values)}].'
-                        )
-            except sqlite3.Error:
-                logger.exception("Could not fetch unique values for aggregated_data.")
-
-        # Добавляем описания уникальных значений в самом конце схемы
-        if unique_values_descriptions:
-            schema_info_parts.append(
-                "\n        ### Дополнительная информация об уникальных значениях --\n"
-            )
-            schema_info_parts.extend(unique_values_descriptions)
-            schema_info_parts.append(
-                "\n"
-            )  # Добавляем пустую строку после этого раздела
-
-        conn.close()
-        return "\n".join(
-            schema_info_parts
-        ).strip()  # Убираем лишние пустые строки в конце
 
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
@@ -231,7 +126,7 @@ class Text2SQLGenerator:
     def _validate_sql(self, sql: str) -> bool:
         """Валидация SQL запроса с помощью SQLGlot"""
         try:
-            parsed = parse_one(sql, dialect=Dialects.SQLITE)
+            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
 
             # Проверка на запрещенные операции
             for node in parsed.walk():
@@ -323,48 +218,49 @@ class Text2SQLGenerator:
                 },
             }
 
-    def _get_accessed_tables(self, sql: str) -> list:
-        """Определяет какие таблицы затрагивает запрос"""
+    def _get_accessed_tables(self, sql: str) -> list[str]:
         try:
-            parsed = parse_one(sql)
-            return list({table.name for table in parsed.find_all(exp.Table)})
+            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
+            return sorted(
+                {table.name.lower() for table in parsed.find_all(exp.Table)}
+            )
         except Exception:
             return []
 
     def execute_safe(self, sql: str) -> dict[str, Any]:
         """
-        Безопасное выполнение SQL запроса (только SELECT)
-
-        Args:
-            sql (str): SQL запрос
-
-        Returns:
-            Dict[str, Any]: Результаты выполнения
+        Safe execution of SQL query (SELECT-only) using SQLAlchemy.
         """
         try:
-            # sanitized_sql = self._sanitize_sql(sql) # Сделать нормально
             sanitized_sql = sql
             if not self._validate_sql(sanitized_sql):
                 raise ValueError("Запрос не прошел валидацию")
 
-            with sqlite3.connect(self.db_path) as conn:
-                conn.row_factory = sqlite3.Row
-                cursor = conn.cursor()
-                cursor.execute(sanitized_sql)
-                results = [dict(row) for row in cursor.fetchall()]
-                if not len(results):
-                    raise ValueError("Запрос вернулся пустым")
+            with self.engine.connect() as conn:
+                result: Result = conn.execute(text(sanitized_sql))
+                rows = result.fetchall()
 
-                return {
-                    "status": "success",
-                    "results": results,
-                    "columns": list(results[0].keys()) if results else [],
-                    "row_count": len(results),
-                    "sql_executed": sanitized_sql,
-                }
+            if not rows:
+                raise ValueError("Запрос вернулся пустым")
+
+            columns = result.keys()
+            results = [dict(zip(columns, row)) for row in rows]
+
+            return {
+                "status": "success",
+                "results": results,
+                "columns": list(columns),
+                "row_count": len(results),
+                "sql_executed": sanitized_sql,
+            }
+
         except Exception as e:
             logger.exception(f"Failed to execute query {sql}.")
-            return {"status": "error", "error": str(e), "sql_attempted": sql}
+            return {
+                "status": "error",
+                "error": str(e),
+                "sql_attempted": sql,
+            }
 
     async def _verify_sql_against_query(
         self, user_query: str, sql_query: str
@@ -473,5 +369,11 @@ class Text2SQLGenerator:
                 logger.info("Соответствие подтверждено!")
             else:
                 verification_result = "skipped"
+            
+            final_result = get_info(
+                message="Успешно",
+                details={**generation_result, "verification": verification_result},
+            )
+            success = True
 
-        return raw_sql
+        return final_result
