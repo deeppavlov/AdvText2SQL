@@ -1,0 +1,194 @@
+[
+  {
+    "question_id": 9,
+    "db_id": "california_schools",
+    "question": "Among the schools with the average score in Math over 560 in the SAT test, how many schools are directly charter-funded?",
+    "evidence": "",
+    "SQL": "SELECT COUNT(T2.`School Code`) FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrMath > 560 AND T2.`Charter Funding Type` = 'Directly funded'",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 13,
+    "db_id": "california_schools",
+    "question": "Please list the phone numbers of the schools with the top 3 SAT excellence rate.",
+    "evidence": "Excellence rate = NumGE1500 / NumTstTakr",
+    "SQL": "SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr DESC LIMIT 3",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 17,
+    "db_id": "california_schools",
+    "question": "Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers.",
+    "evidence": "Valid charter number means the number is not null",
+    "SQL": "SELECT CharterNum, AvgScrWrite, RANK() OVER (ORDER BY AvgScrWrite DESC) AS WritingScoreRank FROM schools AS T1  INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrWrite > 499 AND CharterNum is not null",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 325,
+    "db_id": "toxicology",
+    "question": "How many carcinogenic molecules that consisted of Nitrogen?",
+    "evidence": "nitrogen refers to element = 'n'; label = '+' mean molecules are carcinogenic;",
+    "SQL": "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'n' AND T1.label = '+'",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 279,
+    "db_id": "toxicology",
+    "question": "What is the label for bond ID TR001_10_11?",
+    "evidence": "label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic",
+    "SQL": "SELECT T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_id = 'TR001_10_11'",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 276,
+    "db_id": "toxicology",
+    "question": "Write down the atom IDs of the first and second atoms of triple bond type molecules.",
+    "evidence": "first atom refers to atom_id; second atom refers to atom_id2; triple bond refers to bond_type = '#';",
+    "SQL": "SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '#'",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 498,
+    "db_id": "card_games",
+    "question": "What's the French name of the set of cards with \"Tendo Ice Bridge\" is in?",
+    "evidence": "French refers to language = 'French'; \"Tendo Ice Bridge\" is a translated name of a card; translated name refers to translation",
+    "SQL": "SELECT T2.translation FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Tendo Ice Bridge' AND T2.language = 'French' AND T2.translation IS NOT NULL",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 417,
+    "db_id": "card_games",
+    "question": "What percentage of Japanese translated sets are expansion sets?",
+    "evidence": "Japanese translated refers to language = 'Japanese'; expansion sets refers to type = 'expansion'; percentage = DIVIDE(COUNT(language = 'Japanese'),COUNT(language))*100",
+    "SQL": "SELECT CAST(SUM(CASE WHEN T2.language = 'Japanese' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.type = 'expansion'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 345,
+    "db_id": "card_games",
+    "question": "For artifact type of cards that do not have multiple faces on the same card, state its legalities status for vintage play format.",
+    "evidence": "Artifact type of cards refers to types = 'Artifact'; card does not have multiple faces on the same card refers to side is NULL'; vintage play format refers to format = 'vintage';",
+    "SQL": "SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.type = 'Artifact' AND T2.format = 'vintage' AND T1.side IS NULL",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1533,
+    "db_id": "debit_card_specializing",
+    "question": "For all the people who paid more than 29.00 per unit of product id No.5. Give their consumption status in the August of 2012.",
+    "evidence": "August of 2012 refers to the Date value = '201208' ; Price per unit of product = Price / Amount;",
+    "SQL": "SELECT T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Price / T1.Amount > 29.00 AND T1.ProductID = 5 AND T2.Date = '201208'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1480,
+    "db_id": "debit_card_specializing",
+    "question": "What was the gas consumption peak month for SME customers in 2013?",
+    "evidence": "Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.",
+    "SQL": "SELECT SUBSTR(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTR(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTR(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1529,
+    "db_id": "debit_card_specializing",
+    "question": "What is the amount spent by customer \"38508\" at the gas stations? How much had the customer spent in January 2012?",
+    "evidence": "January 2012 refers to the Date value = '201201'",
+    "SQL": "SELECT SUM(T1.Price) , SUM(IIF(T3.Date = '201201', T1.Price, 0)) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1472,
+    "db_id": "debit_card_specializing",
+    "question": "In 2012, who had the least consumption in LAM?",
+    "evidence": "Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.",
+    "SQL": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 821,
+    "db_id": "superhero",
+    "question": "Hello, give me the amount of ajax",
+    "evidence": "Ajax refers to superhero_name = 'Ajax'",
+    "SQL": "ambiguous",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 842,
+    "db_id": "superhero",
+    "question": "get me the result of all neutral superheroes.",
+    "evidence": "",
+    "SQL": "ambiguous",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 180,
+    "db_id": "financial",
+    "question": "Please provide a list of clients who were born between 1983 and 1987 and whose account branch is in East Bohemia, along with their IDs.",
+    "evidence": "",
+    "SQL": "SELECT T1.client_id, T3.account_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T4 ON T1.client_id = T4.client_id INNER JOIN account AS T3 ON T2.district_id = T3.district_id and T4.account_id = T3.account_id WHERE T2.A3 = 'east Bohemia' AND STRFTIME('%Y', T1.birth_date) BETWEEN '1983' AND '1987'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 113,
+    "db_id": "financial",
+    "question": "For the client who applied 98832 USD loan in 1996/1/3, when was his/her birthday?",
+    "evidence": "",
+    "SQL": "SELECT T4.birth_date FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T2.account_id = T3.account_id INNER JOIN client AS T4 ON T3.client_id = T4.client_id WHERE T1.date = '1996-01-03' AND T1.amount = 98832",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 589,
+    "db_id": "codebase_community",
+    "question": "Which user ID has the highest reputation?",
+    "evidence": "highest reputation refers to Max(Reputation)",
+    "SQL": "SELECT Id FROM users WHERE Reputation = ( SELECT MAX(Reputation) FROM users )",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 685,
+    "db_id": "codebase_community",
+    "question": "Identify the total views on the post 'Computer Game Datasets'. Name the user who posted it last time.",
+    "evidence": "total views refer to ViewCount; Name the user refers to DisplayName; post 'Computer Game Datasets' refers to Text = 'Computer Game Datasets';",
+    "SQL": "SELECT T2.ViewCount, T3.DisplayName FROM postHistory AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id INNER JOIN users AS T3 ON T2.LastEditorUserId = T3.Id WHERE T1.Text = 'Computer Game Datasets'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1365,
+    "db_id": "student_club",
+    "question": "What are the expenses of the budget with the lowest remaining?",
+    "evidence": "expense of budget refers to expense_description; lowest remaining refers to MIN(remaining)",
+    "SQL": "SELECT T2.expense_description FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget ORDER BY T1.remaining LIMIT 1",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": 1388,
+    "db_id": "student_club",
+    "question": "Which students manage to generate the highest income. State his/her full name along with the income source.",
+    "evidence": "name of students means the full name; full name refers to first_name, last_name; generate the highest income refers to MAX(income.amount);",
+    "SQL": "SELECT T1.first_name, T1.last_name, T2.source FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member GROUP BY T1.first_name, T1.last_name, T2.source ORDER BY SUM(T2.amount) DESC LIMIT 1",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": 1339,
+    "db_id": "student_club",
+    "question": "Calculate the total average cost that Elijah Allen spent in the events on September and October.",
+    "evidence": "Elijah Allen is the full name; full name refers to first_name, last_name; The 5th and 6th string of the expense_date in the expense table can refer to month; events in September and October refers to month(expense_date) = 9 OR month(expense_date) = 10",
+    "SQL": "SELECT AVG(T2.cost) FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE T1.last_name = 'Allen' AND T1.first_name = 'Elijah' AND (SUBSTR(T2.expense_date, 6, 2) = '09' OR SUBSTR(T2.expense_date, 6, 2) = '10')",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": 1359,
+    "db_id": "student_club",
+    "question": "How many times was the budget in Advertisement for \"Yearly Kickoff\" meeting more than \"October Meeting\"?",
+    "evidence": "budget in Advertisement refer to category = 'Advertisement' in the budget table; DIVIDE(SUM(amount when event_name = 'Yearly Kickoff'), SUM(amount when event_name = 'October Meeting'))",
+    "SQL": "SELECT CAST(SUM(CASE WHEN T2.event_name = 'Yearly Kickoff' THEN T1.amount ELSE 0 END) AS REAL) / SUM(CASE WHEN T2.event_name = 'October Meeting' THEN T1.amount ELSE 0 END) FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id WHERE T1.category = 'Advertisement' AND T2.type = 'Meeting'",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": 1429,
+    "db_id": "student_club",
+    "question": "What is the name of the social event that was attended by the vice president of the Student_Club located at 900 E. Washington St.?",
+    "evidence": "name of social event refers to event_name where type = 'Social'; 'Vice President' is position; located at refers to location",
+    "SQL": "SELECT T2.event_name FROM attendance AS T1 INNER JOIN event AS T2 ON T2.event_id = T1.link_to_event INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id WHERE T3.position = 'Vice President' AND T2.location = '900 E. Washington St.' AND T2.type = 'Social'",
+    "difficulty": "challenging"
+  }
+]
