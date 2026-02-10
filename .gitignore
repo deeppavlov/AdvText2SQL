@@ -1,1 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Manual files added
 .env
+db_schemas.json
+all_gold_results.json
+all_predicted_results.json
+query_results.json
