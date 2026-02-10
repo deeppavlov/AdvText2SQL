@@ -57,7 +57,15 @@ Since the databases are hosted remotely via PostgreSQL, there are sometimes issu
 
 As of now, you should be generating queries in the **PostgreSQL** dialect of SQL.
 
-Your *tool class* must:
+Your tool class must:
 - have the `__init__` method having the following siganture: `__init__(db_url: str, llm_client: OpenAI)`. So, your tool class only needs to work with a single database at a time. It's up to you if you actually want to use the provided `llm_client`, though.
 - have the `build()` method defined. This will be called only once on benchmark launch. For example, you can obtain the `db_schema` of the database in that method or add any other code you want to run during benchmark startup.
 - have the `query(user_request: str) -> str` method, which intakes the user request and outputs the generated SQL query.
+
+
+## Links
+
+We're using the BIRD benchmark's dev dataset, which can be found [here](https://bird-bench.github.io/).
+BIRD is an industrial-grade text2sql benchmark with cases that are close to real-world queries.
+
+We're also planning to use [Ambrosia](https://ambrosia-benchmark.github.io/) - a text2sql benchmark with a main focus on ambiguous requests.
