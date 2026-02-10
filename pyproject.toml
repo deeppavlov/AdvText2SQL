@@ -16,6 +16,8 @@ dependencies = [
     "fastmcp",
     "python-dotenv",
     "sqlglot",
+    "sqlalchemy",
+    "psycopg[binary]",
     "tabulate",
     "pymupdf",
     "pandas",

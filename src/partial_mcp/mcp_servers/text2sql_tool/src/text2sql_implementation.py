@@ -17,7 +17,7 @@ from .prompts import (
     SYSTEM_PROMPT_TEMPLATE,
     VERIFICATION_PROMPT_TEMPLATE,
 )
-from .utils import get_error, print_result
+from .utils import get_error, get_info, print_result
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
@@ -58,8 +58,100 @@ class Text2SQLGenerator:
         self.engine = create_engine(db_uri, pool_pre_ping=True)
         self.build()
 
+    def _get_db_schema(
+        self,
+        sample_rows_limit: int = 3,
+        get_unique_values: bool = True,
+        unique_threshold: int = 10,
+        sample_tables_with_more_rows: dict | None = None,
+    ) -> str:
+        """
+        Get PostgreSQL schema info with:
+        - table definitions (columns + types)
+        - sample rows
+        - unique values for low-cardinality columns (optional)
+        """
+
+        print(self.db_uri)
+        if sample_tables_with_more_rows is None:
+            sample_tables_with_more_rows = {}
+
+        inspector = inspect(self.engine)
+        schema_parts: list[str] = []
+        unique_values_parts: list[str] = []
+
+        with self.engine.connect() as conn:
+            tables = inspector.get_table_names()
+
+            for table in tables:
+                schema_parts.append(f"-- Table: {table}")
+
+                # 1. Columns
+                columns = inspector.get_columns(table)
+                schema_parts.append(f"CREATE TABLE {table} (")
+                for col in columns:
+                    schema_parts.append(f"    {col['name']} {col['type']},")
+                schema_parts.append(");")
+
+                # 2. Sample rows
+                limit = sample_tables_with_more_rows.get(table, sample_rows_limit)
+                try:
+                    result = conn.execute(
+                        text(f'SELECT * FROM "{table}" LIMIT :limit'),
+                        {"limit": limit},
+                    )
+                    rows = result.fetchall()
+
+                    if rows:
+                        col_names = result.keys()
+                        schema_parts.append("/*")
+                        schema_parts.append("\t".join(col_names))
+                        for row in rows:
+                            schema_parts.append("\t".join(map(str, row)))
+                        schema_parts.append("*/")
+
+                except Exception:
+                    logger.exception(f"Could not fetch sample rows for table {table}")
+
+                schema_parts.append("\n")
+
+                # 3. Unique values per column (low-cardinality only)
+                if not get_unique_values:
+                    continue
+
+                for col in columns:
+                    col_name = col["name"]
+
+                    try:
+                        res = conn.execute(
+                            text(
+                                f'''
+                                SELECT DISTINCT "{col_name}"
+                                FROM "{table}"
+                                WHERE "{col_name}" IS NOT NULL
+                                '''
+                            )
+                        )
+                        values = [r[0] for r in res.fetchall()]
+
+                        if 0 < len(values) <= unique_threshold:
+                            formatted = ", ".join(repr(v) for v in values)
+                            unique_values_parts.append(
+                                f'Possible values for "{table}.{col_name}": [{formatted}]'
+                            )
+
+                    except Exception:
+                        # silently skip problematic columns (JSON, arrays, etc.)
+                        continue
+
+        if unique_values_parts:
+            schema_parts.append("\n### Low-cardinality value hints")
+            schema_parts.extend(unique_values_parts)
+
+        return "\n".join(schema_parts).strip()
+
     # TODO: Consider adding unique values hints, like in the older sqlite3 version of this tool
-    def _get_db_schema(self) -> str:
+    def get_db_schema(self) -> str:
         """
         Lightweight schema extraction for LLM prompts.
 
@@ -72,8 +164,10 @@ class Text2SQLGenerator:
         schema_parts = []
 
         # Default schema for PostgreSQL
+        print(self.db_uri)
         tables = inspector.get_table_names(schema="public")
         if not tables:
+            print("this db failed: ", self.db_uri)
             raise RuntimeError("No tables found in public schema")
 
         for table in tables:
@@ -90,7 +184,7 @@ class Text2SQLGenerator:
 
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
-        return SYSTEM_PROMPT_TEMPLATE.format(db_schema=self.db_schema)
+        return SYSTEM_PROMPT_TEMPLATE.format(db_schema=self.db_schema, sql_dialect="SQLite")
 
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
@@ -103,8 +197,21 @@ class Text2SQLGenerator:
 
         messages = [
             SystemMessage(content=ambiguity_prompt),
-            UserMessage(source="user", content="Проверь запрос на однозначность."),
+            UserMessage(
+                source="user",
+                content="Проверь запрос на однозначность.",
+            ),
         ]
+
+        """
+        content=(
+            "Определи, можно ли вообще ответить на этот вопрос, "
+            "используя ТОЛЬКО данную схему БД. "
+            "Если ответить нельзя — напиши NOT_ANSWERABLE. "
+            "Если ответ возможен, но запрос неоднозначен — опиши, что нужно уточнить. "
+            "Если запрос полностью однозначен и ответим — напиши OK."
+        ),
+        """
 
         try:
             result = await self.llm_client.create(messages)
@@ -126,7 +233,7 @@ class Text2SQLGenerator:
     def _validate_sql(self, sql: str) -> bool:
         """Валидация SQL запроса с помощью SQLGlot"""
         try:
-            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
+            parsed = parse_one(sql, dialect=Dialects.SQLITE)
 
             # Проверка на запрещенные операции
             for node in parsed.walk():
@@ -178,7 +285,7 @@ class Text2SQLGenerator:
         Returns:
             Dict[str, Any]: Результат в формате Model Context Protocol
         """
-        sql_prompt = SQL_PROMPT_TEMPLATE.format(user_query=user_query)
+        sql_prompt = SQL_PROMPT_TEMPLATE.format(user_query=user_query, sql_dialect="SQLite")
         try:
             # Создаем цепочку обработки запроса
             messages = [
@@ -220,7 +327,7 @@ class Text2SQLGenerator:
 
     def _get_accessed_tables(self, sql: str) -> list[str]:
         try:
-            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
+            parsed = parse_one(sql, dialect=Dialects.SQLITE)
             return sorted({table.name.lower() for table in parsed.find_all(exp.Table)})
         except Exception:
             return []
