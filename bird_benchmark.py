@@ -14,7 +14,7 @@ benchmark = BenchmarkBIRD(
     db_url=db_url,
     query_file="./data/some_queries.json",
     answer_file="./data/some_queries.json",
-    use_evidence = True,
+    use_evidence=True,
 )
 
 report = asyncio.run(benchmark.run(Text2SQLGenerator))

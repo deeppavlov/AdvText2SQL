@@ -31,7 +31,7 @@ class BenchmarkBIRD(Benchmark):
             if self.use_evidence:
                 question = f"question: {question}, evidence (may be empty): {evidence}"
 
-            result = await tool.query(question, check_ambiguity=True)
+            result = await tool.query(question)
             print(result)
 
             sql_query = "error"

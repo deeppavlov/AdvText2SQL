@@ -75,7 +75,7 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
         )
 
         try:
-            predicted_sql = sqlite_to_postgres(predicted_sql)
+            # predicted_sql = sqlite_to_postgres(predicted_sql)
             gold_sql = sqlite_to_postgres(gold_sql)
             engine = create_engine(db_uri)
 
