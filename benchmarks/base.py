@@ -35,7 +35,7 @@ class Benchmark(BaseModel):
                 model=os.environ["LLM_MODEL_NAME"],
                 base_url=os.environ["LLM_BASE_URL"],
                 api_key=os.environ["LLM_API_KEY"],
-                temperature=0.6,
+                temperature=0,
                 model_info={
                     "json_output": False,
                     "function_calling": True,

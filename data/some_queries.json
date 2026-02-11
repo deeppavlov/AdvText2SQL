@@ -104,22 +104,6 @@
     "difficulty": "moderate"
   },
   {
-    "question_id": 821,
-    "db_id": "superhero",
-    "question": "Hello, give me the amount of ajax",
-    "evidence": "Ajax refers to superhero_name = 'Ajax'",
-    "SQL": "ambiguous",
-    "difficulty": "simple"
-  },
-  {
-    "question_id": 842,
-    "db_id": "superhero",
-    "question": "get me the result of all neutral superheroes.",
-    "evidence": "",
-    "SQL": "ambiguous",
-    "difficulty": "moderate"
-  },
-  {
     "question_id": 180,
     "db_id": "financial",
     "question": "Please provide a list of clients who were born between 1983 and 1987 and whose account branch is in East Bohemia, along with their IDs.",

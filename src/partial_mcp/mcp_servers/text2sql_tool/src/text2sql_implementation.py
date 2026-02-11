@@ -18,6 +18,7 @@ from .prompts import (
     VERIFICATION_PROMPT_TEMPLATE,
 )
 from .utils import get_error, get_info, print_result
+from .base import BaseTool
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
@@ -42,14 +43,11 @@ class Text2SQLGenerator:
         )
 
         self.llm_client = llm_client
-        # self.db_schema = self._get_db_schema()
-        # self.system_prompt = self._create_system_prompt()
 
         logger.info("Initialized Text2SQLGenerator")
 
-    # TODO: think if getting db_schema and system_prompt is really the build() function
     def build(self):
-        self.db_schema = self._get_db_schema()
+        self.db_schema = self.get_db_schema()
         self.system_prompt = self._create_system_prompt()
 
     def _update_db_schema(self, db_uri):
@@ -184,7 +182,7 @@ class Text2SQLGenerator:
 
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
-        return SYSTEM_PROMPT_TEMPLATE.format(db_schema=self.db_schema, sql_dialect="SQLite")
+        return SYSTEM_PROMPT_TEMPLATE.format(db_schema=self.db_schema, sql_dialect="PostgreSQL")
 
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
@@ -230,10 +228,39 @@ class Text2SQLGenerator:
             logger.exception(f"Failed to check ambiguity for query: {user_query}")
             return {"status": "error", "error": get_error(message=str(e))}
 
+    def _strip_sql_comments(self, sql: str) -> str:
+        sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
+        sql = re.sub(r"--.*?$", "", sql, flags=re.MULTILINE)
+        sql = re.sub(r"^```(?:sql)?\s*|\s*```$", "", sql.strip(), flags=re.IGNORECASE)
+
+        return sql.strip()
+
+    def _is_sql_complete(self, sql: str) -> bool:
+        upper = sql.upper().strip()
+
+        required = ["SELECT", "FROM"]
+        if not all(k in upper for k in required):
+            return False
+
+        if upper.endswith((
+            "WHERE",
+            "JOIN",
+            "FROM",
+            "ON",
+            "AND",
+            "OR",
+        )):
+            return False
+
+        return True
+
     def _validate_sql(self, sql: str) -> bool:
         """Валидация SQL запроса с помощью SQLGlot"""
         try:
-            parsed = parse_one(sql, dialect=Dialects.SQLITE)
+            if not self._is_sql_complete(sql):
+                raise ValueError("Incomplete SQL generated")
+
+            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
 
             # Проверка на запрещенные операции
             for node in parsed.walk():
@@ -245,35 +272,46 @@ class Text2SQLGenerator:
             logger.exception("SQL validation error.")
             return False
 
-    def _sanitize_sql(self, sql: str) -> str:
-        """Расширенная санитизация SQL запроса"""
-        # Удаляем потенциально опасные конструкции
-        dangerous_patterns = [
-            "--",
-            "/*",
-            "*/",
-            ";",
-            "xp_",
-            "sp_",
-            "EXEC",
-            "EXECUTE",
-            "TRUNCATE",
-            "SHUTDOWN",
-        ]
+    def sanitize_sql(self, sql: str) -> str:
+        """
+        Minimal SQL sanitizer for Postgres execution.
+        Fixes common LLM-generated SQL issues:
+        1. Strips markdown/code fences
+        2. Wraps DISTINCT queries with ORDER BY in a subquery
+        3. Normalizes CAST and NULLIF usage
+        """
+        sql = sql.strip()
 
-        for pattern in dangerous_patterns:
-            if pattern.lower() in sql.lower():
-                raise ValueError(f"Обнаружена запрещенная конструкция: {pattern}")
-        # Проверяем экранирование идентификаторов
-        parsed = parse_one(sql)
-        for identifier in parsed.find_all(exp.Identifier):
-            if not identifier.quoted and not any(
-                kw in identifier.sql().upper()
-                for kw in ["SELECT", "FROM", "WHERE", "JOIN", "GROUP BY", "ORDER BY"]
-            ):
-                raise ValueError(f"Неэкранированный идентификатор: {identifier.sql()}")
+        # Remove markdown/code fences
+        sql = re.sub(r"^```[a-z]*|```$", "", sql, flags=re.IGNORECASE).strip()
 
-        return sql.strip()
+        # Detect DISTINCT + ORDER BY and wrap in a subquery
+        distinct_order_by_pattern = re.compile(
+            r"SELECT\s+DISTINCT\s+(.*?)\s+FROM\s+(.*?)\s+ORDER\s+BY\s+(.*?)(LIMIT\s+\d+)?;",
+            flags=re.IGNORECASE | re.DOTALL
+        )
+        match = distinct_order_by_pattern.search(sql)
+        if match:
+            select_cols, from_clause, order_by_clause, limit_clause = match.groups()
+            limit_clause = limit_clause or ""
+            sql = f"""
+            SELECT *
+            FROM (
+                SELECT DISTINCT {select_cols}
+                FROM {from_clause}
+            ) sub
+            ORDER BY {order_by_clause} {limit_clause};
+            """.strip()
+
+        # Replace CAST(... AS REAL) if inside math operations
+        sql = re.sub(r"CAST\((.*?)\s+AS\s+REAL\)", r"\1::REAL", sql, flags=re.IGNORECASE)
+        # Remove invalid nested NULLIF patterns like NULLIF(NULLIF,0)(x)
+        sql = re.sub(r"NULLIF\(NULLIF,0\)\((.*?)\)", r"NULLIF(\1,0)", sql, flags=re.IGNORECASE)
+
+        # remove multiple newlines
+        sql = re.sub(r"\n\s*\n", "\n", sql)
+
+        return sql
 
     async def generate_sql(self, user_query: str) -> dict[str, Any]:
         """
@@ -285,7 +323,7 @@ class Text2SQLGenerator:
         Returns:
             Dict[str, Any]: Результат в формате Model Context Protocol
         """
-        sql_prompt = SQL_PROMPT_TEMPLATE.format(user_query=user_query, sql_dialect="SQLite")
+        sql_prompt = SQL_PROMPT_TEMPLATE.format(user_query=user_query, sql_dialect="PostgreSQL")
         try:
             # Создаем цепочку обработки запроса
             messages = [
@@ -299,7 +337,10 @@ class Text2SQLGenerator:
 
             # Очистка и валидация
             # sanitized_sql = self._sanitize_sql(raw_sql) # TODO сделать нормально
-            sanitized_sql = raw_sql
+            sanitized_sql = self.sanitize_sql(raw_sql)
+
+            sanitized_sql = self._strip_sql_comments(sanitized_sql)
+
             if not self._validate_sql(sanitized_sql):
                 raise ValueError("Сгенерированный SQL не прошел валидацию")
 
@@ -327,7 +368,7 @@ class Text2SQLGenerator:
 
     def _get_accessed_tables(self, sql: str) -> list[str]:
         try:
-            parsed = parse_one(sql, dialect=Dialects.SQLITE)
+            parsed = parse_one(sql, dialect=Dialects.POSTGRES)
             return sorted({table.name.lower() for table in parsed.find_all(exp.Table)})
         except Exception:
             return []
@@ -403,7 +444,6 @@ class Text2SQLGenerator:
         self,
         user_query: str,
         check_ambiguity: bool = False,
-        check_sql_query: bool = False,
     ) -> dict[str, Any]:
         """
         Полный цикл: генерация SQL + выполнение
@@ -453,31 +493,15 @@ class Text2SQLGenerator:
             # Извлекает SQL-запрос из markdown блока, если ответ полностью обернут в ```
             if raw_sql[:3] == "```":
                 raw_sql = re.sub(
-                    r"^```.*?\n|```$", "", raw_sql, flags=re.MULTILINE
-                ).strip()
-            if check_sql_query:
-                logger.info("SQL сгенерирован. Проверяю на соответствие запросу... ")
-
-                # Шаг 3: Проверка соответствия SQL
-                verification_result = await self._verify_sql_against_query(
-                    user_query, raw_sql
+                    r"^```(?:sql)?\s*|\s*```$",
+                    "",
+                    raw_sql.strip(),
+                    flags=re.IGNORECASE,
                 )
-
-                if (
-                    verification_result["status"] != "success"
-                    or not verification_result["is_correct"]
-                ):
-                    # Если SQL не соответствует, мы увеличиваем счётчик retries, чтобы LLM попыталась исправить ошибку.
-                    retries += 1
-                    continue
-
-                logger.info("Соответствие подтверждено!")
-            else:
-                verification_result = "skipped"
 
             final_result = get_info(
                 message="Успешно",
-                details={**generation_result, "verification": verification_result},
+                details={**generation_result},
             )
             success = True
 

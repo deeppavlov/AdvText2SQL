@@ -14,6 +14,7 @@ dependencies = [
     "tiktoken",
     "mcp",
     "fastmcp",
+    "openai",
     "python-dotenv",
     "sqlglot",
     "sqlalchemy",
