@@ -18,7 +18,6 @@ from .prompts import (
     VERIFICATION_PROMPT_TEMPLATE,
 )
 from .utils import get_error, get_info, print_result
-from .base import BaseTool
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
