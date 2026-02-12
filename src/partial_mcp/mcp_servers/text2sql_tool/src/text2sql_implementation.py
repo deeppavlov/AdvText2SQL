@@ -181,7 +181,9 @@ class Text2SQLGenerator:
 
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
-        return SYSTEM_PROMPT_TEMPLATE.format(db_schema=self.db_schema, sql_dialect="PostgreSQL")
+        return SYSTEM_PROMPT_TEMPLATE.format(
+            db_schema=self.db_schema, sql_dialect="PostgreSQL"
+        )
 
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
@@ -241,14 +243,16 @@ class Text2SQLGenerator:
         if not all(k in upper for k in required):
             return False
 
-        if upper.endswith((
-            "WHERE",
-            "JOIN",
-            "FROM",
-            "ON",
-            "AND",
-            "OR",
-        )):
+        if upper.endswith(
+            (
+                "WHERE",
+                "JOIN",
+                "FROM",
+                "ON",
+                "AND",
+                "OR",
+            )
+        ):
             return False
 
         return True
@@ -287,7 +291,7 @@ class Text2SQLGenerator:
         # Detect DISTINCT + ORDER BY and wrap in a subquery
         distinct_order_by_pattern = re.compile(
             r"SELECT\s+DISTINCT\s+(.*?)\s+FROM\s+(.*?)\s+ORDER\s+BY\s+(.*?)(LIMIT\s+\d+)?;",
-            flags=re.IGNORECASE | re.DOTALL
+            flags=re.IGNORECASE | re.DOTALL,
         )
         match = distinct_order_by_pattern.search(sql)
         if match:
@@ -303,9 +307,13 @@ class Text2SQLGenerator:
             """.strip()
 
         # Replace CAST(... AS REAL) if inside math operations
-        sql = re.sub(r"CAST\((.*?)\s+AS\s+REAL\)", r"\1::REAL", sql, flags=re.IGNORECASE)
+        sql = re.sub(
+            r"CAST\((.*?)\s+AS\s+REAL\)", r"\1::REAL", sql, flags=re.IGNORECASE
+        )
         # Remove invalid nested NULLIF patterns like NULLIF(NULLIF,0)(x)
-        sql = re.sub(r"NULLIF\(NULLIF,0\)\((.*?)\)", r"NULLIF(\1,0)", sql, flags=re.IGNORECASE)
+        sql = re.sub(
+            r"NULLIF\(NULLIF,0\)\((.*?)\)", r"NULLIF(\1,0)", sql, flags=re.IGNORECASE
+        )
 
         # remove multiple newlines
         sql = re.sub(r"\n\s*\n", "\n", sql)
@@ -322,7 +330,9 @@ class Text2SQLGenerator:
         Returns:
             Dict[str, Any]: Результат в формате Model Context Protocol
         """
-        sql_prompt = SQL_PROMPT_TEMPLATE.format(user_query=user_query, sql_dialect="PostgreSQL")
+        sql_prompt = SQL_PROMPT_TEMPLATE.format(
+            user_query=user_query, sql_dialect="PostgreSQL"
+        )
         try:
             # Создаем цепочку обработки запроса
             messages = [
