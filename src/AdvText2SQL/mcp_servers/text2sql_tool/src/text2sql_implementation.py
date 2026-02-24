@@ -17,7 +17,7 @@ from .prompts import (
     SYSTEM_PROMPT_TEMPLATE,
     VERIFICATION_PROMPT_TEMPLATE,
 )
-from .utils import get_error, get_info, print_result
+from .utils import print_result
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
@@ -46,7 +46,8 @@ class Text2SQLGenerator:
         logger.info("Initialized Text2SQLGenerator")
 
     def build(self):
-        self.db_schema = self.get_db_schema()
+        self.db_schema = self._get_db_schema_light()
+        # self.db_schema = self._get_db_schema_heavy()
         self.system_prompt = self._create_system_prompt()
 
     def _update_db_schema(self, db_uri):
@@ -55,7 +56,7 @@ class Text2SQLGenerator:
         self.engine = create_engine(db_uri, pool_pre_ping=True)
         self.build()
 
-    def _get_db_schema(
+    def _get_db_schema_heavy(
         self,
         sample_rows_limit: int = 3,
         get_unique_values: bool = True,
@@ -63,13 +64,15 @@ class Text2SQLGenerator:
         sample_tables_with_more_rows: dict | None = None,
     ) -> str:
         """
+        Extract db_schema with a few more features (they all spend tokens).
+
         Get PostgreSQL schema info with:
         - table definitions (columns + types)
         - sample rows
         - unique values for low-cardinality columns (optional)
         """
 
-        print(self.db_uri)
+        # print(self.db_uri)
         if sample_tables_with_more_rows is None:
             sample_tables_with_more_rows = {}
 
@@ -147,8 +150,7 @@ class Text2SQLGenerator:
 
         return "\n".join(schema_parts).strip()
 
-    # TODO: Consider adding unique values hints, like in the older sqlite3 version of this tool
-    def get_db_schema(self) -> str:
+    def _get_db_schema_light(self) -> str:
         """
         Lightweight schema extraction for LLM prompts.
 
@@ -161,7 +163,7 @@ class Text2SQLGenerator:
         schema_parts = []
 
         # Default schema for PostgreSQL
-        print(self.db_uri)
+        # print(self.db_uri)
         tables = inspector.get_table_names(schema="public")
         if not tables:
             print("this db failed: ", self.db_uri)
@@ -227,7 +229,7 @@ class Text2SQLGenerator:
 
         except Exception as e:
             logger.exception(f"Failed to check ambiguity for query: {user_query}")
-            return {"status": "error", "error": get_error(message=str(e))}
+            return {"status": "error"}
 
     def _strip_sql_comments(self, sql: str) -> str:
         sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
@@ -452,38 +454,30 @@ class Text2SQLGenerator:
     async def query(
         self,
         user_query: str,
-        check_ambiguity: bool = False,
     ) -> dict[str, Any]:
         """
         Полный цикл: генерация SQL + выполнение
         Args:
             user_query (str): Запрос на естественном языке
-            check_ambiguity (bool): Флаг, требуется ли проверять запрос на неоднозначность
             check_sql_query (bool): Флаг, требуется ли проверять SQL-запрос на корректность
         Returns:
             Dict[str, Any]: Объединенные результаты генерации и выполнения
         """
-        if check_ambiguity:
-            logger.info("Проверяю запрос на неоднозначность...")
-            ambiguity_check = await self._check_ambiguity(user_query)
 
-            if ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]:
-                logger.info("Запрос неоднозначен. Требуется уточнение.")
-                return get_error(
-                    message="Запрос неоднозначен. Требуется уточнение.",
-                    details={
-                        "status": "ambiguous_query",
-                        "clarification_needed": ambiguity_check["clarification_needed"],
-                        "user_query": user_query,
-                    },
-                )
+        # Ambiguity checking
+        logger.info("Проверяю запрос на неоднозначность...")
+        ambiguity_check = await self._check_ambiguity(user_query)
 
-            if ambiguity_check["status"] == "error":
-                return get_error(
-                    message=f"Ошибка при проверке неоднозначности: {ambiguity_check['error']}.",
-                    details=ambiguity_check,
-                )
+        if ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]:
+            logger.info(f"Запрос неоднозначен. Требуется уточнение по причине: {ambiguity_check['clarification_needed']}")
+            return {"status": "ambiguous"}
 
+        if ambiguity_check["status"] == "error":
+            logger.info("Произошла ошибка при проверка неоднозначности.")
+            return {"status": "error"}
+
+
+        # Main query generation
         retries = 0
         success = False
         raw_sql = ""
@@ -508,10 +502,7 @@ class Text2SQLGenerator:
                     flags=re.IGNORECASE,
                 )
 
-            final_result = get_info(
-                message="Успешно",
-                details={**generation_result},
-            )
+            final_result = {"status": "success", "query": raw_sql}
             success = True
 
         return final_result

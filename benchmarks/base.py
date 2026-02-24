@@ -8,7 +8,7 @@ from typing import Any, Dict, Optional
 from .token_tracking import TokenTrackingClient
 
 
-class Benchmark(BaseModel):
+class BenchmarkBase(BaseModel):
     db_url: str
     """URL to the server with the databases. (without the "https://" part)"""
     query_file: str
@@ -60,7 +60,7 @@ class Benchmark(BaseModel):
             tool.build()
 
         # Saving database schemas for debugging 
-        self.dump_db_schemas_json(tools)
+        self._dump_db_schemas_json(tools)
 
         return tools
 
@@ -76,7 +76,7 @@ class Benchmark(BaseModel):
         """Launches everything. Takes in the tool's class."""
         return await self.evaluate(await self.predict(await self.build(tool_cls)))
 
-    def dump_db_schemas_json(self, tool_dict: Dict[str, Any], output_path: str = "db_schemas.json"):
+    def _dump_db_schemas_json(self, tool_dict: Dict[str, Any], output_path: str = "db_schemas.json"):
         schemas = {
             db_id: tool.db_schema
             for db_id, tool in tool_dict.items()

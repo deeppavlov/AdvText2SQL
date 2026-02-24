@@ -1,0 +1,194 @@
+[
+  {
+    "question_id": 1,
+    "question": "Show all banquet halls and conference rooms where either can hold 200 people.",
+    "db_id": "attachment_1tab_val_event_space",
+    "SQL": "SELECT EventSpaces.Name \r\nFROM EventSpaces\r\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200",
+    "ambig_queries": "['SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200', 'SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200']",
+    "ambig_question": "List all banquet halls and conference rooms with a 200 person capacity."
+  },
+  {
+    "question_id": 2,
+    "question": "List all banquet halls and conference rooms with a 200 person capacity.",
+    "db_id": "attachment_1tab_val_event_space",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200', 'SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200']",
+    "ambig_question": "List all banquet halls and conference rooms with a 200 person capacity."
+  },
+  {
+    "question_id": 3,
+    "question": "What restaurants serve Italian cuisine and what cafes serve the same cuisine?",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "SELECT Restaurants.Name \r\nFROM Restaurants\r\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 4,
+    "question": "List all restaurants and also list cafes that serve Italian cuisine.",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "SELECT Restaurants.Name \r\nFROM Restaurants\r\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 5,
+    "question": "Give me restaurants and cafes that serve Italian cuisine.",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 6,
+    "question": "Provide a list of all chefs and also provide a list of servers who speak English.",
+    "db_id": "attachment_1tab_val_hospitality_staff",
+    "SQL": "SELECT Staff.Name \r\nFROM Staff\r\nWHERE Staff.Role = \"Chef\" OR Staff.Role = \"Server\" AND Staff.Language = \"English\"",
+    "ambig_queries": "['SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE (Staff.Role = \"Chef\" OR Staff.Role = \"Server\") AND Staff.Language = \"English\"', 'SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE Staff.Role = \"Chef\" OR Staff.Role = \"Server\" AND Staff.Language = \"English\"']",
+    "ambig_question": "Show me chefs and servers who speak English."
+  },
+  {
+    "question_id": 7,
+    "question": "Show me chefs and servers who speak English.",
+    "db_id": "attachment_1tab_val_hospitality_staff",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE (Staff.Role = \"Chef\" OR Staff.Role = \"Server\") AND Staff.Language = \"English\"', 'SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE Staff.Role = \"Chef\" OR Staff.Role = \"Server\" AND Staff.Language = \"English\"']",
+    "ambig_question": "Show me chefs and servers who speak English."
+  },
+  {
+    "question_id": 8,
+    "question": "Which chefs speak English and which servers speak the same language?",
+    "db_id": "attachment_1tab_val_hospitality_staff",
+    "SQL": "SELECT Staff.Name \r\nFROM Staff\r\nWHERE (Staff.Role = \"Chef\" OR Staff.Role = \"Server\") AND Staff.Language = \"English\"",
+    "ambig_queries": "['SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE (Staff.Role = \"Chef\" OR Staff.Role = \"Server\") AND Staff.Language = \"English\"', 'SELECT Staff.Name \\r\\nFROM Staff\\r\\nWHERE Staff.Role = \"Chef\" OR Staff.Role = \"Server\" AND Staff.Language = \"English\"']",
+    "ambig_question": "Show me chefs and servers who speak English."
+  },
+  {
+    "question_id": 108,
+    "question": "What is the salary for a position that is common to all hospitals?",
+    "db_id": "scope_hospitals_medicalroles",
+    "SQL": "SELECT MedicalRoles.Salary  from Hospitals_Medical_Roles join MedicalRoles on Hospitals_Medical_Roles.RoleID = MedicalRoles.RoleID join Hospitals on Hospitals_Medical_Roles.HospitalID = Hospitals.HospitalID   GROUP BY Hospitals_Medical_Roles.RoleID HAVING COUNT(DISTINCT Hospitals_Medical_Roles.HospitalID) = (SELECT COUNT(*) FROM  Hospitals)",
+    "ambig_queries": "['SELECT MedicalRoles.Salary  from Hospitals_Medical_Roles join MedicalRoles on Hospitals_Medical_Roles.RoleID = MedicalRoles.RoleID join Hospitals on Hospitals_Medical_Roles.HospitalID = Hospitals.HospitalID   GROUP BY Hospitals_Medical_Roles.RoleID HAVING COUNT(DISTINCT Hospitals_Medical_Roles.HospitalID) = (SELECT COUNT(*) FROM  Hospitals)', 'select hospitals.name , medicalroles.salary from Hospitals_Medical_Roles join MedicalRoles on Hospitals_Medical_Roles.RoleID = MedicalRoles.RoleID join Hospitals on Hospitals_Medical_Roles.HospitalID = Hospitals.HospitalID']",
+    "ambig_question": "What is the salary of a role that each hospital has?"
+  },
+  {
+    "question_id": 109,
+    "question": "Tell me the systems every support specialist works with.",
+    "db_id": "scope_it_support_specialists_systems",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Systems.system_name  from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id   GROUP BY It_Support_Specialists_Systems.system_id HAVING COUNT(DISTINCT It_Support_Specialists_Systems.it_specialist_id) = (SELECT COUNT(*) FROM  It_Support_Specialists)', 'select it_support_specialists.name , systems.system_name from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id']",
+    "ambig_question": "Tell me the systems every support specialist works with."
+  },
+  {
+    "question_id": 110,
+    "question": "which system names and active statuses are associated with every IT support specialist?",
+    "db_id": "scope_it_support_specialists_systems",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Systems.system_name, Systems.is_active  from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id   GROUP BY It_Support_Specialists_Systems.system_id HAVING COUNT(DISTINCT It_Support_Specialists_Systems.it_specialist_id) = (SELECT COUNT(*) FROM  It_Support_Specialists)', 'select it_support_specialists.name , systems.system_name , systems.is_active from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id']",
+    "ambig_question": "which system names and active statuses are associated with every IT support specialist?"
+  },
+  {
+    "question_id": 111,
+    "question": "For each IT support specialist, what are the corresponding system names and active statuses?",
+    "db_id": "scope_it_support_specialists_systems",
+    "SQL": "select it_support_specialists.name , systems.system_name , systems.is_active from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id",
+    "ambig_queries": "['SELECT Systems.system_name, Systems.is_active  from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id   GROUP BY It_Support_Specialists_Systems.system_id HAVING COUNT(DISTINCT It_Support_Specialists_Systems.it_specialist_id) = (SELECT COUNT(*) FROM  It_Support_Specialists)', 'select it_support_specialists.name , systems.system_name , systems.is_active from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id']",
+    "ambig_question": "which system names and active statuses are associated with every IT support specialist?"
+  },
+  {
+    "question_id": 112,
+    "question": "Which responsibility is shared among all internships?",
+    "db_id": "scope_internships_responsibilities",
+    "SQL": "SELECT Responsibilities.responsibility  from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id   GROUP BY Internships_Responsibilities.responsibilityId HAVING COUNT(DISTINCT Internships_Responsibilities.internshipId) = (SELECT COUNT(*) FROM  Internships)",
+    "ambig_queries": "['SELECT Responsibilities.responsibility  from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id   GROUP BY Internships_Responsibilities.responsibilityId HAVING COUNT(DISTINCT Internships_Responsibilities.internshipId) = (SELECT COUNT(*) FROM  Internships)', 'select internships.title , responsibilities.responsibility from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id']",
+    "ambig_question": "Which responsibilities are associated with each internship?"
+  },
+  {
+    "question_id": 113,
+    "question": "For each internship, could you provide the corresponding responsibility?",
+    "db_id": "scope_internships_responsibilities",
+    "SQL": "select internships.title , responsibilities.responsibility from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id",
+    "ambig_queries": "['SELECT Responsibilities.responsibility  from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id   GROUP BY Internships_Responsibilities.responsibilityId HAVING COUNT(DISTINCT Internships_Responsibilities.internshipId) = (SELECT COUNT(*) FROM  Internships)', 'select internships.title , responsibilities.responsibility from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id']",
+    "ambig_question": "Which responsibilities are associated with each internship?"
+  },
+  {
+    "question_id": 114,
+    "question": "For each support specialist, list the systems they work on.",
+    "db_id": "scope_it_support_specialists_systems",
+    "SQL": "select it_support_specialists.name , systems.system_name from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id",
+    "ambig_queries": "['SELECT Systems.system_name  from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id   GROUP BY It_Support_Specialists_Systems.system_id HAVING COUNT(DISTINCT It_Support_Specialists_Systems.it_specialist_id) = (SELECT COUNT(*) FROM  It_Support_Specialists)', 'select it_support_specialists.name , systems.system_name from It_Support_Specialists_Systems join Systems on It_Support_Specialists_Systems.system_id = Systems.system_id join It_Support_Specialists on It_Support_Specialists_Systems.it_specialist_id = It_Support_Specialists.id']",
+    "ambig_question": "Tell me the systems every support specialist works with."
+  },
+  {
+    "question_id": 115,
+    "question": "Which responsibilities are associated with each internship?",
+    "db_id": "scope_internships_responsibilities",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Responsibilities.responsibility  from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id   GROUP BY Internships_Responsibilities.responsibilityId HAVING COUNT(DISTINCT Internships_Responsibilities.internshipId) = (SELECT COUNT(*) FROM  Internships)', 'select internships.title , responsibilities.responsibility from Internships_Responsibilities join Responsibilities on Internships_Responsibilities.responsibilityId = Responsibilities.id join Internships on Internships_Responsibilities.internshipId = Internships.id']",
+    "ambig_question": "Which responsibilities are associated with each internship?"
+  },
+  {
+    "question_id": 261,
+    "question": "What are the minimum and preferred years of experience for the open position with the greatest salary?",
+    "db_id": "vague_2cols_experience",
+    "SQL": "SELECT Minimum_Years, Preferred_Years\r\nFROM Jobs\r\nORDER BY Salary DESC\r\nLIMIT 1;",
+    "ambig_queries": "['SELECT Minimum_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Minimum_Years, Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;']",
+    "ambig_question": "What experience do I need for the open position with the greatest salary?"
+  },
+  {
+    "question_id": 262,
+    "question": "What compensation is offered to software developers?",
+    "db_id": "vague_2cols_compensation",
+    "SQL": "ambiguous",
+    "ambig_queries": "[\"select s.Salary_Range \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\", \"select s.Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\", \"select s.Salary_Range, Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\"]",
+    "ambig_question": "What compensation is offered to software developers?"
+  },
+  {
+    "question_id": 263,
+    "question": "How much might a software developer expect to get paid per hour?",
+    "db_id": "vague_2cols_compensation",
+    "SQL": "select s.Hourly_Rate \r\nfrom position as p \r\njoin salarydetails as s \r\non p.id=s.positionid \r\nwhere p.title = 'Software Developer'",
+    "ambig_queries": "[\"select s.Salary_Range \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\", \"select s.Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\", \"select s.Salary_Range, Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid \\r\\nwhere p.title = 'Software Developer'\"]",
+    "ambig_question": "What compensation is offered to software developers?"
+  },
+  {
+    "question_id": 264,
+    "question": "List all the job positions and the associated salary range.",
+    "db_id": "vague_2cols_compensation",
+    "SQL": "select p.title, s.Salary_Range \r\nfrom position as p \r\njoin salarydetails as s \r\non p.id=s.positionid",
+    "ambig_queries": "['select p.title, s.Salary_Range \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid', 'select p.title, s.Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid', 'select p.title, s.Salary_Range, Hourly_Rate \\r\\nfrom position as p \\r\\njoin salarydetails as s \\r\\non p.id=s.positionid']",
+    "ambig_question": "Show me all the positions and compensation offered."
+  },
+  {
+    "question_id": 265,
+    "question": "What are the preferred years of experience for the open position with the greatest salary?",
+    "db_id": "vague_2cols_experience",
+    "SQL": "SELECT Preferred_Years\r\nFROM Jobs\r\nORDER BY Salary DESC\r\nLIMIT 1;",
+    "ambig_queries": "['SELECT Minimum_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Minimum_Years, Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;']",
+    "ambig_question": "What experience do I need for the open position with the greatest salary?"
+  },
+  {
+    "question_id": 266,
+    "question": "What experience do I need for the open position with the greatest salary?",
+    "db_id": "vague_2cols_experience",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Minimum_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;', 'SELECT Minimum_Years, Preferred_Years\\r\\nFROM Jobs\\r\\nORDER BY Salary DESC\\r\\nLIMIT 1;']",
+    "ambig_question": "What experience do I need for the open position with the greatest salary?"
+  },
+  {
+    "question_id": 267,
+    "question": "What are the street addresses and cities of the rental properties in the database?",
+    "db_id": "vague_2cols_location",
+    "SQL": "SELECT P.Street_Address, City from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'",
+    "ambig_queries": "[\"SELECT P.Street_Address from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\", \"SELECT P.City from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\", \"SELECT P.Street_Address, City from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\"]",
+    "ambig_question": "What are the locations of rental properties in the database?"
+  },
+  {
+    "question_id": 279,
+    "question": "What are the locations of rental properties in the database?",
+    "db_id": "vague_2cols_location",
+    "SQL": "ambiguous",
+    "ambig_queries": "[\"SELECT P.Street_Address from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\", \"SELECT P.City from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\", \"SELECT P.Street_Address, City from Transactions AS T LEFT JOIN Properties AS P ON T.property_id = P.property_id WHERE T.TypeOfTransaction LIKE 'Rent'\"]",
+    "ambig_question": "What are the locations of rental properties in the database?"
+  }
+]
