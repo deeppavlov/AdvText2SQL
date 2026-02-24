@@ -130,72 +130,46 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
 
     total_acc = accuracy(results)
 
-    neri_rows = [r for r in results if r["gold_sql"] == "ambiguous"]
-    sql_rows = [r for r in results if r["gold_sql"] != "ambiguous"]
-
     by_difficulty = {}
     for diff in set(r["difficulty"] for r in results):
         subset = [r for r in results if r["difficulty"] == diff]
         by_difficulty[diff] = accuracy(subset)
 
+    false_ambiguous = sum(
+        1 for r in results if r["predicted_sql"] == "ambiguous"
+    )
+
+    false_ambiguous_rate = (
+        100.0 * false_ambiguous / len(results) if results else 0.0
+    )
+
     print(results)
     report = {
         "overall_accuracy": total_acc,
-        "sql_accuracy": accuracy(sql_rows),
-        "neri_accuracy": accuracy(neri_rows),
         "accuracy_by_difficulty": by_difficulty,
-        "counts": {
-            "total": len(results),
-            "sql": len(sql_rows),
-            "neri": len(neri_rows),
-        },
+        "false_ambiguous": false_ambiguous,
+        "false_ambiguous_rate": false_ambiguous_rate,
+        "total": len(results),
         "results": results,
     }
 
     return report
 
-
 def print_evaluation_report(report: dict):
-    print("\n==================== Benchmark Results ====================")
+    print("\n================ BIRD Benchmark Results ====================\n")
 
     # ---- overall ----
     print(f"Overall accuracy: {report['overall_accuracy']:.2f}%")
-    print()
-
-    # ---- breakdown by gold intent ----
-    print("By gold intent:")
-    print(f"  SQL accuracy : {report['sql_accuracy']:.2f}%")
-    print(f"  NERI accuracy: {report['neri_accuracy']:.2f}%")
-    print()
-
-    # ---- counts ----
-    counts = report["counts"]
-    print("Counts:")
-    print(f"  Total queries : {counts['total']}")
-    print(f"  SQL queries   : {counts['sql']}")
-    print(f"  NERI queries  : {counts['neri']}")
-    print()
+    print(f" Total queries : {report['total']}")
 
     # ---- difficulty ----
+    print()
     print("Accuracy by difficulty:")
     for diff, acc in sorted(report["accuracy_by_difficulty"].items()):
         print(f"  {diff:<12}: {acc:.2f}%")
     print()
 
-    # ---- NERI confusion details ----
-    results = report["results"]
-
-    gold_neri = [r for r in results if r["gold_sql"] == "ambiguous"]
-    gold_sql = [r for r in results if r["gold_sql"] != "ambiguous"]
-
-    neri_correct = sum(1 for r in gold_neri if r["predicted_sql"] == "ambiguous")
-    neri_missed = len(gold_neri) - neri_correct
-
-    false_ambiguous = sum(1 for r in gold_sql if r["predicted_sql"] == "ambiguous")
-
-    print("NERI behavior:")
-    print(f"  Correctly flagged ambiguous : {neri_correct}")
-    print(f"  Missed ambiguous            : {neri_missed}")
-    print(f"  False ambiguous (SQL gold)  : {false_ambiguous}")
+    print(f"False ambiguous predicted : {report['false_ambiguous']}")
+    print(f"False ambiguous rate      : {report['false_ambiguous_rate']:.2f}%")
 
     print("============================================================\n")

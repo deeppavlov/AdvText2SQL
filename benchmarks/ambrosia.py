@@ -2,15 +2,11 @@ import json
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
-from .evaluate_bird import run_evaluation
+from .evaluate_ambrosia import run_evaluation
 from .response import ToolResponse
 
 
-class BenchmarkBIRD(BenchmarkBase):
-    use_evidence: bool = False
-    """Dump evidence directly into the `user_query` instead of the prompt
-    to help the model. (debatable, consult teacher)"""
-
+class BenchmarkAmbrosia(BenchmarkBase):
 
     def _load_queries(self) -> List[dict]:
         with open(self.query_file, "r") as f:
@@ -25,12 +21,8 @@ class BenchmarkBIRD(BenchmarkBase):
             qid = item["question_id"]
             db_id = item["db_id"]
             question = item["question"]
-            evidence = item["evidence"]
 
             tool = tool_dict[db_id]
-
-            if self.use_evidence:
-                question = f"question: {question}, evidence (may be empty): {evidence}"
 
             result = await tool.query(question)
             print(result)
@@ -54,6 +46,6 @@ class BenchmarkBIRD(BenchmarkBase):
 
     async def evaluate(self, predictions: Dict[str, str]) -> dict:
         self._save_predictions(predictions, "./query_results.json")
-        report = run_evaluation(predictions, self.answer_file, self.db_url)
+        report = run_evaluation(predictions, self.answer_file)
 
         return report

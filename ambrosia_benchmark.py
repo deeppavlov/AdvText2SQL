@@ -2,19 +2,18 @@ import os
 import asyncio
 
 
-from benchmarks.bird import BenchmarkBIRD
-from benchmarks.evaluate_bird import print_evaluation_report
+from benchmarks.ambrosia import BenchmarkAmbrosia
+from benchmarks.evaluate_ambrosia import print_evaluation_report
 from adv_text2sql.mcp_servers.text2sql_tool.src.text2sql_implementation import (
     Text2SQLGenerator,
 )
 
 db_url = os.getenv("BENCHMARK_DB_URL")
 
-benchmark = BenchmarkBIRD(
+benchmark = BenchmarkAmbrosia(
     db_url=db_url,
-    query_file="./data/some_queries.json",
-    answer_file="./data/some_queries.json",
-    use_evidence=True,
+    query_file="./data/ambrosia_small.json",
+    answer_file="./data/ambrosia_small.json",
 )
 
 report = asyncio.run(benchmark.run(Text2SQLGenerator))
