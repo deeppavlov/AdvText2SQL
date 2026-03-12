@@ -105,6 +105,10 @@ There are also two training datasets in this repo:
 - `data/train_queries.json` - this is the BIRD benchmark's train dataset. It has questions labeled by difficulty and gold queries for each question. It has no ambiguous questions.
 - `data/ambrosia_train.json` - this is the Ambrosia benchmark's train dataset. It has both ambiguous and non-ambiguous questions. The file contains pairs `question` -> `ambig_type`, which you can use to train the tool. Secondly, there are `ambig_question` and `ambig_queries` fields for each `question_id`. Basically, it's `ambiguous_question` -> `possible queries`. So, it's like an additional dataset of ambiguous queries. You should check it out yourself to really get it.
 
+## Dev notes (students, skip)
+
+To host the database on a server, there are instructions and some files in the `data/launch_db/` directory, check out it's `README.md`.
+
 ## Links
 
 We're using the BIRD benchmark's `dev` dataset, which can be found [here](https://bird-bench.github.io/).
