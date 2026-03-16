@@ -116,11 +116,13 @@ There are also two training datasets in this repo:
 
 ## Baseline tool results
 
-As of now, the average accuracy of the baseline tool using gpt-3.5-turbo is somewhere around 20-35% (didn't check the larger dataset, plus it's different for every benchmark run). This accuracy is quite low, but the official BIRD benchmark's website reports that this is close to the expected accuracy of directly using ChatGPT with a single prompt and nothing else, no additional procedures, no multi-agent, just nothing (which is what we're doing in the baseline tool).
+As of now, the average accuracy of the baseline tool using `gpt-3.5-turbo` is somewhere around 20-35% (didn't check the larger datasets, plus it's different for every benchmark run). This accuracy is quite low, but the official BIRD benchmark's website reports that this is close to the expected accuracy of directly using ChatGPT with a single prompt and nothing else, no additional procedures, no multi-agent, just nothing (which is what we're doing in the baseline tool).
 
 At the same time, ambiguity false positives on the BIRD dataset are around 20-30%.
 
 Ambiguity accuracy is in general hard to estimate, but results of running the small Ambrosia dataset were around 50-65%.
+
+#### TODO: run the benchmarks on large datasets
 
 ## Some suggestions
 
