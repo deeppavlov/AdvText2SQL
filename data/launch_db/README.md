@@ -8,9 +8,11 @@ To host the PostgreSQL database, you'll first need to launch the `docker-compose
 
 For safety purposes, the `docker-compose.yml` has to be obtained from other developers working on this benchmark.
 
-First, set all the necessary `env` variables for a PostgreSQL db:
+First, set all the necessary `env` variables for a PostgreSQL db (use an `.env` file for these for conveience and security):
 `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. Also choose an open port instead of 5444 and set it in the docker file.
 These are your "admin" user's settings, you should save these.
+
+**Make sure your password is a real secure password and not something like `admin` or `123`!!!**
 
 Now you can launch the db with something like this (probably in a `tmux` session, or with a detached container (add `-d` to the command)):
 ```
@@ -19,7 +21,7 @@ docker-compose up --build
 
 ## Postgres read-only user
 
-In order for students to not break the database accidentally, they should receive a special "read-only" user instead of your "admin" user. Create a username and a strong password for students to use.
+In order for students to not break the database accidentally, they should receive a special **"read-only" user** instead of your **"admin" user**. Create a username and a strong password for students to use.
 
 After that, run this command to enter the database console (replace `container_name` with the name of the real docker container (check with `docker ps`) and `admin_user_name` with what you set as `POSTGRES_USER`):
 ```bash
@@ -36,7 +38,7 @@ ALTER ROLE readonly_user SET default_transaction_read_only = on;
 ## Uploading datasets
 
 There are two benchmarks right now - BIRD and Ambrosia.
-You will need to install both datasets. For simplicity, upload the BIRD dataset first, instructions below. 
+You will need to install both datasets. For simplicity, upload the BIRD dataset first, instructions below.
 
 ### BIRD
 
@@ -59,20 +61,22 @@ unzip dev_databases.zip
 cd dev_databases
 ```
 
-Next, there is a bash script `migrate.sh` right in this directory, which can migrate all of these SQLite databases to PostgreSQL and upload them into out database.
-
-Put the `migrate.sh` file there (you could just create a new file and copy the code there). Change the `PG_CONTAINER` variable to the right docker container name, also change `admin_username` and `admin_password` to the real username and password of your postgres database. Also check you're accessing the right port in the URI.
-
 One of the databases doesn't work - delete the `european_football_2` db. We don't include it in the datasets.
 ```bash
 rmdir -rf ./european_football_2
 ```
+
+Next, there is a bash script `migrate.sh` right in **this** directory, which can migrate all of these SQLite databases to PostgreSQL and upload them into out database.
+
+Put the `migrate.sh` file there (you could just create a new file and copy the code there). Change the `PG_CONTAINER` variable to the real docker container name, also change `admin_username` and `admin_password` to the real username and password of your postgres database. Also check you're accessing the right port in the URI.
 
 Finally, you can run the migration:
 ```bash
 ./migrate.sh
 ```
 In case one of the db's breaks, you can just delete it, just be mindful of the question datasets (both `dev` and `train`)
+
+#### *TODO: make this load envs from the environment*
 
 ### AMBROSIA
 
