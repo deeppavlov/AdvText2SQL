@@ -8,7 +8,7 @@ from adv_text2sql.mcp_servers.text2sql_tool.src.text2sql_implementation import (
     Text2SQLGenerator,
 )
 
-db_url = os.getenv("BENCHMARK_DB_URL")
+db_url = "localhost:5444"
 
 benchmark = BenchmarkAmbrosia(
     db_url=db_url,

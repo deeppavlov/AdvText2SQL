@@ -21,6 +21,6 @@ predictions = {
     "1472": "```sql\n/* \u041d\u0430\u0439\u0442\u0438 \u043a\u043b\u0438\u0435\u043d\u0442\u0430 \u0441 \u043d\u0430\u0438\u043c\u0435\u043d\u044c\u0448\u0438\u043c \u043f\u043e\u0442\u0440\u0435\u0431\u043b\u0435\u043d\u0438\u0435\u043c \u0432 LAM \u0432 2012 \u0433\u043e\u0434\u0443 */\nSELECT DISTINCT yearmonth.customerid\nFROM yearmonth\nWHERE yearmonth.date LIKE '2012-%'\n  AND yearmonth.consumption = (\n    SELECT MIN(yearmonth.consumption)\n    FROM yearmonth\n    WHERE yearmonth.date LIKE '2012-%'\n  )\n```",
 }
 
-report = run_evaluation(predictions, "./data/some_queries.json", db_url)
+report = run_evaluation(predictions, "./data/bird_small.json", db_url)
 
 print_evaluation_report(report)
