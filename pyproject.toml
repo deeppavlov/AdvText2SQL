@@ -31,7 +31,6 @@ dependencies = [
 dev = [
     "ruff",
     "pyrefly",
-    "pre-commit",
 ]
 test = [
     "pytest",
