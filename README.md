@@ -18,7 +18,7 @@ You could try running a simple postgres console command like:
 ```bash
 \l
 ```
-This should list a pretty large number of databases like `ambiguous__some_number__some_name`.
+This should list a pretty large number of databases like `attachment__some_number__some_name`.
 
 Then you can just type `exit` to exit:
 ```bash
@@ -27,7 +27,7 @@ exit
 
 ## LLM and database credentials
 
-First, you need to add your LLM and database credentials. For that, copy the `.env.example` file
+After that, you need to add your LLM and database credentials. For that, copy the `.env.example` file
 to `.env`:
 ```bash
 cp .env.example .env
@@ -56,9 +56,9 @@ benchmark = BenchmarkBIRD(
 
 ### AMBROSIA
 
-The Ambrosia benchmark checks how your tool reacts to **ambiguity**. It has two testing datasets: `ambrosia_large` (240 questions) and `ambrosia_small` (24 questions)
+The Ambrosia benchmark checks how your tool reacts to **ambiguity**. It has two testing datasets: `./data/ambrosia_large.json` (240 questions) and `./data/ambrosia_small.json` (24 questions)
 
-Usage is exactly the same as BIRD, you should use the small set of questions at first (`./data/ambrosia_small.json`).
+Usage is exactly the same as BIRD, you should use the small set of questions at first.
 
 ## Running the benchmark
 
