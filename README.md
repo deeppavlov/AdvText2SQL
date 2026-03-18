@@ -2,23 +2,9 @@
 
 This repository is made for testing student-written text2SQL tools with the help of different modern text2SQL benchmarks like BIRD and Ambrosia. BIRD benchmark tests **SQL generation**, while the Ambrosia benchmark tests for how a tool reacts to **ambiguity**.
 
-## Requirements
-
-### Linux
-Make sure you have `pip` and `uv` installed.
-
-Quick Linux installation for those:
-```bash
-sudo apt update
-sudo apt install python3-pip
-pip install uv
-```
-
-### Windows
-I'd recommend using Linux, Windows users will have to install `pip` and `uv` themselves. They will also have to think of how to do a proxy connection on their own. It should still work, though.
-
 ## Establishing connection with database
 
+### Linux
 In order to connect to the database network, you need to type this command (requires a `user_name` and password from the teacher):
 ```bash
 ssh -N -L 5444:10.11.1.6:5444 user_name@lnsigo.mipt.ru -p2278
@@ -38,6 +24,18 @@ This should list a pretty large number of databases like `attachment__some_numbe
 Then you can just type `exit` to exit:
 ```bash
 exit
+```
+
+### Windows
+I'd recommend using Linux, Windows users will have to think of how to do a proxy connection on their own. It should still work, though.
+
+## Dependencies
+
+Make sure the machine you connected to has `uv` installed.
+
+Quick Linux installation:
+```bash
+pip install uv
 ```
 
 ## LLM and database credentials
