@@ -27,9 +27,7 @@ exit
 
 ## Dependencies
 
-Make sure the machine you connected to has `uv` installed.
-
-Quick Linux installation:
+Make sure the machine you connected to has `uv` installed:
 ```bash
 pip install uv
 ```
