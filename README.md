@@ -27,7 +27,7 @@ exit
 
 ## Dependencies
 
-Make sure the machine you connected to has `uv` installed:
+Make sure you have `uv` installed:
 ```bash
 pip install uv
 ```
