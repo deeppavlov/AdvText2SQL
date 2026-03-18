@@ -32,6 +32,13 @@ Make sure you have `uv` installed:
 pip install uv
 ```
 
+## Install the repo
+
+```bash
+git clone https://github.com/deeppavlov/AdvText2SQL
+cd AdvText2SQL
+```
+
 ## LLM and database credentials
 
 After that, you need to add your LLM and database credentials. For that, copy the `.env.example` file
