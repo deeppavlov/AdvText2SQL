@@ -118,7 +118,7 @@ Just make sure that your resulting tool class still has these methods:
 
 In the real world some requests are going to be ambiguous - either too vague to create a query, out-of-scope of the database or maybe the request has several possible interpretations which affect the answer. Carefully consider how you will handle those queries, because the `query()` method must be ready for ambiguous requests. 
 
-In case the user request is ambiguous, the tool should set `"status": "ambiguous"`.
+In case the user request is ambiguous, the tool should return `{"status": "ambiguous"}`.
 
 Note that the generated queries must use the **PostgreSQL** dialect of SQL. Also, please, prepare your queries for being launched immediately - remove markdown blocks, validate the sql syntax. In case there is an error in your sql query, the score for that question will be zero.
 
