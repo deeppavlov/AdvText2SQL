@@ -4,7 +4,6 @@ This repository is made for testing student-written text2SQL tools with the help
 
 ## Establishing connection with database
 
-### Linux
 In order to connect to the database network, you need to type this command (requires a `user_name` and password from the teacher):
 ```bash
 ssh -N -L 5444:10.11.1.6:5444 user_name@lnsigo.mipt.ru -p2278
@@ -25,9 +24,6 @@ Then you can just type `exit` to exit:
 ```bash
 exit
 ```
-
-### Windows
-I'd recommend using Linux, Windows users will have to think of how to do a proxy connection on their own. It should still work, though.
 
 ## Dependencies
 
