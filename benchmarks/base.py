@@ -1,11 +1,14 @@
-import os
 import json
+import logging
+import os
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from pydantic import BaseModel
 from typing import Any, Dict, Optional
 
 from .token_tracking import TokenTrackingClient
+
+logger = logging.getLogger("text2sql_tool")
 
 
 class BenchmarkBase(BaseModel):
@@ -56,8 +59,10 @@ class BenchmarkBase(BaseModel):
                 llm_client=self.llm_client,
             )
 
-        for tool in tools.values():
+        for db_id, tool in tools.items():
+            logger.info(f"Building tool for db_id={db_id}")
             tool.build()
+            logger.info(f"Build done for db_id={db_id}")
 
         # Saving database schemas for debugging 
         self._dump_db_schemas_json(tools)
@@ -77,10 +82,14 @@ class BenchmarkBase(BaseModel):
         return await self.evaluate(await self.predict(await self.build(tool_cls)))
 
     def _dump_db_schemas_json(self, tool_dict: Dict[str, Any], output_path: str = "db_schemas.json"):
-        schemas = {
-            db_id: tool.db_schema
-            for db_id, tool in tool_dict.items()
-        }
+        schemas = {}
+        for db_id, tool in tool_dict.items():
+            schemas[db_id] = {
+                "schema": tool.db_schema,
+                "relationships": tool.relationships_str,
+                "column_stats": tool.column_stats_str,
+            }
 
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(schemas, f, ensure_ascii=False, indent=2)
+        logger.info(f"DB schemas dumped to {output_path}")
