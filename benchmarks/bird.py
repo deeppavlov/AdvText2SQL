@@ -1,9 +1,14 @@
+import asyncio
 import json
+import logging
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
 from .evaluate_bird import run_evaluation
 from .response import ToolResponse
+
+
+logger = logging.getLogger("text2sql_tool")
 
 
 class BenchmarkBIRD(BenchmarkBase):
@@ -21,7 +26,7 @@ class BenchmarkBIRD(BenchmarkBase):
         queries = self._load_queries()
         predictions = {}
 
-        for item in queries:
+        for i, item in enumerate(queries):
             qid = item["question_id"]
             db_id = item["db_id"]
             question = item["question"]
@@ -32,6 +37,7 @@ class BenchmarkBIRD(BenchmarkBase):
             if self.use_evidence:
                 question = f"question: {question}, evidence (may be empty): {evidence}"
 
+            logger.info(f"[{i+1}/{len(queries)}] Processing q_id={qid} db={db_id}")
             result = await tool.query(question)
             print(result)
 
@@ -44,7 +50,11 @@ class BenchmarkBIRD(BenchmarkBase):
             else:
                 sql_query = "error"
 
+            logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
+
+            # Throttle to avoid rate limiting
+            await asyncio.sleep(1.0)
 
         return predictions
 

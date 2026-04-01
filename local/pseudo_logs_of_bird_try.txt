@@ -1,0 +1,714 @@
+_handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.InternalError: (psycopg.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+[SQL: SELECT COUNT(*) FROM "set_translations"]
+(Background on this error at: https://sqlalche.me/e/20/2j85)
+Column statistics exploration failed for table cards
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 428, in _explore_column_statistics
+    row_count = self._get_table_row_count(conn, table)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 267, in _get_table_row_count
+    res = conn.execute(text(f'SELECT COUNT(*) FROM "{table}"'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.InternalError: (psycopg.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+[SQL: SELECT COUNT(*) FROM "cards"]
+(Background on this error at: https://sqlalche.me/e/20/2j85)
+Column statistics exploration failed for table rulings
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 428, in _explore_column_statistics
+    row_count = self._get_table_row_count(conn, table)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 267, in _get_table_row_count
+    res = conn.execute(text(f'SELECT COUNT(*) FROM "{table}"'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.InternalError: (psycopg.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+[SQL: SELECT COUNT(*) FROM "rulings"]
+(Background on this error at: https://sqlalche.me/e/20/2j85)
+Column type detection failed for table satscores
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedFunction: operator does not exist: bigint ~ unknown
+LINE 1: ...ll12__nonnull", COUNT(*) FILTER (WHERE "enroll12" ~ '^-?[0-9...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 299, in _detect_column_types_for_table
+    result = conn.execute(text(query))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedFunction) operator does not exist: bigint ~ unknown
+LINE 1: ...ll12__nonnull", COUNT(*) FILTER (WHERE "enroll12" ~ '^-?[0-9...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+[SQL: SELECT COUNT(*) FILTER (WHERE "cds" IS NOT NULL) AS "cds__nonnull", COUNT(*) FILTER (WHERE "cds" ~ '^-?[0-9]+$') AS "cds__integer", COUNT(*) FILTER (WHERE "cds" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "cds__numeric", COUNT(*) FILTER (WHERE "cds" ~ '^\d{4}-\d{2}-\d{2}') AS "cds__date", COUNT(*) FILTER (WHERE "cds" ~ '^[\[{]') AS "cds__json", COUNT(DISTINCT "cds") AS "cds__distinct", COUNT(*) FILTER (WHERE "rtype" IS NOT NULL) AS "rtype__nonnull", COUNT(*) FILTER (WHERE "rtype" ~ '^-?[0-9]+$') AS "rtype__integer", COUNT(*) FILTER (WHERE "rtype" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "rtype__numeric", COUNT(*) FILTER (WHERE "rtype" ~ '^\d{4}-\d{2}-\d{2}') AS "rtype__date", COUNT(*) FILTER (WHERE "rtype" ~ '^[\[{]') AS "rtype__json", COUNT(DISTINCT "rtype") AS "rtype__distinct", COUNT(*) FILTER (WHERE "sname" IS NOT NULL) AS "sname__nonnull", COUNT(*) FILTER (WHERE "sname" ~ '^-?[0-9]+$') AS "sname__integer", COUNT(*) FILTER (WHERE "sname" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "sname__numeric", COUNT(*) FILTER (WHERE "sname" ~ '^\d{4}-\d{2}-\d{2}') AS "sname__date", COUNT(*) FILTER (WHERE "sname" ~ '^[\[{]') AS "sname__json", COUNT(DISTINCT "sname") AS "sname__distinct", COUNT(*) FILTER (WHERE "dname" IS NOT NULL) AS "dname__nonnull", COUNT(*) FILTER (WHERE "dname" ~ '^-?[0-9]+$') AS "dname__integer", COUNT(*) FILTER (WHERE "dname" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "dname__numeric", COUNT(*) FILTER (WHERE "dname" ~ '^\d{4}-\d{2}-\d{2}') AS "dname__date", COUNT(*) FILTER (WHERE "dname" ~ '^[\[{]') AS "dname__json", COUNT(DISTINCT "dname") AS "dname__distinct", COUNT(*) FILTER (WHERE "cname" IS NOT NULL) AS "cname__nonnull", COUNT(*) FILTER (WHERE "cname" ~ '^-?[0-9]+$') AS "cname__integer", COUNT(*) FILTER (WHERE "cname" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "cname__numeric", COUNT(*) FILTER (WHERE "cname" ~ '^\d{4}-\d{2}-\d{2}') AS "cname__date", COUNT(*) FILTER (WHERE "cname" ~ '^[\[{]') AS "cname__json", COUNT(DISTINCT "cname") AS "cname__distinct", COUNT(*) FILTER (WHERE "enroll12" IS NOT NULL) AS "enroll12__nonnull", COUNT(*) FILTER (WHERE "enroll12" ~ '^-?[0-9]+$') AS "enroll12__integer", COUNT(*) FILTER (WHERE "enroll12" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "enroll12__numeric", COUNT(*) FILTER (WHERE "enroll12" ~ '^\d{4}-\d{2}-\d{2}') AS "enroll12__date", COUNT(*) FILTER (WHERE "enroll12" ~ '^[\[{]') AS "enroll12__json", COUNT(DISTINCT "enroll12") AS "enroll12__distinct", COUNT(*) FILTER (WHERE "numtsttakr" IS NOT NULL) AS "numtsttakr__nonnull", COUNT(*) FILTER (WHERE "numtsttakr" ~ '^-?[0-9]+$') AS "numtsttakr__integer", COUNT(*) FILTER (WHERE "numtsttakr" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "numtsttakr__numeric", COUNT(*) FILTER (WHERE "numtsttakr" ~ '^\d{4}-\d{2}-\d{2}') AS "numtsttakr__date", COUNT(*) FILTER (WHERE "numtsttakr" ~ '^[\[{]') AS "numtsttakr__json", COUNT(DISTINCT "numtsttakr") AS "numtsttakr__distinct", COUNT(*) FILTER (WHERE "avgscrread" IS NOT NULL) AS "avgscrread__nonnull", COUNT(*) FILTER (WHERE "avgscrread" ~ '^-?[0-9]+$') AS "avgscrread__integer", COUNT(*) FILTER (WHERE "avgscrread" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "avgscrread__numeric", COUNT(*) FILTER (WHERE "avgscrread" ~ '^\d{4}-\d{2}-\d{2}') AS "avgscrread__date", COUNT(*) FILTER (WHERE "avgscrread" ~ '^[\[{]') AS "avgscrread__json", COUNT(DISTINCT "avgscrread") AS "avgscrread__distinct", COUNT(*) FILTER (WHERE "avgscrmath" IS NOT NULL) AS "avgscrmath__nonnull", COUNT(*) FILTER (WHERE "avgscrmath" ~ '^-?[0-9]+$') AS "avgscrmath__integer", COUNT(*) FILTER (WHERE "avgscrmath" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "avgscrmath__numeric", COUNT(*) FILTER (WHERE "avgscrmath" ~ '^\d{4}-\d{2}-\d{2}') AS "avgscrmath__date", COUNT(*) FILTER (WHERE "avgscrmath" ~ '^[\[{]') AS "avgscrmath__json", COUNT(DISTINCT "avgscrmath") AS "avgscrmath__distinct", COUNT(*) FILTER (WHERE "avgscrwrite" IS NOT NULL) AS "avgscrwrite__nonnull", COUNT(*) FILTER (WHERE "avgscrwrite" ~ '^-?[0-9]+$') AS "avgscrwrite__integer", COUNT(*) FILTER (WHERE "avgscrwrite" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "avgscrwrite__numeric", COUNT(*) FILTER (WHERE "avgscrwrite" ~ '^\d{4}-\d{2}-\d{2}') AS "avgscrwrite__date", COUNT(*) FILTER (WHERE "avgscrwrite" ~ '^[\[{]') AS "avgscrwrite__json", COUNT(DISTINCT "avgscrwrite") AS "avgscrwrite__distinct", COUNT(*) FILTER (WHERE "numge1500" IS NOT NULL) AS "numge1500__nonnull", COUNT(*) FILTER (WHERE "numge1500" ~ '^-?[0-9]+$') AS "numge1500__integer", COUNT(*) FILTER (WHERE "numge1500" ~ '^-?[0-9]+(\.[0-9]+)?$') AS "numge1500__numeric", COUNT(*) FILTER (WHERE "numge1500" ~ '^\d{4}-\d{2}-\d{2}') AS "numge1500__date", COUNT(*) FILTER (WHERE "numge1500" ~ '^[\[{]') AS "numge1500__json", COUNT(DISTINCT "numge1500") AS "numge1500__distinct" FROM (SELECT * FROM "satscores" ORDER BY RANDOM() LIMIT 500) s]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Column statistics exploration failed for table schools
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 428, in _explore_column_statistics
+    row_count = self._get_table_row_count(conn, table)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 267, in _get_table_row_count
+    res = conn.execute(text(f'SELECT COUNT(*) FROM "{table}"'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.InternalError: (psycopg.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+[SQL: SELECT COUNT(*) FROM "schools"]
+(Background on this error at: https://sqlalche.me/e/20/2j85)
+Column statistics exploration failed for table frpm
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 428, in _explore_column_statistics
+    row_count = self._get_table_row_count(conn, table)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 267, in _get_table_row_count
+    res = conn.execute(text(f'SELECT COUNT(*) FROM "{table}"'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+           ^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.InternalError: (psycopg.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+[SQL: SELECT COUNT(*) FROM "frpm"]
+(Background on this error at: https://sqlalche.me/e/20/2j85)
+Failed to check ambiguity for query: question: Among the schools with the average score in Math over 560 in the SAT test, how many schools are directly charter-funded?, evidence (may be empty): 
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Please list the phone numbers of the schools with the top 3 SAT excellence rate., evidence (may be empty): Excellence rate = NumGE1500 / NumTstTakr
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers., evidence (may be empty): Valid charter number means the number is not null
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: How many carcinogenic molecules that consisted of Nitrogen?, evidence (may be empty): nitrogen refers to element = 'n'; label = '+' mean molecules are carcinogenic;
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What is the label for bond ID TR001_10_11?, evidence (may be empty): label = '+' mean molecules are carcinogenic; label = '-' means molecules are non-carcinogenic
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Write down the atom IDs of the first and second atoms of triple bond type molecules., evidence (may be empty): first atom refers to atom_id; second atom refers to atom_id2; triple bond refers to bond_type = '#';
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What's the French name of the set of cards with "Tendo Ice Bridge" is in?, evidence (may be empty): French refers to language = 'French'; "Tendo Ice Bridge" is a translated name of a card; translated name refers to translation
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What percentage of Japanese translated sets are expansion sets?, evidence (may be empty): Japanese translated refers to language = 'Japanese'; expansion sets refers to type = 'expansion'; percentage = DIVIDE(COUNT(language = 'Japanese'),COUNT(language))*100
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: For artifact type of cards that do not have multiple faces on the same card, state its legalities status for vintage play format., evidence (may be empty): Artifact type of cards refers to types = 'Artifact'; card does not have multiple faces on the same card refers to side is NULL'; vintage play format refers to format = 'vintage';
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: For all the people who paid more than 29.00 per unit of product id No.5. Give their consumption status in the August of 2012., evidence (may be empty): August of 2012 refers to the Date value = '201208' ; Price per unit of product = Price / Amount;
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What was the gas consumption peak month for SME customers in 2013?, evidence (may be empty): Year 2013 can be presented as Between 201301 And 201312; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What is the amount spent by customer "38508" at the gas stations? How much had the customer spent in January 2012?, evidence (may be empty): January 2012 refers to the Date value = '201201'
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: In 2012, who had the least consumption in LAM?, evidence (may be empty): Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Please provide a list of clients who were born between 1983 and 1987 and whose account branch is in East Bohemia, along with their IDs., evidence (may be empty): 
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: For the client who applied 98832 USD loan in 1996/1/3, when was his/her birthday?, evidence (may be empty): 
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Which user ID has the highest reputation?, evidence (may be empty): highest reputation refers to Max(Reputation)
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Identify the total views on the post 'Computer Game Datasets'. Name the user who posted it last time., evidence (may be empty): total views refer to ViewCount; Name the user refers to DisplayName; post 'Computer Game Datasets' refers to Text = 'Computer Game Datasets';
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What are the expenses of the budget with the lowest remaining?, evidence (may be empty): expense of budget refers to expense_description; lowest remaining refers to MIN(remaining)
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Which students manage to generate the highest income. State his/her full name along with the income source., evidence (may be empty): name of students means the full name; full name refers to first_name, last_name; generate the highest income refers to MAX(income.amount);
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: Calculate the total average cost that Elijah Allen spent in the events on September and October., evidence (may be empty): Elijah Allen is the full name; full name refers to first_name, last_name; The 5th and 6th string of the expense_date in the expense table can refer to month; events in September and October refers to month(expense_date) = 9 OR month(expense_date) = 10
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: How many times was the budget in Advertisement for "Yearly Kickoff" meeting more than "October Meeting"?, evidence (may be empty): budget in Advertisement refer to category = 'Advertisement' in the budget table; DIVIDE(SUM(amount when event_name = 'Yearly Kickoff'), SUM(amount when event_name = 'October Meeting'))
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+Failed to check ambiguity for query: question: What is the name of the social event that was attended by the vice president of the Student_Club located at 900 E. Washington St.?, evidence (may be empty): name of social event refers to event_name where type = 'Social'; 'Vice President' is position; located at refers to location
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 545, in _check_ambiguity
+    result = await self.llm_client.create(messages)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py", line 13, in create
+    resp = await self.client.create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/openai/_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'object': 'error', 'message': 'Rate limit exceeded', 'type': 'rate_limited', 'param': None, 'code': '1300', 'raw_status_code': 429}
+{'status': 'error'}
+[{'question_id': '9', 'gold_sql': 'SELECT COUNT(T2."School Code") FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.CDSCode WHERE T1.AvgScrMath > 560 AND T2."Charter Funding Type" = \'Directly funded\'', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '13', 'gold_sql': 'SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY CAST(T2.NumGE1500 AS REAL) / NULLIF(T2.NumTstTakr, 0) DESC NULLS LAST LIMIT 3', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '17', 'gold_sql': 'SELECT CharterNum, AvgScrWrite, RANK() OVER (ORDER BY AvgScrWrite DESC NULLS LAST) AS WritingScoreRank FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrWrite > 499 AND NOT CharterNum IS NULL', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '325', 'gold_sql': "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'n' AND T1.label = '+'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '279', 'gold_sql': "SELECT T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_id = 'TR001_10_11'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '276', 'gold_sql': "SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '#'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '498', 'gold_sql': "SELECT T2.translation FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Tendo Ice Bridge' AND T2.language = 'French' AND NOT T2.translation IS NULL", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '417', 'gold_sql': "SELECT CAST(SUM(CASE WHEN T2.language = 'Japanese' THEN 1 ELSE 0 END) AS REAL) * 100 / NULLIF(NULLIF,0)(COUNT(T1.id), 0) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.type = 'expansion'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "("\nLINE 1: ...EN 1 ELSE 0 END) AS REAL) * 100 / NULLIF(NULLIF,0)(COUNT(T1....\n                                                             ^\n[SQL: SELECT CAST(SUM(CASE WHEN T2.language = \'Japanese\' THEN 1 ELSE 0 END) AS REAL) * 100 / NULLIF(NULLIF,0)(COUNT(T1.id), 0) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.type = \'expansion\']\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '345', 'gold_sql': "SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.type = 'Artifact' AND T2.format = 'vintage' AND T1.side IS NULL", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1533', 'gold_sql': "SELECT T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Price / NULLIF(NULLIF,0)(T1.Amount, 0) > 29.00 AND T1.ProductID = 5 AND T2.Date = '201208'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "("\nLINE 1: ... = T2.CustomerID WHERE T1.Price / NULLIF(NULLIF,0)(T1.Amount...\n                                                             ^\n[SQL: SELECT T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Price / NULLIF(NULLIF,0)(T1.Amount, 0) > 29.00 AND T1.ProductID = 5 AND T2.Date = \'201208\']\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1480', 'gold_sql': "SELECT SUBSTRING(T2.Date FROM 5 FOR 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTRING(T2.Date FROM 1 FOR 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTRING(T2.Date FROM 5 FOR 2) ORDER BY SUM(T2.Consumption) DESC NULLS LAST LIMIT 1", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1529', 'gold_sql': "SELECT SUM(T1.Price), SUM(CASE WHEN T3.Date = '201201' THEN T1.Price ELSE 0 END) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1472', 'gold_sql': "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTRING(T2.Date FROM 1 FOR 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC NULLS FIRST LIMIT 1", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '180', 'gold_sql': "SELECT T1.client_id, T3.account_id FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T4 ON T1.client_id = T4.client_id INNER JOIN account AS T3 ON T2.district_id = T3.district_id AND T4.account_id = T3.account_id WHERE T2.A3 = 'east Bohemia' AND TO_CHAR(CAST(T1.birth_date AS TIMESTAMP), 'YYYY') BETWEEN '1983' AND '1987'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '113', 'gold_sql': "SELECT T4.birth_date FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T2.account_id = T3.account_id INNER JOIN client AS T4 ON T3.client_id = T4.client_id WHERE T1.date = '1996-01-03' AND T1.amount = 98832", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '589', 'gold_sql': 'SELECT Id FROM users WHERE Reputation = (SELECT MAX(Reputation) FROM users)', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '685', 'gold_sql': "SELECT T2.ViewCount, T3.DisplayName FROM postHistory AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id INNER JOIN users AS T3 ON T2.LastEditorUserId = T3.Id WHERE T1.Text = 'Computer Game Datasets'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1365', 'gold_sql': 'SELECT T2.expense_description FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget ORDER BY T1.remaining NULLS FIRST LIMIT 1', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'simple', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1388', 'gold_sql': 'SELECT T1.first_name, T1.last_name, T2.source FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member GROUP BY T1.first_name, T1.last_name, T2.source ORDER BY SUM(T2.amount) DESC NULLS LAST LIMIT 1', 'predicted_sql': 'error', 'score': 0, 'difficulty': 'moderate', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1339', 'gold_sql': "SELECT AVG(T2.cost) FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE T1.last_name = 'Allen' AND T1.first_name = 'Elijah' AND (SUBSTRING(T2.expense_date FROM 6 FOR 2) = '09' OR SUBSTRING(T2.expense_date FROM 6 FOR 2) = '10')", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'challenging', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1359', 'gold_sql': "SELECT CAST(SUM(CASE WHEN T2.event_name = 'Yearly Kickoff' THEN T1.amount ELSE 0 END) AS REAL) / NULLIF(SUM(CASE WHEN T2.event_name = 'October Meeting' THEN T1.amount ELSE 0 END), 0) FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id WHERE T1.category = 'Advertisement' AND T2.type = 'Meeting'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'challenging', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}, {'question_id': '1429', 'gold_sql': "SELECT T2.event_name FROM attendance AS T1 INNER JOIN event AS T2 ON T2.event_id = T1.link_to_event INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id WHERE T3.position = 'Vice President' AND T2.location = '900 E. Washington St.' AND T2.type = 'Social'", 'predicted_sql': 'error', 'score': 0, 'difficulty': 'challenging', 'error': '(psycopg.errors.SyntaxError) syntax error at or near "error"\nLINE 1: error\n        ^\n[SQL: error]\n(Background on this error at: https://sqlalche.me/e/20/f405)'}]
+
+================ BIRD Benchmark Results ====================
+
+Overall accuracy: 0.00%
+ Total queries : 22
+
+Accuracy by difficulty:
+  challenging : 0.00%
+  moderate    : 0.00%
+  simple      : 0.00%
+
+False ambiguous predicted : 0
+False ambiguous rate      : 0.00%
+============================================================
+
+Report on the tokens spent:  {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}
+(adv-text2sql) (base) vlad@MacBook-Airlines AdvText2SQL % 
