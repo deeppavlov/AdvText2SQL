@@ -24,6 +24,7 @@ from .utils import print_result
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
+OPTIMISTIC_AMBIGUITY_FALLBACK = os.getenv("OPTIMISTIC_AMBIGUITY_FALLBACK", "true").lower() == "true"
 
 
 logger = logging.getLogger("text2sql_tool")
@@ -717,7 +718,7 @@ class Text2SQLGenerator:
         Minimal SQL sanitizer for Postgres execution.
         Fixes common LLM-generated SQL issues:
         1. Strips markdown/code fences
-        2. Wraps DISTINCT queries with ORDER BY in a subquery
+        2. Removes misplaced DISTINCT after comma in SELECT list
         3. Normalizes CAST and NULLIF usage
         """
         sql = sql.strip()
@@ -725,23 +726,9 @@ class Text2SQLGenerator:
         # Remove markdown/code fences
         sql = re.sub(r"^```[a-z]*|```$", "", sql, flags=re.IGNORECASE).strip()
 
-        # Detect DISTINCT + ORDER BY and wrap in a subquery
-        distinct_order_by_pattern = re.compile(
-            r"SELECT\s+DISTINCT\s+(.*?)\s+FROM\s+(.*?)\s+ORDER\s+BY\s+(.*?)(LIMIT\s+\d+)?;",
-            flags=re.IGNORECASE | re.DOTALL,
-        )
-        match = distinct_order_by_pattern.search(sql)
-        if match:
-            select_cols, from_clause, order_by_clause, limit_clause = match.groups()
-            limit_clause = limit_clause or ""
-            sql = f"""
-            SELECT *
-            FROM (
-                SELECT DISTINCT {select_cols}
-                FROM {from_clause}
-            ) sub
-            ORDER BY {order_by_clause} {limit_clause};
-            """.strip()
+        # Remove DISTINCT when misplaced after a comma in SELECT list
+        # e.g. "SELECT SUM(x), DISTINCT col" -> "SELECT SUM(x), col"
+        sql = re.sub(r",\s*DISTINCT\s+", ", ", sql, flags=re.IGNORECASE)
 
         # Replace CAST(... AS REAL) if inside math operations
         sql = re.sub(
@@ -905,20 +892,25 @@ class Text2SQLGenerator:
         logger.info("Проверяю запрос на неоднозначность...")
         ambiguity_check = await self._check_ambiguity(user_query)
 
-        if ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]:
-            logger.info(f"Запрос неоднозначен. Требуется уточнение по причине: {ambiguity_check['clarification_needed']}")
-            return {"status": "ambiguous"}
+        was_flagged_ambiguous = (
+            ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]
+        )
+
+        if was_flagged_ambiguous:
+            logger.info(f"Запрос неоднозначен: {ambiguity_check['clarification_needed']}")
+            if not OPTIMISTIC_AMBIGUITY_FALLBACK:
+                return {"status": "ambiguous"}
+            logger.info("Optimistic fallback включён — пробуем сгенерировать SQL несмотря на флаг ambiguous")
 
         if ambiguity_check["status"] == "error":
             logger.warning("Ambiguity check failed, proceeding with SQL generation")
             # НЕ возвращаем error — продолжаем генерацию SQL
 
-
         # Main query generation
         retries = 0
         success = False
         raw_sql = ""
-        final_result = {"status": "error"}
+        final_result = {"status": "ambiguous"} if was_flagged_ambiguous else {"status": "error"}
 
         while not success and retries < MAX_RETRIES:
             logger.info(
@@ -942,5 +934,8 @@ class Text2SQLGenerator:
 
             final_result = {"status": "success", "query": raw_sql}
             success = True
+
+        if was_flagged_ambiguous and success:
+            logger.info("Optimistic fallback: SQL успешно сгенерирован для ранее помеченного запроса")
 
         return final_result
