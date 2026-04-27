@@ -1,3 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:arxiv.org)",
+      "WebSearch",
+      "WebFetch(domain:www.arxiv.org)",
+      "WebFetch(domain:www.themoonlight.io)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:aclanthology.org)",
+      "WebFetch(domain:ar5iv.labs.arxiv.org)",
+      "Bash(git add *)"
+    ]
+  },
+  "outputStyle": "Learning",
   "prefersReducedMotion": false
 }
