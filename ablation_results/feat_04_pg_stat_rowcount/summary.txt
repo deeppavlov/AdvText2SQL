@@ -1,0 +1,5 @@
+Branch: feat/04_pg_stat_rowcount
+Commit: b57ed9c
+
+ablation_results/feat_04_pg_stat_rowcount/bird.log:Overall accuracy: 18.18%
+ablation_results/feat_04_pg_stat_rowcount/ambrosia.log:Accuracy: 45.83%
