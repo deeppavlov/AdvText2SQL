@@ -8,7 +8,9 @@
       "WebFetch(domain:medium.com)",
       "WebFetch(domain:aclanthology.org)",
       "WebFetch(domain:ar5iv.labs.arxiv.org)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git ls-tree *)",
+      "Bash(git checkout *)"
     ]
   },
   "outputStyle": "Learning",

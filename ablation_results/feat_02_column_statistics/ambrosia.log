@@ -1,0 +1,147 @@
+warning: `VIRTUAL_ENV=/Users/vlad/Desktop/uni/Магистратура/2_quarter_project/AdvText2SQL/.venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py:13: UserWarning: Resolved model mismatch: deepseek/deepseek-v4-flash != deepseek/deepseek-v4-flash-20260423. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to deepseek/deepseek-v4-flash-20260423 to enhance token/cost estimation and suppress this warning.
+  resp = await self.client.create(*args, **kwargs)
+SQL validation error.
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 566, in _validate_sql
+    parsed = parse_one(sql, dialect=Dialects.POSTGRES)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/__init__.py", line 140, in parse_one
+    result = dialect.parse(sql, **opts)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/dialects/dialect.py", line 1163, in parse
+    return self.parser(**opts).parse(self.tokenize(sql), sql)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 1669, in parse
+    return self._parse(
+           ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 1738, in _parse
+    expressions.append(parse_method(self))
+                       ^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 1987, in _parse_statement
+    expression = self._parse_set_operations(expression) if expression else self._parse_select()
+                                                                           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 3317, in _parse_select
+    query = self._parse_select_query(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 3421, in _parse_select_query
+    this = self._parse_query_modifiers(this)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 3626, in _parse_query_modifiers
+    key, expression = parser(self)
+                      ^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 1314, in <lambda>
+    TokenType.WHERE: lambda self: ("where", self._parse_where()),
+                                            ^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 4650, in _parse_where
+    exp.Where, comments=self._prev_comments, this=self._parse_disjunction()
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5075, in _parse_disjunction
+    return self._parse_tokens(self._parse_conjunction, self.DISJUNCTION)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 7574, in _parse_tokens
+    expression=parse_method(),
+               ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5078, in _parse_conjunction
+    return self._parse_tokens(self._parse_equality, self.CONJUNCTION)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 7567, in _parse_tokens
+    this = parse_method()
+           ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5081, in _parse_equality
+    return self._parse_tokens(self._parse_comparison, self.EQUALITY)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 7567, in _parse_tokens
+    this = parse_method()
+           ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5084, in _parse_comparison
+    return self._parse_tokens(self._parse_range, self.COMPARISON)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 7567, in _parse_tokens
+    this = parse_method()
+           ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5087, in _parse_range
+    this = this or self._parse_bitwise()
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5301, in _parse_bitwise
+    this = self._parse_term()
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5335, in _parse_term
+    this = self._parse_factor()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5358, in _parse_factor
+    this = self._parse_at_time_zone(parse_method())
+                                    ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5378, in _parse_exponent
+    return self._parse_tokens(self._parse_unary, self.EXPONENT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 7567, in _parse_tokens
+    this = parse_method()
+           ^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5383, in _parse_unary
+    return self._parse_type()
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5445, in _parse_type
+    this = self._parse_column()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5758, in _parse_column
+    this = self._parse_column_reference()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5767, in _parse_column_reference
+    this = self._parse_field()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5969, in _parse_field
+    field = self._parse_primary() or self._parse_function(
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5955, in _parse_primary
+    return self._parse_paren()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 5928, in _parse_paren
+    self._match_r_paren(expression=this)
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 8437, in _match_r_paren
+    self.raise_error("Expecting )")
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/.venv/lib/python3.11/site-packages/sqlglot/parser.py", line 1782, in raise_error
+    raise error
+sqlglot.errors.ParseError: Expecting ). Line 5, Col: 8.
+  ND s."language" LIKE '%English%')
+   OR (s."role" LIKE '%Server%' AND s."language" LIKE '%English%'
+[4mORDER BY[0m s."role";
+Failed to generate SQL from user_query='Which chefs speak English and which servers speak the same language?'
+Traceback (most recent call last):
+  File "/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py", line 654, in generate_sql
+    raise ValueError("Сгенерированный SQL не прошел валидацию")
+ValueError: Сгенерированный SQL не прошел валидацию
+{'status': 'success', 'query': 'SELECT * FROM "eventspaces" WHERE ("event_space" ILIKE \'%Banquet Hall%\' OR "event_space" ILIKE \'%Conference Room%\') AND "capacity" >= 200;'}
+{'status': 'success', 'query': 'SELECT *\nFROM "eventspaces"\nWHERE ("event_space" LIKE \'%Banquet Hall%\' OR "event_space" LIKE \'%Conference Room%\')\n  AND "capacity" = 200;'}
+{'status': 'success', 'query': 'SELECT DISTINCT r."name"\nFROM "restaurants" r\nWHERE r."food_service" ILIKE \'%Restaurant%\' AND r."cuisine" ILIKE \'%Italian%\'\nUNION\nSELECT DISTINCT r."name"\nFROM "restaurants" r\nWHERE r."food_service" ILIKE \'%Café%\' AND r."cuisine" ILIKE \'%Italian%\';'}
+{'status': 'ambiguous'}
+{'status': 'success', 'query': "SELECT DISTINCT *\nFROM restaurants\nWHERE (food_service ILIKE '%café%' OR food_service ILIKE '%restaurant%')\n  AND cuisine ILIKE '%italian%';"}
+{'status': 'success', 'query': 'SELECT \'Chef\' AS "category", "name", "role", "language"\nFROM "staff"\nWHERE "role" = \'Chef\'\nUNION ALL\nSELECT \'Server (English)\' AS "category", "name", "role", "language"\nFROM "staff"\nWHERE "role" = \'Server\' AND "language" = \'English\'\nORDER BY "category", "name";'}
+{'status': 'success', 'query': 'SELECT DISTINCT s."name", s."role"\nFROM "staff" s\nWHERE (s."role" ILIKE \'%chef%\' OR s."role" ILIKE \'%server%\')\n  AND s."language" ILIKE \'%english%\';'}
+{'status': 'success', 'query': 'SELECT DISTINCT s."name", s."role", s."language"\nFROM "staff" s\nWHERE (s."role" LIKE \'Chef\' OR s."role" LIKE \'Server\')\n  AND s."language" LIKE \'English\';'}
+{'status': 'success', 'query': 'WITH total_hospitals AS (\n    SELECT COUNT(*) AS cnt FROM "hospitals"\n)\nSELECT DISTINCT mr."salary"\nFROM "hospitals_medical_roles" hmr\nJOIN "medicalroles" mr ON hmr."roleid" = mr."roleid"\nCROSS JOIN total_hospitals th\nGROUP BY mr."roleid", mr."salary", th.cnt\nHAVING COUNT(DISTINCT hmr."hospitalid") = th.cnt'}
+{'status': 'success', 'query': 'SELECT \n    "s"."name" AS "specialist_name",\n    "sys"."system_name"\nFROM "it_support_specialists" "s"\nJOIN "it_support_specialists_systems" "iss" ON "s"."id" = "iss"."it_specialist_id"\nJOIN "systems" "sys" ON "iss"."system_id" = "sys"."system_id"\nORDER BY "s"."name", "sys"."system_name";'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT sp."name", s."system_name", s."is_active"\n                FROM "it_support_specialists" sp\nJOIN "it_support_specialists_systems" iss ON sp."id" = iss."it_specialist_id"\nJOIN "systems" s ON iss."system_id" = s."system_id"\n            ) sub\n            ORDER BY sp."name", s."system_name" ;'}
+{'status': 'success', 'query': 'SELECT \n    "iss"."name" AS "specialist_name",\n    "s"."system_name",\n    "s"."is_active"\nFROM "it_support_specialists" "iss"\nJOIN "it_support_specialists_systems" "iss_sys" ON "iss"."id" = "iss_sys"."it_specialist_id"\nJOIN "systems" "s" ON "iss_sys"."system_id" = "s"."system_id"\nORDER BY "iss"."name", "s"."system_name";'}
+{'status': 'success', 'query': 'SELECT r."responsibility"\nFROM responsibilities r\nJOIN internships_responsibilities ir ON r."id" = ir."responsibilityid"\nGROUP BY r."id", r."responsibility"\nHAVING COUNT(DISTINCT ir."internshipid") = (SELECT COUNT(*) FROM internships);'}
+{'status': 'ambiguous'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT s."name" AS specialist_name,\n    sys."system_name" AS system_name\n                FROM "it_support_specialists" s\nJOIN "it_support_specialists_systems" ss ON s."id" = ss."it_specialist_id"\nJOIN "systems" sys ON ss."system_id" = sys."system_id"\n            ) sub\n            ORDER BY s."name", sys."system_name" ;'}
+{'status': 'ambiguous'}
+{'status': 'success', 'query': 'SELECT "minimum_years", "preferred_years"\nFROM "jobs"\nWHERE "salary" IS NOT NULL\nORDER BY "salary" DESC\nLIMIT 1;'}
+{'status': 'success', 'query': 'SELECT DISTINCT\n    sd."salary_range",\n    sd."hourly_rate"\nFROM "position" p\nJOIN "salarydetails" sd ON p."id" = sd."positionid"\nWHERE p."title" ILIKE \'%software developer%\';'}
+{'status': 'ambiguous'}
+{'status': 'success', 'query': 'SELECT p."title", sd."salary_range"\nFROM "position" p\nLEFT JOIN "salarydetails" sd ON p."id" = sd."positionid";'}
+{'status': 'success', 'query': 'SELECT "preferred_years" \nFROM "jobs" \nORDER BY "salary" DESC \nLIMIT 1;'}
+{'status': 'ambiguous'}
+{'status': 'ambiguous'}
+{'status': 'ambiguous'}
+
+=== Ambiguity Detection (Ambrosia benchmark) ===
+Accuracy: 58.33%
+Total questions: 24
+Gold ambiguous: 9
+Predicted ambiguous: 7
+Correctly flagged ambiguous: 3
+===========================
+
+Report on the tokens spent:  {'prompt_tokens': 49864, 'completion_tokens': 26561, 'total_tokens': 0}
