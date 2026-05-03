@@ -6,7 +6,7 @@ This repository is made for testing student-written text2SQL tools with the help
 
 In order to connect to the database network, you need to type this command (requires a `user_name` and password from the teacher):
 ```bash
-ssh -N -L 5444:10.11.1.6:5444 user_name@lnsigo.mipt.ru -p2278
+ssh -N -L 5444:10.11.1.6:5444 user_name@lnsigo.mipt.ru -p2278 
 ```
 
 You can check the database connection, and connect to the postgres database console with:
@@ -79,6 +79,11 @@ Usage is exactly the same as BIRD, you should use the small set of questions at 
 Finally, you can run the BIRD benchmark with:
 ```bash
 uv run --env-file .env bird_benchmark.py
+```
+
+or 
+```bash
+$env:PYTHONPATH=".\src"; uv run --env-file .env bird_benchmark.py
 ```
 And the Ambrosia benchmark with:
 ```bash

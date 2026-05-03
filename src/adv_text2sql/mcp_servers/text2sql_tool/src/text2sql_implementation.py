@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import os
 import re
@@ -24,7 +25,6 @@ MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
 
 
 logger = logging.getLogger("text2sql_tool")
-
 
 class Text2SQLGenerator:
     def __init__(self, db_uri: str, llm_client: OpenAIChatCompletionClient):
@@ -150,36 +150,171 @@ class Text2SQLGenerator:
 
         return "\n".join(schema_parts).strip()
 
+    # def _get_db_schema_light(self) -> str:
+    #     """
+    #     Lightweight schema extraction for LLM prompts.
+
+    #     Includes:
+    #     - table names
+    #     - column names
+    #     - column types
+    #     """
+    #     inspector = inspect(self.engine)
+    #     schema_parts = []
+
+    #     # Default schema for PostgreSQL
+    #     # print(self.db_uri)
+    #     tables = inspector.get_table_names(schema="public")
+    #     if not tables:
+    #         print("this db failed: ", self.db_uri)
+    #         raise RuntimeError("No tables found in public schema")
+
+    #     for table in tables:
+    #         schema_parts.append(f"TABLE {table}")
+
+    #         columns = inspector.get_columns(table, schema="public")
+    #         for col in columns:
+    #             col_type = str(col["type"])
+    #             schema_parts.append(f"  - {col['name']} ({col_type})")
+
+    #         schema_parts.append("")
+
+    #     return "\n".join(schema_parts).strip()
+
     def _get_db_schema_light(self) -> str:
         """
-        Lightweight schema extraction for LLM prompts.
-
-        Includes:
-        - table names
-        - column names
-        - column types
+        Robust schema extraction. Handles empty DBs, custom schemas, and search paths.
         """
         inspector = inspect(self.engine)
         schema_parts = []
+        system_schemas = {"information_schema", "pg_catalog", "pg_toast"}
+        
+        # 1. Try default search path first (fastest & covers 95% cases)
+        default_tables = inspector.get_table_names()
+        if default_tables:
+            for table in default_tables:
+                schema_parts.append(f"TABLE {table}")
+                columns = inspector.get_columns(table)
+                for col in columns:
+                    schema_parts.append(f"  - {col['name']} ({str(col['type'])})")
+                schema_parts.append("")
+            return "\n".join(schema_parts).strip()
 
-        # Default schema for PostgreSQL
-        # print(self.db_uri)
-        tables = inspector.get_table_names(schema="public")
-        if not tables:
-            print("this db failed: ", self.db_uri)
-            raise RuntimeError("No tables found in public schema")
-
-        for table in tables:
-            schema_parts.append(f"TABLE {table}")
-
-            columns = inspector.get_columns(table, schema="public")
-            for col in columns:
-                col_type = str(col["type"])
-                schema_parts.append(f"  - {col['name']} ({col_type})")
-
-            schema_parts.append("")
-
+        # 2. Fallback: scan all non-system schemas explicitly
+        for schema in inspector.get_schema_names():
+            if schema in system_schemas:
+                continue
+            tables = inspector.get_table_names(schema=schema)
+            if tables:
+                for table in tables:
+                    schema_parts.append(f"TABLE {schema}.{table}")
+                    columns = inspector.get_columns(table, schema=schema)
+                    for col in columns:
+                        schema_parts.append(f"  - {col['name']} ({str(col['type'])})")
+                    schema_parts.append("")
+                    
+        # 3. Graceful degradation for empty/unreachable DBs
+        if not schema_parts:
+            logger.warning(f"No tables found in {self.db_uri}. Returning placeholder.")
+            return "DATABASE EMPTY OR INACCESSIBLE"
+            
         return "\n".join(schema_parts).strip()
+    
+    def _get_calibrated_ambiguity_prompt(self, user_query: str) -> str:
+        """
+        Calibrated prompt with REAL examples from ambrosia_train.json.
+        Focus: detect ONLY ambiguities that lead to DIFFERENT SQL queries.
+        """
+        return f"""
+    You are an ambiguity detection expert for Text-to-SQL. Use the AmbiSQL taxonomy.
+
+    ### Database Schema:
+    {self.db_schema}
+
+    ### Ambiguity Taxonomy (mark ONLY if leads to DIFFERENT SQL):
+    1. ambiguous_scope: unclear quantifier scope (e.g., "each can hold 200" → per room or combined?)
+    2. unclear_schema: ambiguous column reference (e.g., "ranked 2" → which column: rank/position/positionOrder?)
+    3. unclear_value: ambiguous value reference (e.g., "after Vietnam War" → which date: 1975-04-30 or 1975-12-31?)
+    4. missing_sql_keywords: unclear operation (e.g., "users by date" → ORDER BY? GROUP BY? WHERE?)
+
+    ### CRITICAL RULES:
+    MARK AS AMBIGUOUS if query has phrases like:
+    - "each" / "every" with capacity/quantity → ambiguous_scope
+    - "after/before [historical event]" → unclear_value (needs exact date)
+    - "ranked N" / "position N" without column name → unclear_schema
+    - "by [attribute]" without operation context → missing_sql_keywords
+
+    DO NOT mark as ambiguous if:
+    - Explicit metric: "average", "max", "min", "sum"
+    - Explicit period: month name, year (e.g., "January 2025")
+    - "top-N" → implies ORDER BY + LIMIT
+    - Simple filter: "WHERE condition" is obvious from context
+
+    ### REAL EXAMPLES FROM AMBROSIA DATASET:
+
+    AMBIGUOUS (mark as ambiguous):
+    Query: "Show banquet halls and conference rooms where each can hold 200 people"
+    Reason: "each" → ambiguous_scope (per room individually or combined capacity?)
+
+    Query: "How many drivers born after the Vietnam War have been ranked 2?"
+    Reason: "after Vietnam War" → unclear_value (needs exact date); "ranked 2" → unclear_schema (which column?)
+
+    Query: "Show users by registration date"
+    Reason: "by date" → missing_sql_keywords (ORDER BY? GROUP BY? WHERE?)
+
+    UNAMBIGUOUS (do NOT mark):
+    Query: "Show top-5 customers by purchase amount in January 2025"
+    Reason: "top-5" → ORDER BY + LIMIT; "January 2025" → explicit period
+
+    Query: "List all restaurants serving Italian cuisine"
+    Reason: Simple filter with UNION — no ambiguity
+
+    ### User Query:
+    "{user_query}"
+
+    ### Response Format (VALID JSON ONLY):
+    {{
+        "ambiguous": true/false,
+        "ambiguity_types": ["type1", ...],  // empty [] if unambiguous
+        "ambiguous_phrases": ["phrase1", ...],
+        "reasoning": "1 sentence: why ambiguous or why NOT ambiguous"
+    }}
+    """
+
+    def _is_false_positive(self, user_query: str) -> bool:
+        """
+        Aggressive post-filtering of FALSE POSITIVES (overly cautious LLM).
+        Returns True if query is CLEARLY unambiguous despite LLM's hesitation.
+        """
+        query_lower = user_query.lower().strip()
+        
+        # STRONG signals of unambiguity (override LLM's false positive)
+        strong_unambiguous = [
+            r'\b(top|first|last)\s*-?\d+\b',           # "top-5", "first 10"
+            r'\b(average|avg|mean)\b',                 # "average salary"
+            r'\b(max|maximum|min|minimum|sum)\b',      # explicit aggregation
+            r'\b(january|february|march|april|may|june|july|august|september|october|november|december)\b',  # months
+            r'\b202[0-9]\b',                           # years 2020-2029
+            r'\blist\s+all\b',                         # "list all users"
+            r'\bshow\s+all\b',                         # "show all records"
+            r'\b(id|name|address|city|country)\b.*\blist\b',  # basic entity listing
+        ]
+        
+        # WEAK signals (don't override LLM if it detected real ambiguity)
+        weak_unambiguous = [
+            r'\bby\s+(date|month|year|category)\b',    # "users by date" — could be ambiguous!
+            r'\bfor\s+(january|february|202[0-9])\b',
+        ]
+        
+        # Check STRONG signals FIRST (high confidence unambiguous)
+        for pattern in strong_unambiguous:
+            if re.search(pattern, query_lower):
+                return True
+        
+        # DO NOT filter weak signals — they might be truly ambiguous!
+        # (e.g., "users by date" IS ambiguous per Ambrosia taxonomy)
+        
+        return False
 
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
@@ -187,49 +322,92 @@ class Text2SQLGenerator:
             db_schema=self.db_schema, sql_dialect="PostgreSQL"
         )
 
+    # async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
+    #     """
+    #     Проверяет пользовательский запрос на неоднозначность с помощью LLM.
+    #     """
+    #     ambiguity_prompt = AMBIGUITY_PROMPT_TEMPLATE.format(
+    #         db_schema=self.db_schema,
+    #         user_query=user_query,
+    #     )
+
+    #     messages = [
+    #         SystemMessage(content=ambiguity_prompt),
+    #         UserMessage(
+    #             source="user",
+    #             content="Проверь запрос на однозначность.",
+    #         ),
+    #     ]
+
+    #     """
+    #     content=(
+    #         "Определи, можно ли вообще ответить на этот вопрос, "
+    #         "используя ТОЛЬКО данную схему БД. "
+    #         "Если ответить нельзя — напиши NOT_ANSWERABLE. "
+    #         "Если ответ возможен, но запрос неоднозначен — опиши, что нужно уточнить. "
+    #         "Если запрос полностью однозначен и ответим — напиши OK."
+    #     ),
+    #     """
+
+    #     try:
+    #         result = await self.llm_client.create(messages)
+    #         response_text = result.content.strip()
+
+    #         if response_text.lower() == "ok":
+    #             return {"status": "success", "ambiguous": False}
+    #         else:
+    #             return {
+    #                 "status": "success",
+    #                 "ambiguous": True,
+    #                 "clarification_needed": response_text,
+    #             }
+
+    #     except Exception as e:
+    #         logger.exception(f"Failed to check ambiguity for query: {user_query}")
+    #         return {"status": "error"}
+
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
-        Проверяет пользовательский запрос на неоднозначность с помощью LLM.
+        Hybrid ambiguity detection: LLM + aggressive post-filtering.
+        Optimized for Ambrosia benchmark with minimal false positives on BIRD.
         """
-        ambiguity_prompt = AMBIGUITY_PROMPT_TEMPLATE.format(
-            db_schema=self.db_schema,
-            user_query=user_query,
-        )
-
+        # Step 1: LLM detection with calibrated English prompt
+        ambiguity_prompt = self._get_calibrated_ambiguity_prompt(user_query)
+        
         messages = [
             SystemMessage(content=ambiguity_prompt),
-            UserMessage(
-                source="user",
-                content="Проверь запрос на однозначность.",
-            ),
+            UserMessage(source="user", content="Respond with VALID JSON ONLY:"),
         ]
-
-        """
-        content=(
-            "Определи, можно ли вообще ответить на этот вопрос, "
-            "используя ТОЛЬКО данную схему БД. "
-            "Если ответить нельзя — напиши NOT_ANSWERABLE. "
-            "Если ответ возможен, но запрос неоднозначен — опиши, что нужно уточнить. "
-            "Если запрос полностью однозначен и ответим — напиши OK."
-        ),
-        """
-
+        
         try:
             result = await self.llm_client.create(messages)
             response_text = result.content.strip()
-
-            if response_text.lower() == "ok":
-                return {"status": "success", "ambiguous": False}
-            else:
-                return {
-                    "status": "success",
-                    "ambiguous": True,
-                    "clarification_needed": response_text,
-                }
-
+            response_text = re.sub(r'^```(?:json)?\s*|\s*```$', '', response_text.strip(), flags=re.IGNORECASE)
+            
+            import json
+            parsed = json.loads(response_text)
+            is_ambiguous = parsed.get("ambiguous", False)
+            
+            # Step 2: AGGRESSIVE post-filtering (critical for BIRD accuracy)
+            if is_ambiguous and self._is_false_positive(user_query):
+                logger.info(f"FILTERED_FALSE_POSITIVE | query='{user_query[:70]}'")
+                return {"status": "success", "ambiguous": False, "ambiguity_details": {"method": "post_filter"}}
+            
+            # Log ONLY truly ambiguous queries for analysis
+            if is_ambiguous:
+                types = parsed.get("ambiguity_types", ["unknown"])
+                logger.info(f"AMBIGUOUS_QUERY | types={types} | query='{user_query[:70]}'")
+            
+            return {
+                "status": "success",
+                "ambiguous": is_ambiguous,
+                "ambiguity_details": {**parsed, "method": "llm_calibrated"}
+            }
+            
         except Exception as e:
-            logger.exception(f"Failed to check ambiguity for query: {user_query}")
-            return {"status": "error"}
+            logger.warning(f"LLM ambiguity check failed (defaulting to unambiguous): {str(e)[:100]}")
+            return {"status": "success", "ambiguous": False, "ambiguity_details": {"method": "fallback"}}
+
 
     def _strip_sql_comments(self, sql: str) -> str:
         sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
@@ -468,8 +646,15 @@ class Text2SQLGenerator:
         logger.info("Проверяю запрос на неоднозначность...")
         ambiguity_check = await self._check_ambiguity(user_query)
 
+        # if ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]:
+        #     logger.info(f"Запрос неоднозначен. Требуется уточнение по причине: {ambiguity_check['clarification_needed']}")
+        #     return {"status": "ambiguous"}
+
+        
         if ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]:
-            logger.info(f"Запрос неоднозначен. Требуется уточнение по причине: {ambiguity_check['clarification_needed']}")
+            # Извлекаем типы из структурированного ответа
+            ambiguity_types = ambiguity_check.get("ambiguity_details", {}).get("ambiguity_types", ["unknown"])
+            logger.info(f"AMBIGUOUS_QUERY | types={ambiguity_types} | query='{user_query[:60]}'")
             return {"status": "ambiguous"}
 
         if ambiguity_check["status"] == "error":
@@ -481,6 +666,7 @@ class Text2SQLGenerator:
         retries = 0
         success = False
         raw_sql = ""
+        final_result = {"status": "error"}
 
         while not success and retries < MAX_RETRIES:
             logger.info(
@@ -489,6 +675,9 @@ class Text2SQLGenerator:
             generation_result = await self.generate_sql(user_query)
 
             if generation_result["status"] != "success":
+                wait = min(60, 5 * (2 ** retries))
+                logger.warning(f"SQL generation failed, retrying in {wait}s ({retries + 1}/{MAX_RETRIES})")
+                await asyncio.sleep(wait)
                 retries += 1
                 continue
 
@@ -506,3 +695,4 @@ class Text2SQLGenerator:
             success = True
 
         return final_result
+

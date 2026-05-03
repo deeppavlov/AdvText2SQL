@@ -45,3 +45,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/partial_mcp"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
