@@ -1,0 +1,2 @@
+ablation_results/feat_05_light_schema/bird.log:Overall accuracy: 27.27%
+ablation_results/feat_05_light_schema/ambrosia.log:Accuracy: N/A%

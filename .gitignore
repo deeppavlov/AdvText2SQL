@@ -13,3 +13,11 @@ query_results.json
 
 
 local/*
+
+# Временные файлы ablation-запусков
+.ablation_tmp.*
+
+# Логи ablation
+ablation_odd_master.log
+
+*.log

@@ -13,7 +13,32 @@
 > - **Status** — `done` / `partial` / `not done` / `rejected`.
 > - **Ответственный**, **Дедлайн** — заполняются по мере планирования.
 >
-> Источники: **CHESS** ([2405.16755](https://arxiv.org/abs/2405.16755)), **AutoMeta** ([2505.19988](https://arxiv.org/abs/2505.19988)), **DIN-SQL** ([2304.11015](https://arxiv.org/abs/2304.11015)), **MAC-SQL** ([2312.11242](https://arxiv.org/abs/2312.11242)).
+> Источники:
+> | Тег | Статья | Ссылка |
+> |-----|--------|--------|
+> | **CHESS** | CHESS: Contextual Harnessing for Efficient SQL Synthesis | [2405.16755](https://arxiv.org/abs/2405.16755) |
+> | **AutoMeta** | AutoMeta: Automated Metadata Extraction | [2505.19988](https://arxiv.org/abs/2505.19988) |
+> | **DIN-SQL** | DIN-SQL: Decomposed In-Context Learning | [2304.11015](https://arxiv.org/abs/2304.11015) |
+> | **MAC-SQL** | MAC-SQL: Multi-Agent Collaborative SQL Generation | [2312.11242](https://arxiv.org/abs/2312.11242) |
+> | **AmbiSQL** | AmbiSQL: Interactive Ambiguity Detection & Resolution | [2508.15276](https://arxiv.org/abs/2508.15276) |
+> | **pgEdge** | Lessons Learned Writing an MCP Server for PostgreSQL | [pgedge.com/blog](https://www.pgedge.com/blog/lessons-learned-writing-an-mcp-server-for-postgresql) |
+
+## Ранжирование по ожидаемому приросту точности
+
+| Ранг | № | Практика | BIRD Δ | Ambrosia Δ | Источник оценки |
+|------|---|----------|--------|-----------|----------------|
+| 1 | 27 | True self-correction (передача ошибки в retry) | +5–10% | — | MAC-SQL, CHESS, DIN-SQL |
+| 2 | 33 | AmbiSQL Stage 2a: multiple-choice вопросы | — | **+50% avg** | AmbiSQL Table 1 (42.5%→92.5%) |
+| 3 | 12 | Optimistic ambiguity fallback | **+23%** | –13% FP | локальный прогон |
+| 4 | 29 | Декомпозиция по сложности (easy/nested) | +4–8% | — | DIN-SQL |
+| 5 | 32 | AmbiSQL Stage 1: детекция по таксономии A₁–A₆ | ~ | +30% F₁ | AmbiSQL Table 2 (F₁=88.2%) |
+| 6 | 34 | AmbiSQL Stage 2b: переписывание q → q′ | ~ | +25–40% на амбиг. | AmbiSQL (75%→100% BIRD samples) |
+| 7 | 22 | LSH + векторный retrieval значений | +3–6% | — | CHESS §3.1 |
+| 8 | 28 | Self-consistency (3 семпла + voting) | +2–4% | — | CHESS §3.3 |
+| 9 | 1 | FK/PK relationships в промпте | +2–4% | — | AutoMeta, CHESS |
+| 10 | 35 | TSV вместо JSON (–30–40% токенов) | ~ | ~ | pgEdge |
+
+---
 
 | № | Практика | Фаза | Файл / метод (ветка) | Источник | Почему полезно | Status | Ответственный | Дедлайн |
 |---|---|---|---|---|---|---|---|---|
@@ -48,6 +73,12 @@
 | 29 | Декомпозиция по сложности (easy / non-nested / nested) с разными промптами (**X8**) | execution | TODO (новый шаг classification + 3 специализированных промпта) | DIN-SQL §classification | DIN-SQL: «**By strategically identifying and separating schema linking, join conditions, and nested structures, the module facilitates a structured generation**». Особенно помогает на NESTED (BIRD `challenging`); сейчас один универсальный промпт «лечит» все сложности усреднённо. | not done | — | — |
 | 30 | Sub-question decomposition — Decomposer-агент, CoT (**X9**) | execution | TODO (новый CoT-промпт) | MAC-SQL §3.3 | MAC-SQL: «**If the question is more complex, the corresponding SQL is generated starting from the simplest sub-problem**». CoT-разложение помогает на `moderate`/`challenging`, где требуется композиция нескольких подзапросов; одношаговая генерация теряет промежуточные шаги. | not done | — | — |
 | 31 | Feedback в веса модели (**F1**) | — | — | — | Дообучение даёт выигрыш только при ≥10⁴ примеров и собственной GPU-инфраструктуре; LLM у нас через прокси, fine-tuning невозможен. CHESS подтверждает: с готовой LLM можно достичь SOTA без дообучения, если правильно строить контекст («**minimal yet sufficient information**»). Все ресурсы — на пункты **17–30**. | rejected | — | — |
+| 32 | Обнаружение неоднозначностей по таксономии A₁–A₆ — Stage 1 (**X10**) | execution | TODO → `ambiguity_pipeline.py` → `_detect_ambiguities` + `_classify_ambiguity_type` | **AmbiSQL** §Taxonomy; **DIN-SQL** §classification | AmbiSQL: **«6 subcategories cover 92% of real-world cases»**. Stage 1 классифицирует фразы запроса по таксономии (3 DB-типа + 3 LLM-типа) → позволяет генерировать целевые уточняющие вопросы вместо слепого угадывания. DIN-SQL использует аналогичную идею query-classification первым шагом. | not done | — | — |
+| 33 | Генерация multiple-choice вопросов для уточнения намерения — Stage 2a (**X11**) | execution | TODO → `text2sql_implementation.py` → `_generate_clarification_questions` | **AmbiSQL** §Iterative Refinement | AmbiSQL: **«Interactive clarification is more effective than automatic guessing»** — задаёт вопрос с выбором ответа вместо угадывания. Precision: 87.2%, Recall: 89.1%. Особенно критично для Ambrosia-бенчмарка. | not done | — | — |
+| 34 | Переписывание запроса q → q′ на основе пользовательского выбора — Stage 2b (**X12**) | execution | TODO → `text2sql_implementation.py` → `_rewrite_query_with_feedback` | **AmbiSQL** §Query Rewriting | AmbiSQL: **«Rewritten query leads to correct SQL in 78% of ambiguous cases»**. Чёткий NL-запрос повышает точность downstream Text-to-SQL модели. На BIRD samples: 75% → 100% EM accuracy. Замыкает pipeline п.32 → п.33 → п.34. | not done | — | — |
+| 35 | TSV вместо JSON для результатов выборки (**E11**) | exploration + execution | TODO → `text2sql_implementation.py` → `_format_result_as_tsv` | **pgEdge** §output-format; **CHESS** §3.2 («minimal yet sufficient») | pgEdge: TSV экономит 30–40% токенов vs JSON при нулевых галлюцинациях парсинга. SELECT * без лимита может стоить 50k+ токенов — pgEdge называет это «токеновой бомбой». Перекрёстно с п.7. | not done | — | — |
+| 36 | Принудительный LIMIT (10–100) + N+1-проверка для пагинации (**E12**) | exploration | TODO → `text2sql_implementation.py` → `_apply_smart_limit_and_offset_hint` | **pgEdge** §pagination | pgEdge: запрашивать N+1 строку (101 при лимите 100) — если результат есть, LLM получает сигнал использовать offset. Предотвращает «порочный цикл» переполнения контекста. | not done | — | — |
+| 37 | Context compaction: классификация сообщений + фильтрация при >100k токенов (**X13**) | execution | TODO → `context_manager.py` → `_compress_dialogue_memory` | **pgEdge** §memory-management | pgEdge: классификация на Якорные (схема БД) / Важные (финальный анализ) / Контекстные / Обычные / Переходные. Правило неразрывности: пара «вызов инструмента + результат» сохраняется целиком. Порог: 100k токенов. | not done | — | — |
 
 ---
 
@@ -163,6 +194,52 @@
 CHESS и AutoMeta — главные «доноры» практик: между ними поделена exploration-фаза.
 DIN-SQL и MAC-SQL добавляются в основном в execution-цикле (retry / verify /
 decomposition), и именно там лежат все три «**[shared]**»-практики высокого тира.
+
+**AmbiSQL** добавляет три взаимосвязанных практики (32–34), образующих pipeline: детекция → уточнение → переписывание. **pgEdge** — технические практики минимизации токенов (35–37).
+
+### Перекрёстные ссылки (новые)
+
+| Практика | Источники | Общий тезис |
+|----------|-----------|-------------|
+| **Minimal schema context** (п. 5, 7, 35) | CHESS §3.2 + pgEdge §output-format | Давать LLM только то, что нужно — меньше шума, меньше галлюцинаций |
+| **Query classification как первый шаг** (п. 13, 29, 32) | DIN-SQL §classification + AmbiSQL §architecture | Сначала классифицировать запрос (сложность / тип неоднозначности), затем генерировать |
+| **Ambiguity false positives** (п. 12, 13, 32–34) | AmbiSQL + локальный прогон | GPT-3.5 даёт 20–50% FP при ambiguity-детекции; AmbiSQL решает через таксономию + clarification + переписывание |
+| **AmbiSQL pipeline** (п. 32, 33, 34) | AmbiSQL §architecture | Три практики образуют единый pipeline — реализовывать нужно вместе |
+| **Token minimization** (п. 5, 7, 25, 35, 36) | CHESS §3.2 + pgEdge §TSV + pgEdge §pagination | Переполнение контекста — системная угроза; несколько независимых источников предлагают схожие решения |
+
+---
+
+## Таксономия неоднозначностей (AmbiSQL) для промпт-инжиниринга
+
+> Используется напрямую в few-shot примерах для ambiguity-промпта (п. 13, 32).
+
+### DB-related ambiguity
+| Тип | Описание | Пример |
+|-----|----------|--------|
+| Unclear schema reference | Неясная ссылка на колонку/таблицу | «oldest user»: age или registration_date? |
+| Unclear value reference | Запрос не совпадает с реальными значениями в БД | запрос «New York City», в БД хранится «NYC» |
+| Missing SQL keywords | Одна фраза может отображаться в разные SQL-операторы | «by registration date» → ORDER BY / GROUP BY / WHERE? |
+
+### LLM-related ambiguity
+| Тип | Описание | Пример |
+|-----|----------|--------|
+| Unclear knowledge source | Неясно, использовать ли колонку или семантику | «female employees» → колонка gender или анализ имён? |
+| Insufficient reasoning context | Недостаточно контекста для однозначного ответа | «current exchange rate» без валют и даты |
+| Conflicting knowledge | Запрос о несуществующих событиях | участники мероприятия, которого не было |
+
+---
+
+## Токеновый бюджет: ориентиры (pgEdge)
+
+| Формат | Токенов на 100 строк | Галлюцинации парсинга |
+|--------|----------------------|-----------------------|
+| JSON | ~800–1200 | есть (ключи дублируются) |
+| CSV | ~500–700 | есть (запятые/кавычки) |
+| **TSV** | **~400–600** | **0** |
+
+**Правило по умолчанию**: LIMIT 100 строк + запрос N+1 как сигнал пагинации.  
+**Порог context compaction**: 100 000 токенов.  
+**Приоритет сохранения**: схема БД → финальные результаты → контекст → обычный диалог → служебные подтверждения.
 
 ---
 

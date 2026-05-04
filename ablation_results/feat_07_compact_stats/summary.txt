@@ -1,0 +1,5 @@
+Branch: feat/feat_07_compact_stats
+Commit: 6461b3d
+
+ablation_results/feat_07_compact_stats/bird.log:Overall accuracy: 0.00%
+ablation_results/feat_07_compact_stats/ambrosia.log:Accuracy: N/A%

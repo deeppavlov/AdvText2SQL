@@ -3,6 +3,8 @@ import logging
 import os
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
+
+FEAT_9 = os.getenv("FEAT_9", "true").lower() == "true"  # dump db_schemas.json after build
 from pydantic import BaseModel
 from typing import Any, Dict, Optional
 
@@ -64,8 +66,8 @@ class BenchmarkBase(BaseModel):
             tool.build()
             logger.info(f"Build done for db_id={db_id}")
 
-        # Saving database schemas for debugging 
-        self._dump_db_schemas_json(tools)
+        if FEAT_9:
+            self._dump_db_schemas_json(tools)
 
         return tools
 

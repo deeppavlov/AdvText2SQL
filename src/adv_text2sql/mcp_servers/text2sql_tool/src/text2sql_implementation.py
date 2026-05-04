@@ -26,6 +26,12 @@ from .utils import print_result
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
 OPTIMISTIC_AMBIGUITY_FALLBACK = os.getenv("OPTIMISTIC_AMBIGUITY_FALLBACK", "true").lower() == "true"
 
+# Ablation feature flags (default true = full feature set when not running ablation)
+FEAT_1 = os.getenv("FEAT_1", "true").lower() == "true"  # FK/PK relationships in prompt
+FEAT_3 = os.getenv("FEAT_3", "true").lower() == "true"  # regex type detection + column stats
+FEAT_5 = os.getenv("FEAT_5", "true").lower() == "true"  # light schema (names + types)
+FEAT_7 = os.getenv("FEAT_7", "true").lower() == "true"  # compact stats formatting
+
 
 logger = logging.getLogger("text2sql_tool")
 
@@ -91,13 +97,27 @@ class Text2SQLGenerator:
     def build(self):
         start = time.time()
         logger.info(f"Build started for {self.db_uri}")
+        logger.info(f"Feature flags: FEAT_1={FEAT_1} FEAT_3={FEAT_3} FEAT_5={FEAT_5} FEAT_7={FEAT_7}")
 
-        self.db_schema = self._get_db_schema_light()
-        # self.db_schema = self._get_db_schema_heavy()
-        self.db_relationships = self._explore_db_relationships()
-        self.relationships_str = self._format_relationships()
-        self.column_stats = self._explore_column_statistics()
-        self.column_stats_str = self._format_column_statistics(self.column_stats)
+        self.db_schema = self._get_db_schema_light() if FEAT_5 else ""
+
+        if FEAT_1:
+            self.db_relationships = self._explore_db_relationships()
+            self.relationships_str = self._format_relationships()
+        else:
+            self.db_relationships = {"foreign_keys": [], "primary_keys": {}}
+            self.relationships_str = ""
+
+        if FEAT_3:
+            self.column_stats = self._explore_column_statistics()
+            self.column_stats_str = (
+                self._format_column_statistics(self.column_stats) if FEAT_7
+                else self._format_column_statistics_verbose(self.column_stats)
+            )
+        else:
+            self.column_stats = {}
+            self.column_stats_str = ""
+
         self.system_prompt = self._create_system_prompt()
 
         elapsed = time.time() - start
@@ -594,6 +614,24 @@ class Text2SQLGenerator:
 
             parts.append("")
 
+        return "\n".join(parts).strip() if parts else "-- No statistics available"
+
+    def _format_column_statistics_verbose(self, stats: dict) -> str:
+        """Форматирует статистики без компактных оптимизаций (FEAT_7=false)."""
+        parts = []
+        for table, tinfo in stats.items():
+            row_count = tinfo["row_count"]
+            parts.append(f"TABLE {table} ({row_count:,} rows)")
+            for col, cinfo in tinfo["columns"].items():
+                dtype = cinfo["detected_type"]
+                distinct = cinfo["distinct_count"]
+                s = cinfo.get("stats") or {}
+                line = f"  - {col}: {dtype}, {distinct} distinct values"
+                details = [f"{k}={v}" for k, v in s.items() if k != "type"]
+                if details:
+                    line += " | " + ", ".join(details)
+                parts.append(line)
+            parts.append("")
         return "\n".join(parts).strip() if parts else "-- No statistics available"
 
     async def _llm_call_with_retry(

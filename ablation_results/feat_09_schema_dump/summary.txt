@@ -1,0 +1,5 @@
+Branch: feat/feat_09_schema_dump
+Commit: 6461b3d
+
+ablation_results/feat_09_schema_dump/bird.log:Overall accuracy: 4.55%
+ablation_results/feat_09_schema_dump/ambrosia.log:Accuracy: N/A%
