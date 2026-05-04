@@ -196,7 +196,7 @@ decomposition), и именно там лежат все три «**[shared]**»
 | `feat/04_pg_stat_rowcount` | #4 row-count + min-formatter | #8 | `c3d2cfc` | TBD | TBD |
 | `feat/06_heavy_schema` | #6 heavy schema | #8 | `10fb79b` | **27.27%** (simple 44.44% / moderate 10.00% / challenging 33.33%; false-ambiguous 27.27%) | **58.33%** (24 q, 9 gold-ambig, 5 predicted-ambig, 2 correctly flagged) |
 | `feat/08_pg_rollback` | #8 PG rollback guards | — | `d018812` | **31.82%** (simple 66.67% / moderate 0.00% / challenging 33.33%) | **41.67%** (24 q, 9 gold-ambig, 9 predicted-ambig, 2 correctly flagged) |
-| `feat/10_build_timing` | #10 build() timing + log | — | `c3d2cfc` | TBD | TBD |
+| `feat/10_build_timing` | #10 build() timing + log | — | `c282b19` | **36.36%** (simple 66.67% / moderate 10.00% / challenging 33.33%) | **50.00%** (24 q, 9 gold-ambig, 11 predicted-ambig, 4 correctly flagged) |
 
 **Как заполнить:** `./scripts/run_ablation.sh <branch-name>` запустит BIRD +
 Ambrosia на указанной ветке и положит логи в `ablation_results/<branch>/`.
