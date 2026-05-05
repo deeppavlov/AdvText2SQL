@@ -191,7 +191,7 @@ decomposition), и именно там лежат все три «**[shared]**»
 
 | Branch | Practice | Co-applied (deps) | Base commit | BIRD acc | Ambrosia acc |
 |---|---|---|---|---|---|
-| `main` (baseline) | — | — | `c3d2cfc` | TBD | TBD |
+| `main` (baseline) | — | — | `3d3e990` | **22.73%** (simple 33.33% / moderate 10.00% / challenging 0.00%; false-ambiguous 45.45%) | **54.17%** (24 q, 9 gold-ambig, 8 predicted-ambig, 3 correctly flagged) |
 | `feat/02_column_statistics` | #2 column stats | #4, #8 | `75175bd` | **31.82%** (simple 66.67% / moderate 0.00% / challenging 33.33%; false-ambiguous 36.36%) | **58.33%** (24 q, 9 gold-ambig, 7 predicted-ambig, 3 correctly flagged) |
 | `feat/04_pg_stat_rowcount` | #4 row-count + min-formatter | #8 | `c3d2cfc` | TBD | TBD |
 | `feat/06_heavy_schema` | #6 heavy schema | #8 | `10fb79b` | **27.27%** (simple 44.44% / moderate 10.00% / challenging 33.33%; false-ambiguous 27.27%) | **58.33%** (24 q, 9 gold-ambig, 5 predicted-ambig, 2 correctly flagged) |
