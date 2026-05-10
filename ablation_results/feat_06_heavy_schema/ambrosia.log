@@ -1,0 +1,36 @@
+/Users/vlad/Desktop/uni/maga/2_quarter_project/AdvText2SQL/benchmarks/token_tracking.py:13: UserWarning: Resolved model mismatch: deepseek/deepseek-v4-flash != deepseek/deepseek-v4-flash-20260423. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to deepseek/deepseek-v4-flash-20260423 to enhance token/cost estimation and suppress this warning.
+  resp = await self.client.create(*args, **kwargs)
+{'status': 'ambiguous'}
+{'status': 'success', 'query': 'SELECT DISTINCT "name", "event_space", "capacity"\nFROM "eventspaces"\nWHERE ("event_space" LIKE \'%Banquet Hall%\' OR "event_space" LIKE \'%Conference Room%\')\n  AND "capacity" = 200;'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT "name", "food_service"\n                FROM "restaurants"\nWHERE "cuisine" = \'Italian\'\n  AND ("food_service" = \'Restaurant\' OR "food_service" = \'Café\')\n            ) sub\n            ORDER BY "food_service" ;'}
+{'status': 'success', 'query': 'SELECT *\nFROM "restaurants"\nWHERE "food_service" ILIKE \'%Restaurant%\'\n   OR ("food_service" ILIKE \'%Café%\' AND "cuisine" ILIKE \'%Italian%\');'}
+{'status': 'success', 'query': 'SELECT DISTINCT *\nFROM "restaurants"\nWHERE ("food_service" LIKE \'%Restaurant%\' OR "food_service" LIKE \'%Café%\')\n  AND "cuisine" LIKE \'%Italian%\';'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT s."name",\n    s."role"\n                FROM "staff" s\nWHERE (LOWER(s."role") LIKE \'%chef%\')\n   OR (LOWER(s."role") LIKE \'%server%\' AND LOWER(s."language") LIKE \'%english%\')\n            ) sub\n            ORDER BY s."role", s."name" ;'}
+{'status': 'success', 'query': 'SELECT * FROM "staff" WHERE ("role" ILIKE \'Chef\' OR "role" ILIKE \'Server\') AND "language" ILIKE \'English\';'}
+{'status': 'ambiguous'}
+{'status': 'success', 'query': 'SELECT mr."salary"\nFROM "medicalroles" mr\nWHERE mr."roleid" IN (\n    SELECT hmr."roleid"\n    FROM "hospitals_medical_roles" hmr\n    GROUP BY hmr."roleid"\n    HAVING COUNT(DISTINCT hmr."hospitalid") = (SELECT COUNT(*) FROM "hospitals")\n);'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT sp."name" AS specialist_name, s."system_name" AS system_name\n                FROM "it_support_specialists" sp\nJOIN "it_support_specialists_systems" ss ON sp."id" = ss."it_specialist_id"\nJOIN "systems" s ON ss."system_id" = s."system_id"\n            ) sub\n            ORDER BY sp."name", s."system_name" ;'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT "s"."name" AS "specialist_name",\n    "sys"."system_name",\n    "sys"."is_active"\n                FROM "it_support_specialists" "s"\nINNER JOIN "it_support_specialists_systems" "iss" ON "s"."id" = "iss"."it_specialist_id"\nINNER JOIN "systems" "sys" ON "iss"."system_id" = "sys"."system_id"\n            ) sub\n            ORDER BY "s"."name", "sys"."system_name" ;'}
+{'status': 'success', 'query': 'SELECT "iss"."name", "s"."system_name", "s"."is_active"\nFROM "it_support_specialists" "iss"\nJOIN "it_support_specialists_systems" "isss" ON "iss"."id" = "isss"."it_specialist_id"\nJOIN "systems" "s" ON "isss"."system_id" = "s"."system_id";'}
+{'status': 'success', 'query': 'SELECT r."responsibility"\nFROM "responsibilities" r\nJOIN "internships_responsibilities" ir ON r."id" = ir."responsibilityid"\nGROUP BY r."id", r."responsibility"\nHAVING COUNT(DISTINCT ir."internshipid") = (SELECT COUNT(*) FROM "internships");'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT i."title", r."responsibility"\n                FROM "internships" i\nJOIN "internships_responsibilities" ir ON i."id" = ir."internshipid"\nJOIN "responsibilities" r ON ir."responsibilityid" = r."id"\n            ) sub\n            ORDER BY i."title", r."responsibility" ;'}
+{'status': 'success', 'query': 'SELECT \n    "iss"."name" AS "specialist_name",\n    "s"."system_name" AS "system_name"\nFROM "it_support_specialists" "iss"\nJOIN "it_support_specialists_systems" "isss" ON "iss"."id" = "isss"."it_specialist_id"\nJOIN "systems" "s" ON "isss"."system_id" = "s"."system_id"\nORDER BY "specialist_name", "system_name";'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT i."title" AS "Internship Title",\n    r."responsibility" AS "Responsibility"\n                FROM "internships" i\nJOIN "internships_responsibilities" ir ON i."id" = ir."internshipid"\nJOIN "responsibilities" r ON ir."responsibilityid" = r."id"\n            ) sub\n            ORDER BY i."title", r."responsibility" ;'}
+{'status': 'success', 'query': 'SELECT "minimum_years", "preferred_years"\nFROM "jobs"\nORDER BY "salary" DESC\nLIMIT 1;'}
+{'status': 'success', 'query': 'SELECT DISTINCT sd."salary_range", sd."hourly_rate"\nFROM "position" p\nJOIN "salarydetails" sd ON p."id" = sd."positionid"\nWHERE p."title" ILIKE \'%Software Developer%\';'}
+{'status': 'success', 'query': 'SELECT DISTINCT s."hourly_rate"\nFROM "position" p\nJOIN "salarydetails" s ON p."id" = s."positionid"\nWHERE LOWER(p."title") LIKE \'%software developer%\';'}
+{'status': 'success', 'query': 'SELECT p.title AS job_position, s.salary_range\nFROM "position" p\nLEFT JOIN "salarydetails" s ON p.id = s.positionid;'}
+{'status': 'success', 'query': 'SELECT *\n            FROM (\n                SELECT DISTINCT "preferred_years"\n                FROM "jobs"\n            ) sub\n            ORDER BY "salary" DESC  LIMIT 1;'}
+{'status': 'ambiguous'}
+{'status': 'ambiguous'}
+{'status': 'ambiguous'}
+
+=== Ambiguity Detection (Ambrosia benchmark) ===
+Accuracy: 58.33%
+Total questions: 24
+Gold ambiguous: 9
+Predicted ambiguous: 5
+Correctly flagged ambiguous: 2
+===========================
+
+Report on the tokens spent:  {'prompt_tokens': 69189, 'completion_tokens': 28933, 'total_tokens': 0}

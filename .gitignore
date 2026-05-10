@@ -13,3 +13,4 @@ query_results.json
 
 
 local/*
+*.jsonl.gz

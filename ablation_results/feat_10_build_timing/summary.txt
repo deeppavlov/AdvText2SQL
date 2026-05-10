@@ -1,0 +1,5 @@
+Branch: feat/10_build_timing
+Commit: 38a004d
+
+ablation_results/feat_10_build_timing/bird.log:Overall accuracy: 36.36%
+ablation_results/feat_10_build_timing/ambrosia.log:Accuracy: 50.00%

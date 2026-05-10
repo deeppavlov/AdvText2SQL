@@ -1,0 +1,5 @@
+Branch: main
+Commit: 3d3e990
+
+ablation_results/main/bird.log:Overall accuracy: 22.73%
+ablation_results/main/ambrosia.log:Accuracy: 54.17%

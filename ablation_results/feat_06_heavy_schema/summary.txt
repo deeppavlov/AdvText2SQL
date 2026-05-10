@@ -1,0 +1,5 @@
+Branch: feat/06_heavy_schema
+Commit: 10fb79b
+
+ablation_results/feat_06_heavy_schema/bird.log:Overall accuracy: 27.27%
+ablation_results/feat_06_heavy_schema/ambrosia.log:Accuracy: 58.33%

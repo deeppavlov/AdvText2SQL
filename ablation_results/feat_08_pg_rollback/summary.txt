@@ -1,0 +1,5 @@
+Branch: feat/08_pg_rollback
+Commit: d018812
+
+ablation_results/feat_08_pg_rollback/bird.log:Overall accuracy: 31.82%
+ablation_results/feat_08_pg_rollback/ambrosia.log:Accuracy: 41.67%
