@@ -97,6 +97,62 @@ Two modes in `text2sql_implementation.py`:
 - Student branches should be created off `main` and never pushed directly to `main`
 - `MAX_RETRIES` defaults to 7; overridable via env var
 
+## Ablation Feature Flags
+
+Feature flags gate the schema/stats enrichment in `Text2SQLGenerator.build()`. They are read at **module import time** — not per-call — so they must be set before any `uv run`.
+
+FEAT_N maps 1:1 to Practice #N in `practices_doc.md`. Flags are read at **module import time** — must be set before `uv run`.
+
+| Flag | Default | Practice | Effect when `true` |
+|------|---------|----------|--------------------|
+| `FEAT_1`  | `true`  | #1  | FK/PK relationships in prompt |
+| `FEAT_2`  | `true`  | #2  | Column statistics (min/max/top-K) |
+| `FEAT_3`  | `true`  | #3  | Regex type detection for TEXT columns (requires FEAT_2) |
+| `FEAT_4`  | `true`  | #4  | `pg_stat` row count (requires FEAT_2) |
+| `FEAT_5`  | `true`  | #5  | Light schema (table/column names + types) |
+| `FEAT_6`  | `false` | #6  | Heavy schema — sample rows + enums (off by default) |
+| `FEAT_7`  | `true`  | #7  | Compact stats formatting (requires FEAT_2) |
+| `FEAT_8`  | `true`  | #8  | Rollback guards on failed PG transactions |
+| `FEAT_9`  | `true`  | #9  | Dump `db_schemas.json` after build phase |
+| `FEAT_10` | `true`  | #10 | `build()` timing + prompt-size log |
+| `FEAT_11` | `true`  | #11 | JSON structured logging to file |
+| `FEAT_12` | `true`  | #12 | Optimistic ambiguity fallback — generate SQL even when flagged ambiguous |
+| `FEAT_13` | `true`  | #13 | Few-shot examples in ambiguity prompt |
+| `FEAT_14` | `true`  | #14 | Strict SQL rules in generation prompt |
+| `FEAT_15` | `true`  | #15 | `sanitize_sql` clean-up (markdown, DISTINCT, CAST fixes) |
+| `FEAT_16` | `true`  | #16 | sqlglot validate + forbid DROP/DELETE/UPDATE |
+| `FEAT_17` | `true`  | #17 | Retry loop up to `MAX_RETRIES` |
+| `FEAT_18` | `true`  | #18 | Exponential backoff on 429 rate-limit |
+| `FEAT_19` | `true`  | #19 | `asyncio.sleep` throttle between benchmark questions |
+| `FEAT_20` | `true`  | #20 | LLM-as-judge verify in retry loop |
+| `FEAT_27` | `true`  | #27 | True self-correction — pass error text into retry prompt |
+| `FEAT_29` | `true`  | #29 | Complexity-based prompt selection (simple/complex) |
+| `FEAT_32` | `false` | #32 | AmbiSQL Stage 1: taxonomy detection (A1-A6) |
+| `FEAT_33` | `false` | #33 | AmbiSQL Stage 2a: clarification questions (requires FEAT_32) |
+| `FEAT_34` | `false` | #34 | AmbiSQL Stage 2b: query rewriting / auto-resolve (requires FEAT_33) |
+| `FEAT_35` | `true`  | #35 | TSV schema format (30–40% fewer tokens vs JSON) |
+
+**Critical**: flags default to `"true"` unless noted. Any flag absent from the environment is treated as enabled. To run ablation, all flags must be explicitly set. Exceptions: FEAT_32/33/34 default `false` (AmbiSQL pipeline is experimental).
+
+### Running isolated ablation (leave-one-in)
+
+On Windows/Git Bash, shell `export` does not reliably cross the MSYS2→uv.exe boundary. Use a temp env file:
+
+```bash
+# One feature at a time:
+bash local/run_single.sh FEAT_5 ambrosia   # ambrosia | bird | both
+
+# Full 14-feature ablation (BIRD + Ambrosia per feature, ~6 hours):
+bash local/ablation_full.sh
+```
+
+Results are saved to `ablation_results/<feat_name>/` (bird.log, ambrosia.log, summary.txt).
+
+### Additional env vars
+
+- `MAX_RETRIES` — SQL generation retries (default: 7)
+- `LLM_MIN_INTERVAL` — seconds between questions (default: 3; ablation scripts use 12)
+
 ## Baseline Accuracy (reference)
 - BIRD: ~20–35% with gpt-3.5-turbo
 - Ambrosia: ~50–65% ambiguity detection accuracy

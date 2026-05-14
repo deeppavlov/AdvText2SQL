@@ -16,21 +16,51 @@ from sqlglot.errors import ParseError
 
 from .prompts import (
     AMBIGUITY_PROMPT_TEMPLATE,
+    AMBIGUITY_PROMPT_SIMPLE,
     SQL_PROMPT_TEMPLATE,
+    SQL_PROMPT_BASIC,
+    SQL_PROMPT_COMPLEX_TEMPLATE,
+    SQL_PROMPT_SIMPLE_TEMPLATE,
+    SQL_RETRY_PROMPT_TEMPLATE,
     SYSTEM_PROMPT_TEMPLATE,
     VERIFICATION_PROMPT_TEMPLATE,
+    TAXONOMY_DETECTION_PROMPT,
+    CLARIFICATION_PROMPT,
+    AUTO_RESOLVE_PROMPT,
 )
 from .utils import print_result
 
 # Load environment variables for the main block
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", 7))
-OPTIMISTIC_AMBIGUITY_FALLBACK = os.getenv("OPTIMISTIC_AMBIGUITY_FALLBACK", "true").lower() == "true"
 
-# Ablation feature flags (default true = full feature set when not running ablation)
-FEAT_1 = os.getenv("FEAT_1", "true").lower() == "true"  # FK/PK relationships in prompt
-FEAT_3 = os.getenv("FEAT_3", "true").lower() == "true"  # regex type detection + column stats
-FEAT_5 = os.getenv("FEAT_5", "true").lower() == "true"  # light schema (names + types)
-FEAT_7 = os.getenv("FEAT_7", "true").lower() == "true"  # compact stats formatting
+# Ablation feature flags — FEAT_N maps 1:1 to Practice #N in practices_doc.md
+# Default true = full feature set when not running ablation
+FEAT_1  = os.getenv("FEAT_1",  "true").lower()  == "true"  # #1  FK/PK relationships in prompt
+FEAT_2  = os.getenv("FEAT_2",  "true").lower()  == "true"  # #2  column statistics (min/max/top-K)
+FEAT_3  = os.getenv("FEAT_3",  "true").lower()  == "true"  # #3  regex type detection for TEXT cols
+FEAT_4  = os.getenv("FEAT_4",  "true").lower()  == "true"  # #4  pg_stat row count (vs fallback COUNT)
+FEAT_5  = os.getenv("FEAT_5",  "true").lower()  == "true"  # #5  light schema (names + types)
+FEAT_6  = os.getenv("FEAT_6",  "false").lower() == "true"  # #6  heavy schema (samples + enums; off by default)
+FEAT_7  = os.getenv("FEAT_7",  "true").lower()  == "true"  # #7  compact stats formatting
+FEAT_8  = os.getenv("FEAT_8",  "true").lower()  == "true"  # #8  PG rollback guards on failed transactions
+FEAT_9  = os.getenv("FEAT_9",  "true").lower()  == "true"  # #9  dump db_schemas.json after build
+FEAT_10 = os.getenv("FEAT_10", "true").lower()  == "true"  # #10 build() timing + prompt size log
+FEAT_11 = os.getenv("FEAT_11", "true").lower()  == "true"  # #11 JSON structured logging to file
+FEAT_12 = os.getenv("FEAT_12", "true").lower()  == "true"  # #12 optimistic ambiguity fallback
+FEAT_13 = os.getenv("FEAT_13", "true").lower()  == "true"  # #13 few-shot ambiguity prompt with rules
+FEAT_14 = os.getenv("FEAT_14", "true").lower()  == "true"  # #14 strict SQL rules in generation prompt
+FEAT_15 = os.getenv("FEAT_15", "true").lower()  == "true"  # #15 sanitize_sql clean-up
+FEAT_16 = os.getenv("FEAT_16", "true").lower()  == "true"  # #16 sqlglot validate + forbid mutations
+FEAT_17 = os.getenv("FEAT_17", "true").lower()  == "true"  # #17 retry loop up to MAX_RETRIES
+FEAT_18 = os.getenv("FEAT_18", "true").lower()  == "true"  # #18 LLM exponential backoff on 429
+FEAT_19 = os.getenv("FEAT_19", "true").lower()  == "true"  # #19 asyncio.sleep throttle between questions
+FEAT_20 = os.getenv("FEAT_20", "true").lower()  == "true"  # #20 LLM-as-judge verify in retry loop
+FEAT_27 = os.getenv("FEAT_27", "true").lower()  == "true"  # #27 true self-correction (error feedback in retry)
+FEAT_29 = os.getenv("FEAT_29", "true").lower()  == "true"  # #29 complexity-based prompt selection
+FEAT_32 = os.getenv("FEAT_32", "false").lower() == "true"  # #32 AmbiSQL Stage 1: taxonomy detection (A1-A6)
+FEAT_33 = os.getenv("FEAT_33", "false").lower() == "true"  # #33 AmbiSQL Stage 2a: clarification questions
+FEAT_34 = os.getenv("FEAT_34", "false").lower() == "true"  # #34 AmbiSQL Stage 2b: query rewriting
+FEAT_35 = os.getenv("FEAT_35", "true").lower()  == "true"  # #35 TSV schema format (token-efficient)
 
 
 logger = logging.getLogger("text2sql_tool")
@@ -68,11 +98,12 @@ def setup_logging(log_file: str = "text2sql_debug.log"):
     ))
     root_logger.addHandler(console)
 
-    # File handler — JSON DEBUG
-    file_handler = logging.FileHandler(log_file, mode="w", encoding="utf-8")
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(JSONFormatter())
-    root_logger.addHandler(file_handler)
+    # File handler — JSON DEBUG (FEAT_11)
+    if FEAT_11:
+        file_handler = logging.FileHandler(log_file, mode="w", encoding="utf-8")
+        file_handler.setLevel(logging.DEBUG)
+        file_handler.setFormatter(JSONFormatter())
+        root_logger.addHandler(file_handler)
 
 
 class Text2SQLGenerator:
@@ -97,9 +128,25 @@ class Text2SQLGenerator:
     def build(self):
         start = time.time()
         logger.info(f"Build started for {self.db_uri}")
-        logger.info(f"Feature flags: FEAT_1={FEAT_1} FEAT_3={FEAT_3} FEAT_5={FEAT_5} FEAT_7={FEAT_7}")
+        logger.info(
+            f"Feature flags: "
+            f"FEAT_1={FEAT_1} FEAT_2={FEAT_2} FEAT_3={FEAT_3} FEAT_4={FEAT_4} "
+            f"FEAT_5={FEAT_5} FEAT_6={FEAT_6} FEAT_7={FEAT_7} FEAT_8={FEAT_8} "
+            f"FEAT_9={FEAT_9} FEAT_10={FEAT_10} FEAT_11={FEAT_11} FEAT_12={FEAT_12} "
+            f"FEAT_13={FEAT_13} FEAT_14={FEAT_14} FEAT_15={FEAT_15} FEAT_16={FEAT_16} "
+            f"FEAT_17={FEAT_17} FEAT_18={FEAT_18} FEAT_19={FEAT_19} FEAT_20={FEAT_20} "
+            f"FEAT_27={FEAT_27} FEAT_29={FEAT_29} "
+            f"FEAT_32={FEAT_32} FEAT_33={FEAT_33} FEAT_34={FEAT_34} FEAT_35={FEAT_35}"
+        )
 
-        self.db_schema = self._get_db_schema_light() if FEAT_5 else ""
+        if FEAT_35:
+            self.db_schema = self._get_db_schema_tsv()
+        elif FEAT_6:
+            self.db_schema = self._get_db_schema_heavy()
+        elif FEAT_5:
+            self.db_schema = self._get_db_schema_light()
+        else:
+            self.db_schema = ""
 
         if FEAT_1:
             self.db_relationships = self._explore_db_relationships()
@@ -108,8 +155,10 @@ class Text2SQLGenerator:
             self.db_relationships = {"foreign_keys": [], "primary_keys": {}}
             self.relationships_str = ""
 
-        if FEAT_3:
-            self.column_stats = self._explore_column_statistics()
+        if FEAT_2:
+            self.column_stats = self._explore_column_statistics(
+                use_regex=FEAT_3, use_pg_stat=FEAT_4
+            )
             self.column_stats_str = (
                 self._format_column_statistics(self.column_stats) if FEAT_7
                 else self._format_column_statistics_verbose(self.column_stats)
@@ -120,12 +169,13 @@ class Text2SQLGenerator:
 
         self.system_prompt = self._create_system_prompt()
 
-        elapsed = time.time() - start
-        logger.info(
-            f"Build completed in {elapsed:.1f}s — "
-            f"stats for {len(self.column_stats)} tables, "
-            f"system prompt {len(self.system_prompt)} chars"
-        )
+        if FEAT_10:
+            elapsed = time.time() - start
+            logger.info(
+                f"Build completed in {elapsed:.1f}s — "
+                f"stats for {len(self.column_stats)} tables, "
+                f"system prompt {len(self.system_prompt)} chars"
+            )
 
     def _update_db_schema(self, db_uri):
         self.db_uri = db_uri
@@ -158,6 +208,7 @@ class Text2SQLGenerator:
         unique_values_parts: list[str] = []
 
         with self.engine.connect() as conn:
+            conn.execute(text("SET LOCAL statement_timeout = '10s'"))
             tables = inspector.get_table_names()
 
             for table in tables:
@@ -258,6 +309,21 @@ class Text2SQLGenerator:
 
         return "\n".join(schema_parts).strip()
 
+    def _get_db_schema_tsv(self) -> str:
+        """FEAT_35: TSV schema — table/column/type, one row per column (~30% fewer tokens than light schema)."""
+        inspector = inspect(self.engine)
+        tables = inspector.get_table_names(schema="public")
+        if not tables:
+            raise RuntimeError("No tables found in public schema")
+
+        rows = ["table\tcolumn\ttype"]
+        for table in tables:
+            columns = inspector.get_columns(table, schema="public")
+            for col in columns:
+                rows.append(f"{table}\t{col['name']}\t{str(col['type'])}")
+
+        return "\n".join(rows)
+
     def _create_system_prompt(self) -> str:
         """Создает системный промпт с описанием схемы БД"""
         return SYSTEM_PROMPT_TEMPLATE.format(
@@ -336,20 +402,22 @@ class Text2SQLGenerator:
             if row and row[0] > 0:
                 return int(row[0])
         except Exception:
-            try:
-                conn.rollback()
-            except Exception:
-                pass
+            if FEAT_8:
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
 
         try:
             res = conn.execute(text(f'SELECT COUNT(*) FROM "{table}"'))
             return int(res.scalar())
         except Exception:
             logger.exception(f"COUNT(*) failed for table {table}")
-            try:
-                conn.rollback()
-            except Exception:
-                pass
+            if FEAT_8:
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
             return 0
 
     def _detect_column_types_for_table(
@@ -385,10 +453,11 @@ class Text2SQLGenerator:
             row = result.fetchone()
         except Exception:
             logger.exception(f"Column type detection failed for table {table}")
-            try:
-                conn.rollback()
-            except Exception:
-                pass
+            if FEAT_8:
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
             return {}
 
         if not row:
@@ -500,16 +569,25 @@ class Text2SQLGenerator:
             logger.exception(
                 f"Stats computation failed for {table}.{column}"
             )
-            try:
-                conn.rollback()
-            except Exception:
-                pass
+            if FEAT_8:
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
 
         return None
 
-    def _explore_column_statistics(self) -> dict:
+    def _explore_column_statistics(
+        self, use_regex: bool = True, use_pg_stat: bool = True
+    ) -> dict:
         """
         Оркестратор: собирает row counts, типы и статистики для всех таблиц.
+
+        Args:
+            use_regex: FEAT_3 — use regex sampling to detect real column types.
+                       False → treat all TEXT columns as categorical.
+            use_pg_stat: FEAT_4 — use pg_stat_user_tables for row count.
+                         False → skip row count (set to 0).
         """
         inspector = inspect(self.engine)
         tables = inspector.get_table_names(schema="public")
@@ -518,11 +596,19 @@ class Text2SQLGenerator:
         with self.engine.connect() as conn:
             for table in tables:
                 try:
-                    row_count = self._get_table_row_count(conn, table)
+                    row_count = self._get_table_row_count(conn, table) if use_pg_stat else 0
                     columns = inspector.get_columns(table, schema="public")
-                    col_types = self._detect_column_types_for_table(
-                        conn, table, columns
-                    )
+                    if use_regex:
+                        col_types = self._detect_column_types_for_table(conn, table, columns)
+                    else:
+                        col_types = {
+                            col["name"]: {
+                                "detected_type": "categorical",
+                                "distinct_count": 0,
+                                "nonnull_count": 1,
+                            }
+                            for col in columns
+                        }
 
                     col_stats = {}
                     for col in columns:
@@ -553,10 +639,11 @@ class Text2SQLGenerator:
                     logger.exception(
                         f"Column statistics exploration failed for table {table}"
                     )
-                    try:
-                        conn.rollback()
-                    except Exception:
-                        pass
+                    if FEAT_8:
+                        try:
+                            conn.rollback()
+                        except Exception:
+                            pass
 
         logger.info(f"Column statistics: {len(result)}/{len(tables)} tables processed")
         return result
@@ -635,33 +722,38 @@ class Text2SQLGenerator:
         return "\n".join(parts).strip() if parts else "-- No statistics available"
 
     async def _llm_call_with_retry(
-        self, messages, max_retries: int = 3, base_delay: float = 2.0
+        self, messages, max_retries: int = 6, base_delay: float = 5.0, max_delay: float = 120.0
     ):
-        """Обёртка LLM вызовов с retry и exponential backoff при 429."""
+        """Обёртка LLM вызовов с retry и exponential backoff при 429. FEAT_18 gates backoff."""
         import asyncio as _asyncio
 
-        for attempt in range(max_retries):
+        effective_retries = max_retries if FEAT_18 else 1
+        for attempt in range(effective_retries):
+            if attempt > 0:
+                await _asyncio.sleep(1.0)  # min 1s between calls to stay under 1 RPS
             try:
                 return await self.llm_client.create(messages)
             except Exception as e:
                 err_str = str(e).lower()
-                if "429" in str(e) or "rate" in err_str:
-                    delay = base_delay * (2 ** attempt)
+                if FEAT_18 and ("429" in str(e) or "rate" in err_str):
+                    delay = min(base_delay * (2 ** attempt), max_delay)
                     logger.warning(
-                        f"Rate limited, retrying in {delay}s "
-                        f"(attempt {attempt + 1}/{max_retries})"
+                        f"Rate limited, retrying in {delay:.0f}s "
+                        f"(attempt {attempt + 1}/{effective_retries})"
                     )
                     await _asyncio.sleep(delay)
                 else:
                     raise
         # Last attempt — let exception propagate
+        await _asyncio.sleep(1.0)
         return await self.llm_client.create(messages)
 
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
         Проверяет пользовательский запрос на неоднозначность с помощью LLM.
         """
-        ambiguity_prompt = AMBIGUITY_PROMPT_TEMPLATE.format(
+        template = AMBIGUITY_PROMPT_TEMPLATE if FEAT_13 else AMBIGUITY_PROMPT_SIMPLE
+        ambiguity_prompt = template.format(
             db_schema=self.db_schema,
             db_relationships=self.relationships_str,
             column_statistics=self.column_stats_str,
@@ -705,6 +797,78 @@ class Text2SQLGenerator:
             logger.exception(f"Failed to check ambiguity for query: {user_query}")
             return {"status": "error"}
 
+    async def _detect_ambiguity_by_taxonomy(self, user_query: str) -> dict[str, Any]:
+        """Stage 1: классифицирует запрос по таксономии AmbiSQL (A1-A6). FEAT_32."""
+        prompt = TAXONOMY_DETECTION_PROMPT.format(
+            db_schema=self.db_schema,
+            user_query=user_query,
+        )
+        messages = [
+            SystemMessage(content=prompt),
+            UserMessage(source="user", content="Classify the query."),
+        ]
+        try:
+            result = await self._llm_call_with_retry(messages)
+            text = result.content.strip()
+            text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.IGNORECASE).strip()
+            data = json_module.loads(text)
+            logger.info(f"Taxonomy detection: is_ambiguous={data.get('is_ambiguous')} type={data.get('ambiguity_type')}")
+            return data
+        except Exception:
+            logger.exception(f"Taxonomy detection failed for: {user_query}")
+            return {"is_ambiguous": False, "ambiguity_type": None, "reason": ""}
+
+    async def _generate_clarification_question(
+        self, user_query: str, ambiguity_type: str, reason: str
+    ) -> dict[str, Any]:
+        """Stage 2a: генерирует multiple-choice вопрос для уточнения. FEAT_33."""
+        prompt = CLARIFICATION_PROMPT.format(
+            db_schema=self.db_schema,
+            user_query=user_query,
+            ambiguity_type=ambiguity_type,
+            reason=reason,
+        )
+        messages = [
+            SystemMessage(content=prompt),
+            UserMessage(source="user", content="Generate clarification question."),
+        ]
+        try:
+            result = await self._llm_call_with_retry(messages)
+            text = result.content.strip()
+            text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.IGNORECASE).strip()
+            data = json_module.loads(text)
+            logger.info(f"Clarification question: {data.get('question', '')[:80]}")
+            return data
+        except Exception:
+            logger.exception(f"Clarification generation failed for: {user_query}")
+            return {"question": "", "options": []}
+
+    async def _auto_resolve_ambiguity(
+        self, user_query: str, question: str, options: list
+    ) -> str:
+        """Stage 2b: LLM выбирает наиболее вероятную опцию и переписывает запрос. FEAT_34."""
+        prompt = AUTO_RESOLVE_PROMPT.format(
+            user_query=user_query,
+            clarification_question=question,
+            options="\n".join(f"- {o}" for o in options),
+            db_schema=self.db_schema,
+        )
+        messages = [
+            SystemMessage(content=prompt),
+            UserMessage(source="user", content="Choose and rewrite."),
+        ]
+        try:
+            result = await self._llm_call_with_retry(messages)
+            text = result.content.strip()
+            text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.IGNORECASE).strip()
+            data = json_module.loads(text)
+            rewritten = data.get("rewritten_query", user_query)
+            logger.info(f"Auto-resolve: chose '{data.get('chosen_option', '')}' → '{rewritten[:80]}'")
+            return rewritten
+        except Exception:
+            logger.exception(f"Auto-resolve failed for: {user_query}")
+            return user_query
+
     def _strip_sql_comments(self, sql: str) -> str:
         sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
         sql = re.sub(r"--.*?$", "", sql, flags=re.MULTILINE)
@@ -734,7 +898,9 @@ class Text2SQLGenerator:
         return True
 
     def _validate_sql(self, sql: str) -> bool:
-        """Валидация SQL запроса с помощью SQLGlot"""
+        """Валидация SQL запроса с помощью SQLGlot. FEAT_16 gates this check."""
+        if not FEAT_16:
+            return True
         try:
             if not self._is_sql_complete(sql):
                 raise ValueError("Incomplete SQL generated")
@@ -782,7 +948,29 @@ class Text2SQLGenerator:
 
         return sql
 
-    async def generate_sql(self, user_query: str) -> dict[str, Any]:
+    def _classify_query_complexity(self, question: str) -> str:
+        """FEAT_29: keyword heuristic — no extra LLM call, zero latency."""
+        q = question.lower()
+        complex_signals = [
+            "join", "group by", "having", "union", "except", "intersect",
+            "with ", "rank(", "partition by", "case when", "subquery",
+            "подзапрос", "рекурс", "окно", "ранг",
+        ]
+        moderate_signals = [
+            "count", "sum", "avg", "average", "max", "min",
+            "среднее", "сумм", "количество", "максимальн", "минимальн",
+            "group", "order by", "distinct",
+        ]
+        complex_score = sum(1 for s in complex_signals if s in q)
+        if complex_score >= 2:
+            return "complex"
+        if complex_score == 1 or any(s in q for s in moderate_signals):
+            return "moderate"
+        return "simple"
+
+    async def generate_sql(self, user_query: str, prev_sql: str | None = None,
+                           error_feedback: str | None = None,
+                           complexity: str | None = None) -> dict[str, Any]:
         """
         Генерирует SQL запрос из естественно-языкового запроса
 
@@ -792,23 +980,41 @@ class Text2SQLGenerator:
         Returns:
             Dict[str, Any]: Результат в формате Model Context Protocol
         """
-        sql_prompt = SQL_PROMPT_TEMPLATE.format(
-            user_query=user_query, sql_dialect="PostgreSQL"
-        )
+        # FEAT_27: self-correction prompt when error context is available
+        # FEAT_29: complexity-based prompt selection (fallback to standard)
+        if FEAT_27 and prev_sql and error_feedback:
+            sql_prompt = SQL_RETRY_PROMPT_TEMPLATE.format(
+                user_query=user_query,
+                prev_sql=prev_sql,
+                error_feedback=error_feedback,
+                sql_dialect="PostgreSQL",
+            )
+        elif FEAT_29 and complexity == "complex":
+            sql_prompt = SQL_PROMPT_COMPLEX_TEMPLATE.format(
+                user_query=user_query, sql_dialect="PostgreSQL"
+            )
+        elif FEAT_29 and complexity == "simple":
+            sql_prompt = SQL_PROMPT_SIMPLE_TEMPLATE.format(
+                user_query=user_query, sql_dialect="PostgreSQL"
+            )
+        else:
+            # FEAT_14: use strict SQL rules prompt; fallback to basic prompt without rules
+            template = SQL_PROMPT_TEMPLATE if FEAT_14 else SQL_PROMPT_BASIC
+            sql_prompt = template.format(
+                user_query=user_query, sql_dialect="PostgreSQL"
+            )
         try:
-            # Создаем цепочку обработки запроса
             messages = [
                 SystemMessage(content=self.system_prompt),
                 UserMessage(source="user", content=dedent(sql_prompt)),
             ]
 
-            # Прямой вызов LLM
             result = await self._llm_call_with_retry(messages)
             raw_sql = result.content.strip()
+            raw_sql_attempted = raw_sql  # preserve for FEAT_27 retry context
 
-            # Очистка и валидация
-            # sanitized_sql = self._sanitize_sql(raw_sql) # TODO сделать нормально
-            sanitized_sql = self.sanitize_sql(raw_sql)
+            # FEAT_15: sanitize LLM output (markdown, DISTINCT, CAST fixes)
+            sanitized_sql = self.sanitize_sql(raw_sql) if FEAT_15 else raw_sql
 
             sanitized_sql = self._strip_sql_comments(sanitized_sql)
 
@@ -831,6 +1037,7 @@ class Text2SQLGenerator:
             return {
                 "status": "error",
                 "error": str(e),
+                "sql_attempted": locals().get("raw_sql_attempted"),  # for FEAT_27 retry context
                 "user_query": user_query,
                 "metadata": {
                     "validation_passed": False,
@@ -926,23 +1133,44 @@ class Text2SQLGenerator:
         """
         logger.info(f"query() started: {user_query[:100]}")
 
-        # Ambiguity checking
+        # Ambiguity checking — FEAT_32: AmbiSQL taxonomy pipeline; else: classic _check_ambiguity
         logger.info("Проверяю запрос на неоднозначность...")
-        ambiguity_check = await self._check_ambiguity(user_query)
+        was_flagged_ambiguous = False
 
-        was_flagged_ambiguous = (
-            ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]
-        )
-
-        if was_flagged_ambiguous:
-            logger.info(f"Запрос неоднозначен: {ambiguity_check['clarification_needed']}")
-            if not OPTIMISTIC_AMBIGUITY_FALLBACK:
-                return {"status": "ambiguous"}
-            logger.info("Optimistic fallback включён — пробуем сгенерировать SQL несмотря на флаг ambiguous")
-
-        if ambiguity_check["status"] == "error":
-            logger.warning("Ambiguity check failed, proceeding with SQL generation")
-            # НЕ возвращаем error — продолжаем генерацию SQL
+        if FEAT_32:
+            taxonomy = await self._detect_ambiguity_by_taxonomy(user_query)
+            if taxonomy.get("is_ambiguous"):
+                ambiguity_type = taxonomy.get("ambiguity_type", "unknown")
+                reason = taxonomy.get("reason", "")
+                logger.info(f"AmbiSQL: тип={ambiguity_type} — {reason[:80]}")
+                if FEAT_33:
+                    clarification = await self._generate_clarification_question(
+                        user_query, ambiguity_type, reason
+                    )
+                    if FEAT_34:
+                        user_query = await self._auto_resolve_ambiguity(
+                            user_query,
+                            clarification.get("question", ""),
+                            clarification.get("options", []),
+                        )
+                        logger.info(f"AmbiSQL: rewritten → {user_query[:80]}")
+                        # rewritten query is unambiguous — proceed to SQL generation
+                    else:
+                        return {"status": "ambiguous"}
+                else:
+                    return {"status": "ambiguous"}
+        else:
+            ambiguity_check = await self._check_ambiguity(user_query)
+            was_flagged_ambiguous = (
+                ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]
+            )
+            if was_flagged_ambiguous:
+                logger.info(f"Запрос неоднозначен: {ambiguity_check['clarification_needed']}")
+                if not FEAT_12:
+                    return {"status": "ambiguous"}
+                logger.info("Optimistic fallback включён — пробуем сгенерировать SQL несмотря на флаг ambiguous")
+            if ambiguity_check["status"] == "error":
+                logger.warning("Ambiguity check failed, proceeding with SQL generation")
 
         # Main query generation
         retries = 0
@@ -950,13 +1178,30 @@ class Text2SQLGenerator:
         raw_sql = ""
         final_result = {"status": "ambiguous"} if was_flagged_ambiguous else {"status": "error"}
 
-        while not success and retries < MAX_RETRIES:
+        # FEAT_27: track previous attempt for error-feedback self-correction
+        last_error: str | None = None
+        last_sql: str | None = None
+
+        # FEAT_29: classify once before the retry loop (zero extra LLM calls)
+        complexity: str | None = self._classify_query_complexity(user_query) if FEAT_29 else None
+        if FEAT_29:
+            logger.info(f"Query complexity: {complexity}")
+
+        max_retries_effective = MAX_RETRIES if FEAT_17 else 1
+        while not success and retries < max_retries_effective:
             logger.info(
-                f"Попытка {retries + 1}/{MAX_RETRIES}. Генерирую валидный SQL-запрос... "
+                f"Попытка {retries + 1}/{max_retries_effective}. Генерирую валидный SQL-запрос... "
             )
-            generation_result = await self.generate_sql(user_query)
+            generation_result = await self.generate_sql(
+                user_query,
+                prev_sql=last_sql if FEAT_27 else None,
+                error_feedback=last_error if FEAT_27 else None,
+                complexity=complexity,
+            )
 
             if generation_result["status"] != "success":
+                last_error = generation_result.get("error", "Ошибка генерации SQL")
+                last_sql = generation_result.get("sql_attempted")
                 retries += 1
                 continue
 
@@ -969,6 +1214,17 @@ class Text2SQLGenerator:
                     raw_sql.strip(),
                     flags=re.IGNORECASE,
                 )
+
+            # FEAT_20: LLM verification — check SQL matches the user's intent
+            if FEAT_20:
+                verify_result = await self._verify_sql_against_query(user_query, raw_sql)
+                if not verify_result.get("is_correct"):
+                    reason = verify_result.get("reason", "")
+                    logger.info(f"LLM verify: не OK — {reason[:100]}")
+                    last_sql = raw_sql
+                    last_error = f"SQL не соответствует запросу: {reason}"
+                    retries += 1
+                    continue
 
             final_result = {"status": "success", "query": raw_sql}
             success = True

@@ -1,9 +1,17 @@
+import asyncio
 import json
+import logging
+import os
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
 from .evaluate_ambrosia import run_evaluation
 from .response import ToolResponse
+
+logger = logging.getLogger("text2sql_tool")
+
+_LLM_MIN_INTERVAL = float(os.getenv("LLM_MIN_INTERVAL", "3.0"))
+_FEAT_19 = os.getenv("FEAT_19", "true").lower() == "true"
 
 
 class BenchmarkAmbrosia(BenchmarkBase):
@@ -17,13 +25,14 @@ class BenchmarkAmbrosia(BenchmarkBase):
         queries = self._load_queries()
         predictions = {}
 
-        for item in queries:
+        for i, item in enumerate(queries):
             qid = item["question_id"]
             db_id = item["db_id"]
             question = item["question"]
 
             tool = tool_dict[db_id]
 
+            logger.info(f"[{i+1}/{len(queries)}] Processing q_id={qid} db={db_id}")
             result = await tool.query(question)
             print(result)
 
@@ -36,7 +45,10 @@ class BenchmarkAmbrosia(BenchmarkBase):
             else:
                 sql_query = "error"
 
+            logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
+
+            await asyncio.sleep(_LLM_MIN_INTERVAL if _FEAT_19 else 0)
 
         return predictions
 

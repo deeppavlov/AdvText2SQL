@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import os
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
@@ -9,6 +10,9 @@ from .response import ToolResponse
 
 
 logger = logging.getLogger("text2sql_tool")
+
+_LLM_MIN_INTERVAL = float(os.getenv("LLM_MIN_INTERVAL", "3.0"))
+_FEAT_19 = os.getenv("FEAT_19", "true").lower() == "true"
 
 
 class BenchmarkBIRD(BenchmarkBase):
@@ -53,8 +57,7 @@ class BenchmarkBIRD(BenchmarkBase):
             logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
 
-            # Throttle to avoid rate limiting
-            await asyncio.sleep(1.0)
+            await asyncio.sleep(_LLM_MIN_INTERVAL if _FEAT_19 else 0)
 
         return predictions
 

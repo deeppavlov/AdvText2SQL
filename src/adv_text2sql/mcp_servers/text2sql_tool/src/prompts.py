@@ -112,6 +112,62 @@ SQL_PROMPT_TEMPLATE = """
 
 SQL запрос:"""
 
+# FEAT_11: used when a previous SQL attempt failed — passes error context for self-correction
+SQL_RETRY_PROMPT_TEMPLATE = """
+Преобразуй следующий запрос в SQL:
+Запрос: {user_query}
+
+Предыдущая попытка завершилась ошибкой.
+Предыдущий SQL:
+```sql
+{prev_sql}
+```
+Ошибка: {error_feedback}
+
+Исправь SQL с учётом ошибки. Применяй те же правила:
+1. Только SQL, диалект {sql_dialect}
+2. DISTINCT пишется ТОЛЬКО сразу после SELECT
+3. Если SELECT DISTINCT с ORDER BY — все колонки ORDER BY ОБЯЗАНЫ быть в SELECT
+4. Используй LIKE для имён собственных и значений из таблицы
+НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
+
+SQL запрос:"""
+
+# FEAT_15: for simple queries — single table, no aggregation complexity
+SQL_PROMPT_SIMPLE_TEMPLATE = """
+Преобразуй следующий запрос в SQL (запрос простой — один SELECT):
+Запрос: {user_query}
+
+Требования:
+1. Только SQL, диалект {sql_dialect}
+2. Используй LIKE для имён собственных и значений из таблицы
+3. DISTINCT пишется ТОЛЬКО сразу после SELECT
+4. Все поля TEXT — преобразуй перед числовыми сравнениями
+НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
+
+SQL запрос:"""
+
+# FEAT_15: for complex queries — multiple JOINs, nested subqueries, window functions
+SQL_PROMPT_COMPLEX_TEMPLATE = """
+Преобразуй следующий запрос в SQL (запрос сложный — используй пошаговый подход):
+Запрос: {user_query}
+
+Стратегия:
+1. Определи нужные таблицы и JOIN-условия
+2. Напиши промежуточные вычисления через CTE (WITH ...) если нужно
+3. Собери финальный SELECT
+
+Обязательные правила:
+1. Только SQL, диалект {sql_dialect}
+2. DISTINCT пишется ТОЛЬКО сразу после SELECT; если ORDER BY — все его колонки в SELECT
+3. Используй LIKE для имён собственных
+4. Все поля TEXT — явный CAST перед числовыми/датовыми сравнениями
+5. Для топ-N используй GROUP BY + ORDER BY + LIMIT, не DISTINCT
+6. Проверь: нет ли неоднозначных JOIN-ов без ON-условия
+НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
+
+SQL запрос:"""
+
 VERIFICATION_PROMPT_TEMPLATE = """
 Ты — эксперт по SQL, который проверяет соответствие SQL-запросов пользовательским запросам.
 Тебе предоставлены оригинальный запрос пользователя и сгенерированный SQL-запрос.
@@ -178,4 +234,113 @@ SYSTEM_PROMPT_TEMPLATE = """
 13. Имена собственных из запроса пользователя (имена людей, названия событий, продуктов, карт и т.д.)
     используй ТОЧНО как написано в запросе. НЕ переводи и НЕ транслитерируй!
     Пример: "Elijah Allen" → ищи 'Elijah' и 'Allen', НЕ 'Элайджа' и не 'Аллен'.
+"""
+
+# ── FEAT_13 fallback: simplified ambiguity check without few-shot examples ──────
+AMBIGUITY_PROMPT_SIMPLE = """
+Ты — помощник, который проверяет запросы к базе данных на неоднозначность.
+
+### Схема базы данных:
+{db_schema}
+
+### Связи между таблицами:
+{db_relationships}
+
+### Статистика столбцов:
+{column_statistics}
+
+### Запрос пользователя:
+{user_query}
+
+Если запрос однозначен — ответь только "OK".
+Если запрос неоднозначен — опиши кратко, что именно неясно.
+"""
+
+# ── FEAT_14 fallback: basic SQL prompt without strict rules ──────────────────────
+SQL_PROMPT_BASIC = """
+Преобразуй следующий запрос в SQL:
+Запрос: {user_query}
+
+Только SQL, диалект {sql_dialect}. Никаких пояснений.
+
+SQL запрос:"""
+
+# ── FEAT_32: AmbiSQL Stage 1 — taxonomy-based ambiguity detection ────────────────
+TAXONOMY_DETECTION_PROMPT = """
+Ты — эксперт по анализу запросов к базам данных.
+Определи, является ли запрос пользователя неоднозначным, используя таксономию AmbiSQL.
+
+### Схема базы данных:
+{db_schema}
+
+### Запрос пользователя:
+{user_query}
+
+### Таксономия неоднозначностей (A1–A6):
+
+DB-related:
+A1 — Unclear schema reference: неясно, какую колонку/таблицу имеет в виду пользователь
+A2 — Unclear value reference: значение в запросе не совпадает с реальными значениями в БД
+A3 — Missing SQL keywords: одна фраза может означать разные SQL-операторы (ORDER BY vs GROUP BY)
+
+LLM-related:
+A4 — Unclear knowledge source: неясно, использовать ли данные из БД или внешние знания
+A5 — Insufficient reasoning context: недостаточно контекста для однозначного ответа
+A6 — Conflicting knowledge: запрос противоречит данным в БД
+
+### Ответ (строго JSON):
+{{
+  "is_ambiguous": true/false,
+  "ambiguity_type": "A1"/"A2"/"A3"/"A4"/"A5"/"A6"/null,
+  "reason": "краткое объяснение или null"
+}}
+"""
+
+# ── FEAT_33: AmbiSQL Stage 2a — generate multiple-choice clarification question ──
+CLARIFICATION_PROMPT = """
+Запрос пользователя неоднозначен (тип {ambiguity_type}).
+
+### Запрос:
+{user_query}
+
+### Причина неоднозначности:
+{reason}
+
+### Схема базы данных:
+{db_schema}
+
+Сгенерируй уточняющий вопрос с 2–4 вариантами ответа (multiple-choice).
+Варианты должны покрывать все разумные интерпретации запроса.
+
+### Ответ (строго JSON):
+{{
+  "question": "текст уточняющего вопроса",
+  "options": ["Вариант A: ...", "Вариант B: ...", "Вариант C: ..."]
+}}
+"""
+
+# ── FEAT_34: AmbiSQL Stage 2b — auto-resolve and rewrite query ──────────────────
+AUTO_RESOLVE_PROMPT = """
+Запрос пользователя был неоднозначен. Был задан уточняющий вопрос.
+
+### Исходный запрос:
+{user_query}
+
+### Уточняющий вопрос:
+{clarification_question}
+
+### Варианты ответа:
+{options}
+
+### Схема базы данных:
+{db_schema}
+
+Выбери наиболее вероятный вариант, исходя из схемы БД и контекста запроса.
+Перепиши исходный запрос так, чтобы он стал однозначным.
+
+### Ответ (строго JSON):
+{{
+  "chosen_option": "Вариант X",
+  "rewritten_query": "переписанный однозначный запрос"
+}}
 """

@@ -58,25 +58,25 @@
 | 14 | Жёсткие правила в SQL-промпте (DISTINCT после SELECT, CAST дат, не транслитерировать имена) | execution | `prompts.py:93-181` → `SQL_PROMPT_TEMPLATE`, `SYSTEM_PROMPT_TEMPLATE` (ветка `kin_br`) | локальная диагностика | Каждое правило закрывает измеренный класс ошибок: транслитерация имён → 1 запрос, DISTINCT после запятой → 1 запрос, неявный CAST дат → 2 запроса. Превентивные правила в промпте дешевле, чем post-fix sanitize. | done | — | — |
 | 15 | `sanitize_sql` — markdown / DISTINCT / CAST / NULLIF чистка (**X3** часть 1) | execution | `text2sql_implementation.py:716-745` → `sanitize_sql` (ветка `kin_br`) | локальная диагностика | LLM возвращает markdown-обёртки, SQLite-style CAST вместо PostgreSQL, DISTINCT после запятой. Нормализация до валидации экономит retry-итерации (а значит токены) на форматных ошибках. | done | — | — |
 | 16 | Валидация через `sqlglot` + запрет DROP/DELETE/UPDATE (**X3** часть 2) | execution | `text2sql_implementation.py:698-714` → `_validate_sql` (ветка `kin_br`) | — | Парсинг до execution отсеивает синтаксические ошибки без обращения к БД (быстро + дёшево); запрет mutation-операций — обязательный safety-guard для read-only БД. | done | — | — |
-| 17 | Retry-цикл до `MAX_RETRIES=7` при провале validate | execution | `text2sql_implementation.py:910-936` → `query()` (ветка `kin_br`) | DIN-SQL §self-correction · CHESS §3.3 · MAC-SQL §3.4 **[shared 3]** | DIN-SQL: «**In our self-correction module the model is instructed to correct those minor mistakes**». Все три статьи описывают итеративный regenerate-loop как стандартный приём; у нас сейчас цикл «глухой» — это **каркас** для пункта **27** (true self-correction). | partial | — | — |
+| 17 | Retry-цикл до `MAX_RETRIES=7` при провале validate | execution | `text2sql_implementation.py` → `query()` — `FEAT_17` gates `max_retries_effective = MAX_RETRIES if FEAT_17 else 1` | DIN-SQL §self-correction · CHESS §3.3 · MAC-SQL §3.4 **[shared 3]** | DIN-SQL: «**In our self-correction module the model is instructed to correct those minor mistakes**». Все три статьи описывают итеративный regenerate-loop как стандартный приём; цикл с `FEAT_17` стал полноценным каркасом для `FEAT_27` (true self-correction). | done | — | — |
 | 18 | LLM-вызовы с exponential backoff на 429 / rate-limit (**X4**) | execution | `text2sql_implementation.py:599-620` → `_llm_call_with_retry` (ветка `kin_br`) | — | На 200+ вопросах rate-limit неизбежен; backoff с jitter позволяет завершить весь прогон без падения и без потери уже потраченных токенов. | done | — | — |
 | 19 | Throttle `asyncio.sleep(1.0)` между вопросами | execution | `benchmarks/bird.py:58` (ветка `kin_br`) | — | Дополнительная защита от burst-нагрузок поверх backoff'а. Стоимость низкая (200 × 1 сек ≈ 3.3 мин), стабильность пайплайна выше — страховка пункта **18**. | done | — | — |
-| 20 | `_verify_sql_against_query` — LLM-as-judge на сгенерированный SQL (**X5**) | execution | `text2sql_implementation.py:845-874` → `_verify_sql_against_query` (ветка `kin_br`, **не подключён в `query()`**) | CHESS §3.3 (revision) · MAC-SQL §3.4 (Refiner) **[shared 2]** | CHESS: «**The model is then asked to evaluate the correctness of the SQL query and revise it if necessary**». Доп. LLM-проход отсеивает грубые семантические ошибки, которые `sqlglot` поймать не может (например `SUM(amount)` вместо `SUM(price)`). | partial | — | — |
+| 20 | `_verify_sql_against_query` — LLM-as-judge на сгенерированный SQL (**X5**) | execution | `text2sql_implementation.py` → `_verify_sql_against_query` + `query()` — `FEAT_20` gates the verify step in retry loop | CHESS §3.3 (revision) · MAC-SQL §3.4 (Refiner) **[shared 2]** | CHESS: «**The model is then asked to evaluate the correctness of the SQL query and revise it if necessary**». Доп. LLM-проход отсеивает грубые семантические ошибки, которые `sqlglot` поймать не может. Теперь подключён в `query()` через `FEAT_20`. | done | — | — |
 | 21 | MinHash-скетчи колонок (**E6**) | exploration | TODO | AutoMeta §profiling | AutoMeta: «**Minhash sketches for estimating set resemblance**». За O(k) оценивает долю общих значений двух колонок → быстро предлагает join-кандидатов, которых нет в FK (закрывает половину пункта **24**). | not done | — | — |
 | 22 | LSH-индекс + векторная БД на значения колонок для retrieval сущностей вопроса (**E7**) | exploration | TODO | CHESS §3.1 (Entity & Context Retrieval) | CHESS §3.1: для текстовых колонок LSH + embeddings находят **точные значения**, упомянутые в вопросе, и подмешивают их в промпт. Решает класс ошибок типа «What's the French name of the set that contains 'Tendo Ice Bridge'?». | not done | — | — |
 | 23 | SQL-to-text NL-описания таблиц / колонок (**E8**) | exploration | TODO | AutoMeta §SQL-to-text | AutoMeta: «**analyzing an SQL query to identify referenced fields, creating a focused schema, and prompting an LLM to generate questions**» — обратная задача: один раз генерируем NL-описания при `build()`, помогает LLM выбирать правильную колонку среди похожих по имени. | not done | — | — |
 | 24 | Анализ query-log для извлечения скрытых join-предикатов | exploration | TODO (для нашего стенда query-log внешних пользователей недоступен — альтернатива в **26**) | AutoMeta §query-log | AutoMeta: **«25%+ of the equality join constraints used were not documented in the SQLite schema»**. Query-log хранит реально используемые join-пути, которые в FK не описаны — прямой источник «скрытого знания о БД». | not done | — | — |
 | 25 | Per-question schema pruning — Selector-агент (**E9**) | exploration | TODO (вызывать перед `generate_sql`) | MAC-SQL §3.2 (Selector) · CHESS §3.2 (Schema Selection) **[shared 2]** | MAC-SQL: «**The Selector decomposes a large database into smaller sub-databases to minimize interference from irrelevant information**». CHESS §3.2 делает то же по сути — отбор минимально-достаточного подмножества колонок/таблиц под каждый вопрос. Для БД с >30 колонок (наш `cards` — 72) уменьшает шум промпта. Цена: +1 LLM round-trip / запрос. | not done | — | — |
 | 26 | `learnt_hints` — накопление подсказок между прогонами одной БД (**E10 = F3**) | exploration | TODO (дописать `_dump_db_schemas_json` и `build()`) | AutoMeta §query-log (адаптировано — см. §«Кросс-цитированные практики») | После прогона BIRD знаем формат дат (`yearmonth.Date` = `YYYYMM`), реальные join-пути (`client → disp → account`), частые SQL-паттерны-ошибки. Дозапись в `db_schemas.json` и подмешивание в промпт следующего запуска — самый дешёвый источник прироста (наш аналог query-log из пункта **24**). | not done | — | — |
-| 27 | True self-correction — передача текста ошибки в next prompt (**X6 = F2**) | execution | TODO (переписать retry-цикл `query()`) | DIN-SQL §self-correction · CHESS §3.3 (revision) · MAC-SQL §3.4 (Refiner) **[shared 3]** | MAC-SQL: «**using the original SQL and error feedback information**»; CHESS: «**we provide the model with the database schema, the question, the generated candidate SQL query, and its execution result**». Превращает 7 «слепых» retry в осмысленный self-correction-loop. **Главный кандидат на +5–10% accuracy.** | not done | — | — |
+| 27 | True self-correction — передача текста ошибки в next prompt (**X6 = F2**) | execution | `text2sql_implementation.py` → `query()` + `generate_sql()` — `FEAT_27` passes `prev_sql` + `error_feedback` into `SQL_RETRY_PROMPT_TEMPLATE` | DIN-SQL §self-correction · CHESS §3.3 (revision) · MAC-SQL §3.4 (Refiner) **[shared 3]** | MAC-SQL: «**using the original SQL and error feedback information**». Превращает 7 «слепых» retry в осмысленный self-correction-loop — каждый retry видит предыдущий SQL и текст ошибки. **Главный кандидат на +5–10% accuracy.** | done | — | — |
 | 28 | Self-consistency — 3 семпла + majority voting (**X7**) | execution | TODO (новый wrapper над `generate_sql`) | CHESS §3.3 | CHESS: «**we use self-consistency to select the SQL query that appears most consistently across three samples**». Снижает шум при ненулевой температуре; CHESS фиксирует +2–4% accuracy за 3× стоимость токенов. | not done | — | — |
-| 29 | Декомпозиция по сложности (easy / non-nested / nested) с разными промптами (**X8**) | execution | TODO (новый шаг classification + 3 специализированных промпта) | DIN-SQL §classification | DIN-SQL: «**By strategically identifying and separating schema linking, join conditions, and nested structures, the module facilitates a structured generation**». Особенно помогает на NESTED (BIRD `challenging`); сейчас один универсальный промпт «лечит» все сложности усреднённо. | not done | — | — |
+| 29 | Декомпозиция по сложности (easy / non-nested / nested) с разными промптами (**X8**) | execution | `text2sql_implementation.py` → `_classify_query_complexity()` + `generate_sql()` — `FEAT_29` selects `SQL_PROMPT_COMPLEX_TEMPLATE` / `SQL_PROMPT_SIMPLE_TEMPLATE` | DIN-SQL §classification | DIN-SQL: «**By strategically identifying and separating schema linking, join conditions, and nested structures, the module facilitates a structured generation**». Keyword-heuristic классификация (zero LLM cost) + 3 специализированных промпта. | done | — | — |
 | 30 | Sub-question decomposition — Decomposer-агент, CoT (**X9**) | execution | TODO (новый CoT-промпт) | MAC-SQL §3.3 | MAC-SQL: «**If the question is more complex, the corresponding SQL is generated starting from the simplest sub-problem**». CoT-разложение помогает на `moderate`/`challenging`, где требуется композиция нескольких подзапросов; одношаговая генерация теряет промежуточные шаги. | not done | — | — |
 | 31 | Feedback в веса модели (**F1**) | — | — | — | Дообучение даёт выигрыш только при ≥10⁴ примеров и собственной GPU-инфраструктуре; LLM у нас через прокси, fine-tuning невозможен. CHESS подтверждает: с готовой LLM можно достичь SOTA без дообучения, если правильно строить контекст («**minimal yet sufficient information**»). Все ресурсы — на пункты **17–30**. | rejected | — | — |
-| 32 | Обнаружение неоднозначностей по таксономии A₁–A₆ — Stage 1 (**X10**) | execution | TODO → `ambiguity_pipeline.py` → `_detect_ambiguities` + `_classify_ambiguity_type` | **AmbiSQL** §Taxonomy; **DIN-SQL** §classification | AmbiSQL: **«6 subcategories cover 92% of real-world cases»**. Stage 1 классифицирует фразы запроса по таксономии (3 DB-типа + 3 LLM-типа) → позволяет генерировать целевые уточняющие вопросы вместо слепого угадывания. DIN-SQL использует аналогичную идею query-classification первым шагом. | not done | — | — |
-| 33 | Генерация multiple-choice вопросов для уточнения намерения — Stage 2a (**X11**) | execution | TODO → `text2sql_implementation.py` → `_generate_clarification_questions` | **AmbiSQL** §Iterative Refinement | AmbiSQL: **«Interactive clarification is more effective than automatic guessing»** — задаёт вопрос с выбором ответа вместо угадывания. Precision: 87.2%, Recall: 89.1%. Особенно критично для Ambrosia-бенчмарка. | not done | — | — |
-| 34 | Переписывание запроса q → q′ на основе пользовательского выбора — Stage 2b (**X12**) | execution | TODO → `text2sql_implementation.py` → `_rewrite_query_with_feedback` | **AmbiSQL** §Query Rewriting | AmbiSQL: **«Rewritten query leads to correct SQL in 78% of ambiguous cases»**. Чёткий NL-запрос повышает точность downstream Text-to-SQL модели. На BIRD samples: 75% → 100% EM accuracy. Замыкает pipeline п.32 → п.33 → п.34. | not done | — | — |
-| 35 | TSV вместо JSON для результатов выборки (**E11**) | exploration + execution | TODO → `text2sql_implementation.py` → `_format_result_as_tsv` | **pgEdge** §output-format; **CHESS** §3.2 («minimal yet sufficient») | pgEdge: TSV экономит 30–40% токенов vs JSON при нулевых галлюцинациях парсинга. SELECT * без лимита может стоить 50k+ токенов — pgEdge называет это «токеновой бомбой». Перекрёстно с п.7. | not done | — | — |
+| 32 | Обнаружение неоднозначностей по таксономии A₁–A₆ — Stage 1 (**X10**) | execution | `text2sql_implementation.py` → `_detect_ambiguity_by_taxonomy()` — `FEAT_32` replaces `_check_ambiguity()` in `query()` | **AmbiSQL** §Taxonomy; **DIN-SQL** §classification | AmbiSQL: **«6 subcategories cover 92% of real-world cases»**. LLM classifies query by taxonomy (A1-A6), returns JSON `{is_ambiguous, ambiguity_type, reason}`. | done | — | — |
+| 33 | Генерация multiple-choice вопросов для уточнения намерения — Stage 2a (**X11**) | execution | `text2sql_implementation.py` → `_generate_clarification_question()` — `FEAT_33` triggers on ambiguous Stage 1 result | **AmbiSQL** §Iterative Refinement | AmbiSQL: **«Interactive clarification is more effective than automatic guessing»**. LLM generates multiple-choice question, returns JSON `{question, options}`. Precision: 87.2%, Recall: 89.1%. | done | — | — |
+| 34 | Переписывание запроса q → q′ на основе пользовательского выбора — Stage 2b (**X12**) | execution | `text2sql_implementation.py` → `_auto_resolve_ambiguity()` — `FEAT_34` auto-picks most likely option and rewrites query for batch benchmarks | **AmbiSQL** §Query Rewriting | AmbiSQL: **«Rewritten query leads to correct SQL in 78% of ambiguous cases»**. In batch mode: LLM selects most probable option + rewrites unambiguous NL query → proceeds to SQL generation. | done | — | — |
+| 35 | TSV вместо JSON для результатов выборки (**E11**) | exploration + execution | `text2sql_implementation.py` — `FEAT_35` gates TSV schema format in `_get_db_schema_light()` | **pgEdge** §output-format; **CHESS** §3.2 («minimal yet sufficient») | pgEdge: TSV экономит 30–40% токенов vs JSON при нулевых галлюцинациях парсинга. SELECT * без лимита может стоить 50k+ токенов — pgEdge называет это «токеновой бомбой». Перекрёстно с п.7. | done | — | — |
 | 36 | Принудительный LIMIT (10–100) + N+1-проверка для пагинации (**E12**) | exploration | TODO → `text2sql_implementation.py` → `_apply_smart_limit_and_offset_hint` | **pgEdge** §pagination | pgEdge: запрашивать N+1 строку (101 при лимите 100) — если результат есть, LLM получает сигнал использовать offset. Предотвращает «порочный цикл» переполнения контекста. | not done | — | — |
 | 37 | Context compaction: классификация сообщений + фильтрация при >100k токенов (**X13**) | execution | TODO → `context_manager.py` → `_compress_dialogue_memory` | **pgEdge** §memory-management | pgEdge: классификация на Якорные (схема БД) / Важные (финальный анализ) / Контекстные / Обычные / Переходные. Правило неразрывности: пара «вызов инструмента + результат» сохраняется целиком. Порог: 100k токенов. | not done | — | — |
 
@@ -243,39 +243,51 @@ decomposition), и именно там лежат все три «**[shared]**»
 
 ---
 
-## Ablation experiment (practices #2, #4, #6, #8, #10)
+## Ablation experiment — leave-one-in (commit `f997dec`)
 
-Каждая из пяти практик exploration-фазы вынесена в отдельную ветку от `main`,
-чтобы измерить её индивидуальный вклад в accuracy BIRD и Ambrosia.
+**Методология:** *leave-one-in*. Все флаги принудительно `false`; только
+тестируемый флаг (+ минимальные зависимости) ставится в `true`. Результаты
+из `ablation_results/*/summary.txt`. Датасеты: BIRD-small (22 q) + Ambrosia-small (24 q).
+Шум: ±5–10% при 1 прогоне / temperature > 0. Запуск: `bash local/ablation_full.sh`.
 
-**Методология:**
+**Δ считается от baseline** (все флаги off): BIRD=0.00%, Ambrosia=50.00%.
 
-- **Изоляция:** *leave-one-in*. Каждая ветка = `main` + только эта практика +
-  минимально необходимые зависимости. Co-applied честно перечислены ниже.
-- **Baseline:** ветка `main` на момент создания ablation-веток
-  (commit `c3d2cfc`). На ней практики #2/#4/#6/#8/#10 отсутствуют.
-- **Прогон:** один прогон BIRD-small + Ambrosia-small на каждую ветку через
-  `scripts/run_ablation.sh <branch>`. Результат — accuracy, печатаемый
-  бенчмарками. Заполняется по факту запуска.
-- **Шум:** 1 прогон при temperature > 0 даёт ±5–10% разброс. Цифры рассчитаны
-  как ориентир, не как статистически значимые показатели.
-- **Ожидаемые «нулевые» эффекты:** ветки `feat/08_*` и `feat/10_*` —
-  служебные практики (rollback-guard и observability-логи). На чистом `main`
-  им нечего ловить / некуда влиять, accuracy ≈ baseline. Это **валидный**
-  результат: подтверждает, что они работают «в комбинации», а не самостоятельно.
+| № | Флаг | Практика (краткое) | Зависимости | BIRD% | Δbird | AMB% | Δamb |
+|---|---|---|---|---|---|---|---|
+| — | BASELINE | все флаги off | — | **0.00%** | — | **50.00%** | — |
+| 1 | FEAT_1 | FK/PK relationships | — | 9.09% | **+9.09%** | 62.50% | **+12.50%** |
+| 2 | FEAT_2 | Column statistics | FEAT_5 | 4.55% | **+4.55%** | 62.50% | **+12.50%** |
+| 3 | FEAT_3 | Regex type detection | FEAT_5, FEAT_2 | 0.00% | 0% | 62.50% | **+12.50%** |
+| 4 | FEAT_4 | pg_stat row count | FEAT_5, FEAT_2 | 4.55% | **+4.55%** | 45.83% | −4.17% |
+| 5 | FEAT_5 | Light schema | — | 4.55% | **+4.55%** | 58.33% | +8.33% |
+| 6 | FEAT_6 | Heavy schema | FEAT_5 | 4.55% | **+4.55%** | 62.50% | **+12.50%** |
+| 7 | FEAT_7 | Compact stats formatting | FEAT_5, FEAT_2 | 4.55% | **+4.55%** | 62.50% | **+12.50%** |
+| 8 | FEAT_8 | PG rollback guards | FEAT_5 | 4.55% | **+4.55%** | 50.00% | 0% |
+| 9 | FEAT_9 | Dump db_schemas.json | — | 0.00% | 0% | 54.17% | +4.17% |
+| 10 | FEAT_10 | build() timing log | FEAT_5 | 4.55% | **+4.55%** | 50.00% | 0% |
+| 11 | FEAT_11 | JSON structured logging | FEAT_5 | 4.55% | **+4.55%** | **66.67%** | **+16.67%** |
+| 12 | FEAT_12 | Optimistic ambiguity fallback | FEAT_5 | 4.55% | **+4.55%** | 62.50% | **+12.50%** |
+| 13 | FEAT_13 | Few-shot ambiguity prompt | FEAT_5 | 4.55% | **+4.55%** | 41.67% | **−8.33%** |
+| 14 | FEAT_14 | Strict SQL rules | FEAT_5 | 4.55% | **+4.55%** | 50.00% | 0% |
+| 15 | FEAT_15 | sanitize_sql | FEAT_5 | 0.00% | 0% | 58.33% | +8.33% |
+| 16 | FEAT_16 | sqlglot validate | FEAT_5 | 9.09% | **+9.09%** | 58.33% | +8.33% |
+| 17 | FEAT_17 | Retry loop MAX_RETRIES | FEAT_5 | **13.64%** | **+13.64%** | 58.33% | +8.33% |
+| 18 | FEAT_18 | LLM exponential backoff | FEAT_5 | 9.09% | **+9.09%** | 45.83% | −4.17% |
+| 19 | FEAT_19 | asyncio.sleep throttle | FEAT_5 | 9.09% | **+9.09%** | 58.33% | +8.33% |
+| 20 | FEAT_20 | LLM-as-judge verify | FEAT_5 | 0.00% | 0% | 50.00% | 0% |
+| 27 | FEAT_27 | True self-correction | FEAT_5 | 0.00% | 0% | 50.00% | 0% |
+| 29 | FEAT_29 | Complexity-based prompts | FEAT_5 | 4.55% | **+4.55%** | 58.33% | +8.33% |
+| 32 | FEAT_32 | AmbiSQL taxonomy detection | FEAT_5 | 4.55% | **+4.55%** | 41.67% | **−8.33%** |
+| 33 | FEAT_33 | AmbiSQL clarification questions | FEAT_5, FEAT_32 | 9.09% | **+9.09%** | 58.33% | +8.33% |
+| 34 | FEAT_34 | AmbiSQL query rewriting | FEAT_5, FEAT_32, FEAT_33 | 4.55% | **+4.55%** | 62.50% | **+12.50%** |
+| 35 | FEAT_35 | TSV schema format | — | 4.55% | **+4.55%** | 58.33% | +8.33% |
 
-**Результаты (заполняются после прогона):**
+**Наблюдения:**
 
-| Branch | Practice | Co-applied (deps) | Base commit | BIRD acc | Ambrosia acc |
-|---|---|---|---|---|---|
-| `main` (baseline) | — | — | `c3d2cfc` | TBD | TBD |
-| `feat/02_column_statistics` | #2 column stats | #4, #8 | `75175bd` | **31.82%** (simple 66.67% / moderate 0.00% / challenging 33.33%; false-ambiguous 36.36%) | **58.33%** (24 q, 9 gold-ambig, 7 predicted-ambig, 3 correctly flagged) |
-| `feat/04_pg_stat_rowcount` | #4 row-count + min-formatter | #8 | `c3d2cfc` | TBD | TBD |
-| `feat/06_heavy_schema` | #6 heavy schema | #8 | `c3d2cfc` | TBD | TBD |
-| `feat/08_pg_rollback` | #8 PG rollback guards | — | `c3d2cfc` | TBD | TBD |
-| `feat/10_build_timing` | #10 build() timing + log | — | `c3d2cfc` | TBD | TBD |
-
-**Как заполнить:** `./scripts/run_ablation.sh <branch-name>` запустит BIRD +
-Ambrosia на указанной ветке и положит логи в `ablation_results/<branch>/`.
-Финальная цифра для BIRD печатается как `Overall accuracy: X.XX%`,
-для Ambrosia — `Accuracy: X.XX%`. Перепиши их в таблицу выше.
+- **FEAT_17 (retry)** — лучший по BIRD (+13.64%). Retry-цикл компенсирует одиночные неудачные генерации.
+- **FEAT_1, FEAT_16, FEAT_18, FEAT_19, FEAT_33** — второй эшелон по BIRD (+9.09% каждая).
+- **FEAT_11 (json logging)** — лучший по Ambrosia (+16.67%). Логически не должен влиять на точность — требует повторной проверки (возможно side-effect от flush буфера).
+- **FEAT_13 (few-shot)** и **FEAT_32 (taxonomy)** — снижают Ambrosia на −8.33%. Few-shot примеры и taxonomy-промпт мешают модели при данной конфигурации.
+- **FEAT_20, FEAT_27** — нулевая дельта: эффект проявляется только внутри работающего retry-loop (FEAT_17), в изоляции не помогают.
+- **FEAT_6 (heavy schema)** — такой же результат как FEAT_5 light по BIRD, но даёт +12.50% AMB. Дополнительные токены на sample rows помогают ambiguity-детекции.
+- **FEAT_34 (AmbiSQL rewrite)** — 4.55% BIRD / +12.50% AMB. Pipeline работает: taxonomy → clarification → rewrite → SQL.

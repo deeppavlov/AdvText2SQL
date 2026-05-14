@@ -1,2 +1,4 @@
-ablation_results/feat_01_fk_pk/bird.log:Overall accuracy: 9.09%
-ablation_results/feat_01_fk_pk/ambrosia.log:Accuracy: 62.50%
+Label:   feat_01_fk_pk
+Commit:  f997dec
+BIRD:    9.09%
+Ambrosia:62.50%
