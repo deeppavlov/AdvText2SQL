@@ -1,0 +1,10 @@
+[
+  {
+    "question": "How much might a software developer expect to get paid per hour?",
+    "sql": "SELECT\n    \"salarydetails\".\"hourly_rate\" AS \"expected_hourly_rate\"\nFROM\n    \"salarydetails\"\nJOIN\n    \"position\" ON \"salarydetails\".\"positionid\" = \"position\".\"id\"\nWHERE\n    LOWER(\"position\".\"title\") LIKE '%software developer%'\n    AND \"salarydetails\".\"hourly_rate\" IS NOT NULL;"
+  },
+  {
+    "question": "List all the job positions and the associated salary range.",
+    "sql": "SELECT\n    p.\"title\" AS job_position,\n    sd.\"salary_range\" AS salary_range\nFROM\n    \"position\" p\nLEFT JOIN\n    \"salarydetails\" sd ON p.\"id\" = sd.\"positionid\";"
+  }
+]

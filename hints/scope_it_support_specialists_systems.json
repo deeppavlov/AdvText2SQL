@@ -1,0 +1,18 @@
+[
+  {
+    "question": "Tell me the systems every support specialist works with.",
+    "sql": "SELECT\n    its.\"id\" AS specialist_id,\n    its.\"name\" AS specialist_name,\n    string_agg(s.\"system_name\", ', ' ORDER BY s.\"system_name\") AS systems\nFROM\n    \"it_support_specialists\" its\nJOIN\n    \"it_support_specialists_systems\" itss ON its.\"id\" = itss.\"it_specialist_id\"\nJOIN\n    \"systems\" s ON itss.\"system_id\" = s.\"system_id\"\nGROUP BY\n    its.\"id\", its.\"name\";"
+  },
+  {
+    "question": "which system names and active statuses are associated with every IT support specialist?",
+    "sql": "SELECT\n    s.\"system_name\",\n    s.\"is_active\",\n    its.\"name\" AS \"it_specialist_name\"\nFROM\n    \"it_support_specialists\" its\nCROSS JOIN\n    \"systems\" s\nLEFT JOIN\n    \"it_support_specialists_systems\" itss ON itss.\"it_specialist_id\" = its.\"id\"\n                                          AND itss.\"system_id\" = s.\"system_id\"\nWHERE\n    itss.\"it_specialist_id\" IS NOT NULL\nORDER BY\n    its.\"name\",\n    s.\"system_name\";"
+  },
+  {
+    "question": "For each IT support specialist, what are the corresponding system names and active statuses?",
+    "sql": "SELECT\n    its.\"name\" AS it_specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM\n    \"it_support_specialists\" its\nJOIN\n    \"it_support_specialists_systems\" itss ON its.\"id\" = itss.\"it_specialist_id\"\nJOIN\n    \"systems\" s ON itss.\"system_id\" = s.\"system_id\";"
+  },
+  {
+    "question": "For each support specialist, list the systems they work on.",
+    "sql": "SELECT\n    its.\"id\" AS specialist_id,\n    its.\"name\" AS specialist_name,\n    s.\"system_id\",\n    sys.\"system_name\"\nFROM\n    \"it_support_specialists\" its\nJOIN\n    \"it_support_specialists_systems\" s ON its.\"id\" = s.\"it_specialist_id\"\nJOIN\n    \"systems\" sys ON s.\"system_id\" = sys.\"system_id\"\nORDER BY\n    its.\"id\", sys.\"system_id\";"
+  }
+]

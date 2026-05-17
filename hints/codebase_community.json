@@ -1,0 +1,10 @@
+[
+  {
+    "question": "question: Which user ID has the highest reputation?, evidence (may be empty): highest reputation refers to Max(Reputation)",
+    "sql": "SELECT \"id\"\nFROM \"users\"\nORDER BY \"reputation\" DESC\nLIMIT 1;"
+  },
+  {
+    "question": "question: Identify the total views on the post 'Computer Game Datasets'. Name the user who posted it last time., evidence (may be empty): total views refer to ViewCount; Name the user refers to DisplayName; post 'Computer Game Datasets' refers to Text = 'Computer Game Datasets';",
+    "sql": "SELECT\n    p.\"viewcount\" AS total_views,\n    u.\"displayname\" AS user_who_posted_last\nFROM\n    \"posts\" p\nJOIN\n    \"users\" u ON p.\"owneruserid\" = u.\"id\"\nWHERE\n    p.\"title\" = 'Computer Game Datasets'\n    AND p.\"posttypeid\" = 1  \nORDER BY\n    p.\"creationdate\" DESC\nLIMIT 1;"
+  }
+]

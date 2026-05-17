@@ -1,4 +1,4 @@
-Label:   feat_08_rollback
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:50.00%
+Label:   FEAT_8:  PG rollback guards
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:54.17%

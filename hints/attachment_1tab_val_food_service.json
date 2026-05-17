@@ -1,0 +1,10 @@
+[
+  {
+    "question": "List all restaurants and also list cafes that serve Italian cuisine.",
+    "sql": "SELECT DISTINCT\n    r.\"id\",\n    r.\"name\",\n    r.\"address\",\n    r.\"food_service\",\n    r.\"cuisine\"\nFROM\n    \"restaurants\" r\nWHERE\n    r.\"food_service\" = 'cafe'\n    AND LOWER(r.\"cuisine\") LIKE '%italian%'\nUNION ALL\nSELECT\n    r.\"id\",\n    r.\"name\",\n    r.\"address\",\n    r.\"food_service\",\n    r.\"cuisine\"\nFROM\n    \"restaurants\" r\nWHERE\n    r.\"food_service\" != 'cafe'\n    OR r.\"food_service\" IS NULL;"
+  },
+  {
+    "question": "Give me restaurants and cafes that serve Italian cuisine.",
+    "sql": "SELECT DISTINCT r.\"id\",\n                r.\"name\",\n                r.\"address\",\n                r.\"food_service\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"cuisine\") = 'italian';"
+  }
+]

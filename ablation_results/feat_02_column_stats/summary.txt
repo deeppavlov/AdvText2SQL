@@ -1,4 +1,4 @@
-Label:   feat_02_column_stats
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:62.50%
+Label:   FEAT_2:  column statistics
+Commit:  6cfeae6
+BIRD:    45.45%
+Ambrosia:54.17%

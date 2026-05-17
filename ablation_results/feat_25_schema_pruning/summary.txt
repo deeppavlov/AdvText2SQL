@@ -1,0 +1,4 @@
+Label:   FEAT_25: per-question schema pruning
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:50.00%

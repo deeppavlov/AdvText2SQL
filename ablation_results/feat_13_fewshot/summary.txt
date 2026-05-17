@@ -1,4 +1,4 @@
-Label:   feat_13_fewshot
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:41.67%
+Label:   FEAT_13: few-shot ambiguity prompt
+Commit:  6cfeae6
+BIRD:     40.91%
+Ambrosia: 50.00%

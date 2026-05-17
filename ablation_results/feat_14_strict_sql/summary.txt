@@ -1,4 +1,4 @@
-Label:   feat_14_strict_sql
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:50.00%
+Label:   FEAT_14: strict SQL rules
+Commit:  6cfeae6
+BIRD:    31.82%
+Ambrosia:54.17%

@@ -1,8 +1,10 @@
 import json as json_module
 import logging
 import os
+import pathlib
 import re
 import time
+from collections import Counter
 from datetime import datetime, timezone
 from textwrap import dedent
 from typing import Any
@@ -27,6 +29,9 @@ from .prompts import (
     TAXONOMY_DETECTION_PROMPT,
     CLARIFICATION_PROMPT,
     AUTO_RESOLVE_PROMPT,
+    SCHEMA_PRUNING_PROMPT,
+    TABLE_DESCRIPTION_PROMPT,
+    DECOMPOSITION_PROMPT,
 )
 from .utils import print_result
 
@@ -61,6 +66,13 @@ FEAT_32 = os.getenv("FEAT_32", "false").lower() == "true"  # #32 AmbiSQL Stage 1
 FEAT_33 = os.getenv("FEAT_33", "false").lower() == "true"  # #33 AmbiSQL Stage 2a: clarification questions
 FEAT_34 = os.getenv("FEAT_34", "false").lower() == "true"  # #34 AmbiSQL Stage 2b: query rewriting
 FEAT_35 = os.getenv("FEAT_35", "true").lower()  == "true"  # #35 TSV schema format (token-efficient)
+FEAT_36 = os.getenv("FEAT_36", "true").lower()  == "true"  # #36 smart LIMIT 101 injection (N+1 pagination)
+FEAT_25 = os.getenv("FEAT_25", "false").lower() == "true"  # #25 per-question schema pruning (1 extra LLM call)
+FEAT_26 = os.getenv("FEAT_26", "false").lower() == "true"  # #26 learnt_hints — persist successful patterns
+FEAT_28 = os.getenv("FEAT_28", "false").lower() == "true"  # #28 self-consistency — 3 samples + majority vote
+FEAT_21 = os.getenv("FEAT_21", "false").lower() == "true"  # #21 MinHash column similarity — implicit join hints
+FEAT_23 = os.getenv("FEAT_23", "false").lower() == "true"  # #23 NL table descriptions via LLM (cached)
+FEAT_30 = os.getenv("FEAT_30", "false").lower() == "true"  # #30 CoT sub-question decomposition
 
 
 logger = logging.getLogger("text2sql_tool")
@@ -125,8 +137,9 @@ class Text2SQLGenerator:
 
         logger.info("Initialized Text2SQLGenerator")
 
-    def build(self):
+    async def build(self):
         start = time.time()
+        self._db_id = self.db_uri.rsplit("/", 1)[-1]
         logger.info(f"Build started for {self.db_uri}")
         logger.info(
             f"Feature flags: "
@@ -136,17 +149,17 @@ class Text2SQLGenerator:
             f"FEAT_13={FEAT_13} FEAT_14={FEAT_14} FEAT_15={FEAT_15} FEAT_16={FEAT_16} "
             f"FEAT_17={FEAT_17} FEAT_18={FEAT_18} FEAT_19={FEAT_19} FEAT_20={FEAT_20} "
             f"FEAT_27={FEAT_27} FEAT_29={FEAT_29} "
-            f"FEAT_32={FEAT_32} FEAT_33={FEAT_33} FEAT_34={FEAT_34} FEAT_35={FEAT_35}"
+            f"FEAT_32={FEAT_32} FEAT_33={FEAT_33} FEAT_34={FEAT_34} FEAT_35={FEAT_35} "
+            f"FEAT_36={FEAT_36} FEAT_25={FEAT_25} FEAT_26={FEAT_26} FEAT_28={FEAT_28} "
+            f"FEAT_21={FEAT_21} FEAT_23={FEAT_23} FEAT_30={FEAT_30}"
         )
 
         if FEAT_35:
             self.db_schema = self._get_db_schema_tsv()
         elif FEAT_6:
             self.db_schema = self._get_db_schema_heavy()
-        elif FEAT_5:
-            self.db_schema = self._get_db_schema_light()
         else:
-            self.db_schema = ""
+            self.db_schema = self._get_db_schema_light()  # FEAT_5 or baseline fallback
 
         if FEAT_1:
             self.db_relationships = self._explore_db_relationships()
@@ -169,6 +182,31 @@ class Text2SQLGenerator:
 
         self.system_prompt = self._create_system_prompt()
 
+        # FEAT_21: MinHash column similarity — append implicit join hints to system prompt
+        if FEAT_21:
+            similar_cols = self._find_similar_columns()
+            if similar_cols:
+                self.system_prompt += f"\n\n### Возможные неявные связи колонок (MinHash):\n{similar_cols}"
+                logger.info(f"FEAT_21: added MinHash column hints")
+
+        # FEAT_23: NL table descriptions — append to system prompt (cached per db_id)
+        if FEAT_23:
+            descs = await self._generate_table_descriptions()
+            if descs:
+                desc_str = "\n".join(f"- {t}: {d}" for t, d in descs.items())
+                self.system_prompt += f"\n\n### Описания таблиц:\n{desc_str}"
+                logger.info(f"FEAT_23: added NL descriptions for {len(descs)} tables")
+
+        # FEAT_26: append learnt hints from previous runs to system prompt
+        if FEAT_26:
+            hints = self._load_learnt_hints()
+            if hints:
+                hints_text = "\n".join(
+                    f"- Q: {h['question']}\n  SQL: {h['sql']}" for h in hints[-10:]
+                )
+                self.system_prompt += f"\n\n## Learnt hints from previous runs\n{hints_text}"
+                logger.info(f"FEAT_26: loaded {len(hints)} learnt hints for {self._db_id}")
+
         if FEAT_10:
             elapsed = time.time() - start
             logger.info(
@@ -177,11 +215,11 @@ class Text2SQLGenerator:
                 f"system prompt {len(self.system_prompt)} chars"
             )
 
-    def _update_db_schema(self, db_uri):
+    async def _update_db_schema(self, db_uri):
         self.db_uri = db_uri
         self.engine.dispose()
         self.engine = create_engine(db_uri, pool_pre_ping=True)
-        self.build()
+        await self.build()
 
     def _get_db_schema_heavy(
         self,
@@ -727,7 +765,7 @@ class Text2SQLGenerator:
         """Обёртка LLM вызовов с retry и exponential backoff при 429. FEAT_18 gates backoff."""
         import asyncio as _asyncio
 
-        effective_retries = max_retries if FEAT_18 else 1
+        effective_retries = max_retries if FEAT_18 else 2
         for attempt in range(effective_retries):
             if attempt > 0:
                 await _asyncio.sleep(1.0)  # min 1s between calls to stay under 1 RPS
@@ -735,8 +773,9 @@ class Text2SQLGenerator:
                 return await self.llm_client.create(messages)
             except Exception as e:
                 err_str = str(e).lower()
-                if FEAT_18 and ("429" in str(e) or "rate" in err_str):
-                    delay = min(base_delay * (2 ** attempt), max_delay)
+                is_rate_limit = "429" in str(e) or "rate" in err_str
+                if is_rate_limit:
+                    delay = min(base_delay * (2 ** attempt), max_delay) if FEAT_18 else 30.0
                     logger.warning(
                         f"Rate limited, retrying in {delay:.0f}s "
                         f"(attempt {attempt + 1}/{effective_retries})"
@@ -782,7 +821,7 @@ class Text2SQLGenerator:
             result = await self._llm_call_with_retry(messages)
             response_text = result.content.strip()
 
-            if response_text.lower() == "ok":
+            if response_text.strip().split('\n')[0].strip().strip('*').rstrip('.!?,').lower() == "ok":
                 logger.info(f"Ambiguity check: OK")
                 return {"status": "success", "ambiguous": False}
             else:
@@ -946,6 +985,12 @@ class Text2SQLGenerator:
         # remove multiple newlines
         sql = re.sub(r"\n\s*\n", "\n", sql)
 
+        # FEAT_36: inject LIMIT 101 (N+1) when SELECT has no LIMIT/FETCH clause
+        if FEAT_15 and FEAT_36:
+            if re.search(r'\bSELECT\b', sql, re.IGNORECASE) and \
+               not re.search(r'\b(LIMIT|FETCH)\b', sql, re.IGNORECASE):
+                sql = sql.rstrip('; \t\n') + '\nLIMIT 101'
+
         return sql
 
     def _classify_query_complexity(self, question: str) -> str:
@@ -970,7 +1015,8 @@ class Text2SQLGenerator:
 
     async def generate_sql(self, user_query: str, prev_sql: str | None = None,
                            error_feedback: str | None = None,
-                           complexity: str | None = None) -> dict[str, Any]:
+                           complexity: str | None = None,
+                           decomposition: str | None = None) -> dict[str, Any]:
         """
         Генерирует SQL запрос из естественно-языкового запроса
 
@@ -1004,10 +1050,22 @@ class Text2SQLGenerator:
                 user_query=user_query, sql_dialect="PostgreSQL"
             )
         try:
-            messages = [
-                SystemMessage(content=self.system_prompt),
-                UserMessage(source="user", content=dedent(sql_prompt)),
-            ]
+            messages = [SystemMessage(content=self.system_prompt)]
+            # FEAT_25: prepend pruned schema as extra context before SQL prompt
+            if FEAT_25:
+                pruned = await self._prune_schema_for_question(user_query)
+                if pruned and pruned != self.db_schema:
+                    messages.append(UserMessage(
+                        source="user",
+                        content=f"Relevant schema for this question:\n{pruned}",
+                    ))
+            # FEAT_30: prepend CoT decomposition before SQL prompt
+            if decomposition:
+                messages.append(UserMessage(
+                    source="user",
+                    content=f"Декомпозиция запроса по шагам:\n{decomposition}",
+                ))
+            messages.append(UserMessage(source="user", content=dedent(sql_prompt)))
 
             result = await self._llm_call_with_retry(messages)
             raw_sql = result.content.strip()
@@ -1051,6 +1109,171 @@ class Text2SQLGenerator:
             return sorted({table.name.lower() for table in parsed.find_all(exp.Table)})
         except Exception:
             return []
+
+    # ── FEAT_26: learnt_hints ─────────────────────────────────────────────────
+
+    def _hints_path(self) -> pathlib.Path:
+        return pathlib.Path("hints") / f"{self._db_id}.json"
+
+    def _load_learnt_hints(self) -> list[dict]:
+        path = self._hints_path()
+        if not path.exists():
+            return []
+        try:
+            return json_module.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+
+    def _save_learnt_hint(self, question: str, sql: str) -> None:
+        path = self._hints_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        hints = self._load_learnt_hints()
+        # Avoid duplicates by question text
+        if not any(h["question"] == question for h in hints):
+            hints.append({"question": question, "sql": sql})
+            path.write_text(json_module.dumps(hints, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # ── FEAT_21: MinHash column similarity ───────────────────────────────────
+
+    def _sample_column_values(self, table: str, column: str, limit: int = 50) -> list[str]:
+        """Sample distinct non-null values from a column."""
+        try:
+            with self.engine.connect() as conn:
+                rows = conn.execute(
+                    text(f'SELECT DISTINCT "{column}" FROM "{table}" WHERE "{column}" IS NOT NULL LIMIT {limit}')
+                )
+                return [str(r[0]) for r in rows]
+        except Exception:
+            return []
+
+    def _minhash_similarity(self, vals1: list[str], vals2: list[str], n: int = 64) -> float:
+        """Estimate Jaccard similarity via MinHash (no external libs)."""
+        if not vals1 or not vals2:
+            return 0.0
+        s1, s2 = set(vals1), set(vals2)
+        matches = sum(
+            min(hash((seed, v)) & 0x7FFFFFFF for v in s1) ==
+            min(hash((seed, v)) & 0x7FFFFFFF for v in s2)
+            for seed in range(n)
+        )
+        return matches / n
+
+    def _find_similar_columns(self) -> str:
+        """FEAT_21: find cross-table column pairs with MinHash similarity > 0.3."""
+        inspector = inspect(self.engine)
+        tables = inspector.get_table_names(schema="public")
+
+        # Collect TEXT columns and their sampled values
+        col_values: dict[tuple[str, str], list[str]] = {}
+        for table in tables:
+            for col in inspector.get_columns(table, schema="public"):
+                if "TEXT" in str(col["type"]).upper() or "VARCHAR" in str(col["type"]).upper():
+                    key = (table, col["name"])
+                    col_values[key] = self._sample_column_values(table, col["name"])
+
+        # Compare cross-table pairs
+        keys = list(col_values.keys())
+        pairs = []
+        for i, (t1, c1) in enumerate(keys):
+            for t2, c2 in keys[i + 1:]:
+                if t1 == t2:
+                    continue
+                sim = self._minhash_similarity(col_values[(t1, c1)], col_values[(t2, c2)])
+                if sim >= 0.3:
+                    pairs.append((sim, t1, c1, t2, c2))
+
+        if not pairs:
+            return ""
+        pairs.sort(reverse=True)
+        lines = [f"{t1}.{c1} ≈ {t2}.{c2} (сходство: {sim:.2f})" for sim, t1, c1, t2, c2 in pairs[:10]]
+        return "\n".join(lines)
+
+    # ── FEAT_23: NL table descriptions ───────────────────────────────────────
+
+    def _nl_descriptions_path(self) -> pathlib.Path:
+        return pathlib.Path("nl_descriptions") / f"{self._db_id}.json"
+
+    async def _generate_table_descriptions(self) -> dict[str, str]:
+        """FEAT_23: generate 1-2 sentence NL descriptions per table, cached in nl_descriptions/."""
+        cache_path = self._nl_descriptions_path()
+        if cache_path.exists():
+            try:
+                return json_module.loads(cache_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+
+        inspector = inspect(self.engine)
+        tables = inspector.get_table_names(schema="public")
+
+        descriptions: dict[str, str] = {}
+        for table in tables:
+            cols = inspector.get_columns(table, schema="public")
+            col_list = ", ".join(f"{c['name']} ({c['type']})" for c in cols)
+            prompt = TABLE_DESCRIPTION_PROMPT.format(table_name=table, columns=col_list)
+            try:
+                result = await self._llm_call_with_retry(
+                    [UserMessage(source="user", content=prompt)]
+                )
+                descriptions[table] = result.content.strip()
+            except Exception as e:
+                logger.warning(f"FEAT_23: failed to describe table {table}: {e}")
+
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json_module.dumps(descriptions, ensure_ascii=False, indent=2), encoding="utf-8")
+        return descriptions
+
+    # ── FEAT_30: CoT sub-question decomposition ──────────────────────────────
+
+    async def _decompose_question(self, user_query: str) -> str:
+        """FEAT_30: one LLM call to break complex question into sub-steps."""
+        prompt = DECOMPOSITION_PROMPT.format(user_query=user_query, db_schema=self.db_schema)
+        try:
+            result = await self._llm_call_with_retry(
+                [UserMessage(source="user", content=prompt)]
+            )
+            return result.content.strip()
+        except Exception:
+            return ""
+
+    # ── FEAT_25: per-question schema pruning ─────────────────────────────────
+
+    async def _prune_schema_for_question(self, user_query: str) -> str:
+        """FEAT_25: one LLM call to select only relevant tables/columns."""
+        if not self.db_schema:
+            return self.db_schema
+        prompt = SCHEMA_PRUNING_PROMPT.format(
+            user_query=user_query,
+            db_schema=self.db_schema,
+        )
+        try:
+            messages = [UserMessage(source="user", content=prompt)]
+            result = await self._llm_call_with_retry(messages)
+            pruned = result.content.strip()
+            return pruned if pruned else self.db_schema
+        except Exception:
+            return self.db_schema
+
+    # ── FEAT_28: self-consistency (3 samples + majority vote) ────────────────
+
+    async def _generate_sql_with_voting(
+        self, user_query: str, n: int = 3, complexity: str | None = None
+    ) -> str | None:
+        """FEAT_28: generate n SQL candidates and pick the majority-vote winner."""
+        candidates: list[str] = []
+        for _ in range(n):
+            result = await self.generate_sql(user_query, complexity=complexity)
+            if result["status"] == "success":
+                candidates.append(result["sql_query"])
+        if not candidates:
+            return None
+        normalized = [re.sub(r"\s+", " ", s.strip().lower()) for s in candidates]
+        winner_norm = Counter(normalized).most_common(1)[0][0]
+        for orig, norm in zip(candidates, normalized):
+            if norm == winner_norm:
+                return orig
+        return candidates[0]
+
+    # ── SQL execution ─────────────────────────────────────────────────────────
 
     def execute_safe(self, sql: str) -> dict[str, Any]:
         """
@@ -1187,6 +1410,22 @@ class Text2SQLGenerator:
         if FEAT_29:
             logger.info(f"Query complexity: {complexity}")
 
+        # FEAT_30: CoT decomposition for complex/moderate queries (one extra LLM call)
+        decomposition: str | None = None
+        if FEAT_30 and complexity in ("complex", "moderate", None):
+            decomposition = await self._decompose_question(user_query)
+            if decomposition:
+                logger.info(f"FEAT_30 decomposition: {decomposition[:100]}")
+
+        # FEAT_28: self-consistency replaces the retry loop
+        if FEAT_28:
+            winner = await self._generate_sql_with_voting(user_query, n=3, complexity=complexity)
+            if winner:
+                if FEAT_26:
+                    self._save_learnt_hint(user_query, winner)
+                return {"status": "success", "query": winner}
+            return {"status": "error"}
+
         max_retries_effective = MAX_RETRIES if FEAT_17 else 1
         while not success and retries < max_retries_effective:
             logger.info(
@@ -1197,6 +1436,7 @@ class Text2SQLGenerator:
                 prev_sql=last_sql if FEAT_27 else None,
                 error_feedback=last_error if FEAT_27 else None,
                 complexity=complexity,
+                decomposition=decomposition,
             )
 
             if generation_result["status"] != "success":
@@ -1228,6 +1468,9 @@ class Text2SQLGenerator:
 
             final_result = {"status": "success", "query": raw_sql}
             success = True
+            # FEAT_26: persist successful SQL pattern for future runs
+            if FEAT_26:
+                self._save_learnt_hint(user_query, raw_sql)
 
         if was_flagged_ambiguous and success:
             logger.info("Optimistic fallback: SQL успешно сгенерирован для ранее помеченного запроса")

@@ -1,4 +1,4 @@
-Label:   feat_06_heavy_schema
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:62.50%
+Label:   FEAT_6:  heavy schema
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:54.17%

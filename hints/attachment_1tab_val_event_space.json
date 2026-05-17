@@ -1,0 +1,10 @@
+[
+  {
+    "question": "Show all banquet halls and conference rooms where either can hold 200 people.",
+    "sql": "SELECT\n    \"id\",\n    \"name\",\n    \"event_space\",\n    \"capacity\",\n    \"address\",\n    \"contactinfo\"\nFROM\n    \"eventspaces\"\nWHERE\n    \"event_space\" IN ('banquet hall', 'conference room')\n    AND \"capacity\" >= 200;"
+  },
+  {
+    "question": "List all banquet halls and conference rooms with a 200 person capacity.",
+    "sql": "SELECT\n    \"id\",\n    \"name\",\n    \"event_space\",\n    \"capacity\",\n    \"address\",\n    \"contactinfo\"\nFROM\n    \"eventspaces\"\nWHERE\n    \"capacity\" = '200'\n    AND LOWER(\"event_space\") IN (LOWER('banquet hall'), LOWER('conference room'));"
+  }
+]

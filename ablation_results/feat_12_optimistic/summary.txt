@@ -1,4 +1,4 @@
-Label:   feat_12_optimistic
-Commit:  f997dec
-BIRD:    4.55%
+Label:   FEAT_12: optimistic ambiguity fallback
+Commit:  6cfeae6
+BIRD:    40.91%
 Ambrosia:62.50%

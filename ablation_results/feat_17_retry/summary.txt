@@ -1,4 +1,4 @@
-Label:   feat_17_retry
-Commit:  f997dec
-BIRD:    13.64%
-Ambrosia:58.33%
+Label:   FEAT_17: retry loop
+Commit:  6cfeae6
+BIRD:    31.82%
+Ambrosia:54.17%

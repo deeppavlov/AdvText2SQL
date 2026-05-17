@@ -1,4 +1,4 @@
-Label:   feat_19_throttle
-Commit:  f997dec
-BIRD:    9.09%
-Ambrosia:58.33%
+Label:   FEAT_19: throttle sleep
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:54.17%

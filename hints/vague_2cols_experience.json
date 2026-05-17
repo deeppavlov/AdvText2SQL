@@ -1,0 +1,14 @@
+[
+  {
+    "question": "What are the minimum and preferred years of experience for the open position with the greatest salary?",
+    "sql": "SELECT\n    \"minimum_years\",\n    \"preferred_years\"\nFROM\n    \"jobs\"\nWHERE\n    \"salary\" = (SELECT MAX(\"salary\") FROM \"jobs\");"
+  },
+  {
+    "question": "What are the preferred years of experience for the open position with the greatest salary?",
+    "sql": "SELECT\n    \"preferred_years\"\nFROM\n    \"jobs\"\nWHERE\n    \"salary\" = (SELECT MAX(\"salary\") FROM \"jobs\");"
+  },
+  {
+    "question": "What experience do I need for the open position with the greatest salary?",
+    "sql": "SELECT\n    j.\"minimum_years\" AS required_experience_years,\n    j.\"preferred_years\" AS preferred_experience_years,\n    j.\"jobtitle\",\n    j.\"description\",\n    r.\"degreelevel\",\n    r.\"fieldofstudy\",\n    s.\"skillname\",\n    s.\"proficiencylevel\"\nFROM\n    \"jobs\" j\nLEFT JOIN\n    \"educationrequirements\" r ON j.\"jobid\" = r.\"requirementid\"\nLEFT JOIN\n    \"requiredskills\" s ON j.\"jobid\" = s.\"skillid\"\nWHERE\n    j.\"salary\" = (SELECT MAX(\"salary\") FROM \"jobs\")\nLIMIT 1;"
+  }
+]

@@ -1,4 +1,4 @@
-Label:   feat_20_llm_verify
-Commit:  f997dec
-BIRD:    0.00%
+Label:   FEAT_20: LLM-as-judge verify
+Commit:  6cfeae6
+BIRD:    31.82%
 Ambrosia:50.00%

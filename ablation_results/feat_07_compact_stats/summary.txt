@@ -1,4 +1,4 @@
-Label:   feat_07_compact_stats
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:62.50%
+Label:   FEAT_7:  compact stats formatting
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:50.00%

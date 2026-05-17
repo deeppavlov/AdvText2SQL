@@ -131,27 +131,41 @@ FEAT_N maps 1:1 to Practice #N in `practices_doc.md`. Flags are read at **module
 | `FEAT_33` | `false` | #33 | AmbiSQL Stage 2a: clarification questions (requires FEAT_32) |
 | `FEAT_34` | `false` | #34 | AmbiSQL Stage 2b: query rewriting / auto-resolve (requires FEAT_33) |
 | `FEAT_35` | `true`  | #35 | TSV schema format (30–40% fewer tokens vs JSON) |
+| `FEAT_36` | `true`  | #36 | Smart LIMIT 101 injection (N+1 pagination guard) |
+| `FEAT_25` | `false` | #25 | Per-question schema pruning — 1 extra LLM call to drop irrelevant tables |
+| `FEAT_26` | `false` | #26 | learnt_hints — persist successful SQL patterns in `hints/<db_id>.json` |
+| `FEAT_28` | `false` | #28 | Self-consistency — 3 SQL samples + majority vote (3× token cost) |
+| `FEAT_21` | `false` | #21 | MinHash column similarity — implicit join hints (extra DB queries at build) |
+| `FEAT_23` | `false` | #23 | NL table descriptions via LLM — cached in `nl_descriptions/{db_id}.json` |
+| `FEAT_30` | `false` | #30 | CoT decomposition — break complex queries into sub-steps (1 extra LLM call) |
 
-**Critical**: flags default to `"true"` unless noted. Any flag absent from the environment is treated as enabled. To run ablation, all flags must be explicitly set. Exceptions: FEAT_32/33/34 default `false` (AmbiSQL pipeline is experimental).
+**Critical**: flags default to `"true"` unless noted. Any flag absent from the environment is treated as enabled. To run ablation, all flags must be explicitly set. Exceptions: FEAT_6/32/33/34/25/26/28 default `false` (experimental or expensive).
 
-### Running isolated ablation (leave-one-in)
+### Ablation methodology (v2 — leave-one-in)
 
-On Windows/Git Bash, shell `export` does not reliably cross the MSYS2→uv.exe boundary. Use a temp env file:
+**Baseline = all FEAT flags false** (equivalent to main branch behavior). Each feature is tested with ONLY that flag enabled. Intra-feature dependencies are kept (FEAT_3/4/7 require FEAT_2; FEAT_33 requires FEAT_32; FEAT_34 requires FEAT_32+33).
+
+Code guarantees that all-false is a working state:
+- `build()`: always falls back to light schema even when FEAT_5/6/35 all false
+- `AMBIGUITY_PROMPT_SIMPLE`: has core "default=unambiguous" rules (not a bare prompt)
+- Benchmarks: always sleep 2s base; FEAT_19 adds configurable extra interval on top
 
 ```bash
-# One feature at a time:
-bash local/run_single.sh FEAT_5 ambrosia   # ambrosia | bird | both
+# One feature at a time (first flag names the output dir):
+bash local/run_single.sh "FEAT_2" bird
+bash local/run_single.sh "FEAT_2 FEAT_3" bird   # FEAT_3 depends on FEAT_2
 
-# Full 14-feature ablation (BIRD + Ambrosia per feature, ~6 hours):
+# Full ablation (BIRD + Ambrosia per feature, ~8 hours):
 bash local/ablation_full.sh
 ```
 
-Results are saved to `ablation_results/<feat_name>/` (bird.log, ambrosia.log, summary.txt).
+Results are saved to `ablation_results/<feat_name>/` (bird.log, ambrosia.log, summary.txt). Runs are skipped if `summary.txt` already exists — delete it to re-run.
 
 ### Additional env vars
 
 - `MAX_RETRIES` — SQL generation retries (default: 7)
-- `LLM_MIN_INTERVAL` — seconds between questions (default: 3; ablation scripts use 12)
+- `LLM_MIN_INTERVAL` — extra seconds added when FEAT_19=true (default: 3)
+- `LLM_BASE_INTERVAL` — always-on floor sleep between questions (default: 2; ablation scripts set to 12 to avoid 429 rate limits)
 
 ## Baseline Accuracy (reference)
 - BIRD: ~20–35% with gpt-3.5-turbo

@@ -13,6 +13,7 @@ logger = logging.getLogger("text2sql_tool")
 
 _LLM_MIN_INTERVAL = float(os.getenv("LLM_MIN_INTERVAL", "3.0"))
 _FEAT_19 = os.getenv("FEAT_19", "true").lower() == "true"
+_BASE_INTERVAL = float(os.getenv("LLM_BASE_INTERVAL", "2.0"))  # set to 12 in ablation scripts
 
 
 class BenchmarkBIRD(BenchmarkBase):
@@ -57,7 +58,7 @@ class BenchmarkBIRD(BenchmarkBase):
             logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
 
-            await asyncio.sleep(_LLM_MIN_INTERVAL if _FEAT_19 else 0)
+            await asyncio.sleep(_BASE_INTERVAL + (_LLM_MIN_INTERVAL if _FEAT_19 else 0))
 
         return predictions
 

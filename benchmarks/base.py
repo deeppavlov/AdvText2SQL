@@ -63,7 +63,7 @@ class BenchmarkBase(BaseModel):
 
         for db_id, tool in tools.items():
             logger.info(f"Building tool for db_id={db_id}")
-            tool.build()
+            await tool.build()
             logger.info(f"Build done for db_id={db_id}")
 
         if FEAT_9:

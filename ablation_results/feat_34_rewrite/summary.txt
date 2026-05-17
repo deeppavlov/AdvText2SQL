@@ -1,4 +1,4 @@
-Label:   feat_34_rewrite
-Commit:  f997dec
-BIRD:    4.55%
+Label:   FEAT_34: query rewriting
+Commit:  6cfeae6
+BIRD:    36.36%
 Ambrosia:62.50%

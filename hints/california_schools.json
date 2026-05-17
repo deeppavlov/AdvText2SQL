@@ -1,0 +1,14 @@
+[
+  {
+    "question": "question: Among the schools with the average score in Math over 560 in the SAT test, how many schools are directly charter-funded?, evidence (may be empty): ",
+    "sql": "SELECT COUNT(DISTINCT s.\"cdscode\") AS charter_schools_count\nFROM \"satscores\" ss\nJOIN \"schools\" s ON ss.\"cds\" = s.\"cdscode\"\nWHERE ss.\"avgscrmath\" > 560\n  AND ss.\"rtype\" = 'S'\n  AND s.\"fundingtype\" = 'Charter - Directly funded';"
+  },
+  {
+    "question": "question: Please list the phone numbers of the schools with the top 3 SAT excellence rate., evidence (may be empty): Excellence rate = NumGE1500 / NumTstTakr",
+    "sql": "WITH sat_excellence AS (\n    SELECT\n        s.\"cds\" AS school_cds,\n        s.\"sname\" AS school_name,\n        s.\"numge1500\"::FLOAT / NULLIF(s.\"numtsttakr\"::FLOAT, 0) AS excellence_rate\n    FROM\n        \"satscores\" s\n    WHERE\n        s.\"rtype\" = 'S'\n        AND s.\"numtsttakr\" > 0\n)\nSELECT\n    sc.\"school\" AS school_name,\n    sc.\"phone\" AS phone_number\nFROM\n    \"schools\" sc\nJOIN\n    sat_excellence se ON sc.\"cdscode\" = se.school_cds\nORDER BY\n    se.excellence_rate DESC\nLIMIT 3;"
+  },
+  {
+    "question": "question: Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers., evidence (may be empty): Valid charter number means the number is not null",
+    "sql": "SELECT\n    s.\"charternum\" AS charter_number,\n    AVG(ss.\"avgscrwrite\") AS avg_writing_score,\n    RANK() OVER (ORDER BY AVG(ss.\"avgscrwrite\") DESC) AS rank\nFROM\n    \"satscores\" ss\nJOIN\n    \"schools\" s ON ss.\"cds\" = s.\"cdscode\"\nWHERE\n    ss.\"avgscrwrite\" > 499\n    AND s.\"charternum\" IS NOT NULL\nGROUP BY\n    s.\"charternum\"\nORDER BY\n    avg_writing_score DESC;"
+  }
+]

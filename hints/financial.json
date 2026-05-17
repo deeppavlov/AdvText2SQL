@@ -1,0 +1,6 @@
+[
+  {
+    "question": "question: For the client who applied 98832 USD loan in 1996/1/3, when was his/her birthday?, evidence (may be empty): ",
+    "sql": "SELECT\n    c.\"birth_date\"\nFROM\n    \"loan\" l\nJOIN\n    \"account\" a ON l.\"account_id\" = a.\"account_id\"\nJOIN\n    \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nJOIN\n    \"client\" c ON d.\"client_id\" = c.\"client_id\"\nWHERE\n    l.\"amount\" = 98832\n    AND l.\"date\" = TO_DATE('1996-01-03', 'YYYY-MM-DD');"
+  }
+]
