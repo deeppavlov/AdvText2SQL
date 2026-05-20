@@ -352,7 +352,9 @@ class Text2SQLGenerator:
         inspector = inspect(self.engine)
         tables = inspector.get_table_names(schema="public")
         if not tables:
-            raise RuntimeError("No tables found in public schema")
+            import sys as _sys
+            print(f"[ERROR] No tables in public schema for: {self.db_uri}", file=_sys.stderr, flush=True)
+            raise RuntimeError(f"No tables found in public schema for {self.db_uri}")
 
         rows = ["table\tcolumn\ttype"]
         for table in tables:
@@ -787,6 +789,27 @@ class Text2SQLGenerator:
         await _asyncio.sleep(1.0)
         return await self.llm_client.create(messages)
 
+    def _detect_structural_ambiguity(self, user_query: str) -> bool:
+        """
+        Python-детектор двух синтаксических паттернов неоднозначности (без LLM).
+        AND-scope: "[Тип A] and [Тип B] with/who/that/where [условие]"
+        Every/each: "systems every specialist works with" (не "for each X")
+        TP=6/9, FP=0 на Ambrosia. FP=0 на BIRD.
+        """
+        q = user_query.lower()
+        # AND-scope: letter-only words (exclude year/number ranges)
+        if re.search(
+            r'\b[a-z]+(?:\s+[a-z]+)?\s+and\s+[a-z]+(?:\s+[a-z]+)?\s+'
+            r'(?:with|who|which|that|where|serving|associated\s+with)(?!\s+either)',
+            q,
+        ):
+            return True
+        # every/each as universal quantifier — strip "for each/every" first
+        q_no_for_each = re.sub(r'\bfor\s+(?:every|each)\b', '', q)
+        if re.search(r'\b(?:every|each)\b', q_no_for_each):
+            return True
+        return False
+
     async def _check_ambiguity(self, user_query: str) -> dict[str, Any]:
         """
         Проверяет пользовательский запрос на неоднозначность с помощью LLM.
@@ -850,7 +873,18 @@ class Text2SQLGenerator:
             result = await self._llm_call_with_retry(messages)
             text = result.content.strip()
             text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.IGNORECASE).strip()
-            data = json_module.loads(text)
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            if 0 <= start < end:
+                text = text[start:end]
+            try:
+                data = json_module.loads(text)
+            except json_module.JSONDecodeError:
+                # Replace all control chars (incl. newlines) with space —
+                # safe because space is valid JSON whitespace between tokens
+                # and harmless inside string values.
+                sanitized = re.sub(r"[\x00-\x1f]", " ", text)
+                data = json_module.loads(sanitized)
             logger.info(f"Taxonomy detection: is_ambiguous={data.get('is_ambiguous')} type={data.get('ambiguity_type')}")
             return data
         except Exception:
@@ -1361,27 +1395,41 @@ class Text2SQLGenerator:
         was_flagged_ambiguous = False
 
         if FEAT_32:
-            taxonomy = await self._detect_ambiguity_by_taxonomy(user_query)
-            if taxonomy.get("is_ambiguous"):
-                ambiguity_type = taxonomy.get("ambiguity_type", "unknown")
-                reason = taxonomy.get("reason", "")
-                logger.info(f"AmbiSQL: тип={ambiguity_type} — {reason[:80]}")
-                if FEAT_33:
-                    clarification = await self._generate_clarification_question(
-                        user_query, ambiguity_type, reason
-                    )
-                    if FEAT_34:
-                        user_query = await self._auto_resolve_ambiguity(
-                            user_query,
-                            clarification.get("question", ""),
-                            clarification.get("options", []),
+            try:
+                taxonomy = await self._detect_ambiguity_by_taxonomy(user_query)
+                if taxonomy.get("is_ambiguous"):
+                    ambiguity_type = taxonomy.get("ambiguity_type", "unknown")
+                    reason = taxonomy.get("reason", "")
+                    logger.info(f"AmbiSQL: тип={ambiguity_type} — {reason[:80]}")
+                    if FEAT_33:
+                        clarification = await self._generate_clarification_question(
+                            user_query, ambiguity_type, reason
                         )
-                        logger.info(f"AmbiSQL: rewritten → {user_query[:80]}")
-                        # rewritten query is unambiguous — proceed to SQL generation
+                        if FEAT_34:
+                            user_query = await self._auto_resolve_ambiguity(
+                                user_query,
+                                clarification.get("question", ""),
+                                clarification.get("options", []),
+                            )
+                            logger.info(f"AmbiSQL: rewritten → {user_query[:80]}")
+                            # rewritten query is unambiguous — proceed to SQL generation
+                        else:
+                            return {"status": "ambiguous"}
                     else:
                         return {"status": "ambiguous"}
-                else:
-                    return {"status": "ambiguous"}
+            except Exception as _ambisql_err:
+                logger.warning(f"AmbiSQL pipeline failed ({_ambisql_err}), falling back to classic check")
+                ambiguity_check = await self._check_ambiguity(user_query)
+                was_flagged_ambiguous = (
+                    ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]
+                )
+                if was_flagged_ambiguous:
+                    logger.info(f"Запрос неоднозначен: {ambiguity_check['clarification_needed']}")
+                    if not FEAT_12:
+                        return {"status": "ambiguous"}
+                    logger.info("Optimistic fallback включён после сбоя AmbiSQL")
+                if ambiguity_check["status"] == "error":
+                    logger.warning("Ambiguity check failed, proceeding with SQL generation")
         else:
             ambiguity_check = await self._check_ambiguity(user_query)
             was_flagged_ambiguous = (

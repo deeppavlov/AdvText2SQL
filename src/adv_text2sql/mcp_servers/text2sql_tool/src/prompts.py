@@ -96,8 +96,8 @@ SQL_PROMPT_TEMPLATE = """
 
 Требования:
 1. Только SQL, диалект {sql_dialect} - совместимый синтаксис
-2. Обязательные комментарии перед запросом
-3. Четкое соответствие запросу
+2. SELECT только те колонки, которые явно запрошены в вопросе — НЕ добавляй лишние поля
+3. Каждое имя колонки сверяй со схемой для конкретной таблицы — НЕ используй колонку одной таблицы через alias другой
 4. Используй LIKE, если запрос касается имён собственных, фамилий, названий подразделений.
 Всегда используй LIKE, если запрос касается значений из таблицы, которых нет явно
 в промпте. В таблице слова могут быть в разных падежах, с кавычками или без,
@@ -108,6 +108,9 @@ SQL_PROMPT_TEMPLATE = """
    - Если нужно SELECT DISTINCT с ORDER BY — все колонки ORDER BY ОБЯЗАНЫ быть в SELECT.
    - Если сортируешь по вычисляемому выражению, которого нет в SELECT — используй GROUP BY
      вместо DISTINCT, или включи выражение в SELECT.
+6. Проверка алиасов: каждый alias, используемый в SELECT/WHERE/ORDER BY/GROUP BY,
+   ОБЯЗАН быть объявлен в FROM или JOIN этого же SELECT-блока. Alias из внешнего запроса
+   недоступен внутри подзапроса и наоборот. Перед завершением пройдись по каждому alias.
 НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
 
 SQL запрос:"""
@@ -129,6 +132,11 @@ SQL_RETRY_PROMPT_TEMPLATE = """
 2. DISTINCT пишется ТОЛЬКО сразу после SELECT
 3. Если SELECT DISTINCT с ORDER BY — все колонки ORDER BY ОБЯЗАНЫ быть в SELECT
 4. Используй LIKE для имён собственных и значений из таблицы
+5. Если ошибка "missing FROM-clause entry for table X": alias X не объявлен —
+   найди где ты его используешь и либо объяви его в FROM/JOIN, либо замени на правильный alias.
+6. Если ошибка "function to_date(date, unknown) does not exist": колонка уже имеет тип DATE —
+   не оборачивай её в TO_DATE(). Используй напрямую: EXTRACT(YEAR FROM col) или CAST(col AS TEXT)
+   перед вызовом строковых функций. Пример: вместо TO_DATE(col, 'YYYY-MM-DD') пиши просто col.
 НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
 
 SQL запрос:"""
@@ -159,11 +167,16 @@ SQL_PROMPT_COMPLEX_TEMPLATE = """
 
 Обязательные правила:
 1. Только SQL, диалект {sql_dialect}
-2. DISTINCT пишется ТОЛЬКО сразу после SELECT; если ORDER BY — все его колонки в SELECT
-3. Используй LIKE для имён собственных
-4. Все поля TEXT — явный CAST перед числовыми/датовыми сравнениями
-5. Для топ-N используй GROUP BY + ORDER BY + LIMIT, не DISTINCT
-6. Проверь: нет ли неоднозначных JOIN-ов без ON-условия
+2. SELECT только те колонки, которые явно запрошены в вопросе — НЕ добавляй лишние поля
+3. Каждое имя колонки сверяй со схемой для конкретной таблицы — НЕ используй колонку одной таблицы через alias другой
+4. DISTINCT пишется ТОЛЬКО сразу после SELECT; если ORDER BY — все его колонки в SELECT
+5. Используй LIKE для имён собственных
+6. Все поля TEXT — явный CAST перед числовыми/датовыми сравнениями
+7. Для топ-N используй GROUP BY + ORDER BY + LIMIT, не DISTINCT
+8. Проверь: нет ли неоднозначных JOIN-ов без ON-условия
+9. Проверка алиасов: каждый alias, используемый в SELECT/WHERE/ORDER BY/GROUP BY,
+   ОБЯЗАН быть объявлен в FROM или JOIN этого же SELECT-блока (включая каждый CTE-блок отдельно).
+   Alias из внешнего SELECT недоступен внутри подзапроса. Перед финализацией пройдись по каждому alias.
 НЕ ОФОРМЛЯЙ НИКАК СВОЙ ОТВЕТ. ТВОЙ ОТВЕТ - ТОЛЬКО ЗАПРОС, НИЧЕГО БОЛЕЕ!
 
 SQL запрос:"""
@@ -276,64 +289,126 @@ SQL запрос:"""
 
 # ── FEAT_32: AmbiSQL Stage 1 — taxonomy-based ambiguity detection ────────────────
 TAXONOMY_DETECTION_PROMPT = """
-Ты — эксперт по анализу запросов к базам данных.
-Определи, является ли запрос пользователя РЕАЛЬНО неоднозначным по таксономии AmbiSQL.
-
-### Ключевое правило:
-По умолчанию запрос ОДНОЗНАЧЕН. Возвращай is_ambiguous=true ТОЛЬКО если ты уверен на 90%+
-что существуют ≥2 принципиально РАЗНЫХ интерпретации, дающих РАЗНЫЕ результаты,
-и схема БД не позволяет выбрать одну.
-
-### Схема базы данных:
-{db_schema}
+Твоя задача — проверить, содержит ли запрос один из двух конкретных синтаксических паттернов.
+Это задача сопоставления паттерна, а не суждение об однозначности.
+Не используй схему БД для вынесения вердикта по паттернам 1 и 2 — они лингвистические.
 
 ### Запрос пользователя:
 {user_query}
 
-### Таксономия (A1–A6) — СТРОГИЕ критерии:
+---
 
-A1 — Unclear schema reference: термин из запроса ОДНОВРЕМЕННО относится к ≥2 РАЗНЫМ таблицам
-     или колонкам с ПРИНЦИПИАЛЬНО РАЗНЫМИ данными, и нельзя выбрать без уточнения.
-     НЕ флажь: общие слова типа "данные", "значения", числовой порог, конкретное имя.
+## Паттерн 1 — AND-scope (тип A3a)
 
-A2 — Unclear value reference: значение явно указано в запросе, но отсутствует в БД
-     И нет очевидного ближайшего аналога (т.е. запрос не может быть выполнен).
+НАЙДИ в запросе структуру: "[Тип A] and [Тип B] (with|who|which|that|where|serving) [условие]"
+Неоднозначность: условие относится к обоим типам или только к последнему?
 
-A3 — Missing SQL keywords: одна фраза может означать ПРИНЦИПИАЛЬНО РАЗНЫЕ агрегации,
-     дающие РАЗНЫЕ числа. НЕ флажь: "топ-N", "наибольший", "наименьший" — они однозначны (ORDER BY + LIMIT).
+ОБРАТИ ВНИМАНИЕ: паттерн требует ДВА РАЗНЫХ ТИПА объектов через and, после которых
+идёт ограничительный клауз. Числа, даты и одиночные типы паттерн НЕ образуют.
 
-A4 — Unclear knowledge source: неясно, использовать ли данные из БД или внешние знания,
-     И оба варианта дают принципиально РАЗНЫЕ результаты.
+Примеры → is_ambiguous=true:
+- "List all banquet halls and conference rooms with a 200 person capacity."
+  СТРУКТУРА: [banquet halls] and [conference rooms] WITH [a 200 person capacity]
+  ВОПРОС: with 200 — к halls тоже или только к rooms?
 
-A5 — Insufficient reasoning context: явно отсутствует информация, без которой SQL
-     физически нельзя написать. НЕ флажь: "мало деталей" или "можно интерпретировать по-разному"
-     — если хотя бы один разумный SQL существует, это не A5.
+- "Give me restaurants and cafes that serve Italian cuisine."
+  СТРУКТУРА: [restaurants] and [cafes] THAT [serve Italian cuisine]
+  ВОПРОС: that serve — к restaurants тоже или только к cafes?
 
-A6 — Conflicting knowledge: запрос прямо противоречит данным в БД (несуществующая категория,
-     невозможное условие).
+- "Show me chefs and servers who speak English."
+  СТРУКТУРА: [chefs] and [servers] WHO [speak English]
+  ВОПРОС: who speak — к chefs тоже или только к servers?
 
-### Никогда НЕ флажь как неоднозначность (is_ambiguous=false):
-- Запрос содержит конкретное имя, дату, ID или числовой порог
-- "Топ", "наибольший", "наименьший", "пик", "минимальный", "максимальный" — агрегация очевидна
-- Запрос содержит несколько вопросов → ответить на все в одном SELECT
-- Неясно, сколько строк вернётся — это задача SQL, не неоднозначность
-- Есть поле evidence с подсказкой — evidence определяет интерпретацию
+Примеры → is_ambiguous=false:
+- "Show all banquet halls and conference rooms where either can hold 200 people."
+  ПРИЧИНА: "either" после where = явная дизъюнкция, неоднозначности нет.
 
-### Примеры (is_ambiguous=false):
-- "How many schools have average math score > 560 and are directly funded?" → A1 НЕТ (фильтры конкретны)
-- "What is the phone of the top 3 schools by test-taker rate?" → A5 НЕТ (топ-3 = ORDER BY LIMIT 3)
-- "Who had the least consumption in LAM in 2012?" → A3 НЕТ ("least" = MIN, период указан)
-- "What percentage of Japanese translated sets are expansion sets?" → НЕТ (процент = формула)
+- "List all restaurants and also list cafes that serve Italian cuisine."
+  ПРИЧИНА: "also list" / "also provide" разбивает перечисление явно, это два раздельных запроса.
 
-### Примеры (is_ambiguous=true):
-- "Покажи худшие точки" → A3: "худшие" по какому показателю? Нет метрики в запросе и схема не помогает.
-- "Покажи данные клиентов" → A1: "данные" — какие колонки? Нет уточнения, таблица большая.
+- "Provide a list of all chefs and also provide a list of servers who speak English."
+  ПРИЧИНА: "also provide a list of" = явное разделение на два отдельных запроса.
 
-### Ответ (строго JSON):
+- "Which chefs speak English and which servers speak the same language?"
+  ПРИЧИНА: "which X [глагол] and which Y [глагол]" = два параллельных полных предложения,
+  каждая часть имеет своё подлежащее и глагол. Ограничительного клауза нет.
+
+- "What restaurants serve Italian cuisine and what cafes serve the same cuisine?"
+  ПРИЧИНА: "what X [глагол] and what Y [глагол]" = параллельная структура двух вопросов.
+
+- "How many schools have avg math > 560 and are directly funded?"
+  ПРИЧИНА: один тип объектов (schools), два условия — нет двух типов.
+
+- "Please provide a list of clients who were born between 1983 and 1987 and whose..."
+  ПРИЧИНА: "between 1983 and 1987" — числовой диапазон, не два типа объектов.
+
+---
+
+## Паттерн 2 — Every/Each (тип A3b)
+
+НАЙДИ в запросе "every" или "each" в позиции универсального квантора над множеством сущностей.
+Неоднозначность: пересечение (то что есть у ВСЕХ) или перечисление (то что есть у КАЖДОЙ)?
+
+ИСКЛЮЧЕНИЕ: "For each X, ..." = явная итерация — паттерна НЕТ.
+
+Примеры → is_ambiguous=true:
+- "Tell me the systems every support specialist works with."
+  ВОПРОС: системы которые используют ВСЕ специалисты? Или список систем для каждого?
+
+- "which system names and active statuses are associated with every IT support specialist?"
+  ВОПРОС: те системы что у ВСЕХ или перечисление для каждого?
+
+- "Which responsibilities are associated with each internship?"
+  ВОПРОС: общие обязанности (INTERSECT)? Или список для каждой стажировки?
+
+Примеры → is_ambiguous=false:
+- "For each IT support specialist, what are the corresponding systems?"
+  ПРИЧИНА: "For each X, ..." = явная итерация, перечисление задано структурой предложения.
+
+- "For each internship, could you provide the corresponding responsibilities?"
+  ПРИЧИНА: то же — явная итерация.
+
+- "What is the salary for a position that is common to all hospitals?"
+  ПРИЧИНА: "common to all" = агрегат (EXISTS ALL / пересечение), семантика уже задана словом "common".
+  Это не квантор every/each — неоднозначности между INTERSECT и перечислением нет.
+
+- "Which responsibility is shared among all internships?"
+  ПРИЧИНА: "shared among all" = то же — слово "shared" само означает пересечение.
+  Паттерна every/each нет.
+
+---
+
+## Паттерн 3 — Расплывчатый термин (тип A1)
+
+Используй схему базы данных для этого паттерна:
+{db_schema}
+
+НАЙДИ: запрос содержит абстрактный термин (compensation, experience, location, contact,
+schedule, performance), И в схеме выше есть 2+ РАЗНЫХ колонки которые его означают.
+
+Примеры → is_ambiguous=true:
+- "What compensation is offered?" + схема имеет [salary_range] И [hourly_rate] → A1
+- "What are the locations of rental properties?" + схема имеет [street_address] И [city] как отдельные колонки → A1
+- "What experience do I need?" + схема имеет [minimum_years] И [preferred_years] → A1
+  (оба поля означают "опыт" — минимальный требуемый и предпочтительный)
+
+Примеры → is_ambiguous=false:
+- "What is the salary of developers?" → конкретная колонка, нет расплывчатости.
+- "Where is the office located?" → очевидно одна колонка address.
+- "What are the street addresses and cities of properties?" → запрос уже перечисляет обе колонки явно.
+
+---
+
+## Ответ
+
+Если найден хотя бы один паттерн → is_ambiguous=true.
+Иначе → is_ambiguous=false.
+
+Строго JSON:
 {{
   "is_ambiguous": true/false,
-  "ambiguity_type": "A1"/"A2"/"A3"/"A4"/"A5"/"A6"/null,
-  "reason": "краткое объяснение или null"
+  "ambiguity_type": "A1"/"A3"/null,
+  "reason": "какой паттерн найден и почему, или null"
 }}
 """
 

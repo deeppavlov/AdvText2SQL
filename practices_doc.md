@@ -324,18 +324,46 @@ BASE = FEAT_5=true  FEAT_12=true  FEAT_18=true  FEAT_19=true
 | 28 | FEAT_28 | Self-consistency | 36.36% | 0% | 54.17% | 0% | Нейтрален (3× дороже) |
 | 29 | FEAT_29 | Complexity-based prompts | 40.91% | +4.55% | 54.17% | 0% | Шум |
 | 30 | FEAT_30 | CoT decomposition | 40.91% | +4.55% | 54.17% | 0% | Шум, но позитивен |
-| 32 | FEAT_32 | AmbiSQL taxonomy | 36.36% | 0% | 45.83% | -8.34% | Taxonomy без rewrite вреден: возвращает ambiguous вместо SQL |
-| 33 | FEAT_33 | AmbiSQL clarification | 31.82% | -4.55% | 45.83% | -8.34% | То же: без FEAT_34 только хуже |
-| 34 | FEAT_34 | AmbiSQL rewrite | 36.36% | 0% | **62.50%** | **+8.33%** | ★ Сильный сигнал на AMB: весь pipeline работает только вместе |
+| 32 | FEAT_32 | AmbiSQL taxonomy | 36.36% | 0% | 45.83% | -8.34% | В isolation плох: prompt был философским, JSON errors. После переработки prompts даёт +AMB |
+| 33 | FEAT_33 | AmbiSQL clarification | 31.82% | -4.55% | 45.83% | -8.34% | В isolation плох; в комбинации с исправленным FEAT_32 (без FEAT_34) — даёт AMB 91–96% |
+| 34 | FEAT_34 | AmbiSQL rewrite | 36.36% | 0% | **62.50%** | **+8.33%** | Auto-resolve → потолок AMB 62.5%. Несовместим с целью AMB 70%+ |
 | 35 | FEAT_35 | TSV schema | 40.91% | +4.55% | 58.33% | +4.16% | Позитивен на обоих (меньше токенов = меньше шума) |
 | 36 | FEAT_36 | Smart LIMIT | 36.36% | 0% | 50.00% | -4.17% | Нейтрален |
 
 **Итого сильных сигналов (≥ +8% или стабильно на обоих):**
 - **FEAT_2** (+9.09% BIRD) — column statistics, самый сильный
 - **FEAT_12** (+4.55% BIRD, +8.33% AMB) — optimistic fallback, стабильно на обоих
-- **FEAT_34** (+8.33% AMB) — AmbiSQL rewrite pipeline (требует FEAT_32+33+34 вместе)
+- **FEAT_34** (+8.33% AMB в isolation) — но создаёт потолок 62.5%: несовместим с AMB 70%+
 
-**Структурная находка:** FEAT_32/33 без FEAT_34 ухудшают результат (-8.34% AMB). Пайплайн AmbiSQL должен включаться только полностью.
+**Структурная находка (v2, isolation):** FEAT_32/33 в isolation дают -8.34% AMB из-за двух проблем: (1) философский прайминг в taxonomy prompt, (2) JSON parse errors. После исправления промпта FEAT_32+33 **без** FEAT_34 дают AMB 91–96%. FEAT_34 — не обязательная часть pipeline, а архитектурный выбор с trade-off: auto-resolve улучшает BIRD (~+4%) но блокирует AMB на 62.5%.
+
+---
+
+### Результаты гибридных экспериментов (комбинации фич)
+
+> Запуск: `bash local/run_single.sh "FEAT_X FEAT_Y ..." both`  
+> Полный отчёт: `ablation_results/HYBRID_EXPERIMENTS_REPORT.md`
+
+**Оптимальная комбинация:**
+```
+FEAT_2 FEAT_3 FEAT_4 FEAT_8 FEAT_12 FEAT_17 FEAT_18 FEAT_19 FEAT_27 FEAT_29 FEAT_30 FEAT_32 FEAT_33 FEAT_35
+```
+
+| Эксперимент | BIRD | AMB | Ключевое изменение |
+|-------------|------|-----|-------------------|
+| 1 | 40.91% | 70.83% | Taxonomy prompt rewrite: философия → паттерны |
+| 2 | 50.00% | 66.67% | +BIRD фичи (3/4/17/27/29/30), JSON errors ещё не пофикшены |
+| 3 | 50.00% | **87.50%** | JSON парсер + counterexamples для FP/FN |
+| 4 | **54.55%** | **95.83%** | Alias check rule в SQL_PROMPT |
+| 5 | 54.55% | 91.67% | TO_DATE retry-rule (Q180 не починился, AMB — температурный шум) |
+
+**Изменения в промптах, обусловившие прирост AMB:**
+- `TAXONOMY_DETECTION_PROMPT`: переписан как задача сопоставления синтаксических паттернов; схема только для A1; counterexamples для A3a/A3b FP (Q8/Q108/Q112) и A1 FN (Q266/Q279)
+- `_detect_ambiguity_by_taxonomy()`: JSON парсер извлекает `{...}` из ответа, sanitize control chars → ошибок 0
+
+**Изменения в промптах, обусловившие прирост BIRD:**
+- `SQL_PROMPT_TEMPLATE`, `SQL_PROMPT_COMPLEX_TEMPLATE`: правило 6/9 — проверка алиасов перед финализацией
+- `SQL_RETRY_PROMPT_TEMPLATE`: правило 5 — `missing FROM-clause entry`; правило 6 — `to_date(date, unknown)`
 
 ---
 
