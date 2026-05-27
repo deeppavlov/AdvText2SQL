@@ -24,10 +24,52 @@ def sqlite_to_postgres(query: str) -> str:
         print("SQLGlot parse error:", e)
         query_pg = query
 
-    # Fix division by zero
-    query_pg = re.sub(r"(\b\w+\b)\s*/\s*(\b\w+\b)", r"\1 / NULLIF(\2,0)", query_pg)
+    # Apply transforms only outside quoted identifiers ("...") and string literals ('...')
+    # to avoid corrupting column names like "Charter School (Y/N)" or date literals.
+    query_pg = _apply_outside_quotes(query_pg, _fix_division_and_dates)
 
     return query_pg
+
+
+def _fix_division_and_dates(segment: str) -> str:
+    # Fix division by zero — negative lookahead avoids wrapping function calls like COUNT(...)
+    segment = re.sub(r"(\b\w+\b)\s*/\s*(\b\w+\b)(?!\s*\()", r"\1 / NULLIF(\2, 0)", segment)
+    # Fix TO_DATE on bare (unquoted) column references — column is already DATE type
+    segment = re.sub(
+        r"\bTO_DATE\(\s*(\b[a-zA-Z_]\w*\b)\s*,\s*'[^']+'\)",
+        r"\1", segment, flags=re.IGNORECASE
+    )
+    return segment
+
+
+def _apply_outside_quotes(sql: str, transform) -> str:
+    """Apply transform() only to unquoted segments of sql (outside "..." and '...')."""
+    result = []
+    i = 0
+    while i < len(sql):
+        ch = sql[i]
+        if ch == '"':
+            end = sql.find('"', i + 1)
+            end = end if end != -1 else len(sql) - 1
+            result.append(sql[i:end + 1])
+            i = end + 1
+        elif ch == "'":
+            j = i + 1
+            while j < len(sql):
+                if sql[j] == "'" and (j + 1 >= len(sql) or sql[j + 1] != "'"):
+                    break
+                j += 1
+            result.append(sql[i:j + 1])
+            i = j + 1
+        else:
+            next_q = len(sql)
+            for qc in ('"', "'"):
+                pos = sql.find(qc, i)
+                if pos != -1:
+                    next_q = min(next_q, pos)
+            result.append(transform(sql[i:next_q]))
+            i = next_q
+    return "".join(result)
 
 
 def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
@@ -43,13 +85,17 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
 
     all_predicted = {}
     all_gold = {}
+    engines: Dict[str, any] = {}
+    total = len(predictions)
 
-    for question_id, predicted_sql in predictions.items():
+    for idx, (question_id, predicted_sql) in enumerate(predictions.items(), 1):
         gold_query = gold_queries[question_id]
 
         gold_sql = gold_query["SQL"]
         db_id = gold_query["db_id"]
         difficulty = gold_query["difficulty"]
+
+        print(f"[{idx}/{total}] q_id={question_id} db={db_id}", flush=True)
 
         # ---- ambiguous request processing ----
         if gold_sql == "ambiguous" or predicted_sql == "ambiguous":
@@ -70,16 +116,16 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
             continue
 
         # ---- SQL execution and comparison with gold results ----
-        db_uri = (
-            f"postgresql+psycopg://{db_username}:{db_password}@{db_url}/{db_id}"
-        )
+        db_uri = f"postgresql+psycopg://{db_username}:{db_password}@{db_url}/{db_id}"
+        if db_id not in engines:
+            engines[db_id] = create_engine(db_uri)
 
         try:
-            # predicted_sql = sqlite_to_postgres(predicted_sql)
             gold_sql = sqlite_to_postgres(gold_sql)
-            engine = create_engine(db_uri)
+            engine = engines[db_id]
 
             with engine.connect() as conn:
+                conn.execute(text("SET statement_timeout = '30s'"))
 
                 gold_res = conn.execute(text(gold_sql)).fetchall()
                 all_gold[question_id] = [list(row) for row in gold_res]
@@ -87,7 +133,17 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
                 pred_res = conn.execute(text(predicted_sql)).fetchall()
                 all_predicted[question_id] = [list(row) for row in pred_res]
 
-            score = set(pred_res) == set(gold_res)
+            def _to_hashable(v):
+                if isinstance(v, list):
+                    return tuple(_to_hashable(i) for i in v)
+                if isinstance(v, dict):
+                    return tuple(sorted((k, _to_hashable(val)) for k, val in v.items()))
+                return v
+
+            def _normalize(row):
+                return tuple(_to_hashable(v) for v in row)
+
+            score = set(_normalize(r) for r in pred_res) == set(_normalize(r) for r in gold_res)
 
             results.append(
                 {

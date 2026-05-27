@@ -61,10 +61,26 @@ class BenchmarkBase(BaseModel):
                 llm_client=self.llm_client,
             )
 
+        failed_db_ids = set()
         for db_id, tool in tools.items():
             logger.info(f"Building tool for db_id={db_id}")
-            await tool.build()
-            logger.info(f"Build done for db_id={db_id}")
+            try:
+                await tool.build()
+                logger.info(f"Build done for db_id={db_id}")
+            except Exception as e:
+                logger.warning(f"Skipping db_id={db_id}: {e}")
+                failed_db_ids.add(db_id)
+
+        for db_id in failed_db_ids:
+            tools.pop(db_id)
+
+        if not tools:
+            raise RuntimeError(
+                f"All {len(failed_db_ids)} databases failed to build — server unreachable or out of connections."
+            )
+
+        if failed_db_ids:
+            logger.warning(f"Proceeding with {len(tools)}/{len(tools) + len(failed_db_ids)} databases ({len(failed_db_ids)} failed)")
 
         if FEAT_9:
             self._dump_db_schemas_json(tools)

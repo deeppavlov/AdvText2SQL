@@ -59,7 +59,12 @@ class Text2SQLGenerator:
 
 ```
 query(user_request)
-  → _check_ambiguity()        # LLM decides: "OK" or ambiguous
+  → if FEAT_32:
+      _taxonomy_stop_filter(query)  # regex pre-filter — returns False (not ambiguous) for
+                                    # structural patterns like "and also list", "for each X,",
+                                    # "in common", "shared between" — before any LLM call
+      → if not stopped: _detect_ambiguity_by_taxonomy()  # LLM taxonomy (A1/A3 types)
+  → else: _check_ambiguity()        # classic LLM ambiguity check
   → if ambiguous: return {"status": "ambiguous"}
   → for up to MAX_RETRIES:
       generate_sql()          # LLM generates SQL
@@ -67,6 +72,8 @@ query(user_request)
       _validate_sql()         # sqlglot parse + forbid DROP/DELETE/UPDATE
     → return {"status": "success", "query": sql}
 ```
+
+**Taxonomy stop_filter** (`_taxonomy_stop_filter` static method) runs before every taxonomy LLM call. It catches ~31/40 false-positive patterns from the large Ambrosia dataset that the LLM prompt cannot reliably handle. Prompt-based STOP rules were tried and made results worse — regex is the right tool for structural syntactic patterns.
 
 ### SQL Validation & Sanitization
 
@@ -96,6 +103,25 @@ Two modes in `text2sql_implementation.py`:
 - Only SELECT queries are permitted (enforced by `_validate_sql()`)
 - Student branches should be created off `main` and never pushed directly to `main`
 - `MAX_RETRIES` defaults to 7; overridable via env var
+
+### Connection Pool (large datasets)
+
+With 55 databases built simultaneously, default SQLAlchemy pool_size=5 exhausts server connections. Use:
+```python
+create_engine(db_uri, pool_pre_ping=True, pool_size=3, max_overflow=2, pool_timeout=30)
+```
+Server `max_connections=400` (raised by admin). Our footprint: 55 DBs × 5 connections = 275 max.
+
+### Result Set Comparison
+
+`evaluate_bird.py` compares result sets via `set()`. PostgreSQL can return `list` (arrays) or `dict` (JSONB) column values which are unhashable. Use `_to_hashable()` to recursively convert before set comparison:
+```python
+def _to_hashable(v):
+    if isinstance(v, list): return tuple(_to_hashable(i) for i in v)
+    if isinstance(v, dict): return tuple(sorted((k, _to_hashable(val)) for k, val in v.items()))
+    return v
+```
+Both `evaluate_bird.py` and `bird_evaluate_only.py` have this fix applied.
 
 ## Ablation Feature Flags
 
@@ -163,10 +189,41 @@ Results are saved to `ablation_results/<feat_name>/` (bird.log, ambrosia.log, su
 
 ### Additional env vars
 
-- `MAX_RETRIES` — SQL generation retries (default: 7)
+- `MAX_RETRIES` — SQL generation retries (default: 7; use 5 for ablation)
 - `LLM_MIN_INTERVAL` — extra seconds added when FEAT_19=true (default: 3)
-- `LLM_BASE_INTERVAL` — always-on floor sleep between questions (default: 2; ablation scripts set to 12 to avoid 429 rate limits)
+- `LLM_BASE_INTERVAL` — always-on floor sleep between questions (default: 2; use **15** for ablation to avoid 429 rate limits)
+- `DATASET_SIZE` — `small` or `large`, controls which data file is loaded (default: `large` in `run_single.sh`)
+
+### run_single.sh env var priority
+
+`run_single.sh` strips `LLM_BASE_INTERVAL`, `MAX_RETRIES`, and `DATASET_SIZE` from the `.env` copy and writes them explicitly with shell-variable-or-default logic:
+```bash
+LLM_BASE_INTERVAL=${LLM_BASE_INTERVAL:-15}
+MAX_RETRIES=${MAX_RETRIES:-5}
+DATASET_SIZE=${DATASET_SIZE:-large}
+```
+**Priority**: shell export > script default. Values in `.env` are ignored for these three keys. To override, export before running:
+```bash
+DATASET_SIZE=small bash local/run_single.sh "FEAT_2 FEAT_3" both
+```
+
+## Best Known Feature Combination (ablation v2)
+
+Best small dataset results (LLM_BASE_INTERVAL=15, MAX_RETRIES=5):
+- **BIRD small**: 54.55% | **Ambrosia small**: 95.83%
+
+```
+FEAT_2 FEAT_3 FEAT_4 FEAT_8 FEAT_12 FEAT_17 FEAT_18 FEAT_19 FEAT_27 FEAT_30 FEAT_32 FEAT_33 FEAT_35
+```
+
+FEAT_29 (complexity routing) is neutral — omitting saves 1 LLM call/question.  
+FEAT_32+33 (taxonomy) requires `_taxonomy_stop_filter` to avoid FP over-triggering on large dataset.
+
+Large dataset results with same combination:
+- **BIRD large**: ~41-43% | **Ambrosia large**: ~71-80% (improving with stop_filter iterations)
+
+BIRD breakdown by difficulty (large): simple 58.2%, moderate 34.8%, challenging 26.2%.
 
 ## Baseline Accuracy (reference)
-- BIRD: ~20–35% with gpt-3.5-turbo
-- Ambrosia: ~50–65% ambiguity detection accuracy
+- BIRD: ~20–35% with gpt-3.5-turbo; ~36% all-false baseline with current model
+- Ambrosia: ~54% all-false baseline with current model

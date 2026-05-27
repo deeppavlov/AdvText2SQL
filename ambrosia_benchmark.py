@@ -12,10 +12,13 @@ from adv_text2sql.mcp_servers.text2sql_tool.src.text2sql_implementation import (
 
 db_url = "localhost:5444"
 
+_size = os.environ.get("DATASET_SIZE", "large")
+_dataset = f"./data/ambrosia_{_size}.json"
+
 benchmark = BenchmarkAmbrosia(
     db_url=db_url,
-    query_file="./data/ambrosia_small.json",
-    answer_file="./data/ambrosia_small.json",
+    query_file=_dataset,
+    answer_file=_dataset,
 )
 
 report = asyncio.run(benchmark.run(Text2SQLGenerator))

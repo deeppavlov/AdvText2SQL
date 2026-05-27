@@ -1,8 +1,8 @@
 # Hybrid Experiments Report: Feature Combination Search
 
-> **Цель:** BIRD ≥ 50% и Ambrosia ≥ 70% одновременно.  
+> **Цель:** BIRD ≥ 63.64% и Ambrosia ≥ 70% одновременно.  
 > **Baseline v2:** BIRD 36.36% / AMB 54.17%  
-> **Достигнуто:** BIRD 54.55% / AMB 91–96%
+> **Достигнуто на данный момент:** BIRD 54.55% / AMB 91–96%
 
 ---
 

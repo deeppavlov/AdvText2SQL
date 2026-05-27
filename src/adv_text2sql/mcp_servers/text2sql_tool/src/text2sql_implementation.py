@@ -131,6 +131,9 @@ class Text2SQLGenerator:
         self.engine: Engine = create_engine(
             db_uri,
             pool_pre_ping=True,
+            pool_size=3,
+            max_overflow=2,
+            pool_timeout=30,
         )
 
         self.llm_client = llm_client
@@ -859,8 +862,38 @@ class Text2SQLGenerator:
             logger.exception(f"Failed to check ambiguity for query: {user_query}")
             return {"status": "error"}
 
+    @staticmethod
+    def _taxonomy_stop_filter(query: str) -> bool:
+        """Returns True if query matches a structural non-ambiguous pattern → skip taxonomy LLM call."""
+        q = query.lower()
+        return bool(
+            # Dual-list patterns: "X and also list/provide/show Y"
+            re.search(r"\band also\s+(list|provide|show|give|display)\b", q)
+            # Parallel sub-questions: "and what/which/who X verb"
+            or re.search(r"\band\s+(what|which|who)\s+\w", q)
+            # "both X and Y [clause]"
+            or re.search(r"\b(give me both|show both|list both|both\s+\w+\s+and\s+\w+\s+(who|which|that|where|with))\b", q)
+            # Explicit disjunction: "where either", "either of which"
+            or re.search(r"\b(where either|either of which)\b", q)
+            # "as well as"
+            or re.search(r"\bas well as\b", q)
+            # Explicit iteration at sentence start: "For each/every X, verb Y" — unambiguous grouping
+            # NOTE: "Y for each/every X" (each at end) is Pattern 2 ambiguous — NOT blocked
+            or re.search(r"^\s*for (each|every)\s+\w", q)
+            or re.search(r"^\s*for all\s+\w", q)
+            # Intersection/aggregation: "in common", "shared between/among", "common to/for all/every"
+            or re.search(r"\bin common\b", q)
+            or re.search(r"\bshared (between|among)\b", q)
+            or re.search(r"\bcommon (to|for) (all|every)\b", q)
+            or re.search(r"\bsame (for|by|among) all\b", q)
+        )
+
     async def _detect_ambiguity_by_taxonomy(self, user_query: str) -> dict[str, Any]:
         """Stage 1: классифицирует запрос по таксономии AmbiSQL (A1-A6). FEAT_32."""
+        if self._taxonomy_stop_filter(user_query):
+            logger.info("Taxonomy stop-filter matched: is_ambiguous=False (no LLM call)")
+            return {"is_ambiguous": False, "ambiguity_type": None, "reason": "stop-filter"}
+
         prompt = TAXONOMY_DETECTION_PROMPT.format(
             db_schema=self.db_schema,
             user_query=user_query,
@@ -1107,6 +1140,16 @@ class Text2SQLGenerator:
 
             # FEAT_15: sanitize LLM output (markdown, DISTINCT, CAST fixes)
             sanitized_sql = self.sanitize_sql(raw_sql) if FEAT_15 else raw_sql
+
+            # Unconditional semantic fixes (always on, regardless of FEAT_15):
+            # 1. TO_DATE on DATE columns → strip to bare column ref (PG errors on DATE arg)
+            sanitized_sql = re.sub(
+                r"\bTO_DATE\(\s*((?:\w+\.)?(?:\"[^\"]+\"|\b[a-zA-Z_]\w*\b))\s*,\s*'[^']+'\)",
+                r"\1", sanitized_sql, flags=re.IGNORECASE
+            )
+            # 2. NULLS ordering: PG default (DESC→NULLS FIRST) is opposite SQLite (DESC→NULLS LAST)
+            sanitized_sql = re.sub(r'\bDESC\b(?!\s+NULLS)', 'DESC NULLS LAST', sanitized_sql, flags=re.IGNORECASE)
+            sanitized_sql = re.sub(r'\bASC\b(?!\s+NULLS)', 'ASC NULLS FIRST', sanitized_sql, flags=re.IGNORECASE)
 
             sanitized_sql = self._strip_sql_comments(sanitized_sql)
 

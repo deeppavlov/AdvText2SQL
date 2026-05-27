@@ -10,7 +10,8 @@
       "WebFetch(domain:ar5iv.labs.arxiv.org)",
       "Bash(git add *)",
       "Bash(git ls-tree *)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(python -c ' *)"
     ]
   },
   "outputStyle": "Learning",

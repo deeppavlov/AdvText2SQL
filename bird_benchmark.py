@@ -13,10 +13,13 @@ setup_logging()
 
 db_url = "localhost:5444"
 
+_size = os.environ.get("DATASET_SIZE", "large")
+_dataset = f"./data/bird_{_size}.json"
+
 benchmark = BenchmarkBIRD(
     db_url=db_url,
-    query_file="./data/bird_small.json",
-    answer_file="./data/bird_small.json",
+    query_file=_dataset,
+    answer_file=_dataset,
     use_evidence=True,
 )
 

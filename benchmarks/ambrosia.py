@@ -31,6 +31,10 @@ class BenchmarkAmbrosia(BenchmarkBase):
             db_id = item["db_id"]
             question = item["question"]
 
+            if db_id not in tool_dict:
+                logger.warning(f"Skipping q_id={qid}: db_id={db_id} failed to build")
+                continue
+
             tool = tool_dict[db_id]
 
             logger.info(f"[{i+1}/{len(queries)}] Processing q_id={qid} db={db_id}")
