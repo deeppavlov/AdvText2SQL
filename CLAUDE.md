@@ -100,3 +100,55 @@ Two modes in `text2sql_implementation.py`:
 ## Baseline Accuracy (reference)
 - BIRD: ~20–35% with gpt-3.5-turbo
 - Ambrosia: ~50–65% ambiguity detection accuracy
+
+## Autonomous Text2SQL Pipeline (ветка `feat/autonomous-pipeline`)
+
+Параллельно с benchmark-фреймворком построен **автономный pipeline**: даёшь
+PostgreSQL-URL → за ~30 минут получаешь fine-tuned модель и inference-сервис
+под эту конкретную БД.
+
+```bash
+uv run python scripts/preflight.py        # проверка окружения
+uv run text2sql --help                    # 7 команд pipeline
+uv run text2sql init --db-url ...         # full orchestration: profile → generate → train
+```
+
+### Стадии (CLI subcommands)
+
+| Команда | Что делает | Артефакт |
+|---|---|---|
+| `text2sql profile` | Извлекает schema/relationships/stats/samples из БД | `data/profiles/<db_id>/profile.json` |
+| `text2sql generate` | Генерирует Q-SQL пары (template + LLM) + валидирует | `data/synthetic/*_validated.jsonl` |
+| `text2sql build-dataset` | Собирает chat-format train.jsonl/val.jsonl | `data/finetune/<db_id>/` |
+| `text2sql train` | Генерирует Colab notebook для FT | `notebooks/auto_train_<db_id>.ipynb` |
+| `text2sql serve` | REPL-клиент поверх vLLM | (interactive) |
+| `text2sql heal` | Собирает failed → корректирует через GPT-4 | `data/heal/<db_id>_corrections.jsonl` |
+| `text2sql init` | Orchestrator: profile → generate → build → train | (multi) |
+
+### Главный инвариант: train == inference
+
+`schema_str` / `relationships_str` / `column_stats_str` в `profile.json` —
+**byte-to-byte** идентичны выходу `Text2SQLGenerator.build()`. Это позволяет
+`Text2SQLGenerator.load_from_profile()` загружаться за <50ms вместо 30+ сек.
+
+Проверяется тестами:
+- `tests/test_profiler.py::test_schema_str_invariant` (с реальной БД)
+- `tests/test_training.py::test_dataset_builder_invariant_with_text2sql_generator` (unit)
+
+### Модули в `src/adv_text2sql/`
+
+- `profiler/` — извлечение метаданных БД
+- `synth/` — генерация и валидация синтетических Q-SQL пар
+- `training/` — chat-format dataset + Colab notebook template
+- `serve/` — vLLM Docker + Python SDK + query logger
+- `heal/` — self-healing loop через failed-queries
+- `cli/` — top-level Typer entry point (`text2sql`)
+
+Подробности: `src/adv_text2sql/README.md`.
+
+### Запуск unit-тестов
+
+```bash
+uv run python -m pytest tests/ -m "not integration"   # 29 unit-тестов, ~1 сек
+uv run python -m pytest tests/ -m integration          # требует SSH + DB env
+```

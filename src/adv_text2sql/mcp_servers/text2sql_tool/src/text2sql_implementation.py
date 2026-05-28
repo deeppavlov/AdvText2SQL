@@ -113,6 +113,44 @@ class Text2SQLGenerator:
         self.engine = create_engine(db_uri, pool_pre_ping=True)
         self.build()
 
+    def load_from_profile(self, profile_path: str):
+        """Холодный старт за <50ms — заполнить атрибуты из pre-computed profile.json.
+
+        В отличие от `build()`, который дёргает PG ~30 секунд для извлечения
+        schema/stats/samples, этот метод просто читает JSON-файл (созданный
+        стадией `text2sql profile`) и проставляет ровно те же self-атрибуты.
+
+        Используется в production MCP-сервере для мгновенного старта.
+
+        ИНВАРИАНТ: атрибуты `db_schema`, `relationships_str`, `column_stats_str`,
+        `system_prompt` должны быть byte-identical с тем, что выдаёт `build()`
+        для той же БД. Гарантируется тем, что `profile.json` пишется через
+        `SchemaExtractor`/`StatsCollector`/`format_column_statistics`, которые
+        напрямую переиспользуют те же pure-functions.
+
+        Args:
+            profile_path: путь к `data/profiles/<db_id>/profile.json`
+        """
+        # Импорт здесь, чтобы избежать циркулярки при загрузке модуля
+        from adv_text2sql.profiler.profile import Profile
+
+        start = time.time()
+        profile = Profile.load_json(profile_path)
+
+        self.db_schema = profile.schema_str
+        self.db_relationships = profile.relationships
+        self.relationships_str = profile.relationships_str
+        self.column_stats = profile.column_stats
+        self.column_stats_str = profile.column_stats_str
+        self.system_prompt = self._create_system_prompt()
+
+        elapsed = time.time() - start
+        logger.info(
+            f"Loaded from profile {profile_path} in {elapsed * 1000:.0f}ms "
+            f"(db_id={profile.db_id}, "
+            f"system_prompt={len(self.system_prompt)} chars)"
+        )
+
     def _get_db_schema_heavy(
         self,
         sample_rows_limit: int = 3,

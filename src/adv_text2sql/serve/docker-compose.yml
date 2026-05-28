@@ -1,0 +1,57 @@
+# docker-compose для развёртывания vLLM + (опционально) prometheus.
+#
+# Использование:
+#   1. cd src/adv_text2sql/serve/
+#   2. ADAPTER_DIR=$PWD/../../../models/card_games/adapter docker-compose up -d
+#   3. curl http://localhost:8000/v1/models     # проверка
+#   4. curl http://localhost:8000/v1/chat/completions -d '{...}'
+#
+# Требования: nvidia-docker (Linux+GPU) или nvidia-container-toolkit.
+
+version: "3.9"
+
+services:
+  vllm:
+    build:
+      context: .
+      dockerfile: Dockerfile.vllm
+    image: text2sql-vllm:latest
+    container_name: text2sql-vllm
+    ports:
+      - "8000:8000"
+    environment:
+      BASE_MODEL: ${BASE_MODEL:-Qwen/Qwen2.5-Coder-7B-Instruct}
+      ADAPTER_NAME: ${ADAPTER_NAME:-text2sql}
+      MAX_MODEL_LEN: ${MAX_MODEL_LEN:-8192}
+    volumes:
+      # ADAPTER_DIR — переменная окружения, должна указывать на папку с
+      # adapter_config.json + adapter_model.safetensors
+      - ${ADAPTER_DIR:-./adapter}:/adapters/active:ro
+      # Кэш для весов базовой модели (чтобы при рестарте не качать снова)
+      - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s    # vLLM грузит модель долго (~1 мин на A100)
+
+  # Опционально: Prometheus для метрик (vLLM exposes /metrics)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: text2sql-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    profiles: ["observability"]   # docker-compose --profile observability up
+
+volumes:
+  hf_cache:
