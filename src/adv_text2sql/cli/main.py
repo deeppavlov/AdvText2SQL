@@ -202,6 +202,32 @@ def serve(
         ask(q)
 
 
+@app.command("eval")
+def eval_cmd(
+    profile_path: str = typer.Option(..., "--profile"),
+    gold_path: str = typer.Option(..., "--gold", help="BIRD/Ambrosia gold JSON"),
+    model_url: str = typer.Option("http://localhost:8000/v1", "--model-url"),
+    model_name: str = typer.Option("text2sql", "--model-name"),
+    db_url: str = typer.Option(..., "--db-url"),
+    limit: int = typer.Option(50, "--limit"),
+    use_evidence: bool = typer.Option(False, "--use-evidence"),
+    out: str = typer.Option("experiments", "--out"),
+) -> None:
+    """Прогон FT-модели на BIRD subset → execution accuracy report."""
+    from adv_text2sql.eval.cli import run_eval_cmd
+
+    run_eval_cmd(
+        profile_path=profile_path,
+        gold_path=gold_path,
+        model_url=model_url,
+        model_name=model_name,
+        db_url=db_url,
+        limit=limit,
+        use_evidence=use_evidence,
+        out_dir=out,
+    )
+
+
 @app.command()
 def heal(
     profile_path: str = typer.Option(..., "--profile"),
