@@ -1,0 +1,38 @@
+{
+  "_comment": "Bi-вариант (RU+EN) на каждый из 5 генераторов синтетики. Имя <model>_bi означает 500 русских + 500 английских = 1000 пар.",
+  "db_id": "card_games",
+  "profile_path": "data/profiles/card_games/profile.json",
+  "bird_path": "data/bird_large.json",
+  "experiments": [
+    {
+      "name": "gpt41_bi",
+      "llm_model": "gpt-4.1",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    },
+    {
+      "name": "codexmini_bi",
+      "llm_model": "gpt-5.1-codex-mini",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    },
+    {
+      "name": "gpt41nano_bi",
+      "llm_model": "gpt-4.1-nano",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    },
+    {
+      "name": "gpt4omini_bi",
+      "llm_model": "gpt-4o-mini",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    },
+    {
+      "name": "gpt41mini_bi",
+      "llm_model": "gpt-4.1-mini",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    }
+  ]
+}

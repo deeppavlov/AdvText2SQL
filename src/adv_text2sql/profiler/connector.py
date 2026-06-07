@@ -9,11 +9,11 @@ DBConnector — тонкая обёртка над SQLAlchemy engine для Post
 from __future__ import annotations
 
 from dataclasses import dataclass
-from urllib.parse import urlparse
 
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.engine import Engine
 from sqlalchemy.engine.reflection import Inspector
+from sqlalchemy.engine.url import make_url
 
 
 SUPPORTED_DIALECTS = ("postgresql",)
@@ -78,17 +78,26 @@ class DBConnector:
         """Извлечь имя БД из URI — оно же `db_id` для путей артефактов.
 
         Пример: 'postgresql+psycopg://user:pw@h:5444/card_games' → 'card_games'.
+        Использует SQLAlchemy URL-парсер — он корректно работает даже когда
+        пароль содержит спецсимволы (`/`, `@`, `:`), которые ломают urlparse.
         """
-        path = urlparse(self.db_uri).path  # '/card_games'
-        return path.lstrip("/") or "unknown_db"
+        return make_url(self.db_uri).database or "unknown_db"
 
     def redacted_uri(self) -> str:
-        """URI без пароля — для логов и profile.json."""
-        parsed = urlparse(self.db_uri)
-        if parsed.password:
-            netloc = parsed.netloc.replace(f":{parsed.password}", ":***")
-            return parsed._replace(netloc=netloc).geturl()
-        return self.db_uri
+        """URI без пароля — для логов и profile.json.
+
+        Собираем вручную, не через render_as_string — он percent-encodes
+        специальные символы (например `***` → `%2A%2A%2A`), что неудобно
+        для человеческого чтения логов.
+        """
+        url = make_url(self.db_uri)
+        if not url.password:
+            return self.db_uri
+        auth = f"{url.username}:***@" if url.username else "***@"
+        host = url.host or ""
+        port = f":{url.port}" if url.port else ""
+        db = f"/{url.database}" if url.database else ""
+        return f"{url.drivername}://{auth}{host}{port}{db}"
 
     # ── Internal ─────────────────────────────────────────────────────────────
 

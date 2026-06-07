@@ -64,10 +64,13 @@ FT_DIR = DATA_DIR / "finetune"
 SYN_DIR = DATA_DIR / "synthetic"
 
 BIRD_TRAIN_FILES = [
-    DATA_DIR / "train_queries.json",       # in-repo, 357 q
-    DATA_DIR / "bird_train_full.json",     # опционально, ~9k q
+    # PG-транспилированные и провалидированные версии (см. scripts/transpile_train_sql.py).
+    # Раньше тут лежали SQLite-исходники → модель училась SQLite-диалекту → на инференсе
+    # PG падал. Теперь поле `SQL` уже в PG, поле `SQL_original` хранит SQLite-исходник для аудита.
+    DATA_DIR / "train_queries_pg.json",       # 357 → ~340 после фильтра
+    DATA_DIR / "bird_train_full_pg.json",     # ~9k → ~1-2k после фильтра по доступным БД
 ]
-AMBROSIA_TRAIN_FILES = [DATA_DIR / "ambrosia_train.json"]
+AMBROSIA_TRAIN_FILES = [DATA_DIR / "ambrosia_train_pg.json"]
 
 BIRD_HOLDOUT_FILE = DATA_DIR / "bird_small.json"
 AMBROSIA_HOLDOUT_FILE = DATA_DIR / "ambrosia_small.json"
@@ -243,6 +246,8 @@ def format_sql_example(example: dict, schema: dict[str, str]) -> dict:
         "messages": [
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_content},
+            # SQL уже PG — транспиляция и валидация делается в
+            # scripts/transpile_train_sql.py до этого этапа. Здесь только формат.
             {"role": "assistant", "content": example["SQL"].strip()},
         ],
         "_meta": {
@@ -411,6 +416,16 @@ def write_jsonl(rows: list[dict], path: Path) -> None:
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--skip-pg", action="store_true",
+        help="Не ходить в PG за новыми схемами — использовать только кэш. "
+             "Удобно когда туннель лежит: записи с отсутствующей схемой будут "
+             "пропущены (логируется skipped_no_schema)."
+    )
+    args = ap.parse_args()
+
     rng = random.Random(RANDOM_SEED)
     FT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -422,7 +437,13 @@ def main() -> None:
     needed_db_ids = {ex["db_id"] for ex in raw}
     logger.info(f"need schemas for {len(needed_db_ids)} unique db_ids")
     cache = load_schema_cache()
-    schemas = ensure_schemas(needed_db_ids, cache)
+    if args.skip_pg:
+        # Не дёргаем PG — works со всем, что уже в _schema_cache.json.
+        missing = [d for d in needed_db_ids if not cache.get(d, {}).get("schema")]
+        logger.info(f"--skip-pg: using cache only. {len(missing)} db_ids without schema → их примеры будут пропущены.")
+        schemas = cache
+    else:
+        schemas = ensure_schemas(needed_db_ids, cache)
 
     # Phase C — формируем chat-сообщения
     formatted = expand_to_messages(raw, schemas)

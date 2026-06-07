@@ -538,16 +538,20 @@ class TemplateRegistry:
         values = profile.low_cardinality_values[key]
         if not values:
             return None
-        # Берём первый символ первого значения для substring-match
+        # Берём первые 2 символа значения для substring-match
         sample = str(rng.choice(values))
         if len(sample) < 2:
             return None
         prefix = sample[:2]
+        # Экранируем одиночные кавычки в prefix (SQL требует удвоения: ' → '')
+        # и спецсимволы LIKE (%, _) — чтобы они не интерпретировались как wildcards
+        if "'" in prefix or "%" in prefix or "_" in prefix or "\\" in prefix:
+            return None  # пропускаем такие значения — они дадут некорректный LIKE
         return SyntheticExample(
             question=f"Найди все строки в {table}, где {col} начинается на '{prefix}'.",
             sql=(
                 f'SELECT * FROM "{table}" '
-                f'WHERE "{col}"::text LIKE \'{prefix}%\' LIMIT 50'
+                f"WHERE \"{col}\"::text LIKE '{prefix}%' LIMIT 50"
             ),
             db_id=profile.db_id,
             template_id="like_pattern",
@@ -628,13 +632,23 @@ ALL_TEMPLATES = [
 class TemplateSyntheticGenerator:
     """Генерирует Q-SQL пары по шаблонам, использует Profile для grounding."""
 
-    def __init__(self, profile: Profile, seed: int = 42) -> None:
+    def __init__(self, profile: Profile, seed: int = 42, language: str = "ru") -> None:
         self.profile = profile
         self.rng = random.Random(seed)
+        # Шаблоны генерируют вопросы на русском. Для другого языка шаблонный
+        # генератор отключается, чтобы НЕ загрязнять датасет чужим языком —
+        # английские вопросы даёт LLM-генератор (он двуязычный).
+        self.language = language
 
     def generate(self, target_count: int) -> list[SyntheticExample]:
         """Сгенерировать target_count примеров. Может вернуть меньше если шаблоны
         не применимы (например, нет numeric-колонок → top-N не работает)."""
+        if self.language != "ru":
+            logger.warning(
+                f"Template generator поддерживает только русский; язык '{self.language}' "
+                f"запрошен → шаблоны пропущены, используйте --generator llm для {self.language}"
+            )
+            return []
         out: list[SyntheticExample] = []
         attempts = 0
         max_attempts = target_count * 3  # защита от бесконечного цикла

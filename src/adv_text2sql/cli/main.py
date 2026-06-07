@@ -80,6 +80,9 @@ def generate(
     db_url: str = typer.Option(
         None, "--db-url", help="PG URL для execute-валидации (без него — только parse+whitelist)"
     ),
+    language: str = typer.Option(
+        "ru", "--language", help="Язык вопросов: ru | en (train==inference!)"
+    ),
 ) -> None:
     """Сгенерировать + отфильтровать синтетический Q-SQL датасет."""
     from adv_text2sql.synth.cli import run_generate
@@ -93,6 +96,7 @@ def generate(
         auto_resize=auto_resize,
         out_dir=out,
         db_url=db_url,
+        language=language,
     )
     console.print(f"\n[bold green]Done.[/bold green] Stats: {stats}")
 

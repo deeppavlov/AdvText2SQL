@@ -1,0 +1,219 @@
+[
+  {
+    "question_id": "510",
+    "question": "Among the cards that doesn't have multiple faces on the same card, who is the illustrator of the card art that has the highest cost of converted mana?",
+    "gold_sql": "SELECT artist FROM cards WHERE side IS NULL ORDER BY convertedManaCost DESC LIMIT 1",
+    "predicted_sql": "SELECT artist \nFROM cards \nWHERE multiverseid IS NOT NULL \nORDER BY convertedmanacost DESC \nLIMIT 1;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "393",
+    "question": "On how many cards designed by John Avon is its foil non-powerful?",
+    "gold_sql": "SELECT COUNT(id) FROM cards WHERE (cardKingdomId IS NULL OR cardKingdomFoilId IS NULL) AND artist = 'John Avon'",
+    "predicted_sql": "/* Считаем количество карточек, которые были разработаны John Avon и у которых версионная версия (foil) не является мощной (powerball). */\nSELECT COUNT(*) \nFROM cards AS T1 \nJOIN rulings AS T2 ON T1.uuid = T2.uuid \nWHERE T1.artist LIKE '%John Avon%' AND T2.text NOT LIKE '%powerball%';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "351",
+    "question": "Name all the cards which have alternative language in Japanese.",
+    "gold_sql": "SELECT T1.name FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T2.language = 'Japanese'",
+    "predicted_sql": "SELECT DISTINCT cd.name \nFROM foreign_data fd \nJOIN cards cd ON fd.uuid = cd.uuid \nWHERE fd.language = 'Japanese';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "377",
+    "question": "How many cards with original type of \"Summon - Angel\" have subtype other than \"Angel\"?",
+    "gold_sql": "SELECT COUNT(id) FROM cards WHERE originalType = 'Summon - Angel' AND subtypes != 'Angel'",
+    "predicted_sql": "SELECT COUNT(*)\nFROM cards\nWHERE originaltype = 'Summon -- Angel'\n  AND subtypes NOT LIKE '%Angel%';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "435",
+    "question": "How many card border with black color ? List out the card id.",
+    "gold_sql": "SELECT id FROM cards WHERE borderColor = 'black' GROUP BY id",
+    "predicted_sql": "-- Считаем количество карточек с черной рамкой и выводим их ID\nSELECT COUNT(*), id \nFROM cards \nWHERE bordercolor = 'black' \nGROUP BY id;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "421",
+    "question": "Please list top three unknown power cards that have promotional types for arena league in alphabetical order.",
+    "gold_sql": "SELECT name FROM cards WHERE (power IS NULL OR power LIKE '%*%') AND promoTypes = 'arenaleague' ORDER BY name LIMIT 3",
+    "predicted_sql": "SELECT DISTINCT name \nFROM cards \nWHERE promotiontypes LIKE '%прмтн%аурен%' \nORDER BY name ASC \nLIMIT 3;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "445",
+    "question": "What is the language and flavor text of the card that has colorpie watermark? List out the type of this card.",
+    "gold_sql": "SELECT DISTINCT T2.language, T2.flavorText FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T2.uuid = T1.uuid WHERE T1.watermark = 'colorpie'",
+    "predicted_sql": "SELECT DISTINCT \n    f.language, \n    f.flavortext, \n    c.type \nFROM \n    foreign_data f\nJOIN \n    cards c ON f.uuid = c.uuid\nWHERE \n    c.watermark = 'colorpool';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "355",
+    "question": "What is the keyword found on card 'Angel of Mercy'?",
+    "gold_sql": "SELECT DISTINCT keywords FROM cards WHERE name = 'Angel of Mercy'",
+    "predicted_sql": "SELECT DISTINCT keywords \nFROM cards \nWHERE name = 'Angel of Mercy';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "453",
+    "question": "What's the unconverted mana cost of the card \"Ancestor's Chosen\"?",
+    "gold_sql": "SELECT DISTINCT manaCost FROM cards WHERE name = 'Ancestor''s Chosen'",
+    "predicted_sql": "SELECT \"convertedmanacost\" \nFROM \"cards\" \nWHERE \"name\" = 'Ancestor''s Chosen';",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "509",
+    "question": "What is the unique id of the set that has the highest number of cards?",
+    "gold_sql": "SELECT id FROM sets ORDER BY baseSetSize DESC LIMIT 1",
+    "predicted_sql": "/* Находим уникальный ID набора с наибольшим количеством карточек */\nSELECT T1.id \nFROM sets AS T1 \nJOIN cards AS T2 ON T1.code = T2.setcode \nGROUP BY T1.id \nORDER BY COUNT(*) DESC \nLIMIT 1;",
+    "difficulty": "simple"
+  },
+  {
+    "question_id": "450",
+    "question": "Of all the cards that are designed by Aaron Miller, how many of them are incredibly powerful?",
+    "gold_sql": "SELECT SUM(CASE WHEN artist = 'Aaron Miller' AND cardKingdomFoilId IS NOT NULL AND cardKingdomId IS NOT NULL THEN 1 ELSE 0 END) FROM cards",
+    "predicted_sql": "-- Считаем количество уникальных карт, которые были разработаны Aaron Miller'ом и считаются очень мощными\nSELECT COUNT(DISTINCT \"name\") \nFROM \"cards\" \nWHERE \"artist\" LIKE '%Aaron%Miller%'\nAND \"name\" IN (\n    SELECT \"name\" \n    FROM \"cards\" \n    WHERE \"text\" LIKE '%desencantar%' \n    OR \"text\" LIKE '%desencantar%'\n    OR \"text\" LIKE '%one-eyed%jackals%'\n    OR \"text\" LIKE '%duel%damage%'\n    OR \"text\" LIKE '%trial%error%'\n    OR \"text\" LIKE '%choque%'\n);",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "515",
+    "question": "When was the oldest mythic card released and what are its legal play formats?",
+    "gold_sql": "SELECT T1.originalReleaseDate, T2.format FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.rarity = 'mythic' AND T1.originalReleaseDate IS NOT NULL AND T2.status = 'Legal' ORDER BY T1.originalReleaseDate LIMIT 1",
+    "predicted_sql": "-- Находим самую старую мифическую карту и её форматы legendariness\nSELECT \n    c.name AS card_name,\n    MIN(c.originalreleasedate) AS release_date,\n    STRING_AGG(DISTINCT l.format, ', ') AS legal_formats\nFROM \n    cards c\nJOIN \n    legalities l ON c.uuid = l.uuid\nWHERE \n    c.ismythic = '1'\nGROUP BY \n    c.name\nORDER BY \n    release_date ASC\nLIMIT 1;",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "498",
+    "question": "What's the French name of the set of cards with \"Tendo Ice Bridge\" is in?",
+    "gold_sql": "SELECT T2.translation FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Tendo Ice Bridge' AND T2.language = 'French' AND T2.translation IS NOT NULL",
+    "predicted_sql": "SELECT DISTINCT t1.translation \nFROM set_translations AS t1 \nJOIN sets AS t2 ON t1.setcode = t2.code \nWHERE t2.name LIKE '%Tendo Ice Bridge%'",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "417",
+    "question": "What percentage of Japanese translated sets are expansion sets?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'Japanese' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.type = 'expansion'",
+    "predicted_sql": "-- Calculate the percentage of Japanese-translated sets that are expansion sets\nSELECT \n    CAST(SUM(CASE WHEN T1.type = 'expansion' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) AS percentage\nFROM \n    sets AS T1\nJOIN \n    set_translations AS T2 ON T1.code = T2.setcode\nWHERE \n    T2.language = 'Japanese';",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "345",
+    "question": "For artifact type of cards that do not have multiple faces on the same card, state its legalities status for vintage play format.",
+    "gold_sql": "SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.type = 'Artifact' AND T2.format = 'vintage' AND T1.side IS NULL",
+    "predicted_sql": "SELECT DISTINCT c.name, l.status\nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.type LIKE '%Artifact%'\n  AND c.layout != 'flip'\n  AND c.layout != 'leveler'\n  AND c.layout != 'scheme'\n  AND l.format = 'vintage';",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "409",
+    "question": "Indicates the number of cards with pre-modern format, ruling text \"This is a triggered mana ability.\" that do not have multiple faces.",
+    "gold_sql": "SELECT COUNT(T1.id) FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid INNER JOIN rulings AS T3 ON T1.uuid = T3.uuid WHERE T2.format = 'premodern' AND T3.text = 'This is a triggered mana ability.' AND T1.Side IS NULL",
+    "predicted_sql": "SELECT COUNT(*)\nFROM cards c\nJOIN rulings r ON c.uuid = r.uuid\nWHERE c.layout != 'dfc' \n  AND r.text LIKE 'This is a % mana ability.';",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "402",
+    "question": "What is the percentage of Story Spotlight cards that do not have a text box? List them by their ID.",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN isTextless = 0 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards WHERE isStorySpotlight = 1",
+    "predicted_sql": "-- Calculate the percentage of Story Spotlights without a text box and list their IDs\nWITH story_spotlights AS (\n    SELECT id\n    FROM cards\n    WHERE keywords LIKE '%story%spotlight%'\n),\nwithout_text_box AS (\n    SELECT id\n    FROM story_spotlights\n    WHERE text = ''\n)\nSELECT \n    (SELECT COUNT(*) FROM without_text_box)::float * 100 / (SELECT COUNT(*) FROM story_spotlights) AS percentage_without_text_box,\n    without_text_box.id\nFROM without_text_box;",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "434",
+    "question": "How many sets are available just in Japanese and not in Magic: The Gathering Online?",
+    "gold_sql": "SELECT COUNT(T1.id) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T2.language = 'Japanese'  AND (T1.mtgoCode IS NULL OR T1.mtgoCode = '')",
+    "predicted_sql": "-- Считаем количество сетей, доступных только на японском языке и недоступных в Magic: The Gathering Online\nSELECT COUNT(*)\nFROM set_translations st\nJOIN sets s ON st.setcode = s.code\nWHERE st.language = 'Japanese'\nAND s.code NOT IN (\n    SELECT setcode\n    FROM rulings\n);",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "517",
+    "question": "How many rare enchantment Abundance cards are there whose play format status are all legal?",
+    "gold_sql": "SELECT COUNT(T1.id) FROM cards AS T1 INNER JOIN legalities AS T2 ON T2.uuid = T1.uuid WHERE T1.rarity = 'rare' AND T1.types = 'Enchantment' AND T1.name = 'Abundance' AND T2.status = 'Legal'",
+    "predicted_sql": "SELECT COUNT(*) \nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.type = 'Enchantment' \n  AND c.subtypes @> '{Abundance}' \n  AND c.rarity = 'Rare' \n  AND l.format = 'vintage' AND l.status = 'Legal'\n  AND l.format = 'legacy' AND l.status = 'Legal'\n  AND l.format = 'commander' AND l.status = 'Legal'\n  AND l.format = 'duel' AND l.status = 'Legal'\n  AND l.format = 'modern' AND l.status = 'Legal'\n  AND l.format = 'mtgo' AND l.status = 'Legal'\n  AND l.format = 'paper' AND l.status = 'Legal';",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "347",
+    "question": "Find all cards illustrated by Stephen Daniel and describe the text of the ruling of these cards. State if these cards have missing or degraded properties and values.",
+    "gold_sql": "SELECT T1.id, T2.text, T1.hasContentWarning FROM cards AS T1 INNER JOIN rulings AS T2 ON T1.uuid = T2.uuid WHERE T1.artist = 'Stephen Daniele'",
+    "predicted_sql": "SELECT \n    c.name AS CardName,\n    r.text AS RulingText,\n    CASE \n        WHEN c.cardkingdomfoilid IS NULL OR c.cardkingdomid IS NULL THEN 'Missing'\n        WHEN c.artist <> 'Stephen Daniel' THEN 'Degraded'\n        ELSE 'Valid'\n    END AS PropertyStatus\nFROM \n    cards c\nJOIN \n    rulings r ON c.uuid = r.uuid\nWHERE \n    c.artist LIKE '%Stephen Daniel%'\nORDER BY \n    c.name;",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "469",
+    "question": "Did the set of cards with \"Angel of Mercy\" appear on Magic: The Gathering Online?",
+    "gold_sql": "SELECT IIF(T2.mtgoCode IS NOT NULL, 'YES', 'NO') FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T1.name = 'Angel of Mercy'",
+    "predicted_sql": "/* Проверяем, принадлежит ли сетку, содержащую \"Angel of Mercy\", Magic: The Gathering Online */\n\nSELECT DISTINCT c.setcode \nFROM cards c\nJOIN set_translations st ON c.setcode = st.setcode\nWHERE c.name LIKE '%Angel of Mercy%'\nAND st.translation LIKE '%Magic:%The:%Gathering:%Online%';",
+    "difficulty": "moderate"
+  },
+  {
+    "question_id": "513",
+    "question": "Among the sets whose expansion type is Commander, which set has the highest total number of cards including promotional and related supplemental products but excluding Alchemy modifications? Indicate the id of the set.",
+    "gold_sql": "SELECT id FROM sets WHERE type = 'commander' ORDER BY totalSetSize DESC LIMIT 1",
+    "predicted_sql": "-- Находим все сеты с типом расширения \"Commander\"\nWITH commander_sets AS (\n    SELECT id\n    FROM sets\n    WHERE type = 'expansion' AND name LIKE '%Commander%'\n),\n-- Суммируем количество карт для каждого сета, исключая Alchemy модификации\ncard_counts AS (\n    SELECT \n        set_id,\n        SUM(CASE WHEN includesfoilonly = 1 OR isfoilonly = 1 THEN 1 ELSE 0 END) AS total_cards\n    FROM \n        set_translations st\n    JOIN \n        sets s ON st.setcode = s.code\n    WHERE \n        st.translation LIKE '%Alloy Frame%'\n        OR st.translation LIKE '%Heartwood%'\n        OR st.translation LIKE '%MightEye%'\n        OR st.translation LIKE '%Vision%')\n    GROUP BY \n        set_id\n)\n-- Находим сет с наибольшим количеством карт\nSELECT \n    cs.id\nFROM \n    commander_sets cs\nJOIN \n    card_counts cc ON cs.id = cc.set_id\nORDER BY \n    cc.total_cards DESC\nLIMIT 1;",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "494",
+    "question": "For all cards illustrated by Jim Pavelec. and describe the text of the ruling of these cards. Do these cards have missing or degraded properties and values.",
+    "gold_sql": "SELECT T2.text , CASE WHEN T1.hasContentWarning = 1 THEN 'YES' ELSE 'NO' END FROM cards AS T1 INNER JOIN rulings AS T2 ON T2.uuid = T1.uuid WHERE T1.artist = 'Jim Pavelec'",
+    "predicted_sql": "-- Находим все карточки, иллюстрированные Jim Pavelec, и описываем их текстовые решения\n-- Также проверяем, есть ли у этих карт отсутствующие или ухудшенные свойства и значения\n\nSELECT \n    c.name AS CardName,\n    r.date AS RulingDate,\n    r.text AS RulingText,\n    CASE \n        WHEN c.artist IS NULL OR c.artist != 'Jim Pavelec' THEN 'Yes'\n        ELSE 'No'\n    END AS HasIncorrectArtist,\n    CASE \n        WHEN c.scryfallid IS NULL OR c.scryfallillustrationid IS NULL THEN 'Yes'\n        ELSE 'No'\n    END AS HasMissingProperties\nFROM \n    cards c\nLEFT JOIN \n    rulings r ON c.uuid = r.uuid\nWHERE \n    c.artist LIKE '%Jim Pavelec%';",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "528",
+    "question": "List the names of all the cards in the set Hour of Devastation and find the formats in which these cards are legal.",
+    "gold_sql": "SELECT DISTINCT T2.name , CASE WHEN T1.status = 'Legal' THEN T1.format ELSE NULL END FROM legalities AS T1 INNER JOIN cards AS T2 ON T2.uuid = T1.uuid WHERE T2.setCode IN ( SELECT code FROM sets WHERE name = 'Hour of Devastation' )",
+    "predicted_sql": "/* Список имен всех карт из набора \"Hour of Devastation\" и форматы, в которых эти карты легальны */\nSELECT DISTINCT c.name AS card_name, l.format\nFROM cards c\nJOIN legalities l ON c.uuid = l.uuid\nWHERE c.setcode = 'HOU';",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "415",
+    "question": "What percentage of cards with format commander and legal status do not have a content warning?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.hasContentWarning = 0 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.format = 'commander' AND T2.status = 'Legal'",
+    "predicted_sql": "-- Calculate the percentage of cards with format 'commander' and legal status that do not have a content warning\nSELECT \n    (COUNT(CASE WHEN T2.status = 'Legal' AND T1.contentwarning = '0' THEN 1 ELSE NULL END)::FLOAT * 100) / COUNT(T1.id) AS percentage\nFROM \n    cards AS T1\nJOIN \n    legalities AS T2 ON T1.uuid = T2.uuid\nWHERE \n    T2.format = 'commander';",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "506",
+    "question": "For all the set of cards that has Japanese translation, what is the percentage of them are only available in non-foil?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN isNonFoilOnly = 1 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM sets WHERE code IN ( SELECT setCode FROM set_translations WHERE language = 'Japanese' )",
+    "predicted_sql": "WITH japanese_cards AS (\n    SELECT c.id\n    FROM cards c\n    JOIN set_translations st ON c.setcode = st.setcode\n    WHERE st.language = 'Japanese'\n),\nnon_foil_only_cards AS (\n    SELECT id\n    FROM japanese_cards\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM cards c2\n        WHERE c2.setcode = japanese_cards.setcode\n          AND c2.multiverseid = japanese_cards.multiverseid\n          AND c2.name = japanese_cards.name\n          AND c2.hasfoil = 1\n    )\n)\nSELECT \n    (COUNT(non_foil_only_cards.id::float) / COUNT(japanese_cards.id)) * 100 AS percentage_non_foil_only\nFROM \n    japanese_cards\nLEFT JOIN \n    non_foil_only_cards ON japanese_cards.id = non_foil_only_cards.id;",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "416",
+    "question": "What percentage of cards without power are in French?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.power IS NULL OR T1.power = '*'",
+    "predicted_sql": "-- Calculate the percentage of cards without power in French\nSELECT \n    (COUNT(CASE WHEN T1.text LIKE '%%Pouvoir:%' THEN 1 ELSE NULL END)::FLOAT * 100) / COUNT(*) AS percentage_without_power\nFROM \n    foreign_data AS T1\nJOIN \n    rulings AS T2 ON T1.uuid = T2.uuid\nWHERE \n    T2.language = 'French';",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "431",
+    "question": "Which set is not available outside of the United States and has foil cards with Japanese writing on them? Please include the set ID in your response.",
+    "gold_sql": "SELECT T1.name, T1.id FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.language = 'Japanese' AND T1.isFoilOnly = 1 AND T1.isForeignOnly = 0",
+    "predicted_sql": "SELECT DISTINCT s.id \nFROM sets s\nJOIN set_translations st ON s.code = st.setcode\nWHERE s.isforeignonly = 1\nAND st.language = 'Japanese'\nAND s.hasfoil = 1;",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "371",
+    "question": "What is the percentage of cards whose language is French among the Story Spotlight cards?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.language = 'French' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.isStorySpotlight = 1",
+    "predicted_sql": "/* Процент карточек, на которые наложена метка \"Story Spotlights\", \n   среди тех, что переведены на французский язык */\n\nWITH story_spotlight_cards AS (\n    SELECT id\n    FROM foreign_data\n    WHERE name LIKE '%Story Spot%'\n),\nfrench_translation_cards AS (\n    SELECT id\n    FROM set_translations\n    WHERE language = 'French'\n)\nSELECT \n    (COUNT(DISTINCT CASE WHEN french_translation_cards.id IS NOT NULL THEN story_spotlight_cards.id END) * 100.0 / COUNT(DISTINCT story_spotlight_cards.id))::NUMERIC(5, 2) AS percentage\nFROM \n    story_spotlight_cards\nLEFT JOIN \n    french_translation_cards ON story_spotlight_cards.id = french_translation_cards.id;",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "487",
+    "question": "What is the percentage of incredibly powerful cards in the set Coldsnap?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.cardKingdomFoilId IS NOT NULL AND T1.cardKingdomId IS NOT NULL THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+    "predicted_sql": "-- Calculate the percentage of \"incredibly powerful\" cards in the set \"Coldsnap\"\nWITH coldsnap_cards AS (\n    SELECT \n        uuid,\n        COUNT(*) AS total_cards\n    FROM \n        cards\n    WHERE \n        setcode = 'Coldsnap'\n    GROUP BY \n        uuid\n),\nincredibly_powerful_cards AS (\n    SELECT \n        uuid,\n        COUNT(*) AS powerful_count\n    FROM \n        cards\n    WHERE \n        setcode = 'Coldsnap'\n        AND (keywords LIKE '%legendary%') -- Assuming \"incredibly powerful\" means having the keyword \"legendary\"\n    GROUP BY \n        uuid\n)\nSELECT \n    (CAST(incredibly_powerful_cards.powerful_count AS REAL) / coldsnap_cards.total_cards) * 100 AS percentage_incredibly_powerful\nFROM \n    coldsnap_cards, incredibly_powerful_cards;",
+    "difficulty": "challenging"
+  },
+  {
+    "question_id": "477",
+    "question": "Which of these artists have designed a card in the set Coldsnap, Jeremy Jarvis, Aaron Miller or Chippy?",
+    "gold_sql": "SELECT T1.artist FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE (T2.name = 'Coldsnap' AND T1.artist = 'Chippy') OR (T2.name = 'Coldsnap' AND T1.artist = 'Aaron Miller') OR (T2.name = 'Coldsnap' AND T1.artist = 'Jeremy Jarvis') GROUP BY T1.artist",
+    "predicted_sql": "SELECT DISTINCT artist \nFROM cards \nWHERE setcode = 'C13' \n   OR artist LIKE '%Jeremy Jarvis%' \n   OR artist LIKE '%Aaron Miller%' \n   OR artist LIKE '%Chippy%';",
+    "difficulty": "challenging"
+  }
+]

@@ -35,9 +35,33 @@ from .template_generator import SyntheticExample
 logger = logging.getLogger("text2sql_tool.synth.llm")
 
 
+# Models that ONLY work with /v1/responses, NOT /v1/chat/completions
+# Source: OpenAI API docs — Codex and select newer models use the Responses API
+_RESPONSES_API_MODELS: frozenset[str] = frozenset(
+    {
+        "codex-mini-latest",
+        "gpt-5.1-codex-mini",
+        "o3-mini",
+    }
+)
+
+
+def _needs_responses_api(model: str) -> bool:
+    """Return True if this model requires /v1/responses instead of /v1/chat/completions."""
+    return model in _RESPONSES_API_MODELS or "codex" in model.lower()
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Prompts
 # ─────────────────────────────────────────────────────────────────────────────
+
+
+# Язык вопросов — критичный параметр: модель должна обучаться на том же языке,
+# на котором будет тестироваться (инвариант train==inference по языку).
+_LANGUAGE_RULE = {
+    "ru": "Вопросы — на РУССКОМ языке, естественные, как от реального аналитика",
+    "en": "Questions — in ENGLISH, natural, as from a real data analyst",
+}
 
 
 SYNTHESIS_SYSTEM_PROMPT = """Ты — генератор обучающих данных для Text2SQL модели.
@@ -46,7 +70,7 @@ SYNTHESIS_SYSTEM_PROMPT = """Ты — генератор обучающих да
 Твоя задача — сгенерировать {batch_size} разнообразных пар (вопрос, SQL).
 
 ТРЕБОВАНИЯ:
-1. Вопросы — на русском языке, естественные, как от реального аналитика
+1. {language_rule}
 2. SQL — корректный PostgreSQL (НЕ SQLite!): используй ::numeric, ::date, NULLIF
 3. Все имена таблиц и колонок — ТОЛЬКО из предоставленной схемы
 4. Используй реальные значения из low_cardinality_values где это уместно
@@ -90,6 +114,10 @@ class LLMGeneratorConfig:
     temperature: float = 0.8
     batch_size: int = 20
     max_retries_per_batch: int = 2
+    language: str = "ru"  # "ru" | "en" — язык генерируемых вопросов
+    # Параллельных запросов. 1 = последовательно (чистые логи, не упирается в TPM
+    # лимит gpt-4.1 ~30K/мин при ~5K токенов/батч). Подними для моделей с большим лимитом.
+    max_concurrency: int = 1
 
 
 class LLMSyntheticGenerator:
@@ -116,8 +144,7 @@ class LLMSyntheticGenerator:
         )
 
         results: list[SyntheticExample] = []
-        # Параллельные батчи (но не больше 5 одновременно — rate limiting)
-        semaphore = asyncio.Semaphore(5)
+        semaphore = asyncio.Semaphore(max(1, self.config.max_concurrency))
 
         async def run_batch(batch_idx: int) -> list[SyntheticExample]:
             async with semaphore:
@@ -138,7 +165,10 @@ class LLMSyntheticGenerator:
     # ── Internals ────────────────────────────────────────────────────────────
 
     async def _generate_one_batch(self, batch_idx: int) -> list[SyntheticExample]:
-        system_prompt = SYNTHESIS_SYSTEM_PROMPT.format(batch_size=self.config.batch_size)
+        lang_rule = _LANGUAGE_RULE.get(self.config.language, _LANGUAGE_RULE["ru"])
+        system_prompt = SYNTHESIS_SYSTEM_PROMPT.format(
+            batch_size=self.config.batch_size, language_rule=lang_rule
+        )
         user_prompt = SYNTHESIS_USER_PROMPT.format(
             db_id=self.profile.db_id,
             schema_str=self.profile.schema_str,
@@ -150,17 +180,11 @@ class LLMSyntheticGenerator:
             batch_size=self.config.batch_size,
         )
 
+        use_responses = _needs_responses_api(self.config.model_name)
+
         for attempt in range(self.config.max_retries_per_batch + 1):
             try:
-                resp = await self.client.chat.completions.create(
-                    model=self.config.model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt},
-                    ],
-                    temperature=self.config.temperature,
-                )
-                content = resp.choices[0].message.content or ""
+                content = await self._call_llm(system_prompt, user_prompt, use_responses)
                 parsed = _parse_json_array(content)
                 return [
                     SyntheticExample(
@@ -174,12 +198,65 @@ class LLMSyntheticGenerator:
                     if "question" in item and "sql" in item
                 ]
             except Exception as e:
+                err_str = str(e)
+                # Auto-detect Responses API requirement from the error message
+                if "only supported in v1/responses" in err_str and not use_responses:
+                    logger.info(
+                        f"Model {self.config.model_name!r} requires Responses API — switching"
+                    )
+                    use_responses = True
+                    continue  # retry immediately with right API
                 if attempt == self.config.max_retries_per_batch:
                     logger.exception(f"Batch {batch_idx} failed after retries: {e}")
                     return []
-                logger.warning(f"Batch {batch_idx} attempt {attempt} failed: {e}, retrying")
+                # 429 rate-limit: parse wait time from error message, sleep
+                wait = 15.0  # default backoff
+                if "rate_limit_exceeded" in err_str or "429" in err_str:
+                    import re as _re
+                    m = _re.search(r"try again in (\d+(?:\.\d+)?)s", err_str)
+                    wait = float(m.group(1)) + 2.0 if m else 20.0
+                    logger.warning(
+                        f"Batch {batch_idx} rate-limited, sleeping {wait:.1f}s"
+                    )
+                    await asyncio.sleep(wait)
+                else:
+                    logger.warning(
+                        f"Batch {batch_idx} attempt {attempt} failed: {e}, retrying"
+                    )
 
         return []
+
+    async def _call_llm(
+        self, system_prompt: str, user_prompt: str, use_responses_api: bool
+    ) -> str:
+        """Call the right OpenAI endpoint and return the text content."""
+        if use_responses_api:
+            # /v1/responses — used by Codex and select newer OpenAI models
+            resp = await self.client.responses.create(
+                model=self.config.model_name,
+                instructions=system_prompt,
+                input=user_prompt,
+            )
+            # Output is in resp.output_text (convenience attr) or nested structure
+            if hasattr(resp, "output_text"):
+                return resp.output_text or ""
+            # Fallback: traverse output → content
+            for block in getattr(resp, "output", []):
+                for part in getattr(block, "content", []):
+                    if getattr(part, "type", None) == "output_text":
+                        return getattr(part, "text", "") or ""
+            return ""
+        else:
+            # /v1/chat/completions — standard path for most models
+            resp = await self.client.chat.completions.create(
+                model=self.config.model_name,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=self.config.temperature,
+            )
+            return resp.choices[0].message.content or ""
 
 
 # ─────────────────────────────────────────────────────────────────────────────

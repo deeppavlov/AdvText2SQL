@@ -10,7 +10,7 @@ notebook_generator — генерирует Colab-ноутбук для FT по�
     notebook_path = generate_finetune_notebook(
         db_id="card_games",
         base_model="unsloth/Qwen2.5-Coder-7B-Instruct-bnb-4bit",
-        drive_data_dir="text2sql_finetune/card_games",
+        drive_data_dir="text2sql/card_games",
     )
 """
 from __future__ import annotations
@@ -22,7 +22,7 @@ from pathlib import Path
 def generate_finetune_notebook(
     db_id: str,
     base_model: str = "unsloth/Qwen2.5-Coder-7B-Instruct-bnb-4bit",
-    drive_data_dir: str = "text2sql_finetune",
+    drive_data_dir: str = "text2sql",
     output_dir: str | Path = "notebooks",
     r: int = 16,
     lora_alpha: int = 32,

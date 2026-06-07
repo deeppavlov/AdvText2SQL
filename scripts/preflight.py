@@ -20,7 +20,20 @@ import importlib
 import os
 import socket
 import sys
+from pathlib import Path
 from typing import Callable
+
+# Auto-load .env если он есть. uv run по умолчанию изолирует среду,
+# поэтому переменные shell могут не пробрасываться внутрь процесса.
+_ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
+if _ENV_FILE.exists():
+    for line in _ENV_FILE.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        # Не перезаписываем уже заданные (приоритет shell-env над .env)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
 def _ok(msg: str) -> None:

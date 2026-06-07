@@ -34,6 +34,14 @@ class BenchmarkBase(BaseModel):
 
         # TODO: move to a better location
         if not self.llm_client:
+            # context_window — сообщаем autogen_ext реальный лимит модели.
+            # Без этого поля клиент не проверяет размер запроса и шлёт
+            # гигантские системные промпты (до ~5k токенов) → LM Studio
+            # отвечает "Compute error" из-за переполнения контекста.
+            # Значение берём из env (LLM_CONTEXT_WINDOW), дефолт 32768
+            # (достаточно для всех схем BIRD; нужно совпадать с настройкой
+            # "Context Length" в LM Studio для загруженной модели).
+            context_window = int(os.environ.get("LLM_CONTEXT_WINDOW", 32768))
             self.llm_client = OpenAIChatCompletionClient(
                 model=os.environ["LLM_MODEL_NAME"],
                 base_url=os.environ["LLM_BASE_URL"],
@@ -45,6 +53,7 @@ class BenchmarkBase(BaseModel):
                     "vision": False,
                     "family": "unknown",
                     "structured_output": False,
+                    "context_window": context_window,
                 },
             )
         self.llm_client = TokenTrackingClient(self.llm_client)

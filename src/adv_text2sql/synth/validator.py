@@ -70,6 +70,9 @@ def check_parse(sql: str) -> tuple[bool, str]:
         return True, "ok"
     except ParseError as e:
         return False, f"parse_error: {str(e)[:100]}"
+    except Exception as e:
+        # TokenError и другие исключения sqlglot — тоже невалидный SQL
+        return False, f"parse_error: {type(e).__name__}: {str(e)[:80]}"
 
 
 def check_whitelist(sql: str) -> tuple[bool, str]:

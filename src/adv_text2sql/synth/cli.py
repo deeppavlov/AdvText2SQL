@@ -40,6 +40,7 @@ def run_generate(
     out_dir: str = "data/synthetic",
     db_url: str | None = None,        # для validator stage; если None — берём redacted из Profile
     seed: int = 42,
+    language: str = "ru",            # "ru" | "en" — язык вопросов (train==inference!)
 ) -> dict:
     """Run full GENERATE stage. Returns statistics dict."""
     profile = Profile.load_json(profile_path)
@@ -63,7 +64,7 @@ def run_generate(
 
     # ── Stage 1: raw generation ─────────────────────────────────────────────
     raw_path = out_dir_path / f"{profile.db_id}_raw_{generator}.jsonl"
-    examples = _run_generators(profile, generator, target, llm_model, seed)
+    examples = _run_generators(profile, generator, target, llm_model, seed, language)
     _write_jsonl(examples, raw_path)
     console.print(f"  → raw written: {raw_path.name} ({len(examples)} examples)")
 
@@ -91,6 +92,18 @@ def run_generate(
     )
 
     # ── Stage 3: auto-resize if pass-rate низкий ────────────────────────────
+    # Если все отказы — sql_error, это обрыв соединения с БД, а не плохой SQL.
+    # Удваивать датасет в этом случае бессмысленно — нужно починить туннель.
+    all_conn_failures = (
+        v_result.passed == 0
+        and v_result.by_reason.get("sql_error", 0) == v_result.rejected
+    )
+    if all_conn_failures:
+        console.print(
+            "[red]Все отказы — sql_error (обрыв соединения с БД). "
+            "Проверьте SSH-туннель (nc -z localhost 5444) и запустите валидацию заново.[/red]"
+        )
+        return
     if auto_resize and v_result.pass_rate < 0.40 and target < 5000:
         new_target = target * 2
         console.print(
@@ -107,6 +120,7 @@ def run_generate(
             out_dir=out_dir,
             db_url=db_url,
             seed=seed + 1,
+            language=language,
         )
 
     return {
@@ -133,12 +147,13 @@ def _run_generators(
     target: int,
     llm_model: str,
     seed: int,
+    language: str = "ru",
 ) -> list[SyntheticExample]:
     examples: list[SyntheticExample] = []
 
     if generator in ("template", "both"):
         n_template = target if generator == "template" else target // 2
-        tg = TemplateSyntheticGenerator(profile, seed=seed)
+        tg = TemplateSyntheticGenerator(profile, seed=seed, language=language)
         examples.extend(tg.generate(n_template))
 
     if generator in ("llm", "both"):
@@ -147,6 +162,7 @@ def _run_generators(
             model_name=llm_model,
             base_url=os.environ.get("LLM_BASE_URL"),
             api_key=os.environ.get("LLM_API_KEY") or os.environ.get("OPENAI_API_KEY"),
+            language=language,
         )
         lg = LLMSyntheticGenerator(profile, config)
         examples.extend(asyncio.run(lg.generate(n_llm)))
