@@ -19,10 +19,9 @@ FastMCP-обёртка над Text2SQLGenerator.
 """
 from __future__ import annotations
 
-import asyncio
 import logging
 import os
-from typing import Annotated, Any
+from typing import Annotated
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from dotenv import load_dotenv
@@ -32,7 +31,6 @@ from tabulate import tabulate
 
 from adv_text2sql.serve.query_logger import QueryEvent, QueryLogger
 
-from .src.generate_tool_description import generate_description_text2sql
 from .src.text2sql_implementation import Text2SQLGenerator
 
 load_dotenv()
@@ -96,15 +94,36 @@ else:
     text2sql_agent.build()
     logger.info("Cold start завершён")
 
-# Tool-description генерируется один раз
-generated_description = asyncio.run(
-    generate_description_text2sql(
-        tool_description=(
-            "Генератор SQL-запросов на естественном языке с контролем безопасности."
-        ),
-        text2sql_agent=text2sql_agent,
+def _build_tool_description(agent: Text2SQLGenerator) -> str:
+    """Статическое описание tool'а (без LLM-вызова на старте).
+
+    Раньше описание генерировал отдельный LLM при импорте модуля (через
+    DESC_LLM_* env) — это давало лишнюю сетевую зависимость и хрупкий boot.
+    Описание схемо-осведомлённое: подставляем список таблиц из агента.
+    """
+    import re
+
+    # db_schema — строка вида "TABLE cards\n  - id ...\nTABLE sets\n ...".
+    # Имена таблиц достаём из неё (отдельного списка tables у агента нет).
+    schema = getattr(agent, "db_schema", "") or ""
+    table_names = re.findall(r"(?m)^TABLE\s+(\w+)", schema)
+    tables = ", ".join(table_names) or "—"
+    return (
+        "## Приоритет вызова\nСредний\n\n"
+        "## Описание\n"
+        "Генерирует SQL-запрос из естественно-языкового вопроса к целевой БД "
+        "с контролем безопасности (только SELECT) и исполняет его.\n"
+        f"Доступные таблицы: {tables}.\n\n"
+        "## Условия вызова\n"
+        "- Запрос должен быть однозначным, термины — расшифрованы.\n"
+        "- Должны быть заданы параметры/значения для поиска в БД.\n\n"
+        "## Возвращает\n"
+        "- str: таблица результатов в формате markdown, либо текст ошибки."
     )
-)
+
+
+# Tool-description собирается один раз на старте (статически, без LLM).
+generated_description = _build_tool_description(text2sql_agent)
 logger.debug(f"Системная инструкция:\n\n{text2sql_agent.system_prompt[:500]}...")
 
 
@@ -133,32 +152,46 @@ async def text2sql(
         t.event = event
 
         try:
-            result = await text2sql_agent.query(
-                user_query_text, check_ambiguity=False, check_sql_query=False
-            )
+            result = await text2sql_agent.query(user_query_text)
         except Exception as e:
             event.status = "error_uncaught"
             event.error_message = str(e)[:200]
             return f"_Ошибка_: {e}"
 
-        # Распаковка ответа Text2SQLGenerator.query()
-        root = result.get("params", result) if isinstance(result, dict) else {}
-        details = root.get("data", {}).get("details", {})
-        exec_info = details.get("execution", {})
-        event.generated_sql = details.get("generated_sql") or root.get("query", "") or ""
+        # query() возвращает плоский dict: {"status": "success", "query": sql}
+        # либо {"status": "ambiguous"} / {"status": "error"}.
+        status = result.get("status") if isinstance(result, dict) else None
 
-        if exec_info.get("status") == "success":
-            data = exec_info.get("results", [])
+        if status == "ambiguous":
+            event.status = "ambiguous"
+            event.error_message = "Запрос неоднозначен"
+            return "_Неоднозначный запрос_: уточните формулировку."
+
+        if status != "success":
+            event.status = "error"
+            event.error_message = "Не удалось сгенерировать SQL"
+            return "_Ошибка_: не удалось сгенерировать SQL по запросу."
+
+        sql = result.get("query", "") or ""
+        event.generated_sql = sql
+
+        # query() только генерирует SQL — исполняем отдельно (нужен доступ к БД).
+        exec_res = text2sql_agent.execute_safe(sql)
+        if exec_res.get("status") == "success":
+            rows = exec_res.get("results", [])
             event.status = "success"
-            event.row_count = len(data) if isinstance(data, list) else None
-            return tabulate(data, headers="keys", tablefmt="pipe") if data else "Нет данных"
+            event.row_count = exec_res.get("row_count")
+            return tabulate(rows, headers="keys", tablefmt="pipe") if rows else "Нет данных"
 
-        # Не-success ветка
-        event.status = exec_info.get("status") or "error"
-        event.error_message = (
-            details.get("error") or root.get("message") or "Выполнение запроса неуспешно"
+        # SQL сгенерирован, но исполнение упало (напр. нет доступа к БД) —
+        # всё равно отдаём SQL: tool полезен и без живого подключения.
+        event.status = "error_execute"
+        event.error_message = exec_res.get("error", "Выполнение запроса неуспешно")
+        return (
+            "SQL сгенерирован, но исполнение не удалось "
+            f"(нет доступа к БД?).\n\n```sql\n{sql}\n```\n\n"
+            f"_Ошибка_: {event.error_message}"
         )
-        return f"_Ошибка_: {event.error_message}"
 
 
 def _db_id_from_uri(uri: str) -> str:

@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from _registry import load_registry  # noqa: E402
+from _registry import REGISTRY_PATH, load_registry  # noqa: E402
 
 from adv_text2sql.profiler.profile import Profile  # noqa: E402
 from adv_text2sql.training.dataset_builder import DatasetBuilder  # noqa: E402
@@ -25,12 +25,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="имя одного эксперимента")
     ap.add_argument(
+        "--registry", default=str(REGISTRY_PATH),
+        help="путь к registry.json (для отдельных наборов экспериментов)",
+    )
+    ap.add_argument(
         "--force", action="store_true",
         help="пересобрать даже те, у кого уже есть train.jsonl",
     )
     args = ap.parse_args()
 
-    reg = load_registry()
+    reg = load_registry(args.registry)
     profile = Profile.load_json(reg.profile_path)
     exps = [e for e in reg.experiments if not args.only or e.name == args.only]
 

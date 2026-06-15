@@ -44,6 +44,9 @@ client = [
 synth = [
     "sentence-transformers",        # dedup эмбеддингами в Week 2
 ]
+serve = [
+    "prometheus-client",            # exporter продуктовых метрик (serve/metrics_exporter.py)
+]
 
 [project.scripts]
 text2sql = "adv_text2sql.cli.main:app"

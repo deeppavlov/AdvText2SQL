@@ -50,11 +50,22 @@ def profile(
         "--skip-stats",
         help="Skip column statistics collection (still extracts schema + relationships)",
     ),
+    skip_low_cardinality: bool = typer.Option(
+        False,
+        "--skip-low-cardinality",
+        help="Skip per-column DISTINCT pass (самый дорогой шаг на больших схемах)",
+    ),
 ) -> None:
     """Извлечь профиль БД → data/profiles/<db_id>/profile.json."""
     from adv_text2sql.profiler.cli import run_profile
 
-    run_profile(db_url=db_url, out_dir=out, sample_size=sample_size, skip_stats=skip_stats)
+    run_profile(
+        db_url=db_url,
+        out_dir=out,
+        sample_size=sample_size,
+        skip_stats=skip_stats,
+        skip_low_cardinality=skip_low_cardinality,
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -127,19 +138,44 @@ def train(
     ),
     drive_dir: str = typer.Option("text2sql_finetune", "--drive-dir"),
     output_dir: str = typer.Option("notebooks", "--output-dir"),
+    profile_path: str = typer.Option(
+        None, "--profile", help="profile.json для авто-подбора max_seq_len (по db_id если не задан)"
+    ),
+    max_seq_len: str = typer.Option(
+        "auto", "--max-seq-len", help="'auto' (из профиля) или целое число токенов"
+    ),
 ) -> None:
     """Сгенерировать Colab-ноутбук для FT под конкретную БД.
 
     После генерации: залить train.jsonl/val.jsonl на Drive в
     `MyDrive/<drive_dir>/<db_id>/`, открыть .ipynb в Colab → Run all.
     """
+    from pathlib import Path
+
+    from adv_text2sql.profiler.profile import Profile
     from adv_text2sql.training.notebook_generator import generate_finetune_notebook
+    from adv_text2sql.training.seq_len import recommend_max_seq_len
+
+    if max_seq_len == "auto":
+        resolved_profile = profile_path or f"data/profiles/{db_id}/profile.json"
+        if not Path(resolved_profile).exists():
+            console.print(
+                f"[red]profile.json не найден ({resolved_profile}).[/red] "
+                f"Укажи --profile или задай --max-seq-len <число>."
+            )
+            raise typer.Exit(code=1)
+        rec = recommend_max_seq_len(Profile.load_json(resolved_profile))
+        seq_len = rec.max_seq_len
+        console.print(f"[cyan]max_seq_len[/cyan]: {rec.message}")
+    else:
+        seq_len = int(max_seq_len)
 
     path = generate_finetune_notebook(
         db_id=db_id,
         base_model=base_model,
         drive_data_dir=drive_dir,
         output_dir=output_dir,
+        max_seq_len=seq_len,
     )
     console.print(
         f"[bold green]✓ Notebook generated[/bold green]: {path}\n"
@@ -293,6 +329,7 @@ def init(
     from adv_text2sql.synth.cli import run_generate
     from adv_text2sql.training.dataset_builder import run_build_dataset
     from adv_text2sql.training.notebook_generator import generate_finetune_notebook
+    from adv_text2sql.training.seq_len import recommend_max_seq_len
 
     # Stage 1
     console.rule("[bold]Stage 1: PROFILE")
@@ -328,7 +365,9 @@ def init(
 
     # Stage 4
     console.rule("[bold]Stage 4: TRAIN (notebook)")
-    nb = generate_finetune_notebook(db_id=profile.db_id)
+    rec = recommend_max_seq_len(profile)
+    console.print(f"[cyan]max_seq_len[/cyan]: {rec.message}")
+    nb = generate_finetune_notebook(db_id=profile.db_id, max_seq_len=rec.max_seq_len)
     console.print(
         f"\n[bold green]✓ Pipeline ready.[/bold green]\n"
         f"  profile  = data/profiles/{profile.db_id}/profile.json\n"

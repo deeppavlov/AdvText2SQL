@@ -1,0 +1,20 @@
+{
+  "_comment": "Валидация адаптивного target_count (Горизонт-1.2): фиксированный бюджет vs auto на лучшем генераторе (gpt-4.1, RU+EN). 'auto' = profile.target_synthetic_count(), поделённый между языками. Для card_games complexity≈27.8 → total≈1391 → ~695/язык. Запуск: uv run --env-file .env python scripts/exp_generate.py --registry experiments/registry_target_count.json",
+  "db_id": "card_games",
+  "profile_path": "data/profiles/card_games/profile.json",
+  "bird_path": "data/bird_large.json",
+  "experiments": [
+    {
+      "name": "tc_fixed_1000",
+      "llm_model": "gpt-4.1",
+      "languages": ["ru", "en"],
+      "count_per_lang": 500
+    },
+    {
+      "name": "tc_auto",
+      "llm_model": "gpt-4.1",
+      "languages": ["ru", "en"],
+      "count_per_lang": "auto"
+    }
+  ]
+}

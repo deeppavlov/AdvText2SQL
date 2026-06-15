@@ -16,6 +16,10 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING, Union
+
+if TYPE_CHECKING:
+    from adv_text2sql.profiler.profile import Profile
 
 REGISTRY_PATH = Path("experiments/registry.json")
 EXP_ROOT = Path("data/exp")
@@ -26,7 +30,25 @@ class Experiment:
     name: str
     llm_model: str
     languages: list[str]
-    count_per_lang: int
+    # int — фиксированное число пар на язык; "auto" — адаптивно из профиля
+    # (target_synthetic_count, поделённый между языками).
+    count_per_lang: Union[int, str]
+
+    @property
+    def is_adaptive(self) -> bool:
+        return isinstance(self.count_per_lang, str) and self.count_per_lang == "auto"
+
+    def resolved_count_per_lang(self, profile: "Profile") -> int:
+        """Фактическое число пар на язык.
+
+        Для "auto" — общий адаптивный бюджет БД (target_synthetic_count),
+        поделённый между языками: иначе многоязычный эксп. сгенерировал бы
+        бюджет × n_languages и сломал бы сравнение adaptive vs fixed.
+        """
+        if not self.is_adaptive:
+            return int(self.count_per_lang)
+        total = profile.target_synthetic_count()
+        return max(1, total // max(1, len(self.languages)))
 
     @property
     def dir(self) -> Path:

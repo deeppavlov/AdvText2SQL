@@ -22,8 +22,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from _registry import Experiment, load_registry  # noqa: E402
+from _registry import REGISTRY_PATH, Experiment, load_registry  # noqa: E402
 
+from adv_text2sql.profiler.profile import Profile  # noqa: E402
 from adv_text2sql.synth.cli import run_generate  # noqa: E402
 
 
@@ -34,17 +35,23 @@ def _db_url() -> str:
     )
 
 
-def generate_one(exp: Experiment, profile_path: str, db_url: str) -> int:
+def generate_one(exp: Experiment, profile: Profile, profile_path: str, db_url: str) -> int:
     """Сгенерировать + валидировать все языки эксперимента, объединить. Возврат: N валидных."""
     exp.dir.mkdir(parents=True, exist_ok=True)
     merged: list[dict] = []
 
+    count_per_lang = exp.resolved_count_per_lang(profile)
+    mode = "auto" if exp.is_adaptive else "fixed"
+
     for lang in exp.languages:
-        print(f"\n  ── {exp.name} / {lang} ({exp.count_per_lang} пар, {exp.llm_model}) ──")
+        print(
+            f"\n  ── {exp.name} / {lang} "
+            f"({count_per_lang} пар [{mode}], {exp.llm_model}) ──"
+        )
         lang_dir = exp.dir / f"_{lang}"
         stats = run_generate(
             profile_path=profile_path,
-            count=str(exp.count_per_lang),
+            count=str(count_per_lang),
             generator="llm",          # LLM двуязычный; template — только ru
             llm_model=exp.llm_model,
             judge=False,
@@ -72,13 +79,18 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="имя одного эксперимента из реестра")
     ap.add_argument(
+        "--registry", default=str(REGISTRY_PATH),
+        help="путь к registry.json (для отдельных наборов экспериментов)",
+    )
+    ap.add_argument(
         "--force", action="store_true",
         help="пересчитать даже те, у кого уже есть validated.jsonl",
     )
     args = ap.parse_args()
 
-    reg = load_registry()
+    reg = load_registry(args.registry)
     db_url = _db_url()
+    profile = Profile.load_json(reg.profile_path)
     exps = [e for e in reg.experiments if not args.only or e.name == args.only]
     if not exps:
         print(f"Нет эксперимента '{args.only}' в реестре")
@@ -91,7 +103,7 @@ def main() -> int:
             n = sum(1 for _ in exp.validated_path.open())
             print(f"\n  ⏭  {exp.name}: уже есть {n} валидных — пропускаю (--force чтобы пересчитать)")
             continue
-        generate_one(exp, reg.profile_path, db_url)
+        generate_one(exp, profile, reg.profile_path, db_url)
 
     print("\n✓ Готово. Дальше: scripts/exp_build.py")
     return 0

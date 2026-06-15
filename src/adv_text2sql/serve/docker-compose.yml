@@ -43,7 +43,8 @@ services:
       retries: 5
       start_period: 120s    # vLLM грузит модель долго (~1 мин на A100)
 
-  # Опционально: Prometheus для метрик (vLLM exposes /metrics)
+  # ── Observability stack (docker-compose --profile observability up) ─────────
+  # Prometheus скрейпит и vLLM (инфра), и metrics-exporter (продуктовые метрики).
   prometheus:
     image: prom/prometheus:latest
     container_name: text2sql-prometheus
@@ -51,7 +52,41 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    profiles: ["observability"]   # docker-compose --profile observability up
+    profiles: ["observability"]
+
+  # Exporter продуктовых метрик из queries.jsonl. Тонкий python-контейнер:
+  # монтируем только скрипт (он без импортов из пакета) + каталог логов.
+  metrics-exporter:
+    image: python:3.11-slim
+    container_name: text2sql-metrics-exporter
+    working_dir: /app
+    command: >
+      sh -c "pip install --no-cache-dir prometheus-client &&
+             python metrics_exporter.py --log-file /logs/queries.jsonl --port 9105"
+    ports:
+      - "9105:9105"
+    volumes:
+      - ./metrics_exporter.py:/app/metrics_exporter.py:ro
+      # LOG_DIR — каталог с queries.jsonl (по умолчанию data/logs от корня репо)
+      - ${LOG_DIR:-../../../data/logs}:/logs:ro
+    profiles: ["observability"]
+
+  # Grafana с преднастроенным datasource + дашбордом (anonymous Admin для дев).
+  grafana:
+    image: grafana/grafana:latest
+    container_name: text2sql-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_USERS_DEFAULT_THEME: "light"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    profiles: ["observability"]
 
 volumes:
   hf_cache:

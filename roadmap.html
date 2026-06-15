@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoText2SQL — Дорожная карта</title>
+<style>
+  :root{
+    --bg:#fafafa; --ink:#1f2937; --muted:#6b7280; --line:#cbd5e1;
+    --card:#ffffff; --border:#e5e7eb;
+    --done:#16a34a; --done-soft:#dcfce7;
+    --h1:#4338ca; --h1-soft:#e0e7ff;
+    --h2:#6366f1; --h2-soft:#eef2ff;
+    --h3:#a5b4fc; --h3-soft:#f5f3ff;
+    --shadow:0 2px 8px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    width:100vw; height:100vh; overflow:hidden;
+    display:flex; flex-direction:column;
+    padding:clamp(14px,3.2vh,32px) clamp(18px,2.6vw,40px);
+  }
+
+  /* ---------- header ---------- */
+  header{display:flex; align-items:baseline; gap:1.2vw; flex:0 0 auto;}
+  header h1{font-size:clamp(20px,3.2vh,34px); letter-spacing:-.02em;}
+  header .sub{font-size:clamp(11px,1.7vh,16px); color:var(--muted);}
+
+  /* ---------- timeline grid ---------- */
+  .timeline{
+    flex:1 1 auto; margin-top:clamp(8px,2vh,20px);
+    display:grid;
+    grid-template-columns:2.5fr repeat(9,1fr);
+    grid-template-rows:auto 1fr 5.5vh 1fr;
+    column-gap:clamp(4px,.5vw,10px);
+    position:relative; min-height:0;
+  }
+
+  /* the continuous spine */
+  .spine{
+    grid-column:1 / -1; grid-row:3;
+    align-self:center; height:4px; border-radius:4px;
+    background:linear-gradient(90deg,var(--done) 0%,var(--h1) 26%,var(--h2) 60%,var(--h3) 100%);
+    position:relative;
+  }
+
+  /* ---------- DONE block (left) ---------- */
+  .done{
+    grid-column:1; grid-row:2 / 5;
+    align-self:center; margin-right:clamp(8px,1vw,18px);
+    background:var(--done-soft); border:1.5px solid var(--done);
+    border-radius:16px; padding:clamp(10px,1.8vh,18px) clamp(12px,1vw,18px);
+    box-shadow:var(--shadow); position:relative;
+  }
+  .done .badge{
+    display:inline-flex; align-items:center; gap:.4em;
+    font-weight:700; color:var(--done); font-size:clamp(13px,2vh,19px);
+    margin-bottom:.5em;
+  }
+  .done .check{
+    width:1.5em; height:1.5em; border-radius:50%;
+    background:var(--done); color:#fff; display:inline-grid; place-items:center;
+    font-size:.8em; flex:0 0 auto;
+  }
+  .done ul{list-style:none; display:flex; flex-direction:column; gap:.42em;}
+  .done li{font-size:clamp(10px,1.55vh,14px); line-height:1.25; padding-left:1em; position:relative; color:#15532b;}
+  .done li::before{content:"✓"; position:absolute; left:0; color:var(--done); font-weight:700;}
+  .done li b{color:#14532d;}
+  /* connector from done block into the spine */
+  .done::after{
+    content:""; position:absolute; right:calc(-1 * clamp(8px,1vw,18px)); top:50%;
+    width:clamp(8px,1vw,18px); height:3px; background:var(--done); transform:translateY(-50%);
+  }
+
+  /* ---------- NOW marker ---------- */
+  .now{
+    grid-column:2; grid-row:1 / 5; justify-self:start; align-self:stretch;
+    border-left:2px dashed #94a3b8; position:relative;
+  }
+  .now span{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    font-size:clamp(9px,1.4vh,12px); font-weight:700; color:#64748b;
+    letter-spacing:.08em; white-space:nowrap;
+  }
+
+  /* ---------- horizon band chips ---------- */
+  .band{
+    grid-row:1; align-self:center; text-align:center;
+    border-radius:999px; padding:.35em .6em; margin:0 .3vw;
+    font-weight:700; font-size:clamp(10px,1.55vh,15px); letter-spacing:.01em;
+  }
+  .band small{display:block; font-weight:500; font-size:.74em; opacity:.85;}
+  .band.b1{grid-column:2 / span 3; background:var(--h1-soft); color:var(--h1);}
+  .band.b2{grid-column:5 / span 3; background:var(--h2-soft); color:var(--h2);}
+  .band.b3{grid-column:8 / span 3; background:var(--h3-soft); color:#6d28d9;}
+
+  /* ---------- station dots ---------- */
+  .dot{
+    grid-row:3; align-self:center; justify-self:center;
+    width:clamp(13px,1.9vh,18px); height:clamp(13px,1.9vh,18px);
+    border-radius:50%; background:#fff; z-index:2;
+  }
+  .dot.h1{border:3px solid var(--h1);} .dot.h2{border:3px solid var(--h2);} .dot.h3{border:3px solid var(--h3);}
+
+  /* ---------- stage cards ---------- */
+  .card{
+    align-self:stretch; background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:clamp(7px,1.3vh,13px) clamp(8px,.7vw,13px);
+    box-shadow:var(--shadow); position:relative;
+    display:flex; flex-direction:column; gap:.3em;
+    border-top:3px solid var(--border);
+  }
+  .card .num{
+    position:absolute; top:-.7em; right:.6em;
+    font-size:clamp(14px,2.4vh,22px); font-weight:800; opacity:.18;
+  }
+  .card h3{font-size:clamp(11px,1.7vh,15.5px); line-height:1.2;}
+  .card p{font-size:clamp(9.5px,1.4vh,13px); line-height:1.28; color:var(--muted);}
+  .card.h1{border-top-color:var(--h1);} .card.h1 .num{color:var(--h1);}
+  .card.h2{border-top-color:var(--h2);} .card.h2 .num{color:var(--h2);}
+  .card.h3{border-top-color:var(--h3);} .card.h3 .num{color:#6d28d9;}
+  .above{grid-row:2; align-self:end; margin-bottom:clamp(6px,1vh,12px);}
+  .below{grid-row:4; align-self:start; margin-top:clamp(6px,1vh,12px);}
+  /* connector stub from card toward spine */
+  .above::after,.below::after{content:""; position:absolute; left:50%; width:2px; height:clamp(6px,1vh,12px); background:var(--border); transform:translateX(-50%);}
+  .above::after{bottom:calc(-1 * clamp(6px,1vh,12px));}
+  .below::after{top:calc(-1 * clamp(6px,1vh,12px));}
+
+  .tag{
+    align-self:flex-start; font-size:clamp(8px,1.2vh,10.5px); font-weight:600;
+    background:#fef3c7; color:#92400e; border-radius:5px; padding:.15em .45em;
+  }
+
+  /* ---------- footer ---------- */
+  footer{flex:0 0 auto; text-align:right; color:var(--muted);
+    font-size:clamp(9px,1.4vh,12px); padding-top:clamp(4px,.8vh,10px);}
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Дорожная карта</h1>
+    <span class="sub">от доказанной концепции — к production и масштабу</span>
+  </header>
+
+  <main class="timeline">
+
+    <!-- continuous spine -->
+    <div class="spine"></div>
+
+    <!-- DONE milestone -->
+    <section class="done">
+      <div class="badge"><span class="check">✓</span> СДЕЛАНО</div>
+      <ul>
+        <li>Полный автономный пайплайн: <b>CLI · 7 команд · 6 модулей · ~5000 строк · 35 тестов</b></li>
+        <li>3 итерации экспериментов, методология отлажена (RU → RU+EN → EN)</li>
+        <li>Self-healing loop: failed → GPT-4 → corrections</li>
+        <li><b>Contribution доказан:</b> синтетика 39.4% ≥ classical FT 38.7% — 10× меньше данных, без ручной разметки</li>
+      </ul>
+    </section>
+
+    <!-- NOW marker -->
+    <div class="now"><span>СЕГОДНЯ</span></div>
+
+    <!-- horizon bands -->
+    <div class="band b1">КРАТКОСРОЧНО<small>довести и провалидировать построенное</small></div>
+    <div class="band b2">СРЕДНЕСРОЧНО<small>качество модели и безопасность</small></div>
+    <div class="band b3">ДОЛГОСРОЧНО<small>охват и интеграции</small></div>
+
+    <!-- station dots: 9 stations in grid columns 2..10 -->
+    <div class="dot h1" style="grid-column:2"></div>
+    <div class="dot h1" style="grid-column:3"></div>
+    <div class="dot h1" style="grid-column:4"></div>
+    <div class="dot h2" style="grid-column:5"></div>
+    <div class="dot h2" style="grid-column:6"></div>
+    <div class="dot h2" style="grid-column:7"></div>
+    <div class="dot h3" style="grid-column:8"></div>
+    <div class="dot h3" style="grid-column:9"></div>
+    <div class="dot h3" style="grid-column:10"></div>
+
+    <!-- ===== Horizon 1 (КРАТКОСРОЧНО) ===== -->
+    <article class="card h1 above" style="grid-column:2">
+      <span class="num">1</span>
+      <h3>Production-серверинг</h3>
+      <p>Финализировать vLLM-Docker + MCP-обёртку + SDK до боевого состояния.</p>
+    </article>
+    <article class="card h1 below" style="grid-column:3">
+      <span class="num">2</span>
+      <h3>Адаптивный target_count</h3>
+      <p>Валидация объёма генерации под complexity_score.</p>
+      <span class="tag">реализовано · не провалидировано</span>
+    </article>
+    <article class="card h1 above" style="grid-column:4">
+      <span class="num">3</span>
+      <h3>Прогон на enterprise-БД</h3>
+      <p>30+ таблиц, 500+ колонок — масштабируемость профайлера и генерации.</p>
+    </article>
+
+    <!-- ===== Horizon 2 (СРЕДНЕСРОЧНО) ===== -->
+    <article class="card h2 below" style="grid-column:5">
+      <span class="num">4</span>
+      <h3>DPO / RLAIF поверх SFT</h3>
+      <p>Execution-результат как сигнал награды: верный SQL ≻ валидный-но-неверный.</p>
+    </article>
+    <article class="card h2 above" style="grid-column:6">
+      <span class="num">5</span>
+      <h3>Redact PII</h3>
+      <p>Отбрасывать персональные low-cardinality значения перед отправкой в LLM.</p>
+    </article>
+    <article class="card h2 below" style="grid-column:7">
+      <span class="num">6</span>
+      <h3>Self-healing в проде</h3>
+      <p>Ночной цикл: автосбор failed → коррекция → дообучение каждые N исправлений.</p>
+    </article>
+
+    <!-- ===== Horizon 3 (ДОЛГОСРОЧНО) ===== -->
+    <!-- TODO(human): впиши одну строку описания в каждую из трёх карточек горизонта 3.
+         Заголовки заданы (Другие СУБД / Интеграция с BI / Динамическая селекция фич).
+         Это твоё содержательное решение — что именно коммитить в long-term roadmap. -->
+    <article class="card h3 above" style="grid-column:8">
+      <span class="num">7</span>
+      <h3>Другие СУБД</h3>
+      <p></p>
+    </article>
+    <article class="card h3 below" style="grid-column:9">
+      <span class="num">8</span>
+      <h3>Интеграция с BI</h3>
+      <p></p>
+    </article>
+    <article class="card h3 above" style="grid-column:10">
+      <span class="num">9</span>
+      <h3>Динамическая селекция фич</h3>
+      <p></p>
+    </article>
+
+  </main>
+
+  <footer>AutoText2SQL · DeepPavlov</footer>
+
+</body>
+</html>

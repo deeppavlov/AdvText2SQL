@@ -30,6 +30,7 @@ def run_profile(
     out_dir: str = "data/profiles",
     sample_size: int = 500,
     skip_stats: bool = False,
+    skip_low_cardinality: bool = False,
 ) -> Path:
     """Полный профилинг БД → запись profile.json. Возвращает путь к файлу.
 
@@ -38,6 +39,8 @@ def run_profile(
         out_dir: куда писать; будет создан подкаталог `<db_id>/`.
         sample_size: сколько строк семплировать для type detection (Week 1 day 3).
         skip_stats: пропустить column statistics (для быстрого smoke-теста).
+        skip_low_cardinality: пропустить per-column DISTINCT-проход (самый дорогой
+            шаг на больших схемах).
     """
     started = time.time()
 
@@ -73,9 +76,10 @@ def run_profile(
             )
 
         # ── Stage 3: Samples ────────────────────────────────────────────────
-        console.print("\n[bold]Stage 3/3:[/bold] sample rows + low-cardinality values…")
+        lc_note = " [yellow](low-cardinality skipped)[/yellow]" if skip_low_cardinality else ""
+        console.print(f"\n[bold]Stage 3/3:[/bold] sample rows + low-cardinality values…{lc_note}")
         s_start = time.time()
-        samples = SampleCollector(connector).collect()
+        samples = SampleCollector(connector).collect(skip_low_cardinality=skip_low_cardinality)
         console.print(
             f"  → samples for {len(samples.sample_rows)} tables, "
             f"{len(samples.low_cardinality_values)} low-cardinality columns "

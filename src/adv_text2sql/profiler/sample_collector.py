@@ -66,11 +66,17 @@ def collect_low_cardinality_values(
     for col in columns:
         col_name = col["name"]
         try:
+            # LIMIT threshold+1: достаём ровно столько, сколько нужно для решения
+            # «≤ threshold или нет». Для high-cardinality колонки PG останавливается
+            # на (threshold+1)-й строке вместо полного скана distinct — критично на
+            # больших таблицах. Результат идентичен версии без LIMIT.
             res = conn.execute(
                 text(
                     f'SELECT DISTINCT "{col_name}" '
-                    f'FROM "{table}" WHERE "{col_name}" IS NOT NULL'
-                )
+                    f'FROM "{table}" WHERE "{col_name}" IS NOT NULL '
+                    f"LIMIT :lim"
+                ),
+                {"lim": threshold + 1},
             )
             values = [r[0] for r in res.fetchall()]
             if 0 < len(values) <= threshold:
@@ -105,7 +111,14 @@ class SampleCollector:
         self.sample_rows_per_table = sample_rows_per_table
         self.low_cardinality_threshold = low_cardinality_threshold
 
-    def collect(self) -> SampleCollectionResult:
+    def collect(self, skip_low_cardinality: bool = False) -> SampleCollectionResult:
+        """Собрать sample rows (+ опц. low-cardinality значения).
+
+        Args:
+            skip_low_cardinality: пропустить per-column DISTINCT-проход. На больших
+                схемах это самый дорогой шаг (один запрос на колонку) — для smoke
+                или когда enum-значения не нужны его можно отключить.
+        """
         engine: Engine = self.connector.engine
         inspector = inspect(engine)
         schema = self.connector.default_schema
@@ -119,6 +132,9 @@ class SampleCollector:
                 sample_rows[table] = collect_sample_rows(
                     conn, table, limit=self.sample_rows_per_table
                 )
+
+                if skip_low_cardinality:
+                    continue
 
                 columns = inspector.get_columns(table, schema=schema)
                 table_low_card = collect_low_cardinality_values(

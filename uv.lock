@@ -43,6 +43,9 @@ dev = [
     { name = "pyrefly" },
     { name = "ruff" },
 ]
+serve = [
+    { name = "prometheus-client" },
+]
 synth = [
     { name = "sentence-transformers" },
 ]
@@ -82,6 +85,7 @@ dev = [
     { name = "pyrefly" },
     { name = "ruff" },
 ]
+serve = [{ name = "prometheus-client" }]
 synth = [{ name = "sentence-transformers" }]
 test = [{ name = "pytest" }]
 

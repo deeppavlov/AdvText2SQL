@@ -42,6 +42,22 @@ from ..profiler.profile import Profile
 logger = logging.getLogger("text2sql_tool.training.dataset_builder")
 
 
+def build_system_prompt(profile: Profile) -> str:
+    """Единая точка сборки system prompt из Profile.
+
+    Тот же текст видит модель и на обучении (этот модуль), и на инференсе
+    (`Text2SQLGenerator._create_system_prompt`). Используется также оценщиком
+    длины последовательности (`training.seq_len`) — поэтому вынесен на уровень
+    модуля как single source of truth, чтобы исключить рассинхрон.
+    """
+    return SYSTEM_PROMPT_TEMPLATE.format(
+        db_schema=profile.schema_str,
+        db_relationships=profile.relationships_str,
+        column_statistics=profile.column_stats_str,
+        sql_dialect="PostgreSQL",
+    )
+
+
 @dataclass
 class DatasetStats:
     train_count: int
@@ -146,12 +162,7 @@ class DatasetBuilder:
 
     def _build_system_prompt(self) -> str:
         """Рендер SYSTEM_PROMPT_TEMPLATE на основе Profile. Тот же что на инференсе."""
-        return SYSTEM_PROMPT_TEMPLATE.format(
-            db_schema=self.profile.schema_str,
-            db_relationships=self.profile.relationships_str,
-            column_statistics=self.profile.column_stats_str,
-            sql_dialect="PostgreSQL",
-        )
+        return build_system_prompt(self.profile)
 
     def _render(self, record: dict[str, Any], system_prompt: str) -> str:
         """Рендер одной записи в chat-format JSONL.
