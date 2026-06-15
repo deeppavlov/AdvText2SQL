@@ -21,6 +21,8 @@ data/profiles/**/*.json
 data/synthetic/*.jsonl
 data/logs/*.jsonl
 data/heal/*.jsonl
+data/finetune/
+data/exp/
 models/**/adapter/
 models/**/*.gguf
 notebooks/auto_train_*.ipynb
