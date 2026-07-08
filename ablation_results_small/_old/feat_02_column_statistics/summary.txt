@@ -1,0 +1,5 @@
+Branch: feat/02_column_statistics
+Commit: 75175bd
+
+ablation_results/feat_02_column_statistics/bird.log:Overall accuracy: 31.82%
+ablation_results/feat_02_column_statistics/ambrosia.log:Accuracy: 58.33%

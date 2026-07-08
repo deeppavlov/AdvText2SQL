@@ -1,0 +1,16 @@
+FEAT: FEAT_4 FEAT_3 FEAT_2 FEAT_8 FEAT_12 FEAT_17 FEAT_18 FEAT_19 FEAT_27 FEAT_29 FEAT_30 FEAT_32 FEAT_33 FEAT_35
+DATASET: bird_large (241 questions, 8 db_ids)
+DATE: 2026-05-19
+
+Overall accuracy: 41.49% (100/241)
+  simple:      57.14% (52/91)
+  moderate:    39.33% (35/89)
+  challenging: 21.31% (13/61)
+
+Для сравнения — small (22 вопроса, 7 db_ids): 54.55% (12/22)
+Разница: -13.06% на large
+
+Вероятные причины расхождения:
+- Large содержит db "superhero" (отсутствует в small) — новый домен, модель не видела таких схем
+- В large больше challenging-вопросов пропорционально (25% vs ~9% в small)
+- Small содержит только 22 вопроса — высокая дисперсия (1 вопрос = 4.55%)

@@ -1,0 +1,4 @@
+Label:   FEAT_6:  heavy schema
+Commit:  6cfeae6
+BIRD:    36.36%
+Ambrosia:54.17%

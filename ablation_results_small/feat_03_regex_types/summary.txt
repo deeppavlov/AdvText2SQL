@@ -1,0 +1,4 @@
+Label:   FEAT_3:  regex type detection
+Commit:  6cfeae6
+BIRD:    40.91%
+Ambrosia:54.17%
