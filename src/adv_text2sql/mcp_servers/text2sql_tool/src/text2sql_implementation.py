@@ -118,6 +118,52 @@ def setup_logging(log_file: str = "text2sql_debug.log"):
         root_logger.addHandler(file_handler)
 
 
+def _fix_round_numeric(sql: str) -> str:
+    """Inject ::NUMERIC into ROUND(expr, n) so PostgreSQL accepts float first args.
+
+    Walks each ROUND( occurrence, counts parens to find the top-level separator comma,
+    then appends ::NUMERIC to the first argument if not already cast.
+    Skips if first arg already ends with ::NUMERIC or ::numeric.
+    """
+    result = []
+    i = 0
+    upper = sql.upper()
+    while i < len(sql):
+        pos = upper.find("ROUND(", i)
+        if pos == -1:
+            result.append(sql[i:])
+            break
+        result.append(sql[i:pos + 6])  # up to and including "ROUND("
+        i = pos + 6
+        # Walk from i to find the top-level comma separating first arg from precision
+        depth = 1
+        j = i
+        sep = -1
+        while j < len(sql) and depth > 0:
+            ch = sql[j]
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            elif ch == "," and depth == 1:
+                sep = j
+                break
+            j += 1
+        if sep == -1:
+            # No separator found — not a two-arg ROUND, skip
+            continue
+        first_arg = sql[i:sep].rstrip()
+        if not re.search(r"::numeric\b", first_arg, re.IGNORECASE):
+            result.append(first_arg + "::NUMERIC")
+        else:
+            result.append(first_arg)
+        result.append(sql[sep])  # the comma
+        i = sep + 1
+    return "".join(result)
+
+
 class Text2SQLGenerator:
     def __init__(self, db_uri: str, llm_client: OpenAIChatCompletionClient):
         """
@@ -1150,6 +1196,17 @@ class Text2SQLGenerator:
             # 2. NULLS ordering: PG default (DESC→NULLS FIRST) is opposite SQLite (DESC→NULLS LAST)
             sanitized_sql = re.sub(r'\bDESC\b(?!\s+NULLS)', 'DESC NULLS LAST', sanitized_sql, flags=re.IGNORECASE)
             sanitized_sql = re.sub(r'\bASC\b(?!\s+NULLS)', 'ASC NULLS FIRST', sanitized_sql, flags=re.IGNORECASE)
+            # 3. ROUND(float_expr, n) → ROUND(float_expr::NUMERIC, n) — PG requires NUMERIC
+            sanitized_sql = _fix_round_numeric(sanitized_sql)
+            # 4. Lowercase simple quoted identifiers: "cardKingdomFoilId" → "cardkingdomfoilid"
+            # PG folds unquoted names to lowercase at CREATE TABLE time; quoted names are
+            # case-sensitive and fail if the column was created without quotes.
+            # Identifiers with spaces/special chars are left untouched (they need their quotes).
+            sanitized_sql = re.sub(
+                r'"([A-Za-z_]\w*)"',
+                lambda m: f'"{m.group(1).lower()}"',
+                sanitized_sql,
+            )
 
             sanitized_sql = self._strip_sql_comments(sanitized_sql)
 

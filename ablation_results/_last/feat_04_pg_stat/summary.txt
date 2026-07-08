@@ -1,4 +1,0 @@
-Label:   feat_04_pg_stat
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:45.83%

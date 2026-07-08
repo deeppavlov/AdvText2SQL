@@ -1,4 +1,0 @@
-Label:   FEAT_14: strict SQL rules
-Commit:  6cfeae6
-BIRD:    31.82%
-Ambrosia:54.17%

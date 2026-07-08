@@ -1,4 +1,0 @@
-Label:   FEAT_13: few-shot ambiguity prompt
-Commit:  6cfeae6
-BIRD:     40.91%
-Ambrosia: 50.00%

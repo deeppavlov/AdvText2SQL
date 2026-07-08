@@ -1,4 +1,0 @@
-Label:   FEAT_5:  light schema
-Commit:  6cfeae6
-BIRD:    31.82%
-Ambrosia:50.00%

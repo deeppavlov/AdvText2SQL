@@ -1,3 +1,0 @@
-FEAT: FEAT_21  benchmark=both
-BIRD:     36.36%
-Ambrosia: 50.00%

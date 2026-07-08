@@ -1,4 +1,0 @@
-Label:   feat_02_column_stats
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:62.50%

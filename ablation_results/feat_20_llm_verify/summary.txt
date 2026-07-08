@@ -1,4 +1,0 @@
-Label:   FEAT_20: LLM-as-judge verify
-Commit:  6cfeae6
-BIRD:    31.82%
-Ambrosia:50.00%

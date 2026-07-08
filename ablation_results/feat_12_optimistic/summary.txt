@@ -1,4 +1,0 @@
-Label:   FEAT_12: optimistic ambiguity fallback
-Commit:  6cfeae6
-BIRD:    40.91%
-Ambrosia:62.50%

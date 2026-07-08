@@ -1,4 +1,0 @@
-Label:   feat_15_sanitize
-Commit:  f997dec
-BIRD:    0.00%
-Ambrosia:58.33%

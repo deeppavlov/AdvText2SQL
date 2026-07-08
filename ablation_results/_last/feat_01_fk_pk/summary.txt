@@ -1,4 +1,0 @@
-Label:   feat_01_fk_pk
-Commit:  f997dec
-BIRD:    9.09%
-Ambrosia:62.50%

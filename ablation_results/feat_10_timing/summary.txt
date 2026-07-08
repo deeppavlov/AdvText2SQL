@@ -1,4 +1,0 @@
-Label:   FEAT_10: build timing log
-Commit:  6cfeae6
-BIRD:    40.91%
-Ambrosia:54.17%

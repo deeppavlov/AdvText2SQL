@@ -1,4 +1,0 @@
-Label:   feat_09_schema_dump
-Commit:  f997dec
-BIRD:    0.00%
-Ambrosia:54.17%

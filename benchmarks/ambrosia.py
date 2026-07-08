@@ -24,12 +24,24 @@ class BenchmarkAmbrosia(BenchmarkBase):
     async def predict(self, tool_dict: Dict[str, Any]) -> Dict[str, str]:
         """Returns predictions in the expected format."""
         queries = self._load_queries()
-        predictions = {}
+
+        # Checkpoint: resume from query_results.json if it exists
+        checkpoint_path = "./query_results.json"
+        predictions: Dict[str, str] = {}
+        if os.path.exists(checkpoint_path):
+            with open(checkpoint_path) as f:
+                predictions = json.load(f)
+            if predictions:
+                print(f"Resuming from checkpoint: {len(predictions)}/{len(queries)} done")
 
         for i, item in enumerate(queries):
             qid = item["question_id"]
             db_id = item["db_id"]
             question = item["question"]
+
+            if str(qid) in predictions:
+                logger.info(f"[{i+1}/{len(queries)}] q_id={qid} — skipped (checkpoint)")
+                continue
 
             if db_id not in tool_dict:
                 logger.warning(f"Skipping q_id={qid}: db_id={db_id} failed to build")
@@ -52,6 +64,10 @@ class BenchmarkAmbrosia(BenchmarkBase):
 
             logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
+
+            # Save checkpoint after every question
+            with open(checkpoint_path, "w") as f:
+                json.dump(predictions, f, indent=2)
 
             await asyncio.sleep(_BASE_INTERVAL + (_LLM_MIN_INTERVAL if _FEAT_19 else 0))
 

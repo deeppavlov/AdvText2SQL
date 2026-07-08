@@ -1,3 +1,0 @@
-FEAT: FEAT_30  Sub-question decomposition
-BIRD:     40.91%
-Ambrosia: 54.17%

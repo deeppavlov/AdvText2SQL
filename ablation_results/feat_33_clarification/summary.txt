@@ -1,4 +1,0 @@
-Label:   FEAT_33: clarification questions
-Commit:  6cfeae6
-BIRD:    31.82%
-Ambrosia:45.83%

@@ -1,4 +1,0 @@
-Label:   feat_14_strict_sql
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:50.00%

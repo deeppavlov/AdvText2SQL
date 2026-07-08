@@ -1,4 +1,0 @@
-Label:   feat_33_clarification
-Commit:  f997dec
-BIRD:    9.09%
-Ambrosia:58.33%

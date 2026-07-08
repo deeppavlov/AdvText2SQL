@@ -1,4 +1,0 @@
-Label:   feat_13_fewshot
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:41.67%

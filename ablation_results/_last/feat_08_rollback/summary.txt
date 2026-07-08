@@ -1,4 +1,0 @@
-Label:   feat_08_rollback
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:50.00%

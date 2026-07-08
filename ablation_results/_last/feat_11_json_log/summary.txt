@@ -1,4 +1,0 @@
-Label:   feat_11_json_log
-Commit:  f997dec
-BIRD:    4.55%
-Ambrosia:66.67%

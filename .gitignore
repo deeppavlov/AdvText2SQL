@@ -1,29 +1,36 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[codz]
 *$py.class
-presentations/
 
-# Manual files added
+# Env и секреты
 .env
+
+# Временные файлы ablation-запусков
+.run_single_tmp.*
+.ablation_current_feat*
+.ablation_tmp.*
+query_results.json
+
+# Промежуточные результаты evaluation
 db_schemas.json
 all_gold_results.json
 all_predicted_results.json
-query_results.json
 
-
-local/*
-
-# Временные файлы ablation-запусков
-.ablation_tmp.*
-
-# Логи ablation
+# Логи (большие, в git не нужны — достаточно summary и query_results)
+*.log
 ablation_odd_master.log
 
-*.log
+# local/ скрипты — трекаем (убрана строка local/*)
 
-# baseline
+# hints/ — автогенерируемые кэши FEAT_26, не нужны в git
+hints/
+
+# nl_descriptions/ — автогенерируемые NL-описания FEAT_23
+nl_descriptions/
+
+# Старые/устаревшие папки результатов
+ablation_results/_hybrid
 ablation_results/feat_00_baseline_both
 ablation_results/feat_00_baseline_both_base
-
-ablation_results/_hybrid
+presentations/

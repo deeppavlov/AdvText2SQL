@@ -1,3 +1,0 @@
-FEAT: FEAT_23  SQL to Text
-BIRD:     31.82%
-Ambrosia: 54.17%

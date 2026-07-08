@@ -1,4 +1,0 @@
-Label:   feat_00_baseline
-Commit:  f997dec
-BIRD:    0.00%
-Ambrosia:50.00%
