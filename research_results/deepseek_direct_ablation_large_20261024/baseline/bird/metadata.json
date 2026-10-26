@@ -1,0 +1,111 @@
+{
+  "configuration": {
+    "model": "deepseek-flash",
+    "reasoning_effort": "none",
+    "temperature": 0,
+    "max_output_tokens": 4096,
+    "dataset_sha256": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+    "feature_flags": {
+      "FEAT_1": false,
+      "FEAT_2": false,
+      "FEAT_3": false,
+      "FEAT_4": false,
+      "FEAT_5": false,
+      "FEAT_6": false,
+      "FEAT_7": false,
+      "FEAT_8": false,
+      "FEAT_9": false,
+      "FEAT_10": false,
+      "FEAT_11": false,
+      "FEAT_12": false,
+      "FEAT_13": false,
+      "FEAT_14": false,
+      "FEAT_15": false,
+      "FEAT_16": false,
+      "FEAT_17": false,
+      "FEAT_18": false,
+      "FEAT_19": false,
+      "FEAT_20": false,
+      "FEAT_21": false,
+      "FEAT_22": false,
+      "FEAT_23": false,
+      "FEAT_24": false,
+      "FEAT_25": false,
+      "FEAT_26": false,
+      "FEAT_27": false,
+      "FEAT_28": false,
+      "FEAT_29": false,
+      "FEAT_30": false,
+      "FEAT_31": false,
+      "FEAT_32": false,
+      "FEAT_33": false,
+      "FEAT_34": false,
+      "FEAT_35": false,
+      "FEAT_36": false
+    },
+    "use_evidence": true,
+    "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+    "max_retries": 5,
+    "api_backend": "deepseek",
+    "base_url": "https://api.deepseek.com",
+    "provider": "direct",
+    "request_options": {
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      }
+    },
+    "model_version": "DeepSeek-V4.1-Flash-1017"
+  },
+  "status": "completed",
+  "questions": 241,
+  "started_at_utc": "2026-10-24T13:01:00.069353+00:00",
+  "git_commit": "2c83c8d94e8bc94a0f6ebee3ff48220b4807aaf0",
+  "dataset": "data\\bird_large.json",
+  "feature_configuration": "baseline",
+  "max_retries": 5,
+  "base_interval_seconds": 3,
+  "min_interval_seconds": 3,
+  "key_before": {
+    "backend": "deepseek",
+    "is_available": true,
+    "balance_infos": [
+      {
+        "currency": "USD",
+        "total_balance": "36.32",
+        "granted_balance": "0.00",
+        "topped_up_balance": "36.32"
+      }
+    ]
+  },
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-10-24T13:24:02.746175+00:00",
+  "phase": "completed",
+  "databases_ready": 8,
+  "databases_total": 8,
+  "current_database": "toxicology",
+  "build_attempt": 1,
+  "usage_this_attempt": {
+    "prompt_tokens": 455000,
+    "completion_tokens": 33654,
+    "total_tokens": 488654
+  },
+  "key_after": {
+    "backend": "deepseek",
+    "is_available": true,
+    "balance_infos": [
+      {
+        "currency": "USD",
+        "total_balance": "36.27",
+        "granted_balance": "0.00",
+        "topped_up_balance": "36.27"
+      }
+    ]
+  },
+  "balance_delta_this_attempt": {
+    "USD": 0.05
+  },
+  "cost_usd_this_attempt": 0.05,
+  "finished_at_utc": "2026-10-24T13:27:09.556320+00:00"
+}

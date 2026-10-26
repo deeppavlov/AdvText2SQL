@@ -10,6 +10,10 @@
 | `ablation_results_large/` | Исторический Mistral baseline и одиночные большие абляции |
 | `ablation_results_small/` | Малые абляции и исторические эксперименты; `feat_best_hybrid_large/` внутри содержит **large** best hybrid |
 | `runs/` | Запуски GPT/DeepSeek, пробы промптов, отчёты, checkpoints, полные ответы и аудит фичей |
+| `deepseek_flash_ablation_large_20261024/` | Создаётся при ручном запуске новой серии: baseline и отдельные фичи; [протокол](../docs/03_deepseek_ablation.md) |
+| `deepseek_direct_ablation_large_20261024/` | Отдельная серия через прямой API DeepSeek и `.env.deepseek`; создаётся при ручном запуске |
+| `deepseek_combinations_large_20261026/` | Три этапа комбинаций на BIRD/Ambrosia, строгий подсчёт ошибок и сравнение с прежними контролями; [протокол](../docs/04_deepseek_combinations.md) |
+| `deepseek_relationships_large_20261026/` | FEAT_1 к выбранному гибриду 14+32+35; два новых запуска с прежними контролями; [протокол](../docs/04_deepseek_combinations.md) |
 | `legacy_notes/` | Старые планы и заметки из `local/old`; это исторический контекст, не актуальные инструкции |
 | `legacy_snapshots/` | Прежние корневые JSON-снимки схем и результатов; не опорные метрики новых прогонов |
 | `organization_20261023/` | Проверка целостности переноса и список удалённых служебных файлов |

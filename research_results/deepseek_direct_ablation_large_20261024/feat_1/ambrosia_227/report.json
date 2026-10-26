@@ -1,0 +1,24 @@
+{
+  "accuracy": 72.68722466960352,
+  "total": 227,
+  "gold_ambiguous": 67,
+  "pred_ambiguous": 7,
+  "true_positive": 6,
+  "generation_errors": 0,
+  "ambiguity_metrics": {
+    "tp": 6,
+    "fp": 1,
+    "fn": 61,
+    "tn": 159,
+    "precision": 0.8571428571428571,
+    "recall": 0.08955223880597014,
+    "f1": 0.16216216216216217,
+    "balanced_accuracy": 0.541651119402985
+  },
+  "dataset_coverage": {
+    "source_questions": 240,
+    "evaluated_questions": 227,
+    "excluded_questions": 13,
+    "dataset_sha256": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231"
+  }
+}

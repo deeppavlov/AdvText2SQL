@@ -1,5 +1,7 @@
 # Python
 __pycache__/
+.venv/
+.ruff_cache/
 *.py[codz]
 *$py.class
 
@@ -21,6 +23,10 @@ __pycache__/
 .ablation_current_feat*
 .ablation_tmp.*
 query_results.json
+# Versioned DeepSeek answers are source data for selector labels and audits.
+!/research_results/deepseek_*/**/query_results.json
+# OS locks are recreated on launch; they are not experiment results.
+/research_results/**/suite.lock
 
 # Промежуточные результаты evaluation
 db_schemas.json
@@ -44,3 +50,6 @@ ablation_results/_hybrid
 ablation_results/feat_00_baseline_both
 ablation_results/feat_00_baseline_both_base
 presentations/
+
+plan.md
+docs/security_review.md

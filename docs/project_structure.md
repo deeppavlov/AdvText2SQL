@@ -13,8 +13,14 @@ AdvText2SQL/
 │   ├── README.md                       # Индекс этапов и правило ведения документации
 │   ├── 01_gpt_research.md               # GPT baseline/гибриды и сравнение с Mistral
 │   ├── 02_feature_selector.md           # План данных и классификатора; ещё не реализован
+│   ├── 03_deepseek_ablation.md          # Протокол и ручной запуск одиночных фичей DeepSeek
+│   ├── 04_deepseek_combinations.md      # Три этапа комбинаций, строгая оценка и команды запуска
 │   └── project_structure.md            # Этот файл: дерево и назначение папок
 ├── research_results/                   # Все архивные и новые результаты исследований
+│   ├── deepseek_direct_ablation_large_20261024/ # Прямой DeepSeek: baseline и одиночные фичи
+│   ├── deepseek_combinations_large_20261026/ # Новые комбинации, контроли и выбор конфигураций
+│   ├── deepseek_relationships_large_20261026/ # Проверка FEAT_1 на опоре 14+32+35
+│   │   └── maintenance/                # Исходные снимки и контроль целостности технических исправлений
 │   ├── README.md                       # Формат хранения и пояснение переноса старых путей
 │   ├── ablation_results_large/         # Большие одиночные абляции и baseline Mistral
 │   │   ├── feat_baseline/              # Исходный большой baseline Mistral
@@ -59,6 +65,13 @@ AdvText2SQL/
 │       └── prompts.py                  # Шаблоны промптов
 ├── benchmarks/                         # BIRD/Ambrosia pipeline, оценщики и учёт токенов
 ├── scripts/                            # Поддерживаемые инструменты текущих исследований
+│   ├── run_feature_ablation.py          # Последовательные абляции, контроль ошибок, сводные таблицы
+│   ├── run_feature_combinations.py      # Шесть запусков: 2+35, затем правила и детектор
+│   ├── run_hybrid_relationships.py      # Два запуска: PK/FK-подсказки к выбранному гибриду
+│   ├── research_metrics.py              # Офлайн-оценка Ambrosia: error всегда неверен
+│   ├── atomic_artifacts.py              # Атомарная запись JSON с повторами при Windows-блокировках
+│   ├── ablation_maintenance.py           # Проверенные I/O-версии и восстановление технических checkpoint-ошибок
+│   ├── llm_endpoints.py                # Прямой DeepSeek/OpenRouter: запросы, баланс и валюты
 │   ├── run_openrouter_baseline.py       # Baseline / hybrid / hybrid_no32_33; checkpoint и metadata
 │   ├── feature_presets.py              # Фиксированные наборы флагов
 │   ├── baseline_connection.py          # Таймауты PostgreSQL и повторы подготовки БД
@@ -73,6 +86,11 @@ AdvText2SQL/
 │   ├── check_openrouter.py             # Короткая платная проверка API, только при явном запуске
 │   └── watch_baseline.ps1              # Наблюдение за конкретным процессом и остановка при сбое
 ├── local/                              # Shell-запуски с SSH
+│   ├── run_feature_ablation.ps1         # PowerShell-вход: выбирает Git Bash вместо WSL
+│   ├── run_deepseek_ablation.ps1        # Та же серия с локальным .env.deepseek
+│   ├── run_deepseek_combinations.ps1     # Ручной запуск трёх этапов комбинаций через SSH
+│   ├── run_deepseek_relationships.ps1    # Ручной запуск опыта со связями через SSH
+│   ├── run_feature_ablation.sh          # Серия абляций через общий SSH launcher
 │   ├── run_openrouter_baseline.sh       # Основной текущий запуск: туннель + Python runner
 │   ├── start_tunnel.sh                 # Наблюдение/переподключение SSH
 │   ├── run_single.sh                   # Рабочий исторический запуск произвольных FEAT через .env
@@ -90,7 +108,7 @@ AdvText2SQL/
 ├── bird_benchmark.py                   # Исходная точка запуска из main, сохранена
 ├── ambrosia_benchmark.py               # Исходная точка запуска из main, сохранена
 ├── bird_evaluate_only.py               # Исходная переоценка; путь задаётся RESULTS_FILE
-├── .env / .env.openrouter              # Локальные секреты и подключения; не публиковать
+├── .env / .env.openrouter / .env.deepseek # Локальные секреты и подключения; не публиковать
 ├── .env.example                        # Исходный пример настроек из main
 ├── pyproject.toml / uv.lock            # Окружение и зависимости из main
 ├── .gitattributes                      # LF для bash-скриптов

@@ -1,0 +1,278 @@
+[
+  {
+    "case": "baseline",
+    "stage": "reference",
+    "features": [],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.15352697095436,
+    "f1": null,
+    "errors": 0,
+    "tokens": 488664,
+    "delta_baseline_pp": 0.0,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "baseline",
+    "stage": "reference",
+    "features": [],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "f1": 0.05714285714285714,
+    "errors": 0,
+    "tokens": 292465,
+    "delta_baseline_pp": 0.0,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_2",
+    "stage": "reference",
+    "features": [
+      2
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 47.302904564315355,
+    "f1": null,
+    "errors": 0,
+    "tokens": 2134231,
+    "delta_baseline_pp": 4.149377593360995,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_2",
+    "stage": "reference",
+    "features": [
+      2
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "f1": 0.10666666666666667,
+    "errors": 0,
+    "tokens": 679868,
+    "delta_baseline_pp": -0.4405286343612431,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_35",
+    "stage": "reference",
+    "features": [
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 47.302904564315355,
+    "f1": null,
+    "errors": 0,
+    "tokens": 472680,
+    "delta_baseline_pp": 4.149377593360995,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_35",
+    "stage": "reference",
+    "features": [
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "f1": 0.1095890410958904,
+    "errors": 0,
+    "tokens": 289153,
+    "delta_baseline_pp": 0.4405286343612289,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_14",
+    "stage": "reference",
+    "features": [
+      14
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.88796680497925,
+    "f1": null,
+    "errors": 0,
+    "tokens": 652844,
+    "delta_baseline_pp": 3.73443983402489,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_14",
+    "stage": "reference",
+    "features": [
+      14
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "f1": 0.13157894736842105,
+    "errors": 0,
+    "tokens": 439921,
+    "delta_baseline_pp": 0.0,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_32",
+    "stage": "reference",
+    "features": [
+      32
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "f1": null,
+    "errors": 0,
+    "tokens": 824766,
+    "delta_baseline_pp": 1.6597510373443924,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_32",
+    "stage": "reference",
+    "features": [
+      32
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 77.5330396475771,
+    "f1": 0.5048543689320388,
+    "errors": 0,
+    "tokens": 425914,
+    "delta_baseline_pp": 6.607929515418505,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "schema_2_35",
+    "stage": 1,
+    "features": [
+      2,
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.058091286307054,
+    "f1": null,
+    "errors": 0,
+    "tokens": 2129514,
+    "delta_baseline_pp": 2.904564315352694,
+    "delta_parent_pp": {
+      "feat_2": -1.2448132780083014,
+      "feat_35": -1.2448132780083014
+    }
+  },
+  {
+    "case": "schema_2_35",
+    "stage": 1,
+    "features": [
+      2,
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "f1": 0.08108108108108109,
+    "errors": 0,
+    "tokens": 681230,
+    "delta_baseline_pp": -0.881057268722472,
+    "delta_parent_pp": {
+      "feat_2": -0.4405286343612289,
+      "feat_35": -1.321585903083701
+    }
+  },
+  {
+    "case": "sql_rules",
+    "stage": 2,
+    "features": [
+      14,
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 48.13278008298755,
+    "f1": null,
+    "errors": 0,
+    "tokens": 638050,
+    "delta_baseline_pp": 4.9792531120331915,
+    "delta_parent_pp": {
+      "feat_35": 0.8298755186721962
+    }
+  },
+  {
+    "case": "sql_rules",
+    "stage": 2,
+    "features": [
+      14,
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "f1": 0.0821917808219178,
+    "errors": 0,
+    "tokens": 444037,
+    "delta_baseline_pp": -0.4405286343612431,
+    "delta_parent_pp": {
+      "feat_35": -0.881057268722472
+    }
+  },
+  {
+    "case": "sql_ambiguity",
+    "stage": 3,
+    "features": [
+      14,
+      32,
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 48.54771784232365,
+    "f1": null,
+    "errors": 0,
+    "tokens": 979404,
+    "delta_baseline_pp": 5.39419087136929,
+    "delta_parent_pp": {
+      "sql_rules": 0.4149377593360981,
+      "feat_32": 3.734439834024897
+    }
+  },
+  {
+    "case": "sql_ambiguity",
+    "stage": 3,
+    "features": [
+      14,
+      32,
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 80.1762114537445,
+    "f1": 0.5794392523364486,
+    "errors": 0,
+    "tokens": 552999,
+    "delta_baseline_pp": 9.251101321585907,
+    "delta_parent_pp": {
+      "sql_rules": 9.69162995594715,
+      "feat_32": 2.643171806167402
+    }
+  }
+]

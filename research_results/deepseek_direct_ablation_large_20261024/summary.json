@@ -1,0 +1,1494 @@
+[
+  {
+    "case": "baseline",
+    "features": [],
+    "control": null,
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": null,
+    "effect": "baseline",
+    "note": "",
+    "f1": 0.05714285714285714,
+    "prompt_tokens": 266206,
+    "completion_tokens": 26259,
+    "successful_calls": 452,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "baseline",
+    "features": [],
+    "control": null,
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.15352697095436,
+    "delta_pp": null,
+    "effect": "baseline",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 33655,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_1",
+    "features": [
+      1
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 72.68722466960352,
+    "delta_pp": 1.7621145374449299,
+    "effect": "improved",
+    "note": "",
+    "f1": 0.16216216216216217,
+    "prompt_tokens": 292541,
+    "completion_tokens": 26192,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_1",
+    "features": [
+      1
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.22821576763486,
+    "delta_pp": 2.0746887966804977,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 502647,
+    "completion_tokens": 29904,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_2",
+    "features": [
+      2
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.10666666666666667,
+    "prompt_tokens": 655208,
+    "completion_tokens": 24660,
+    "successful_calls": 449,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_2",
+    "features": [
+      2
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 47.302904564315355,
+    "delta_pp": 4.149377593360995,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 2104627,
+    "completion_tokens": 29604,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.06,
+    "account_balance_deltas": {
+      "USD": 0.06
+    }
+  },
+  {
+    "case": "feat_3",
+    "features": [
+      3
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": 0.08333333333333333,
+    "prompt_tokens": 264862,
+    "completion_tokens": 26272,
+    "successful_calls": 450,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_3",
+    "features": [
+      3
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.058091286307054,
+    "delta_pp": 2.904564315352694,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": null,
+    "prompt_tokens": 453768,
+    "completion_tokens": 29941,
+    "successful_calls": 482,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_4",
+    "features": [
+      4
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": 0.10666666666666667,
+    "prompt_tokens": 262317,
+    "completion_tokens": 26067,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_4",
+    "features": [
+      4
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.398340248962654,
+    "delta_pp": 1.2448132780082943,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30130,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_5",
+    "features": [
+      5
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "delta_pp": -0.881057268722472,
+    "effect": "worse",
+    "note": "Флаг не переключает light fallback в текущей реализации",
+    "f1": 0.05555555555555555,
+    "prompt_tokens": 264540,
+    "completion_tokens": 26093,
+    "successful_calls": 450,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_5",
+    "features": [
+      5
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "Флаг не переключает light fallback в текущей реализации",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30194,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_6",
+    "features": [
+      6
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.08333333333333333,
+    "prompt_tokens": 623769,
+    "completion_tokens": 23974,
+    "successful_calls": 450,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_6",
+    "features": [
+      6
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 48.96265560165975,
+    "delta_pp": 5.809128630705388,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 763639,
+    "completion_tokens": 28773,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_7",
+    "features": [
+      7
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263088,
+    "completion_tokens": 26330,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_7",
+    "features": [
+      7
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.47302904564315,
+    "delta_pp": 3.319502074688792,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_2; FEAT_2 выключен",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29988,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_8",
+    "features": [
+      8
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "Инфраструктура: rollback при подготовке схемы",
+    "f1": 0.0821917808219178,
+    "prompt_tokens": 263886,
+    "completion_tokens": 26515,
+    "successful_calls": 449,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_8",
+    "features": [
+      8
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.22821576763486,
+    "delta_pp": 2.0746887966804977,
+    "effect": "improved",
+    "note": "Инфраструктура: rollback при подготовке схемы",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30595,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_9",
+    "features": [
+      9
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "Дамп схем через этот флаг текущим runner не вызывается",
+    "f1": 0.10666666666666667,
+    "prompt_tokens": 262293,
+    "completion_tokens": 26353,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_9",
+    "features": [
+      9
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.22821576763486,
+    "delta_pp": 2.0746887966804977,
+    "effect": "improved",
+    "note": "Дамп схем через этот флаг текущим runner не вызывается",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29927,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_10",
+    "features": [
+      10
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "delta_pp": 0.4405286343612289,
+    "effect": "improved",
+    "note": "Инфраструктура: измерение времени build и размера промпта",
+    "f1": 0.13333333333333333,
+    "prompt_tokens": 262314,
+    "completion_tokens": 26132,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_10",
+    "features": [
+      10
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.983402489626556,
+    "delta_pp": 0.8298755186721962,
+    "effect": "improved",
+    "note": "Инфраструктура: измерение времени build и размера промпта",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 34224,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_11",
+    "features": [
+      11
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Инфраструктура: структурированные логи",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263191,
+    "completion_tokens": 26257,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_11",
+    "features": [
+      11
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.398340248962654,
+    "delta_pp": 1.2448132780082943,
+    "effect": "improved",
+    "note": "Инфраструктура: структурированные логи",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29656,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_12",
+    "features": [
+      12
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.0,
+    "prompt_tokens": 268683,
+    "completion_tokens": 26574,
+    "successful_calls": 455,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_12",
+    "features": [
+      12
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29957,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_13",
+    "features": [
+      13
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.0,
+    "prompt_tokens": 458433,
+    "completion_tokens": 41802,
+    "successful_calls": 455,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_13",
+    "features": [
+      13
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 656380,
+    "completion_tokens": 45923,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_14",
+    "features": [
+      14
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.13157894736842105,
+    "prompt_tokens": 415010,
+    "completion_tokens": 24911,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.0,
+    "account_balance_deltas": {
+      "USD": 0.0
+    }
+  },
+  {
+    "case": "feat_14",
+    "features": [
+      14
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.88796680497925,
+    "delta_pp": 3.73443983402489,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 624673,
+    "completion_tokens": 28171,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.06,
+    "account_balance_deltas": {
+      "USD": 0.06
+    }
+  },
+  {
+    "case": "feat_15",
+    "features": [
+      15
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "delta_pp": 0.4405286343612289,
+    "effect": "improved",
+    "note": "",
+    "f1": 0.13333333333333333,
+    "prompt_tokens": 262324,
+    "completion_tokens": 26212,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_15",
+    "features": [
+      15
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.22821576763486,
+    "delta_pp": 2.0746887966804977,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29934,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_16",
+    "features": [
+      16
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263112,
+    "completion_tokens": 26210,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_16",
+    "features": [
+      16
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.398340248962654,
+    "delta_pp": 1.2448132780082943,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29945,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_17",
+    "features": [
+      17
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "delta_pp": 0.4405286343612289,
+    "effect": "improved",
+    "note": "Повторы при ошибке генерации; SQL-валидация FEAT_16 выключена",
+    "f1": 0.1095890410958904,
+    "prompt_tokens": 263986,
+    "completion_tokens": 26196,
+    "successful_calls": 449,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_17",
+    "features": [
+      17
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.398340248962654,
+    "delta_pp": 1.2448132780082943,
+    "effect": "improved",
+    "note": "Повторы при ошибке генерации; SQL-валидация FEAT_16 выключена",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30033,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_18",
+    "features": [
+      18
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "Инфраструктура: backoff при rate limit",
+    "f1": 0.0821917808219178,
+    "prompt_tokens": 263886,
+    "completion_tokens": 26397,
+    "successful_calls": 449,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_18",
+    "features": [
+      18
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.643153526970956,
+    "delta_pp": 2.4896265560165958,
+    "effect": "improved",
+    "note": "Инфраструктура: backoff при rate limit",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30106,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_19",
+    "features": [
+      19
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "delta_pp": -0.881057268722472,
+    "effect": "worse",
+    "note": "Инфраструктура: дополнительная пауза между вопросами",
+    "f1": 0.05555555555555555,
+    "prompt_tokens": 264762,
+    "completion_tokens": 26073,
+    "successful_calls": 450,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_19",
+    "features": [
+      19
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "Инфраструктура: дополнительная пауза между вопросами",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30034,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_20",
+    "features": [
+      20
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "delta_pp": 0.4405286343612289,
+    "effect": "improved",
+    "note": "",
+    "f1": 0.13333333333333333,
+    "prompt_tokens": 377050,
+    "completion_tokens": 29007,
+    "successful_calls": 666,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_20",
+    "features": [
+      20
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 45.22821576763486,
+    "delta_pp": 2.0746887966804977,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 591834,
+    "completion_tokens": 32487,
+    "successful_calls": 724,
+    "key_usage_delta_usd": 0.06,
+    "account_balance_deltas": {
+      "USD": 0.06
+    }
+  },
+  {
+    "case": "feat_21",
+    "features": [
+      21
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "delta_pp": -0.881057268722472,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.08108108108108109,
+    "prompt_tokens": 265980,
+    "completion_tokens": 26305,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_21",
+    "features": [
+      21
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.983402489626556,
+    "delta_pp": 0.8298755186721962,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 470307,
+    "completion_tokens": 29542,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_23",
+    "features": [
+      23
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "delta_pp": -0.881057268722472,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.08108108108108109,
+    "prompt_tokens": 341482,
+    "completion_tokens": 38216,
+    "successful_calls": 690,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_23",
+    "features": [
+      23
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.983402489626556,
+    "delta_pp": 0.8298755186721962,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 566393,
+    "completion_tokens": 32970,
+    "successful_calls": 535,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_25",
+    "features": [
+      25
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "",
+    "f1": 0.0821917808219178,
+    "prompt_tokens": 351199,
+    "completion_tokens": 35030,
+    "successful_calls": 670,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_25",
+    "features": [
+      25
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.47302904564315,
+    "delta_pp": 3.319502074688792,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 634937,
+    "completion_tokens": 39913,
+    "successful_calls": 724,
+    "key_usage_delta_usd": 0.07,
+    "account_balance_deltas": {
+      "USD": 0.07
+    }
+  },
+  {
+    "case": "feat_26",
+    "features": [
+      26
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.04405286343612,
+    "delta_pp": -0.881057268722472,
+    "effect": "worse",
+    "note": "Изолированный кэш; обученные hints не подмешиваются, холодный старт не измеряет их пользу",
+    "f1": 0.05555555555555555,
+    "prompt_tokens": 264762,
+    "completion_tokens": 26050,
+    "successful_calls": 450,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_26",
+    "features": [
+      26
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "Изолированный кэш; обученные hints не подмешиваются, холодный старт не измеряет их пользу",
+    "f1": null,
+    "prompt_tokens": 455018,
+    "completion_tokens": 30318,
+    "successful_calls": 484,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_27",
+    "features": [
+      27
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Feedback требует повторной генерации; FEAT_17 выключен",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263191,
+    "completion_tokens": 26382,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_27",
+    "features": [
+      27
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "Feedback требует повторной генерации; FEAT_17 выключен",
+    "f1": null,
+    "prompt_tokens": 453768,
+    "completion_tokens": 30165,
+    "successful_calls": 482,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_28",
+    "features": [
+      28
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.08333333333333333,
+    "prompt_tokens": 595923,
+    "completion_tokens": 77423,
+    "successful_calls": 894,
+    "key_usage_delta_usd": 0.06,
+    "account_balance_deltas": {
+      "USD": 0.06
+    }
+  },
+  {
+    "case": "feat_28",
+    "features": [
+      28
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.983402489626556,
+    "delta_pp": 0.8298755186721962,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 985201,
+    "completion_tokens": 90066,
+    "successful_calls": 965,
+    "key_usage_delta_usd": 0.09,
+    "account_balance_deltas": {
+      "USD": 0.09
+    }
+  },
+  {
+    "case": "feat_29",
+    "features": [
+      29
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.13157894736842105,
+    "prompt_tokens": 292480,
+    "completion_tokens": 21833,
+    "successful_calls": 446,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_29",
+    "features": [
+      29
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.058091286307054,
+    "delta_pp": 2.904564315352694,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 470762,
+    "completion_tokens": 27708,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_30",
+    "features": [
+      30
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 350370,
+    "completion_tokens": 57474,
+    "successful_calls": 668,
+    "key_usage_delta_usd": 0.06,
+    "account_balance_deltas": {
+      "USD": 0.06
+    }
+  },
+  {
+    "case": "feat_30",
+    "features": [
+      30
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.15352697095436,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 638357,
+    "completion_tokens": 65422,
+    "successful_calls": 724,
+    "key_usage_delta_usd": 0.09,
+    "account_balance_deltas": {
+      "USD": 0.09
+    }
+  },
+  {
+    "case": "feat_32",
+    "features": [
+      32
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 77.5330396475771,
+    "delta_pp": 6.607929515418505,
+    "effect": "improved",
+    "note": "",
+    "f1": 0.5048543689320388,
+    "prompt_tokens": 387932,
+    "completion_tokens": 37982,
+    "successful_calls": 331,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_32",
+    "features": [
+      32
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 44.81327800829875,
+    "delta_pp": 1.6597510373443924,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 763146,
+    "completion_tokens": 61620,
+    "successful_calls": 480,
+    "key_usage_delta_usd": 0.12,
+    "account_balance_deltas": {
+      "USD": 0.12
+    }
+  },
+  {
+    "case": "feat_33",
+    "features": [
+      33
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Механизм не активируется без FEAT_32; FEAT_32 выключен",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263088,
+    "completion_tokens": 26482,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.02,
+    "account_balance_deltas": {
+      "USD": 0.02
+    }
+  },
+  {
+    "case": "feat_33",
+    "features": [
+      33
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.56846473029046,
+    "delta_pp": 0.4149377593360981,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_32; FEAT_32 выключен",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 29940,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_34",
+    "features": [
+      34
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.48458149779735,
+    "delta_pp": -0.4405286343612431,
+    "effect": "worse",
+    "note": "Механизм не активируется без FEAT_32/33; оба флага выключены",
+    "f1": 0.10666666666666667,
+    "prompt_tokens": 262317,
+    "completion_tokens": 26134,
+    "successful_calls": 447,
+    "key_usage_delta_usd": 0.03,
+    "account_balance_deltas": {
+      "USD": 0.03
+    }
+  },
+  {
+    "case": "feat_34",
+    "features": [
+      34
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 46.058091286307054,
+    "delta_pp": 2.904564315352694,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_32/33; оба флага выключены",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 30254,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_35",
+    "features": [
+      35
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "delta_pp": 0.4405286343612289,
+    "effect": "improved",
+    "note": "",
+    "f1": 0.1095890410958904,
+    "prompt_tokens": 263192,
+    "completion_tokens": 25961,
+    "successful_calls": 449,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_35",
+    "features": [
+      35
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 47.302904564315355,
+    "delta_pp": 4.149377593360995,
+    "effect": "improved",
+    "note": "",
+    "f1": null,
+    "prompt_tokens": 442153,
+    "completion_tokens": 30527,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  },
+  {
+    "case": "feat_36",
+    "features": [
+      36
+    ],
+    "control": "baseline",
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "delta_pp": 0.0,
+    "effect": "equal",
+    "note": "Механизм не активируется без FEAT_15; FEAT_15 выключен",
+    "f1": 0.10810810810810811,
+    "prompt_tokens": 263098,
+    "completion_tokens": 26458,
+    "successful_calls": 448,
+    "key_usage_delta_usd": 0.05,
+    "account_balance_deltas": {
+      "USD": 0.05
+    }
+  },
+  {
+    "case": "feat_36",
+    "features": [
+      36
+    ],
+    "control": "baseline",
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.983402489626556,
+    "delta_pp": 0.8298755186721962,
+    "effect": "improved",
+    "note": "Механизм не активируется без FEAT_15; FEAT_15 выключен",
+    "f1": null,
+    "prompt_tokens": 455009,
+    "completion_tokens": 33960,
+    "successful_calls": 483,
+    "key_usage_delta_usd": 0.04,
+    "account_balance_deltas": {
+      "USD": 0.04
+    }
+  }
+]

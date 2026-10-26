@@ -1,0 +1,140 @@
+[
+  {
+    "case": "baseline",
+    "stage": "reference",
+    "features": [],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 43.15352697095436,
+    "f1": null,
+    "errors": 0,
+    "tokens": 488664,
+    "delta_baseline_pp": 0.0,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "baseline",
+    "stage": "reference",
+    "features": [],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 70.9251101321586,
+    "f1": 0.05714285714285714,
+    "errors": 0,
+    "tokens": 292465,
+    "delta_baseline_pp": 0.0,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_35",
+    "stage": "reference",
+    "features": [
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 47.302904564315355,
+    "f1": null,
+    "errors": 0,
+    "tokens": 472680,
+    "delta_baseline_pp": 4.149377593360995,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "feat_35",
+    "stage": "reference",
+    "features": [
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 71.36563876651982,
+    "f1": 0.1095890410958904,
+    "errors": 0,
+    "tokens": 289153,
+    "delta_baseline_pp": 0.4405286343612289,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "sql_ambiguity",
+    "stage": "reference",
+    "features": [
+      14,
+      32,
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 48.54771784232365,
+    "f1": null,
+    "errors": 0,
+    "tokens": 979404,
+    "delta_baseline_pp": 5.39419087136929,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "sql_ambiguity",
+    "stage": "reference",
+    "features": [
+      14,
+      32,
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 80.1762114537445,
+    "f1": 0.5794392523364486,
+    "errors": 0,
+    "tokens": 552999,
+    "delta_baseline_pp": 9.251101321585907,
+    "delta_parent_pp": {}
+  },
+  {
+    "case": "hybrid_with_relationships",
+    "stage": "relationships",
+    "features": [
+      1,
+      14,
+      32,
+      35
+    ],
+    "benchmark": "bird",
+    "status": "completed",
+    "saved": 241,
+    "accuracy": 48.54771784232365,
+    "f1": null,
+    "errors": 0,
+    "tokens": 1003530,
+    "delta_baseline_pp": 5.39419087136929,
+    "delta_parent_pp": {
+      "sql_ambiguity": 0.0
+    }
+  },
+  {
+    "case": "hybrid_with_relationships",
+    "stage": "relationships",
+    "features": [
+      1,
+      14,
+      32,
+      35
+    ],
+    "benchmark": "ambrosia",
+    "status": "completed",
+    "saved": 227,
+    "accuracy": 80.1762114537445,
+    "f1": 0.5871559633027523,
+    "errors": 0,
+    "tokens": 561885,
+    "delta_baseline_pp": 9.251101321585907,
+    "delta_parent_pp": {
+      "sql_ambiguity": 0.0
+    }
+  }
+]

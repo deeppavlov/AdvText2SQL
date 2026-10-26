@@ -3,6 +3,30 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 export PYTHONUTF8=1 PYTHONIOENCODING=utf-8
+if [[ -x .venv/Scripts/python.exe ]]; then
+    PYTHON=.venv/Scripts/python.exe
+elif [[ -x .venv/bin/python ]]; then
+    PYTHON=.venv/bin/python
+else
+    PYTHON=python
+fi
+RUNNER=scripts/run_openrouter_baseline.py
+if [[ "${1:-}" == "--feature-ablation" ]]; then
+    shift
+    RUNNER=scripts/run_feature_ablation.py
+elif [[ "${1:-}" == "--feature-combinations" ]]; then
+    shift
+    RUNNER=scripts/run_feature_combinations.py
+elif [[ "${1:-}" == "--hybrid-relationships" ]]; then
+    shift
+    RUNNER=scripts/run_hybrid_relationships.py
+fi
+# Planning and local status must not open SSH or touch the network.
+for argument in "$@"; do
+    if [[ "$argument" == "--dry-run" || "$argument" == "--prepare" || "$argument" == "--status" || "$argument" == "--help" ]]; then
+        exec "$PYTHON" -u "$RUNNER" "$@"
+    fi
+done
 TUNNEL_PID=""
 cleanup() {
     if [[ -n "$TUNNEL_PID" ]]; then
@@ -35,11 +59,4 @@ if ! (echo >/dev/tcp/127.0.0.1/5444) 2>/dev/null; then
         exit 1
     fi
 fi
-if [[ -x .venv/Scripts/python.exe ]]; then
-    PYTHON=.venv/Scripts/python.exe
-elif [[ -x .venv/bin/python ]]; then
-    PYTHON=.venv/bin/python
-else
-    PYTHON=python
-fi
-"$PYTHON" -u scripts/run_openrouter_baseline.py "$@"
+"$PYTHON" -u "$RUNNER" "$@"

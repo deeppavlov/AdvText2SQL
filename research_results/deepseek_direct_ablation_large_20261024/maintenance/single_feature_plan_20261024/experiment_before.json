@@ -1,0 +1,235 @@
+{
+  "created_at_utc": "2026-10-24T13:00:55.449282+00:00",
+  "protocol": {
+    "version": "feature-ablation-v1",
+    "model": "deepseek-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_backend": "deepseek",
+    "model_version": "DeepSeek-V4.1-Flash-1017",
+    "provider": "direct",
+    "request_options": {
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      }
+    },
+    "temperature": 0,
+    "max_output_tokens": 4096,
+    "reasoning": {
+      "enabled": false
+    },
+    "max_retries": 5,
+    "base_interval_seconds": 3,
+    "min_interval_seconds": 3,
+    "ambiguity_prompt": "current",
+    "bird_questions": 241,
+    "ambrosia_questions": 227,
+    "files_sha256": {
+      "data/bird_large.json": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+      "data/ambrosia_large.json": "844d01cb35b957c43aed87e4318be6bfe1ee4dc639cc32d68830a7031abdb639",
+      "data/ambrosia_large_available_227.json": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231",
+      "scripts/ambrosia_subset.py": "2d5f5f5d50f5bc93d81d831489688fa1bfab329605093446c115c23e04fad76b",
+      "scripts/audit_feature_results.py": "65254344347921b80a0c69d3fa1d00818f16c568476f3c3df968af2430c91cec",
+      "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+      "scripts/bird_subset.py": "aa59d67d660c6315f635d3e0f4df58d0a738fb9b23cdae06d4137be1f31774d7",
+      "scripts/build_feature_dataset.py": "7e65712cf2534bc018478ff7f2a8d9643d6a7ef037394a1b76688652fcda7787",
+      "scripts/check_openrouter.py": "2ab4d7698c1857ea467e1e8640746758b3f0138d9a85373d42ae89984ccf33b8",
+      "scripts/compare_hybrid_runs.py": "c7a2b502e570bff27744d924a5de379bde38b83c960f1f330f87212715e4055f",
+      "scripts/diagnose_ambrosia.py": "e38cc3932e4bb8137d5df805477b609693e6d03789e64d10f1d03a784625de65",
+      "scripts/feature_presets.py": "0923b9c8fa81fe3bb2f1ecbf89f721c3fc1044a8beaf72d4c194ed9b76f0d7f4",
+      "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+      "scripts/prompt_versions.py": "2976d9351a29a6526158da9ad219d3de5153f33050075d369d713b78b51792e3",
+      "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+      "scripts/run_feature_ablation.py": "f90e8f0fff10dd34a5cafc220a9d75c51c6207f3cadd5bfd4017c30aaf71fc16",
+      "scripts/run_openrouter_baseline.py": "0ca0a0e58985995d375293936feeef4cdec8e77395831f70ec81d61789008efe",
+      "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "benchmarks/ambrosia.py": "08ed411f9c02b195293d4521f531765f066d66bf453e2193f06bca66e0fda76c",
+      "benchmarks/base.py": "9c420425286675380e7cbd3e7b8c3b0be0d0cc40124229dcc681e4e9957a4588",
+      "benchmarks/bird.py": "2f6ce1c9b189c3b8840b30c7b6f71ea85ba91f8986b2e0e4201b20143e53a700",
+      "benchmarks/evaluate_ambrosia.py": "c0c0f8a344c06450afd87507f4c838a35be54d1e0985a2a7c96dd3c52fc54959",
+      "benchmarks/evaluate_bird.py": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+      "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+      "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "b0c23ba9e7ff6a27890d283550dd5df7c3962360b5eb95f5583fa1cce6277c20",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d"
+    }
+  },
+  "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+  "cases": [
+    {
+      "name": "baseline",
+      "enabled": [],
+      "control": null,
+      "targets": []
+    },
+    {
+      "name": "feat_1",
+      "enabled": [
+        1
+      ],
+      "control": "baseline",
+      "targets": [
+        1
+      ]
+    },
+    {
+      "name": "feat_2",
+      "enabled": [
+        2
+      ],
+      "control": "baseline",
+      "targets": [
+        2
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ambrosia",
+    "bird"
+  ],
+  "execution_revisions": [
+    {
+      "protocol_sha256": "b32d7be68669b9562a2ce695e254d2b6de94b573e9e3c5d465188f8b1ce1b9fa",
+      "protocol": {
+        "version": "feature-ablation-v1",
+        "model": "deepseek-flash",
+        "base_url": "https://api.deepseek.com",
+        "api_backend": "deepseek",
+        "model_version": "DeepSeek-V4.1-Flash-1017",
+        "provider": "direct",
+        "request_options": {
+          "extra_body": {
+            "thinking": {
+              "type": "disabled"
+            }
+          }
+        },
+        "temperature": 0,
+        "max_output_tokens": 4096,
+        "reasoning": {
+          "enabled": false
+        },
+        "max_retries": 5,
+        "base_interval_seconds": 3,
+        "min_interval_seconds": 3,
+        "ambiguity_prompt": "current",
+        "bird_questions": 241,
+        "ambrosia_questions": 227,
+        "files_sha256": {
+          "data/bird_large.json": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+          "data/ambrosia_large.json": "844d01cb35b957c43aed87e4318be6bfe1ee4dc639cc32d68830a7031abdb639",
+          "data/ambrosia_large_available_227.json": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231",
+          "scripts/ablation_maintenance.py": "dbcbca1297b9740ccbe8ac4d4c4fd6ad5984f93b1205af75dfdf1c815e81e44d",
+          "scripts/ambrosia_subset.py": "2d5f5f5d50f5bc93d81d831489688fa1bfab329605093446c115c23e04fad76b",
+          "scripts/atomic_artifacts.py": "887c37f4899d627d8dabb969722a542f9e95b2d53cb9d9ed5297422dcb9d0846",
+          "scripts/audit_feature_results.py": "65254344347921b80a0c69d3fa1d00818f16c568476f3c3df968af2430c91cec",
+          "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+          "scripts/bird_subset.py": "aa59d67d660c6315f635d3e0f4df58d0a738fb9b23cdae06d4137be1f31774d7",
+          "scripts/build_feature_dataset.py": "7e65712cf2534bc018478ff7f2a8d9643d6a7ef037394a1b76688652fcda7787",
+          "scripts/check_openrouter.py": "2ab4d7698c1857ea467e1e8640746758b3f0138d9a85373d42ae89984ccf33b8",
+          "scripts/compare_hybrid_runs.py": "c7a2b502e570bff27744d924a5de379bde38b83c960f1f330f87212715e4055f",
+          "scripts/diagnose_ambrosia.py": "e38cc3932e4bb8137d5df805477b609693e6d03789e64d10f1d03a784625de65",
+          "scripts/feature_presets.py": "0923b9c8fa81fe3bb2f1ecbf89f721c3fc1044a8beaf72d4c194ed9b76f0d7f4",
+          "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+          "scripts/prompt_versions.py": "2976d9351a29a6526158da9ad219d3de5153f33050075d369d713b78b51792e3",
+          "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+          "scripts/run_feature_ablation.py": "7a5ea9f584f2e7077b37227c10dac325ef06548cee08211ceb4c1eee9009e659",
+          "scripts/run_openrouter_baseline.py": "1a044cf470cbdc6f13d244aca657b975ba4da9db864ef30c5acc5d082c3fff34",
+          "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "benchmarks/ambrosia.py": "08ed411f9c02b195293d4521f531765f066d66bf453e2193f06bca66e0fda76c",
+          "benchmarks/base.py": "9c420425286675380e7cbd3e7b8c3b0be0d0cc40124229dcc681e4e9957a4588",
+          "benchmarks/bird.py": "2f6ce1c9b189c3b8840b30c7b6f71ea85ba91f8986b2e0e4201b20143e53a700",
+          "benchmarks/evaluate_ambrosia.py": "c0c0f8a344c06450afd87507f4c838a35be54d1e0985a2a7c96dd3c52fc54959",
+          "benchmarks/evaluate_bird.py": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+          "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+          "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "b0c23ba9e7ff6a27890d283550dd5df7c3962360b5eb95f5583fa1cce6277c20",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d"
+        }
+      },
+      "approved_at_utc": "2026-10-24T16:59:12.575042+00:00",
+      "reason": "Reviewed Windows artifact IO retries and pending-question resume; model, flags, data and prompts unchanged",
+      "changed_files": [
+        "scripts/ablation_maintenance.py",
+        "scripts/atomic_artifacts.py",
+        "scripts/run_feature_ablation.py",
+        "scripts/run_openrouter_baseline.py"
+      ]
+    },
+    {
+      "protocol_sha256": "9f6ff73af81e658dabc7b6a0f10f40ffc741258a23a6ea3a27432e4f284ad91a",
+      "protocol": {
+        "version": "feature-ablation-v1",
+        "model": "deepseek-flash",
+        "base_url": "https://api.deepseek.com",
+        "api_backend": "deepseek",
+        "model_version": "DeepSeek-V4.1-Flash-1017",
+        "provider": "direct",
+        "request_options": {
+          "extra_body": {
+            "thinking": {
+              "type": "disabled"
+            }
+          }
+        },
+        "temperature": 0,
+        "max_output_tokens": 4096,
+        "reasoning": {
+          "enabled": false
+        },
+        "max_retries": 5,
+        "base_interval_seconds": 3,
+        "min_interval_seconds": 3,
+        "ambiguity_prompt": "current",
+        "bird_questions": 241,
+        "ambrosia_questions": 227,
+        "files_sha256": {
+          "data/bird_large.json": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+          "data/ambrosia_large.json": "844d01cb35b957c43aed87e4318be6bfe1ee4dc639cc32d68830a7031abdb639",
+          "data/ambrosia_large_available_227.json": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231",
+          "scripts/ablation_maintenance.py": "ea8c4b8ffdf3bac99850603c284354907dec11b57d968f3b9f98fb944cb43b86",
+          "scripts/ambrosia_subset.py": "2d5f5f5d50f5bc93d81d831489688fa1bfab329605093446c115c23e04fad76b",
+          "scripts/atomic_artifacts.py": "887c37f4899d627d8dabb969722a542f9e95b2d53cb9d9ed5297422dcb9d0846",
+          "scripts/audit_feature_results.py": "65254344347921b80a0c69d3fa1d00818f16c568476f3c3df968af2430c91cec",
+          "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+          "scripts/bird_subset.py": "aa59d67d660c6315f635d3e0f4df58d0a738fb9b23cdae06d4137be1f31774d7",
+          "scripts/build_feature_dataset.py": "7e65712cf2534bc018478ff7f2a8d9643d6a7ef037394a1b76688652fcda7787",
+          "scripts/check_openrouter.py": "2ab4d7698c1857ea467e1e8640746758b3f0138d9a85373d42ae89984ccf33b8",
+          "scripts/compare_hybrid_runs.py": "c7a2b502e570bff27744d924a5de379bde38b83c960f1f330f87212715e4055f",
+          "scripts/diagnose_ambrosia.py": "e38cc3932e4bb8137d5df805477b609693e6d03789e64d10f1d03a784625de65",
+          "scripts/feature_presets.py": "0923b9c8fa81fe3bb2f1ecbf89f721c3fc1044a8beaf72d4c194ed9b76f0d7f4",
+          "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+          "scripts/prompt_versions.py": "2976d9351a29a6526158da9ad219d3de5153f33050075d369d713b78b51792e3",
+          "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+          "scripts/run_feature_ablation.py": "7a5ea9f584f2e7077b37227c10dac325ef06548cee08211ceb4c1eee9009e659",
+          "scripts/run_openrouter_baseline.py": "1a044cf470cbdc6f13d244aca657b975ba4da9db864ef30c5acc5d082c3fff34",
+          "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "benchmarks/ambrosia.py": "08ed411f9c02b195293d4521f531765f066d66bf453e2193f06bca66e0fda76c",
+          "benchmarks/base.py": "9c420425286675380e7cbd3e7b8c3b0be0d0cc40124229dcc681e4e9957a4588",
+          "benchmarks/bird.py": "2f6ce1c9b189c3b8840b30c7b6f71ea85ba91f8986b2e0e4201b20143e53a700",
+          "benchmarks/evaluate_ambrosia.py": "c0c0f8a344c06450afd87507f4c838a35be54d1e0985a2a7c96dd3c52fc54959",
+          "benchmarks/evaluate_bird.py": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+          "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+          "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "b0c23ba9e7ff6a27890d283550dd5df7c3962360b5eb95f5583fa1cce6277c20",
+          "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d"
+        }
+      },
+      "approved_at_utc": "2026-10-24T17:00:37.964274+00:00",
+      "reason": "Reviewed Windows artifact IO retries and pending-question resume; model, flags, data and prompts unchanged",
+      "changed_files": [
+        "scripts/ablation_maintenance.py",
+        "scripts/atomic_artifacts.py",
+        "scripts/run_feature_ablation.py",
+        "scripts/run_openrouter_baseline.py"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-"""Check OpenRouter credentials and the same AutoGen client used by benchmarks."""
+"""Check the selected OpenRouter or direct DeepSeek endpoint (one billable probe)."""
 
 import argparse
 import asyncio
@@ -7,6 +7,7 @@ from pathlib import Path
 from autogen_core.models import UserMessage
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from dotenv import dotenv_values
+from llm_endpoints import client_options, validate_connection
 
 
 async def check(env_path: Path) -> int:
@@ -20,11 +21,10 @@ async def check(env_path: Path) -> int:
         print(f"Set LLM_API_KEY in {env_path} to your OpenRouter API key.")
         print("Do not paste the key into chat or commit it to Git.")
         return 2
-    if not key.startswith("sk-or-"):
-        print("LLM_API_KEY does not look like an OpenRouter key; no request sent.")
-        return 2
-    if config.get("LLM_BASE_URL", "").rstrip("/") != "https://openrouter.ai/api/v1":
-        print("Expected LLM_BASE_URL=https://openrouter.ai/api/v1; no request sent.")
+    try:
+        backend = validate_connection(config)
+    except ValueError as error:
+        print(f"{error}; no request sent.")
         return 2
 
     model = config.get("LLM_MODEL_NAME") or "openai/gpt-5.4-mini"
@@ -43,17 +43,15 @@ async def check(env_path: Path) -> int:
             "family": "unknown",
             "structured_output": False,
         },
+        **client_options(backend, protocol=True),
     }
-    effort = config.get("LLM_REASONING_EFFORT")
-    if effort:
-        parameters["reasoning_effort"] = effort
 
     client = OpenAIChatCompletionClient(**parameters)
     try:
         response = await client.create(
             [UserMessage(content="Reply with exactly OK.", source="user")]
         )
-        print(f"Connected to OpenRouter: {model}")
+        print(f"Connected to {backend}: {model}")
         print("Response:", str(response.content).replace(key, "[REDACTED]"))
         print("Usage:", response.usage)
         return 0

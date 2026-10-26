@@ -1,0 +1,281 @@
+{
+  "created_at_utc": "2026-10-26T06:16:15.708032+00:00",
+  "protocol": {
+    "version": "feature-combinations-v1",
+    "model": "deepseek-flash",
+    "ablation_design": "three_staged_combinations",
+    "base_url": "https://api.deepseek.com",
+    "api_backend": "deepseek",
+    "model_version": "DeepSeek-V4.1-Flash-1017",
+    "provider": "direct",
+    "request_options": {
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      }
+    },
+    "temperature": 0,
+    "max_output_tokens": 4096,
+    "reasoning": {
+      "enabled": false
+    },
+    "max_retries": 5,
+    "base_interval_seconds": 3,
+    "min_interval_seconds": 3,
+    "ambiguity_prompt": "current",
+    "bird_questions": 241,
+    "ambrosia_questions": 227,
+    "files_sha256": {
+      "data/bird_large.json": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+      "data/ambrosia_large.json": "844d01cb35b957c43aed87e4318be6bfe1ee4dc639cc32d68830a7031abdb639",
+      "data/ambrosia_large_available_227.json": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231",
+      "scripts/ablation_maintenance.py": "424bde5244c2f5afd35af1ac4069bfd8364e0f52b55464bb9af778317248da43",
+      "scripts/ambrosia_subset.py": "2d5f5f5d50f5bc93d81d831489688fa1bfab329605093446c115c23e04fad76b",
+      "scripts/atomic_artifacts.py": "887c37f4899d627d8dabb969722a542f9e95b2d53cb9d9ed5297422dcb9d0846",
+      "scripts/audit_feature_results.py": "65254344347921b80a0c69d3fa1d00818f16c568476f3c3df968af2430c91cec",
+      "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+      "scripts/bird_subset.py": "aa59d67d660c6315f635d3e0f4df58d0a738fb9b23cdae06d4137be1f31774d7",
+      "scripts/build_feature_dataset.py": "7e65712cf2534bc018478ff7f2a8d9643d6a7ef037394a1b76688652fcda7787",
+      "scripts/check_openrouter.py": "2ab4d7698c1857ea467e1e8640746758b3f0138d9a85373d42ae89984ccf33b8",
+      "scripts/compare_hybrid_runs.py": "c7a2b502e570bff27744d924a5de379bde38b83c960f1f330f87212715e4055f",
+      "scripts/diagnose_ambrosia.py": "e38cc3932e4bb8137d5df805477b609693e6d03789e64d10f1d03a784625de65",
+      "scripts/feature_presets.py": "2a0c82a0a42f53d4d4335510efed4b7cc54690d074cfb4448cd07a0e612d169f",
+      "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+      "scripts/prompt_versions.py": "2976d9351a29a6526158da9ad219d3de5153f33050075d369d713b78b51792e3",
+      "scripts/research_metrics.py": "09f18d46f9d12663c958799608f807120356403e7257d354f3583768c0dd5a7c",
+      "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+      "scripts/run_feature_ablation.py": "c669a25cd054b67a16ff4cc8db93900ff539f814301d8b858f2022f02ee167bb",
+      "scripts/run_feature_combinations.py": "dfe2de2ec6c5ab1f8a13fa062ee19fd48bebfd855af5bc8c44e3e8ceae65bffb",
+      "scripts/run_openrouter_baseline.py": "40dcc0e830f168f7de124cc0b799b3a0bb78349f4b409ebf3e89be36e4451a9b",
+      "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "benchmarks/ambrosia.py": "08ed411f9c02b195293d4521f531765f066d66bf453e2193f06bca66e0fda76c",
+      "benchmarks/base.py": "9c420425286675380e7cbd3e7b8c3b0be0d0cc40124229dcc681e4e9957a4588",
+      "benchmarks/bird.py": "2f6ce1c9b189c3b8840b30c7b6f71ea85ba91f8986b2e0e4201b20143e53a700",
+      "benchmarks/evaluate_ambrosia.py": "c0c0f8a344c06450afd87507f4c838a35be54d1e0985a2a7c96dd3c52fc54959",
+      "benchmarks/evaluate_bird.py": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+      "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+      "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "b0c23ba9e7ff6a27890d283550dd5df7c3962360b5eb95f5583fa1cce6277c20",
+      "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d"
+    },
+    "evaluation_policy": "ambrosia-strict-v1",
+    "references_sha256": "a577cbe8db84099fe32e9af8e98edc681a1c80ffd936437be04cfa1ac583e1b5",
+    "selection_rule": "BIRD accuracy descending; tokens ascending; flag count ascending; name ascending"
+  },
+  "protocol_sha256": "8d1cd4c07204ad47817480fe7deb2be1eed50498c20e95e82ac24152880aa32d",
+  "references": {
+    "source": "research_results/deepseek_direct_ablation_large_20261024",
+    "reviewed_source_changes": [
+      "scripts/feature_presets.py",
+      "scripts/research_metrics.py",
+      "scripts/run_feature_combinations.py",
+      "scripts/run_openrouter_baseline.py"
+    ],
+    "reference_protocol_sha256": [
+      "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+      "9f6ff73af81e658dabc7b6a0f10f40ffc741258a23a6ea3a27432e4f284ad91a",
+      "b32d7be68669b9562a2ce695e254d2b6de94b573e9e3c5d465188f8b1ce1b9fa",
+      "e15c9f480fff60da15778d0e2ced1802f03e7a34657ba2fae15b90b856f7fb15"
+    ],
+    "files_sha256": {
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/metadata.json": "e389af6f9054a4c3a777e3552d886bab43d79dbb8987b44d2bdb4a7091aeec7f",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/report.json": "b0bf6aa431b7db419e75cda3f0d4542f91d834bc9b6e8b0d26f187c2ad01fbdf",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/query_results.json": "405e5ed056ffef41c7a7eae4d82eb9042aa80acdb83b794213a28d2b88f59166",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/raw_responses.jsonl": "e8efea89864d94af134018af0699c4f9695fc4884d03d0d347971d36144687de",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/metadata.json": "fc65c418999b143892bc3d5bc50283ceadddaac2440484eacafe359f72b3ad17",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/report.json": "4d8f10fe28e857a23e342cf53cfc9cb18728f0d31b4aaee4a91b479cfe93a3f2",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/query_results.json": "41271875644d3ff12e0dff5a8f510d03abe58f693d03fef681f53e02abecb6cd",
+      "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/raw_responses.jsonl": "9f0242fa3a577dace4d9f7d6724f50f2dc0f1f16c4497114c98a16a2a2375bdb",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/metadata.json": "2fc21c7c434515194e6ac429ec207fbb59de5eec1730117cb9766d08d0a46607",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/report.json": "e29a3da5968e35200430292f0f0f03aeabe51c9be9e82e198081481d1a6c34ed",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/query_results.json": "f63f3d6678bfb25e4e8f8237316cd356f67622bf298221372838b40825d4ea41",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/raw_responses.jsonl": "9499cd46b1e7c17c39e300e41b68b7c7f9b21d07c25e09c9aa7ba2706c2e7128",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/metadata.json": "826405e8feabc7c1ffcffbf4b1cd686aac3763ac38373791e8ad4165389f6f59",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/report.json": "a30b2956df5899ec56ac1206eeedbea9e57469810f817cfd82dd1893d41e4f44",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/query_results.json": "48406cf583541d1a73d154c90921a58660c852dee346743a7a54f7f28b5f04cb",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/raw_responses.jsonl": "e97d1ecc4802833bbd9760a6b0877d194c467a5a9a3d13cb1eb1aa0d9f98efbc",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/metadata.json": "3c0cbdc58c950fb9b993588a6367db27adfbb1ba86c5a26fb8ddac55fd3e7317",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/report.json": "a8698e856246f5dc5894122cfce1fa9e21141814b8bf8e9070567122232673a9",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/query_results.json": "e0b3b1f0d534239c40d8464a08bf6f781d6c5318e72fda6c04442ac7aac48bd9",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/raw_responses.jsonl": "86cf615e0a0f741ac5e426b858e754b80d7131f029611adb9b968dbbbcd44b46",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/metadata.json": "d2636a065b5e2f0f961dac6604705fe765badbb9b826a02d4abfb631f9712407",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/report.json": "5651c563fae07e89a26cae99c9480e4b35a6fc6f9c48db4aa5bd0db657ba7d3e",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/query_results.json": "d54429d3f642ed6203d4a90012505744d5b028c816b7f050188f407cb674c2ab",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/raw_responses.jsonl": "495ded0b1307c1a003da99fe46ee5b052f559d2f96a53a447b13269c066628a9",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/metadata.json": "195cb7fd2362ef981d2b6415191c41c0e9bf6308e4fc5866ad9d50b9624ac4cd",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/report.json": "9117f9d26cd5da1ae0413fed75e350aabb82d9bf26e4ff73baec7014c305abde",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/query_results.json": "fe1f6db87bebdfc452aec2dc51d679ab15ad35a4a023c38072dc129f286baade",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/raw_responses.jsonl": "ca0f9f3df293a23b260db4c3cd190aceb4dce48c9db5599bca16d5cbd1b05e1a",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/metadata.json": "f4704ed4ae3d5e559163411a420a1c9ccb5c1df192d9aeaefca81274124267a9",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/report.json": "7f0f88f639a9a98aa231dee43cc83083ab426e1f18cd9fdd06f994532ed44d5b",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/query_results.json": "27212bfbf512b5d1f45034b07b25c014aec9a145fdde1d74a82c175a3543c1f7",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/raw_responses.jsonl": "8002945b792c684a66ab87dad3ce7b6f6629096d532bb2e86330d0ac8495efc1",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/metadata.json": "07a1268c48c1f9af893a9498444d157501e590c23fb8527e60c6370d9268ab22",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/report.json": "437d6409e654c0b31cf4471494975767cd4955446b9828bb29c4166ef519271c",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/query_results.json": "d46c72ac943816a0fe44445c158b61877159483a4a8b9485b5b05c507fd03d0b",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/raw_responses.jsonl": "9946d058ed6be89bbb8f22fa6cb896fa4a2f04cb29a64343ab44df516e0d6eb3",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/metadata.json": "ffff2fac70473d31e242da3e1716ee21cd7a306055f2eeffd05e15c12e17e1d7",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/report.json": "ba87e3b99cf3eb20c05ac9f97c4d6ed11e6f23aaf93c84320da3a2bd0db66a28",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/query_results.json": "f2ba8484438e0e84e25b96f6744c5e823c2f8f47e0f6ff1036f256cc21c190d6",
+      "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/raw_responses.jsonl": "e037a0956e04c9f58d9272ca22447ec170d5cd8f2f1bd4711ecb46206882f5f0"
+    },
+    "results": {
+      "baseline": {
+        "enabled": [],
+        "benchmarks": {
+          "bird": {
+            "status": "completed",
+            "saved": 241,
+            "accuracy": 43.15352697095436,
+            "f1": null,
+            "errors": 0,
+            "tokens": 488664
+          },
+          "ambrosia": {
+            "status": "completed",
+            "saved": 227,
+            "accuracy": 70.9251101321586,
+            "f1": 0.05714285714285714,
+            "errors": 0,
+            "tokens": 292465
+          }
+        }
+      },
+      "feat_2": {
+        "enabled": [
+          2
+        ],
+        "benchmarks": {
+          "bird": {
+            "status": "completed",
+            "saved": 241,
+            "accuracy": 47.302904564315355,
+            "f1": null,
+            "errors": 0,
+            "tokens": 2134231
+          },
+          "ambrosia": {
+            "status": "completed",
+            "saved": 227,
+            "accuracy": 70.48458149779735,
+            "f1": 0.10666666666666667,
+            "errors": 0,
+            "tokens": 679868
+          }
+        }
+      },
+      "feat_35": {
+        "enabled": [
+          35
+        ],
+        "benchmarks": {
+          "bird": {
+            "status": "completed",
+            "saved": 241,
+            "accuracy": 47.302904564315355,
+            "f1": null,
+            "errors": 0,
+            "tokens": 472680
+          },
+          "ambrosia": {
+            "status": "completed",
+            "saved": 227,
+            "accuracy": 71.36563876651982,
+            "f1": 0.1095890410958904,
+            "errors": 0,
+            "tokens": 289153
+          }
+        }
+      },
+      "feat_14": {
+        "enabled": [
+          14
+        ],
+        "benchmarks": {
+          "bird": {
+            "status": "completed",
+            "saved": 241,
+            "accuracy": 46.88796680497925,
+            "f1": null,
+            "errors": 0,
+            "tokens": 652844
+          },
+          "ambrosia": {
+            "status": "completed",
+            "saved": 227,
+            "accuracy": 70.9251101321586,
+            "f1": 0.13157894736842105,
+            "errors": 0,
+            "tokens": 439921
+          }
+        }
+      },
+      "feat_32": {
+        "enabled": [
+          32
+        ],
+        "benchmarks": {
+          "bird": {
+            "status": "completed",
+            "saved": 241,
+            "accuracy": 44.81327800829875,
+            "f1": null,
+            "errors": 0,
+            "tokens": 824766
+          },
+          "ambrosia": {
+            "status": "completed",
+            "saved": 227,
+            "accuracy": 77.5330396475771,
+            "f1": 0.5048543689320388,
+            "errors": 0,
+            "tokens": 425914
+          }
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "stage": 1,
+      "name": "schema_2_35",
+      "enabled": [
+        2,
+        35
+      ],
+      "parents": [
+        "feat_2",
+        "feat_35"
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "sql_rules",
+      "enabled": [
+        14,
+        35
+      ],
+      "parents": [
+        "feat_35"
+      ],
+      "selection": "BIRD accuracy; ties: fewer recorded tokens, then fewer flags"
+    },
+    {
+      "stage": 3,
+      "name": "sql_ambiguity",
+      "enabled": [
+        14,
+        32,
+        35
+      ],
+      "parents": [
+        "sql_rules",
+        "feat_32"
+      ],
+      "selection": "BIRD accuracy; ties: fewer recorded tokens, then fewer flags"
+    }
+  ]
+}
