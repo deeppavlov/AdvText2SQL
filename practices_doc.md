@@ -342,7 +342,7 @@ BASE = FEAT_5=true  FEAT_12=true  FEAT_18=true  FEAT_19=true
 ### Результаты гибридных экспериментов (комбинации фич)
 
 > Запуск: `bash local/run_single.sh "FEAT_X FEAT_Y ..." both`  
-> Полный отчёт: `research_results/ablation_results_small/HYBRID_EXPERIMENTS_REPORT.md`
+> Полный отчёт: [HYBRID_EXPERIMENTS_REPORT.md](защита/HYBRID_EXPERIMENTS_REPORT.md) (локальные материалы для защиты).
 
 **Оптимальная комбинация:**
 ```

@@ -1,20 +1,22 @@
 # Структура проекта
 
-Актуально после организации файлов 23.10.2026. Подробности исследований —
+Организация файлов выполнена 23.10.2026, дерево обновлено 28.10.2026. Подробности исследований —
 [01_gpt_research.md](01_gpt_research.md), следующий этап —
 [02_feature_selector.md](02_feature_selector.md).
 
 ```text
 AdvText2SQL/
-├── защита/                             # Копии презентаций и исторических отчётов для защиты
+├── защита/                             # Презентации и исторические отчёты; исключена из Git
 │   ├── README.md                       # Оглавление материалов и ссылки на актуальные итоги
-│   └── ablation_results_small/         # 2 PDF и 6 Markdown-файлов; оригиналы в research_results
+│   ├── AutoText2SQL.pdf / presentation.pdf # Две презентации
+│   └── *.md                            # Шесть исторических материалов: слайды, текст и отчёты
 ├── docs/                               # Краткие итоги и журнал этапов Roadmap
 │   ├── README.md                       # Индекс этапов и правило ведения документации
 │   ├── 01_gpt_research.md               # GPT baseline/гибриды и сравнение с Mistral
 │   ├── 02_feature_selector.md           # План данных и классификатора; ещё не реализован
 │   ├── 03_deepseek_ablation.md          # Протокол и ручной запуск одиночных фичей DeepSeek
 │   ├── 04_deepseek_combinations.md      # Три этапа комбинаций, строгая оценка и команды запуска
+│   ├── 05_configuration_dataset.md     # Phase 0.2: utility, маски, групповые splits и CV
 │   └── project_structure.md            # Этот файл: дерево и назначение папок
 ├── research_results/                   # Все архивные и новые результаты исследований
 │   ├── deepseek_direct_ablation_large_20261024/ # Прямой DeepSeek: baseline и одиночные фичи
@@ -26,7 +28,7 @@ AdvText2SQL/
 │   │   ├── feat_baseline/              # Исходный большой baseline Mistral
 │   │   ├── feat_N_bird/                # BIRD с одной включённой фичей
 │   │   └── feat_N_ambrosia/            # Ambrosia с одной включённой фичей
-│   ├── ablation_results_small/         # Малые абляции, поиски комбинаций, исторические отчёты
+│   ├── ablation_results_small/         # Данные малых абляций и поиска комбинаций
 │   │   └── feat_best_hybrid_large/     # Важно: здесь лежит best hybrid НА БОЛЬШИХ наборах
 │   ├── runs/                           # Новые воспроизводимые запуски и диагностики
 │   │   ├── gpt54mini_baseline_large_20261016/
@@ -56,6 +58,9 @@ AdvText2SQL/
 │   ├── ambrosia_large_available_227.json          # Явно зафиксированная доступная выборка
 │   ├── ambrosia_large_available_227.manifest.json # ID, исключения и hashes
 │   ├── feature_labels*.json            # Исторические labels; требуют аудита до обучения
+│   ├── configuration_utility/          # Новый корректный датасет выбора конфигураций
+│   │   ├── README.md                   # Назначение и команды воспроизведения
+│   │   └── deepseek_20261028/           # 468 строк, inputs, manifest, splits, CV и summary
 │   ├── ambrosia_train.json             # Исходные train-данные Ambrosia
 │   ├── train_queries.json              # Исходные примеры проекта
 │   └── launch_db/                      # Инструкции и утилиты размещения БД
@@ -81,6 +86,8 @@ AdvText2SQL/
 │   ├── compare_hybrid_runs.py          # Сравнение новых запусков с baseline и Mistral
 │   ├── audit_feature_results.py        # Аудит всех больших одиночных абляций без LLM
 │   ├── build_feature_dataset.py        # Старый builder labels; требуется доработка перед обучением
+│   ├── build_configuration_dataset.py  # Новый офлайн-builder utility и валидация bundle
+│   ├── configuration_splits.py         # Компоненты БД/семейств, train/dev/test и train-only CV
 │   ├── prompt_versions.py              # Чтение точного промпта из main без переключения ветки
 │   ├── diagnose_ambrosia.py             # Read-only диагностика пустых серверных БД
 │   ├── check_openrouter.py             # Короткая платная проверка API, только при явном запуске

@@ -1,0 +1,411 @@
+{
+  "format_version": "configuration-utility-v1",
+  "primary_candidates": [
+    "economical",
+    "hybrid"
+  ],
+  "configurations": {
+    "baseline": {
+      "experiment": "ablation",
+      "case": "baseline",
+      "features": [],
+      "role": "control",
+      "benchmarks": {
+        "bird": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/baseline/bird",
+          "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+          "questions": 241,
+          "correct": 104,
+          "accuracy": 43.15352697095436,
+          "generation_errors": 0,
+          "execution_errors": 8,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 455009,
+            "completion_tokens": 33655,
+            "recorded_calls": 483,
+            "total_tokens": 488664,
+            "mean_tokens_per_question": 2027.6514522821576,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "ambrosia": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227",
+          "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+          "questions": 227,
+          "correct": 161,
+          "accuracy": 70.9251101321586,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 65,
+            "tn": 159,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.6666666666666666,
+            "recall": 0.029850746268656716,
+            "f1": 0.05714285714285714,
+            "balanced_accuracy": 0.5118003731343284
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 266206,
+            "completion_tokens": 26259,
+            "recorded_calls": 452,
+            "total_tokens": 292465,
+            "mean_tokens_per_question": 1288.3920704845816,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    },
+    "economical": {
+      "experiment": "ablation",
+      "case": "feat_35",
+      "features": [
+        35
+      ],
+      "role": "candidate",
+      "benchmarks": {
+        "bird": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird",
+          "protocol_sha256": "e15c9f480fff60da15778d0e2ced1802f03e7a34657ba2fae15b90b856f7fb15",
+          "questions": 241,
+          "correct": 114,
+          "accuracy": 47.302904564315355,
+          "generation_errors": 0,
+          "execution_errors": 9,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 442153,
+            "completion_tokens": 30527,
+            "recorded_calls": 483,
+            "total_tokens": 472680,
+            "mean_tokens_per_question": 1961.3278008298755,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "ambrosia": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227",
+          "protocol_sha256": "e15c9f480fff60da15778d0e2ced1802f03e7a34657ba2fae15b90b856f7fb15",
+          "questions": 227,
+          "correct": 162,
+          "accuracy": 71.36563876651982,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 63,
+            "tn": 158,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.6666666666666666,
+            "recall": 0.05970149253731343,
+            "f1": 0.1095890410958904,
+            "balanced_accuracy": 0.5236007462686567
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 263192,
+            "completion_tokens": 25961,
+            "recorded_calls": 449,
+            "total_tokens": 289153,
+            "mean_tokens_per_question": 1273.8017621145375,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    },
+    "hybrid": {
+      "experiment": "combinations",
+      "case": "sql_ambiguity",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "role": "candidate",
+      "benchmarks": {
+        "bird": {
+          "path": "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird",
+          "protocol_sha256": "8d1cd4c07204ad47817480fe7deb2be1eed50498c20e95e82ac24152880aa32d",
+          "questions": 241,
+          "correct": 117,
+          "accuracy": 48.54771784232365,
+          "generation_errors": 0,
+          "execution_errors": 6,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 919995,
+            "completion_tokens": 59409,
+            "recorded_calls": 480,
+            "total_tokens": 979404,
+            "mean_tokens_per_question": 4063.917012448133,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "ambrosia": {
+          "path": "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227",
+          "protocol_sha256": "8d1cd4c07204ad47817480fe7deb2be1eed50498c20e95e82ac24152880aa32d",
+          "questions": 227,
+          "correct": 182,
+          "accuracy": 80.1762114537445,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 31,
+            "fp": 9,
+            "fn": 36,
+            "tn": 151,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.775,
+            "recall": 0.4626865671641791,
+            "f1": 0.5794392523364486,
+            "balanced_accuracy": 0.7032182835820895
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 516132,
+            "completion_tokens": 36867,
+            "recorded_calls": 328,
+            "total_tokens": 552999,
+            "mean_tokens_per_question": 2436.1189427312775,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    },
+    "relationships": {
+      "experiment": "relationships",
+      "case": "hybrid_with_relationships",
+      "features": [
+        1,
+        14,
+        32,
+        35
+      ],
+      "role": "auxiliary",
+      "benchmarks": {
+        "bird": {
+          "path": "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird",
+          "protocol_sha256": "2f245569496909b4b2a644e5e8dc6ea31d2c99e19465f932cf3e35521a62adbb",
+          "questions": 241,
+          "correct": 117,
+          "accuracy": 48.54771784232365,
+          "generation_errors": 0,
+          "execution_errors": 6,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 943814,
+            "completion_tokens": 59716,
+            "recorded_calls": 480,
+            "total_tokens": 1003530,
+            "mean_tokens_per_question": 4164.0248962655605,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "ambrosia": {
+          "path": "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227",
+          "protocol_sha256": "2f245569496909b4b2a644e5e8dc6ea31d2c99e19465f932cf3e35521a62adbb",
+          "questions": 227,
+          "correct": 182,
+          "accuracy": 80.1762114537445,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 32,
+            "fp": 10,
+            "fn": 35,
+            "tn": 150,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7619047619047619,
+            "recall": 0.47761194029850745,
+            "f1": 0.5871559633027523,
+            "balanced_accuracy": 0.7075559701492538
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 525622,
+            "completion_tokens": 36263,
+            "recorded_calls": 325,
+            "total_tokens": 561885,
+            "mean_tokens_per_question": 2475.2643171806167,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    }
+  },
+  "model": {
+    "model": "deepseek-flash",
+    "model_version": "DeepSeek-V4.1-Flash-1017",
+    "base_url": "https://api.deepseek.com",
+    "api_backend": "deepseek",
+    "provider": "direct",
+    "request_options": {
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      }
+    },
+    "temperature": 0,
+    "max_output_tokens": 4096,
+    "reasoning": {
+      "enabled": false
+    },
+    "max_retries": 5,
+    "base_interval_seconds": 3,
+    "min_interval_seconds": 3,
+    "ambiguity_prompt": "current"
+  },
+  "model_input_fields": [
+    "question",
+    "evidence",
+    "schema_stats"
+  ],
+  "independent_multilabel_targets_available": false,
+  "label_policy": {
+    "utility": "correct(configuration) - correct(control), observed single-run outcomes, not causal effects",
+    "missing": "null + observed=false",
+    "generation_error": "observed failure, never successful",
+    "ambiguity": "ambrosia-strict-v1; class detection only, not SQL execution quality",
+    "quality_preference": "observed only when primary candidates differ in correctness",
+    "cost_aware_tie": "prefer economical by fixed recorded run-level policy, not measured question cost",
+    "question_cost": "unavailable; null + question_cost_observed=false"
+  },
+  "grouping": {
+    "family_policy": "nfkc-casefold-quoted-literals-numbers-v1",
+    "seed": 42,
+    "ratios": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "near_duplicate_threshold": {
+      "token_jaccard": 0.8,
+      "sequence_ratio": 0.9,
+      "min_unique_tokens": 8
+    }
+  },
+  "prompt_overlap_policy": {
+    "templates": [
+      "SYSTEM_PROMPT_TEMPLATE",
+      "SQL_PROMPT_TEMPLATE",
+      "SQL_PROMPT_BASIC",
+      "AMBIGUITY_PROMPT_SIMPLE",
+      "TAXONOMY_DETECTION_PROMPT"
+    ],
+    "method": "normalized substring in selected static templates; possible exposure only"
+  },
+  "evaluation_scope": {
+    "retrospective_test": true,
+    "independent_final_test_available": false,
+    "configuration_selection_already_used_all_questions": true,
+    "family_stress_is_separate_diagnostic": true
+  },
+  "small_sets": {
+    "bird": {
+      "rows": 22,
+      "overlap_with_current_large": 22,
+      "appended": false
+    },
+    "ambrosia": {
+      "rows": 24,
+      "overlap_with_current_large": 24,
+      "appended": false
+    }
+  },
+  "source_files_sha256": {
+    "data/ambrosia_large_available_227.json": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231",
+    "data/ambrosia_small.json": "3cd158ccac6ae0caeec767b8f96fe00880831d39d4e7135ea31aceb8eddb5e3a",
+    "data/bird_large.json": "135fff6e6bc0fc6bf9f1377a7ee25016d04b313de15dba2192fd6e1ed5c51261",
+    "data/bird_small.json": "72c0802f9bd8404a38fa2c43f56b081dc15d635cb8198feb04b6ab0d06d4b4bd",
+    "research_results/deepseek_combinations_large_20261026/experiment.json": "5a5e161603d22fc8b4f5969796ff35be254894b88859edfb6a032770c1066de5",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227/metadata.json": "b55f313c20c53e6a7119e47e1543a7bae8f1026824100ca5771854e2a3d0e0a7",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227/query_results.json": "62220838705409af9b0159ed0e42656f005c299daae93722f802047af0f2a32a",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227/raw_responses.jsonl": "cad5c92a90ab3a23a851f85dfb314f50169bcbeaf8a3e68464e18e4a5e45147d",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227/report.json": "0cbae1e8f5407829300b77779b09f8a58bb1e8242b6bb79943e995228999d8fa",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird/metadata.json": "4d8533114f6ef48e34474b19c43ff4928baf6add1085c75930501a104e4d157f",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird/query_results.json": "405ba7e2754353e0c0217e1040484efb8bcd9593fa602e6429efacebf55c0e55",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird/raw_responses.jsonl": "f1d874bf0e58df0db115dfdef7c96d7367c477b14332a4c30001d54c65563d4b",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird/report.json": "ae432d7e4bb330dc9fce219a0ca575d15ec8770c67d5ac760b9d9fde10719016",
+    "research_results/deepseek_combinations_large_20261026/suite_status.json": "78db43745cb625d3807cb90d1dda221fe01b05a03d4e6ead648796ce7987232a",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/metadata.json": "fc65c418999b143892bc3d5bc50283ceadddaac2440484eacafe359f72b3ad17",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/query_results.json": "41271875644d3ff12e0dff5a8f510d03abe58f693d03fef681f53e02abecb6cd",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/raw_responses.jsonl": "9f0242fa3a577dace4d9f7d6724f50f2dc0f1f16c4497114c98a16a2a2375bdb",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227/report.json": "4d8f10fe28e857a23e342cf53cfc9cb18728f0d31b4aaee4a91b479cfe93a3f2",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/metadata.json": "e389af6f9054a4c3a777e3552d886bab43d79dbb8987b44d2bdb4a7091aeec7f",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/query_results.json": "405e5ed056ffef41c7a7eae4d82eb9042aa80acdb83b794213a28d2b88f59166",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/raw_responses.jsonl": "e8efea89864d94af134018af0699c4f9695fc4884d03d0d347971d36144687de",
+    "research_results/deepseek_direct_ablation_large_20261024/baseline/bird/report.json": "b0bf6aa431b7db419e75cda3f0d4542f91d834bc9b6e8b0d26f187c2ad01fbdf",
+    "research_results/deepseek_direct_ablation_large_20261024/experiment.json": "70d01a6774398e1535d80804caf0159241df170f0725c6584f8e2b369c09cf81",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/metadata.json": "f4704ed4ae3d5e559163411a420a1c9ccb5c1df192d9aeaefca81274124267a9",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/query_results.json": "27212bfbf512b5d1f45034b07b25c014aec9a145fdde1d74a82c175a3543c1f7",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/raw_responses.jsonl": "8002945b792c684a66ab87dad3ce7b6f6629096d532bb2e86330d0ac8495efc1",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/ambrosia_227/report.json": "7f0f88f639a9a98aa231dee43cc83083ab426e1f18cd9fdd06f994532ed44d5b",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/metadata.json": "195cb7fd2362ef981d2b6415191c41c0e9bf6308e4fc5866ad9d50b9624ac4cd",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/query_results.json": "fe1f6db87bebdfc452aec2dc51d679ab15ad35a4a023c38072dc129f286baade",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/raw_responses.jsonl": "ca0f9f3df293a23b260db4c3cd190aceb4dce48c9db5599bca16d5cbd1b05e1a",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_14/bird/report.json": "9117f9d26cd5da1ae0413fed75e350aabb82d9bf26e4ff73baec7014c305abde",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/metadata.json": "826405e8feabc7c1ffcffbf4b1cd686aac3763ac38373791e8ad4165389f6f59",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/query_results.json": "48406cf583541d1a73d154c90921a58660c852dee346743a7a54f7f28b5f04cb",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/raw_responses.jsonl": "e97d1ecc4802833bbd9760a6b0877d194c467a5a9a3d13cb1eb1aa0d9f98efbc",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/ambrosia_227/report.json": "a30b2956df5899ec56ac1206eeedbea9e57469810f817cfd82dd1893d41e4f44",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/metadata.json": "2fc21c7c434515194e6ac429ec207fbb59de5eec1730117cb9766d08d0a46607",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/query_results.json": "f63f3d6678bfb25e4e8f8237316cd356f67622bf298221372838b40825d4ea41",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/raw_responses.jsonl": "9499cd46b1e7c17c39e300e41b68b7c7f9b21d07c25e09c9aa7ba2706c2e7128",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_2/bird/report.json": "e29a3da5968e35200430292f0f0f03aeabe51c9be9e82e198081481d1a6c34ed",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/metadata.json": "ffff2fac70473d31e242da3e1716ee21cd7a306055f2eeffd05e15c12e17e1d7",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/query_results.json": "f2ba8484438e0e84e25b96f6744c5e823c2f8f47e0f6ff1036f256cc21c190d6",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/raw_responses.jsonl": "e037a0956e04c9f58d9272ca22447ec170d5cd8f2f1bd4711ecb46206882f5f0",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/ambrosia_227/report.json": "ba87e3b99cf3eb20c05ac9f97c4d6ed11e6f23aaf93c84320da3a2bd0db66a28",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/metadata.json": "07a1268c48c1f9af893a9498444d157501e590c23fb8527e60c6370d9268ab22",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/query_results.json": "d46c72ac943816a0fe44445c158b61877159483a4a8b9485b5b05c507fd03d0b",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/raw_responses.jsonl": "9946d058ed6be89bbb8f22fa6cb896fa4a2f04cb29a64343ab44df516e0d6eb3",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_32/bird/report.json": "437d6409e654c0b31cf4471494975767cd4955446b9828bb29c4166ef519271c",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/metadata.json": "d2636a065b5e2f0f961dac6604705fe765badbb9b826a02d4abfb631f9712407",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/query_results.json": "d54429d3f642ed6203d4a90012505744d5b028c816b7f050188f407cb674c2ab",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/raw_responses.jsonl": "495ded0b1307c1a003da99fe46ee5b052f559d2f96a53a447b13269c066628a9",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227/report.json": "5651c563fae07e89a26cae99c9480e4b35a6fc6f9c48db4aa5bd0db657ba7d3e",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/metadata.json": "3c0cbdc58c950fb9b993588a6367db27adfbb1ba86c5a26fb8ddac55fd3e7317",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/query_results.json": "e0b3b1f0d534239c40d8464a08bf6f781d6c5318e72fda6c04442ac7aac48bd9",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/raw_responses.jsonl": "86cf615e0a0f741ac5e426b858e754b80d7131f029611adb9b968dbbbcd44b46",
+    "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird/report.json": "a8698e856246f5dc5894122cfce1fa9e21141814b8bf8e9070567122232673a9",
+    "research_results/deepseek_direct_ablation_large_20261024/suite_status.json": "ab818404facd06dd31c7aa7c8a281e6ed5c8f76da22c329f3b5e5bfc63694ea6",
+    "research_results/deepseek_relationships_large_20261026/experiment.json": "c05fe1037d6ab795e0763a01671c1a1cdf44650122fd5e96368c628bd0fe241e",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227/metadata.json": "1cace2f172989e4645ed9c0a3297b084812be99b74a7bd7817d38fbfe598e4b9",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227/query_results.json": "79d5e7b25e4f0e77c658f72f97a56273e8019cd45424af70eba600e2f46dda77",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227/raw_responses.jsonl": "ccdf0a2e474909bc4e2720d6cda706a76f7718fd5a84a591bf2948fba3079683",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227/report.json": "0bd1908cd5a94b53d46cbc47b3963f1bd9e26251bf2cfe1243f6fa3af76bffac",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird/metadata.json": "8c7ca3005b36467e7d446323da82e02ab56e957d46760b1a6eef64071da20809",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird/query_results.json": "4e96a692859d33e00c3538dc002b603dfee858382ba56482bbf83b02877577b0",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird/raw_responses.jsonl": "243a827cc68c7a8d6c65e6441e834f9a7764d5f6125d5fad2427b1c7bb4a1fcf",
+    "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird/report.json": "63f624c2e33208fb4f03ab5272aa3e6aae1607dc45a53c3c02d09437e31c4b6a",
+    "research_results/deepseek_relationships_large_20261026/suite_status.json": "c6826e060697e9cf75ade909c68c6ad0249ae4f4de3885708ff618652df4d30d",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a"
+  },
+  "builder_files_sha256": {
+    "scripts/build_configuration_dataset.py": "2e22c9d88344f8b2b22aecc5b6dadbc40819a6a38ca1d9ff0adc477b6e4b7d57",
+    "scripts/configuration_splits.py": "6afabea901055884628d280ff279772fed0310394a3758529ca17ac769cd4497",
+    "scripts/research_metrics.py": "09f18d46f9d12663c958799608f807120356403e7257d354f3583768c0dd5a7c"
+  },
+  "output_files_sha256": {
+    "records.jsonl": "4c401997799b87d64fa90f265d99b1a8e3f502e304345fea480832ef63ed324d",
+    "inputs.jsonl": "333ea4f172e88b84020ab0225ea05da50016428730546c607ca38755bac9b286",
+    "splits.json": "cdc89c01b0031c0fd955bd2462cfb2172137557f9ee4f43be3292cd87d873198",
+    "cv_folds.json": "ae67a91df4900cf4ba69854d879b1efdf8446460ae94c1f08729ca729ff28c86",
+    "ambrosia_family_holdout.json": "2b8f37fd66664da85c5e6dbd9e91e7eee9f4e0feb8172b1e0b84418637133024",
+    "summary.json": "7278399c3a2f60c58c371f6a91856ec9c0694eb47c6e7871adf78ab1d0055c63",
+    "summary.md": "4f245da8f3ece8b034fccecfb11699d7be351eac2fcb93c352bf7e0c812eb63c"
+  }
+}

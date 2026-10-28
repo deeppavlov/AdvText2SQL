@@ -1,0 +1,396 @@
+{
+  "records": 468,
+  "databases": 60,
+  "groups": 60,
+  "near_duplicate_edges": 0,
+  "leakage_audit": {
+    "id_overlap": 0,
+    "database_overlap": 0,
+    "family_overlap": 0
+  },
+  "independent_final_test": false,
+  "benchmarks": {
+    "bird": {
+      "records": 241,
+      "databases": 8,
+      "outcome_classes": {
+        "both_correct": 101,
+        "economical_only_correct": 13,
+        "hybrid_only_correct": 16,
+        "neither_correct": 111
+      },
+      "quality_preference_observed": 29,
+      "oracle_correct": 130,
+      "oracle_accuracy": 53.941908713692946,
+      "question_example_overlap": 0,
+      "family_example_overlap": 0,
+      "configurations": {
+        "baseline": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/baseline/bird",
+          "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+          "questions": 241,
+          "correct": 104,
+          "accuracy": 43.15352697095436,
+          "generation_errors": 0,
+          "execution_errors": 8,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 455009,
+            "completion_tokens": 33655,
+            "recorded_calls": 483,
+            "total_tokens": 488664,
+            "mean_tokens_per_question": 2027.6514522821576,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "economical": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/feat_35/bird",
+          "protocol_sha256": "e15c9f480fff60da15778d0e2ced1802f03e7a34657ba2fae15b90b856f7fb15",
+          "questions": 241,
+          "correct": 114,
+          "accuracy": 47.302904564315355,
+          "generation_errors": 0,
+          "execution_errors": 9,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 442153,
+            "completion_tokens": 30527,
+            "recorded_calls": 483,
+            "total_tokens": 472680,
+            "mean_tokens_per_question": 1961.3278008298755,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "hybrid": {
+          "path": "research_results/deepseek_combinations_large_20261026/sql_ambiguity/bird",
+          "protocol_sha256": "8d1cd4c07204ad47817480fe7deb2be1eed50498c20e95e82ac24152880aa32d",
+          "questions": 241,
+          "correct": 117,
+          "accuracy": 48.54771784232365,
+          "generation_errors": 0,
+          "execution_errors": 6,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 919995,
+            "completion_tokens": 59409,
+            "recorded_calls": 480,
+            "total_tokens": 979404,
+            "mean_tokens_per_question": 4063.917012448133,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "relationships": {
+          "path": "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/bird",
+          "protocol_sha256": "2f245569496909b4b2a644e5e8dc6ea31d2c99e19465f932cf3e35521a62adbb",
+          "questions": 241,
+          "correct": 117,
+          "accuracy": 48.54771784232365,
+          "generation_errors": 0,
+          "execution_errors": 6,
+          "ambiguity_metrics": null,
+          "recorded_run_cost": {
+            "prompt_tokens": 943814,
+            "completion_tokens": 59716,
+            "recorded_calls": 480,
+            "total_tokens": 1003530,
+            "mean_tokens_per_question": 4164.0248962655605,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    },
+    "ambrosia": {
+      "records": 227,
+      "databases": 52,
+      "outcome_classes": {
+        "both_correct": 149,
+        "economical_only_correct": 13,
+        "hybrid_only_correct": 33,
+        "neither_correct": 32
+      },
+      "quality_preference_observed": 46,
+      "oracle_correct": 195,
+      "oracle_accuracy": 85.90308370044053,
+      "question_example_overlap": 13,
+      "family_example_overlap": 18,
+      "configurations": {
+        "baseline": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/baseline/ambrosia_227",
+          "protocol_sha256": "92e42b1df808e52352a276d2135966e36ee91eba0f647464afd31c4bc5c740a6",
+          "questions": 227,
+          "correct": 161,
+          "accuracy": 70.9251101321586,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 65,
+            "tn": 159,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.6666666666666666,
+            "recall": 0.029850746268656716,
+            "f1": 0.05714285714285714,
+            "balanced_accuracy": 0.5118003731343284
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 266206,
+            "completion_tokens": 26259,
+            "recorded_calls": 452,
+            "total_tokens": 292465,
+            "mean_tokens_per_question": 1288.3920704845816,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "economical": {
+          "path": "research_results/deepseek_direct_ablation_large_20261024/feat_35/ambrosia_227",
+          "protocol_sha256": "e15c9f480fff60da15778d0e2ced1802f03e7a34657ba2fae15b90b856f7fb15",
+          "questions": 227,
+          "correct": 162,
+          "accuracy": 71.36563876651982,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 63,
+            "tn": 158,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.6666666666666666,
+            "recall": 0.05970149253731343,
+            "f1": 0.1095890410958904,
+            "balanced_accuracy": 0.5236007462686567
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 263192,
+            "completion_tokens": 25961,
+            "recorded_calls": 449,
+            "total_tokens": 289153,
+            "mean_tokens_per_question": 1273.8017621145375,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "hybrid": {
+          "path": "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227",
+          "protocol_sha256": "8d1cd4c07204ad47817480fe7deb2be1eed50498c20e95e82ac24152880aa32d",
+          "questions": 227,
+          "correct": 182,
+          "accuracy": 80.1762114537445,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 31,
+            "fp": 9,
+            "fn": 36,
+            "tn": 151,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.775,
+            "recall": 0.4626865671641791,
+            "f1": 0.5794392523364486,
+            "balanced_accuracy": 0.7032182835820895
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 516132,
+            "completion_tokens": 36867,
+            "recorded_calls": 328,
+            "total_tokens": 552999,
+            "mean_tokens_per_question": 2436.1189427312775,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        },
+        "relationships": {
+          "path": "research_results/deepseek_relationships_large_20261026/hybrid_with_relationships/ambrosia_227",
+          "protocol_sha256": "2f245569496909b4b2a644e5e8dc6ea31d2c99e19465f932cf3e35521a62adbb",
+          "questions": 227,
+          "correct": 182,
+          "accuracy": 80.1762114537445,
+          "generation_errors": 0,
+          "execution_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 32,
+            "fp": 10,
+            "fn": 35,
+            "tn": 150,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7619047619047619,
+            "recall": 0.47761194029850745,
+            "f1": 0.5871559633027523,
+            "balanced_accuracy": 0.7075559701492538
+          },
+          "recorded_run_cost": {
+            "prompt_tokens": 525622,
+            "completion_tokens": 36263,
+            "recorded_calls": 325,
+            "total_tokens": 561885,
+            "mean_tokens_per_question": 2475.2643171806167,
+            "includes_probe_and_build": true,
+            "exact_question_cost_available": false
+          }
+        }
+      }
+    }
+  },
+  "splits": {
+    "train": {
+      "bird": {
+        "records": 131,
+        "databases": [
+          "codebase_community",
+          "student_club",
+          "superhero",
+          "toxicology"
+        ],
+        "outcome_classes": {
+          "both_correct": 65,
+          "economical_only_correct": 6,
+          "hybrid_only_correct": 9,
+          "neither_correct": 51
+        },
+        "quality_preference_observed": 15,
+        "gold_ambiguous": 0,
+        "prompt_family_overlap": 0
+      },
+      "ambrosia": {
+        "records": 136,
+        "databases": [
+          "attachment_1tab_ref_dining",
+          "attachment_1tab_val_accommodation1",
+          "attachment_1tab_val_accommodation2",
+          "attachment_1tab_val_beverage_professional",
+          "attachment_1tab_val_cleaning_professional",
+          "attachment_1tab_val_restaurant",
+          "attachment_1tab_val_seating_area",
+          "attachment_2tab_ref_beverage_professional",
+          "attachment_2tab_val_overnight_stay",
+          "scope_designers_tools",
+          "scope_employers_benefits",
+          "scope_geologists_specimens",
+          "scope_hospitals_medicalroles",
+          "scope_hr_professionals_functions",
+          "scope_it_support_specialists_systems",
+          "scope_job_postings_requirements",
+          "scope_lab_technicians_instruments",
+          "vague_2cols_compensation",
+          "vague_2cols_experience",
+          "vague_2cols_experience_level",
+          "vague_2cols_location",
+          "vague_2cols_offer",
+          "vague_2cols_rating1"
+        ],
+        "outcome_classes": {
+          "both_correct": 87,
+          "economical_only_correct": 7,
+          "hybrid_only_correct": 20,
+          "neither_correct": 22
+        },
+        "quality_preference_observed": 27,
+        "gold_ambiguous": 42,
+        "prompt_family_overlap": 6
+      }
+    },
+    "dev": {
+      "bird": {
+        "records": 55,
+        "databases": [
+          "california_schools",
+          "card_games"
+        ],
+        "outcome_classes": {
+          "both_correct": 18,
+          "economical_only_correct": 6,
+          "hybrid_only_correct": 3,
+          "neither_correct": 28
+        },
+        "quality_preference_observed": 9,
+        "gold_ambiguous": 0,
+        "prompt_family_overlap": 0
+      },
+      "ambrosia": {
+        "records": 46,
+        "databases": [
+          "attachment_1tab_ref_leisure_features",
+          "attachment_1tab_ref_overnight_stay",
+          "attachment_1tab_val_event_space",
+          "attachment_1tab_val_food_service",
+          "attachment_1tab_val_indoor-outdoor_space",
+          "attachment_1tab_val_relaxation_getaway",
+          "attachment_1tab_val_vacation_option",
+          "attachment_2tab_ref_cleaning_professional",
+          "attachment_2tab_val_hospitality_staff",
+          "attachment_2tab_val_restaurant",
+          "scope_banks_financial_roles",
+          "scope_construction_companies_building_roles",
+          "scope_customer_service_representatives_channels",
+          "vague_2cols_qualifications",
+          "vague_2tabs_chef"
+        ],
+        "outcome_classes": {
+          "both_correct": 29,
+          "economical_only_correct": 5,
+          "hybrid_only_correct": 7,
+          "neither_correct": 5
+        },
+        "quality_preference_observed": 12,
+        "gold_ambiguous": 13,
+        "prompt_family_overlap": 6
+      }
+    },
+    "test": {
+      "bird": {
+        "records": 55,
+        "databases": [
+          "debit_card_specializing",
+          "financial"
+        ],
+        "outcome_classes": {
+          "both_correct": 18,
+          "economical_only_correct": 1,
+          "hybrid_only_correct": 4,
+          "neither_correct": 32
+        },
+        "quality_preference_observed": 5,
+        "gold_ambiguous": 0,
+        "prompt_family_overlap": 0
+      },
+      "ambrosia": {
+        "records": 45,
+        "databases": [
+          "attachment_1tab_ref_cleaning_professional",
+          "attachment_1tab_ref_hospitality_staff",
+          "attachment_1tab_val_activity",
+          "attachment_1tab_val_dining",
+          "attachment_1tab_val_hospitality_staff",
+          "attachment_1tab_val_service_format",
+          "attachment_2tab_ref_accommodation",
+          "attachment_2tab_val_relaxation_getaway",
+          "scope_content_creators_platforms",
+          "scope_data_analysts_techniques",
+          "scope_graphic_designers_programs",
+          "scope_internships_responsibilities",
+          "vague_2cols_extras",
+          "vague_2cols_opening_date"
+        ],
+        "outcome_classes": {
+          "both_correct": 33,
+          "economical_only_correct": 1,
+          "hybrid_only_correct": 6,
+          "neither_correct": 5
+        },
+        "quality_preference_observed": 7,
+        "gold_ambiguous": 12,
+        "prompt_family_overlap": 6
+      }
+    }
+  }
+}

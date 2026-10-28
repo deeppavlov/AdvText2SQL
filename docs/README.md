@@ -7,9 +7,10 @@
 | Этап | Файл | Состояние |
 | --- | --- | --- |
 | Phase 0: GPT baseline, гибриды, сравнение с Mistral | [01_gpt_research.md](01_gpt_research.md) | Результаты зафиксированы |
-| Phase 1–2: выбор фичей, подготовка данных и классификатор | [02_feature_selector.md](02_feature_selector.md) | План, реализация не начата |
+| Phase 1–2: выбор фичей и классификатор | [02_feature_selector.md](02_feature_selector.md) | Датасет подготовлен; selector и классификатор ещё не реализованы |
 | DeepSeek Flash: baseline и отдельные фичи | [03_deepseek_ablation.md](03_deepseek_ablation.md) | Все 68 запусков завершены |
 | DeepSeek Flash: комбинации и PK/FK-подсказки | [04_deepseek_combinations.md](04_deepseek_combinations.md) | Все 8 запусков завершены; опора 14+32+35, экономичный контроль 35 |
+| Phase 0.2: полезность конфигураций и групповой split | [05_configuration_dataset.md](05_configuration_dataset.md) | 468 записей, 60 БД, train/dev/test и CV готовы |
 | Навигация по проекту | [project_structure.md](project_structure.md) | Актуальная структура |
 | Проверка перед коммитом | [security_review.md](security_review.md) | Текущие файлы без найденных секретов; в истории есть ключ и пароли |
 
