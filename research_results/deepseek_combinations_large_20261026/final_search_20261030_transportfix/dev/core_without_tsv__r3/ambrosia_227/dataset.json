@@ -1,0 +1,370 @@
+[
+  {
+    "question_id": 1,
+    "question": "Show all banquet halls and conference rooms where either can hold 200 people.",
+    "db_id": "attachment_1tab_val_event_space",
+    "SQL": "SELECT EventSpaces.Name \r\nFROM EventSpaces\r\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200",
+    "ambig_queries": "['SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200', 'SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200']",
+    "ambig_question": "List all banquet halls and conference rooms with a 200 person capacity."
+  },
+  {
+    "question_id": 2,
+    "question": "List all banquet halls and conference rooms with a 200 person capacity.",
+    "db_id": "attachment_1tab_val_event_space",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200', 'SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200']",
+    "ambig_question": "List all banquet halls and conference rooms with a 200 person capacity."
+  },
+  {
+    "question_id": 3,
+    "question": "What restaurants serve Italian cuisine and what cafes serve the same cuisine?",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "SELECT Restaurants.Name \r\nFROM Restaurants\r\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 4,
+    "question": "List all restaurants and also list cafes that serve Italian cuisine.",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "SELECT Restaurants.Name \r\nFROM Restaurants\r\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 5,
+    "question": "Give me restaurants and cafes that serve Italian cuisine.",
+    "db_id": "attachment_1tab_val_food_service",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE (Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\") AND Restaurants.Cuisine = \"Italian\"', 'SELECT Restaurants.Name \\r\\nFROM Restaurants\\r\\nWHERE Restaurants.Food_Service = \"Restaurant\" OR Restaurants.Food_Service = \"Café\" AND Restaurants.Cuisine = \"Italian\"']",
+    "ambig_question": "Give me restaurants and cafes that serve Italian cuisine."
+  },
+  {
+    "question_id": 9,
+    "question": "List all lobbies or terraces that can accomodate 500 people.",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE (Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\") AND Room.Size = 500', 'SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\" AND Room.Size = 500']",
+    "ambig_question": "List all lobbies or terraces that can accomodate 500 people."
+  },
+  {
+    "question_id": 10,
+    "question": "Show all lobbies and also show all terraces that can accommodate 500 people.",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "SQL": "SELECT Room.Name \r\nFROM Room\r\nWHERE Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\" AND Room.Size = 500",
+    "ambig_queries": "['SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE (Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\") AND Room.Size = 500', 'SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\" AND Room.Size = 500']",
+    "ambig_question": "List all lobbies or terraces that can accomodate 500 people."
+  },
+  {
+    "question_id": 11,
+    "question": "List all lobbies that can accommodate 500 people and terraces of the same size.",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "SQL": "SELECT Room.Name \r\nFROM Room\r\nWHERE (Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\") AND Room.Size = 500",
+    "ambig_queries": "['SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE (Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\") AND Room.Size = 500', 'SELECT Room.Name \\r\\nFROM Room\\r\\nWHERE Room.Indoor_Outdoor_Space = \"Lobby\" OR Room.Indoor_Outdoor_Space = \"Terrace\" AND Room.Size = 500']",
+    "ambig_question": "List all lobbies or terraces that can accomodate 500 people."
+  },
+  {
+    "question_id": 12,
+    "question": "Provide a list of all day spas and also provide a list of wellness retreats that cost 150.0.",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "SQL": "SELECT Relaxation_spot.Name \r\nFROM Relaxation_spot\r\nWHERE Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\" AND Relaxation_spot.price = 150.0",
+    "ambig_queries": "['SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE (Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\") AND Relaxation_spot.price = 150.0', 'SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\" AND Relaxation_spot.price = 150.0']",
+    "ambig_question": "Display day spas and wellness retreats that cost 150.0."
+  },
+  {
+    "question_id": 13,
+    "question": "Which day spas cost 150.0 and which wellness retreats cost the same amount?",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "SQL": "SELECT Relaxation_spot.Name \r\nFROM Relaxation_spot\r\nWHERE (Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\") AND Relaxation_spot.price = 150.0",
+    "ambig_queries": "['SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE (Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\") AND Relaxation_spot.price = 150.0', 'SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\" AND Relaxation_spot.price = 150.0']",
+    "ambig_question": "Display day spas and wellness retreats that cost 150.0."
+  },
+  {
+    "question_id": 14,
+    "question": "Display day spas and wellness retreats that cost 150.0.",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE (Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\") AND Relaxation_spot.price = 150.0', 'SELECT Relaxation_spot.Name \\r\\nFROM Relaxation_spot\\r\\nWHERE Relaxation_spot.type = \"Day Spa\" OR Relaxation_spot.type = \"Wellness Retreat\" AND Relaxation_spot.price = 150.0']",
+    "ambig_question": "Display day spas and wellness retreats that cost 150.0."
+  },
+  {
+    "question_id": 15,
+    "question": "List all of the banquet halls, in addition show the 200 capacity conference rooms.",
+    "db_id": "attachment_1tab_val_event_space",
+    "SQL": "SELECT EventSpaces.Name \r\nFROM EventSpaces\r\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200",
+    "ambig_queries": "['SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE (EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\") AND EventSpaces.Capacity = 200', 'SELECT EventSpaces.Name \\r\\nFROM EventSpaces\\r\\nWHERE EventSpaces.Event_Space = \"Banquet Hall\" OR EventSpaces.Event_Space = \"Conference Room\" AND EventSpaces.Capacity = 200']",
+    "ambig_question": "List all banquet halls and conference rooms with a 200 person capacity."
+  },
+  {
+    "question_id": 24,
+    "question": "What cruise ship customers went to a dance class and what resort customers also went to one?",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "SQL": "SELECT Customers.Name \r\nFROM Customers\r\nWHERE (Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\") AND Customers.Activities = \"Dance Class\"",
+    "ambig_queries": "['SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE (Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\") AND Customers.Activities = \"Dance Class\"', 'SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\" AND Customers.Activities = \"Dance Class\"']",
+    "ambig_question": "Show cruise ship customers and resort customers that went to a dance class."
+  },
+  {
+    "question_id": 25,
+    "question": "List all cruise ship customers and also list resort customers that went to a dance class.",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "SQL": "SELECT Customers.Name \r\nFROM Customers\r\nWHERE Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\" AND Customers.Activities = \"Dance Class\"",
+    "ambig_queries": "['SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE (Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\") AND Customers.Activities = \"Dance Class\"', 'SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\" AND Customers.Activities = \"Dance Class\"']",
+    "ambig_question": "Show cruise ship customers and resort customers that went to a dance class."
+  },
+  {
+    "question_id": 26,
+    "question": "Show cruise ship customers and resort customers that went to a dance class.",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE (Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\") AND Customers.Activities = \"Dance Class\"', 'SELECT Customers.Name \\r\\nFROM Customers\\r\\nWHERE Customers.Vacation_Option = \"Cruise Ship\" OR Customers.Vacation_Option = \"All-Inclusive Resort\" AND Customers.Activities = \"Dance Class\"']",
+    "ambig_question": "Show cruise ship customers and resort customers that went to a dance class."
+  },
+  {
+    "question_id": 41,
+    "question": "What hotels with swimming pools are in New York and what hotels with hot tubs are in the same location?",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "SQL": "SELECT Hotel.name \r\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\r\nWHERE (LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\") AND City.name = \"New York\"",
+    "ambig_queries": "['SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE (LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\") AND City.name = \"New York\"', 'SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\" AND City.name = \"New York\"']",
+    "ambig_question": "Show hotels with swimming pools or hot tubs in New York."
+  },
+  {
+    "question_id": 42,
+    "question": "List all hotels with swimming pools and also list hotels with hot tubs in New York.",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "SQL": "SELECT Hotel.name \r\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\r\nWHERE LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\" AND City.name = \"New York\"",
+    "ambig_queries": "['SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE (LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\") AND City.name = \"New York\"', 'SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\" AND City.name = \"New York\"']",
+    "ambig_question": "Show hotels with swimming pools or hot tubs in New York."
+  },
+  {
+    "question_id": 43,
+    "question": "Show hotels with swimming pools or hot tubs in New York.",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE (LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\") AND City.name = \"New York\"', 'SELECT Hotel.name \\r\\nFROM LeisureFeature JOIN FeatureInRoom ON LeisureFeature.id = FeatureInRoom.leisurefeature_id JOIN RoomType ON FeatureInRoom.roomtype_id = RoomType.id JOIN Hotel ON RoomType.hotel_id = Hotel.id JOIN City ON Hotel.city_id = City.id\\r\\nWHERE LeisureFeature.feature = \"Swimming Pool\" OR LeisureFeature.feature = \"Hot Tub\" AND City.name = \"New York\"']",
+    "ambig_question": "Show hotels with swimming pools or hot tubs in New York."
+  },
+  {
+    "question_id": 44,
+    "question": "Provide a list of people who have booked guest rooms, as well as a list of people who have booked air-conditioned suites.",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "SQL": "SELECT Guests.FullName \r\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\r\nWHERE Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite' AND Services.Amenity = 'Air Conditioning'",
+    "ambig_queries": "[\"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE (Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite') AND Services.Amenity = 'Air Conditioning'\", \"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite' AND Services.Amenity = 'Air Conditioning'\"]",
+    "ambig_question": "Who booked a guest room or suite with air conditioning?"
+  },
+  {
+    "question_id": 45,
+    "question": "Who booked air-conditioned guest rooms and who booked air-conditioned suites?",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "SQL": "SELECT Guests.FullName \r\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\r\nWHERE (Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite') AND Services.Amenity = 'Air Conditioning'",
+    "ambig_queries": "[\"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE (Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite') AND Services.Amenity = 'Air Conditioning'\", \"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite' AND Services.Amenity = 'Air Conditioning'\"]",
+    "ambig_question": "Who booked a guest room or suite with air conditioning?"
+  },
+  {
+    "question_id": 46,
+    "question": "Who booked a guest room or suite with air conditioning?",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "SQL": "ambiguous",
+    "ambig_queries": "[\"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE (Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite') AND Services.Amenity = 'Air Conditioning'\", \"SELECT Guests.FullName \\r\\nFROM Rooms JOIN Services ON Rooms.ServiceID = Services.ServiceID JOIN Bookings ON Bookings.ROOMID = Rooms.RoomID JOIN Guests ON Guests.ID = Bookings.GuestID\\r\\nWHERE Rooms.TypeOfRoom = 'Guestroom' OR Rooms.TypeOfRoom = 'Suite' AND Services.Amenity = 'Air Conditioning'\"]",
+    "ambig_question": "Who booked a guest room or suite with air conditioning?"
+  },
+  {
+    "question_id": 68,
+    "question": "Show both housekeepers and laundry attendants who work at the hotel located at 789 River Road.",
+    "db_id": "attachment_2tab_ref_cleaning_professional",
+    "SQL": "SELECT HouseKeepers.FullName\r\nFROM Hotels JOIN HouseKeepers ON Hotels.id = HouseKeepers.hotelId\r\nWHERE Hotels.address = \"789 River Rd\"\r\nUNION\r\nSELECT LaundryAttendants.FullName\r\nFROM Hotels JOIN LaundryAttendants ON Hotels.id = LaundryAttendants.hotelId\r\nWHERE Hotels.address = \"789 River Rd\"",
+    "ambig_queries": "['SELECT HouseKeepers.FullName\\r\\nFROM Hotels JOIN HouseKeepers ON Hotels.id = HouseKeepers.hotelId\\r\\nWHERE Hotels.address = \"789 River Rd\"\\r\\nUNION\\r\\nSELECT LaundryAttendants.FullName\\r\\nFROM Hotels JOIN LaundryAttendants ON Hotels.id = LaundryAttendants.hotelId\\r\\nWHERE Hotels.address = \"789 River Rd\"', 'SELECT HouseKeepers.FullName\\r\\nFROM Hotels JOIN HouseKeepers ON Hotels.id = HouseKeepers.hotelId\\r\\nUNION\\r\\nSELECT LaundryAttendants.FullName\\r\\nFROM Hotels JOIN LaundryAttendants ON Hotels.id = LaundryAttendants.hotelId\\r\\nWHERE Hotels.address = \"789 River Rd\"']",
+    "ambig_question": "Show housekeepers and laundry attendants who work at the hotel located at 789 River Road."
+  },
+  {
+    "question_id": 69,
+    "question": "Display chefs and servers fluent in Spanish.",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Chefs.name\\r\\nFROM Chefs\\r\\nWHERE Chefs.language = \"Spanish\"\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"', 'SELECT Chefs.name\\r\\nFROM Chefs\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"']",
+    "ambig_question": "Display chefs and servers fluent in Spanish."
+  },
+  {
+    "question_id": 70,
+    "question": "Which chefs and servers are fluent in Spanish?",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "SQL": "SELECT Chefs.name\r\nFROM Chefs\r\nWHERE Chefs.language = \"Spanish\"\r\nUNION\r\nSELECT Servers.name\r\nFROM Servers\r\nWHERE Servers.language = \"Spanish\"",
+    "ambig_queries": "['SELECT Chefs.name\\r\\nFROM Chefs\\r\\nWHERE Chefs.language = \"Spanish\"\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"', 'SELECT Chefs.name\\r\\nFROM Chefs\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"']",
+    "ambig_question": "Display chefs and servers fluent in Spanish."
+  },
+  {
+    "question_id": 71,
+    "question": "List all chefs and also display servers fluent in Spanish.",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "SQL": "SELECT Chefs.name\r\nFROM Chefs\r\nUNION\r\nSELECT Servers.name\r\nFROM Servers\r\nWHERE Servers.language = \"Spanish\"",
+    "ambig_queries": "['SELECT Chefs.name\\r\\nFROM Chefs\\r\\nWHERE Chefs.language = \"Spanish\"\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"', 'SELECT Chefs.name\\r\\nFROM Chefs\\r\\nUNION\\r\\nSELECT Servers.name\\r\\nFROM Servers\\r\\nWHERE Servers.language = \"Spanish\"']",
+    "ambig_question": "Display chefs and servers fluent in Spanish."
+  },
+  {
+    "question_id": 78,
+    "question": "Show steak houses and sea food restaurants established in 1980.",
+    "db_id": "attachment_2tab_val_restaurant",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nWHERE SteakHouses.Year_of_establishment = 1980\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980', 'SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980']",
+    "ambig_question": "Show steak houses and sea food restaurants established in 1980."
+  },
+  {
+    "question_id": 79,
+    "question": "Which steak houses were established in 1980 and which sea food restaurants were established in the same year.",
+    "db_id": "attachment_2tab_val_restaurant",
+    "SQL": "SELECT SteakHouses.name\r\nFROM SteakHouses\r\nWHERE SteakHouses.Year_of_establishment = 1980\r\nUNION\r\nSELECT SeaFoodRestaurants.name\r\nFROM SeaFoodRestaurants\r\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980",
+    "ambig_queries": "['SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nWHERE SteakHouses.Year_of_establishment = 1980\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980', 'SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980']",
+    "ambig_question": "Show steak houses and sea food restaurants established in 1980."
+  },
+  {
+    "question_id": 80,
+    "question": "Provide a list of all steak houses and also provide a list of sea food restaurants established in 1980.",
+    "db_id": "attachment_2tab_val_restaurant",
+    "SQL": "SELECT SteakHouses.name\r\nFROM SteakHouses\r\nUNION\r\nSELECT SeaFoodRestaurants.name\r\nFROM SeaFoodRestaurants\r\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980",
+    "ambig_queries": "['SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nWHERE SteakHouses.Year_of_establishment = 1980\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980', 'SELECT SteakHouses.name\\r\\nFROM SteakHouses\\r\\nUNION\\r\\nSELECT SeaFoodRestaurants.name\\r\\nFROM SeaFoodRestaurants\\r\\nWHERE SeaFoodRestaurants.Year_of_establishment = 1980']",
+    "ambig_question": "Show steak houses and sea food restaurants established in 1980."
+  },
+  {
+    "question_id": 163,
+    "question": "provide the communication channel that is common to all customer service representatives",
+    "db_id": "scope_customer_service_representatives_channels",
+    "SQL": "SELECT Channels.channel_value  from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id   GROUP BY Customer_Service_Representatives_Channels.channel_id HAVING COUNT(DISTINCT Customer_Service_Representatives_Channels.representative_id) = (SELECT COUNT(*) FROM  Customer_Service_Representatives)",
+    "ambig_queries": "['SELECT Channels.channel_value  from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id   GROUP BY Customer_Service_Representatives_Channels.channel_id HAVING COUNT(DISTINCT Customer_Service_Representatives_Channels.representative_id) = (SELECT COUNT(*) FROM  Customer_Service_Representatives)', 'select customer_service_representatives.email , channels.channel_value from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id']",
+    "ambig_question": "which communication channels are assigned to each customer service representative?"
+  },
+  {
+    "question_id": 164,
+    "question": "which communication channels are assigned to each customer service representative?",
+    "db_id": "scope_customer_service_representatives_channels",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Channels.channel_value  from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id   GROUP BY Customer_Service_Representatives_Channels.channel_id HAVING COUNT(DISTINCT Customer_Service_Representatives_Channels.representative_id) = (SELECT COUNT(*) FROM  Customer_Service_Representatives)', 'select customer_service_representatives.email , channels.channel_value from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id']",
+    "ambig_question": "which communication channels are assigned to each customer service representative?"
+  },
+  {
+    "question_id": 168,
+    "question": "Show me the construction companies and the corresponding building roles.",
+    "db_id": "scope_construction_companies_building_roles",
+    "SQL": "select construction_companies.company_name , building_roles.role_value from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id",
+    "ambig_queries": "['SELECT Building_Roles.role_value  from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id   GROUP BY Construction_Companies_Building_Roles.building_role_id HAVING COUNT(DISTINCT Construction_Companies_Building_Roles.construction_company_id) = (SELECT COUNT(*) FROM  Construction_Companies)', 'select construction_companies.company_name , building_roles.role_value from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id']",
+    "ambig_question": "What are the building roles for every construction company?"
+  },
+  {
+    "question_id": 170,
+    "question": "What financial roles are present at every bank at the same time?",
+    "db_id": "scope_banks_financial_roles",
+    "SQL": "SELECT Financial_Roles.RoleName  from Banks_Financial_Roles join Financial_Roles on Banks_Financial_Roles.RoleID = Financial_Roles.RoleID join Banks on Banks_Financial_Roles.BankID = Banks.BankID   GROUP BY Banks_Financial_Roles.RoleID HAVING COUNT(DISTINCT Banks_Financial_Roles.BankID) = (SELECT COUNT(*) FROM  Banks)",
+    "ambig_queries": "['SELECT Financial_Roles.RoleName  from Banks_Financial_Roles join Financial_Roles on Banks_Financial_Roles.RoleID = Financial_Roles.RoleID join Banks on Banks_Financial_Roles.BankID = Banks.BankID   GROUP BY Banks_Financial_Roles.RoleID HAVING COUNT(DISTINCT Banks_Financial_Roles.BankID) = (SELECT COUNT(*) FROM  Banks)', 'select banks.name , financial_roles.rolename from Banks_Financial_Roles join Financial_Roles on Banks_Financial_Roles.RoleID = Financial_Roles.RoleID join Banks on Banks_Financial_Roles.BankID = Banks.BankID']",
+    "ambig_question": "What financial roles are there for every bank?"
+  },
+  {
+    "question_id": 171,
+    "question": "What building roles do all construction companies have in common?",
+    "db_id": "scope_construction_companies_building_roles",
+    "SQL": "SELECT Building_Roles.role_value  from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id   GROUP BY Construction_Companies_Building_Roles.building_role_id HAVING COUNT(DISTINCT Construction_Companies_Building_Roles.construction_company_id) = (SELECT COUNT(*) FROM  Construction_Companies)",
+    "ambig_queries": "['SELECT Building_Roles.role_value  from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id   GROUP BY Construction_Companies_Building_Roles.building_role_id HAVING COUNT(DISTINCT Construction_Companies_Building_Roles.construction_company_id) = (SELECT COUNT(*) FROM  Construction_Companies)', 'select construction_companies.company_name , building_roles.role_value from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id']",
+    "ambig_question": "What are the building roles for every construction company?"
+  },
+  {
+    "question_id": 172,
+    "question": "What are the building roles for every construction company?",
+    "db_id": "scope_construction_companies_building_roles",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT Building_Roles.role_value  from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id   GROUP BY Construction_Companies_Building_Roles.building_role_id HAVING COUNT(DISTINCT Construction_Companies_Building_Roles.construction_company_id) = (SELECT COUNT(*) FROM  Construction_Companies)', 'select construction_companies.company_name , building_roles.role_value from Construction_Companies_Building_Roles join Building_Roles on Construction_Companies_Building_Roles.building_role_id = Building_Roles.role_id join Construction_Companies on Construction_Companies_Building_Roles.construction_company_id = Construction_Companies.id']",
+    "ambig_question": "What are the building roles for every construction company?"
+  },
+  {
+    "question_id": 173,
+    "question": "For each customer service representative, what are the corresponding communication channels?",
+    "db_id": "scope_customer_service_representatives_channels",
+    "SQL": "select customer_service_representatives.email , channels.channel_value from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id",
+    "ambig_queries": "['SELECT Channels.channel_value  from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id   GROUP BY Customer_Service_Representatives_Channels.channel_id HAVING COUNT(DISTINCT Customer_Service_Representatives_Channels.representative_id) = (SELECT COUNT(*) FROM  Customer_Service_Representatives)', 'select customer_service_representatives.email , channels.channel_value from Customer_Service_Representatives_Channels join Channels on Customer_Service_Representatives_Channels.channel_id = Channels.channel_id join Customer_Service_Representatives on Customer_Service_Representatives_Channels.representative_id = Customer_Service_Representatives.id']",
+    "ambig_question": "which communication channels are assigned to each customer service representative?"
+  },
+  {
+    "question_id": 272,
+    "question": "List all the vacancies and the required degrees and certifications for them.",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "SELECT degree_level, certification, job_post FROM Degrees",
+    "ambig_queries": "['SELECT degree_level, job_post FROM Degrees', 'SELECT certification, job_post FROM Degrees', 'SELECT degree_level, certification, job_post FROM Degrees']",
+    "ambig_question": "Show all vacancies and required qualifications"
+  },
+  {
+    "question_id": 286,
+    "question": "What is the required degree level for AI Researcher?",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "SELECT degree_level FROM Degrees WHERE job_post = 'AI Researcher'",
+    "ambig_queries": "[\"SELECT degree_level FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT certification FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT degree_level, certification FROM Degrees WHERE job_post = 'AI Researcher'\"]",
+    "ambig_question": "What are the required qualifications for AI Researcher?"
+  },
+  {
+    "question_id": 288,
+    "question": "What is the required certification for AI Researcher?",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "SELECT certification FROM Degrees WHERE job_post = 'AI Researcher'",
+    "ambig_queries": "[\"SELECT degree_level FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT certification FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT degree_level, certification FROM Degrees WHERE job_post = 'AI Researcher'\"]",
+    "ambig_question": "What are the required qualifications for AI Researcher?"
+  },
+  {
+    "question_id": 289,
+    "question": "What is the required degree level and certification for AI Researcher?",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "SELECT degree_level, certification FROM Degrees WHERE job_post = 'AI Researcher'",
+    "ambig_queries": "[\"SELECT degree_level FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT certification FROM Degrees WHERE job_post = 'AI Researcher'\", \"SELECT degree_level, certification FROM Degrees WHERE job_post = 'AI Researcher'\"]",
+    "ambig_question": "What are the required qualifications for AI Researcher?"
+  },
+  {
+    "question_id": 290,
+    "question": "List all the vacancies and the required educational degrees.",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "SELECT degree_level, job_post FROM Degrees",
+    "ambig_queries": "['SELECT degree_level, job_post FROM Degrees', 'SELECT certification, job_post FROM Degrees', 'SELECT degree_level, certification, job_post FROM Degrees']",
+    "ambig_question": "Show all vacancies and required qualifications"
+  },
+  {
+    "question_id": 312,
+    "question": "Show me the sous chef who cooks pizza?",
+    "db_id": "vague_2tabs_chef",
+    "SQL": "Select \r\nc.Full_name\r\nFROM Sous_chef C \r\nJOIN Restaurant R ON c.Sous_id = r.Sous_chef_id\r\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\r\nJOIN Order_details OD ON O.order_id = OD.order_id\r\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\r\nWHERE  m.item_name = 'Pizza'",
+    "ambig_queries": "[\"Select \\r\\nc.Full_name\\r\\nFROM Executive_chef C \\r\\nJOIN Restaurant R ON c.chef_id = r.executive_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\nWHERE  m.item_name = 'Pizza'\", \"Select \\r\\nc.Full_name\\r\\nFROM Sous_chef C \\r\\nJOIN Restaurant R ON c.Sous_id = r.Sous_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\nWHERE  m.item_name = 'Pizza'\", \"Select \\r\\nc.Full_name, C.full_name \\r\\nFROM Executive_chef C \\r\\nJOIN Restaurant R ON c.chef_id = r.executive_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\n JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id WHERE  m.item_name = 'Pizza'\"]",
+    "ambig_question": "Show me any chef who cooks pizza"
+  },
+  {
+    "question_id": 313,
+    "question": "Show me the executive and sous chefs who cook pizza?",
+    "db_id": "vague_2tabs_chef",
+    "SQL": "Select \r\nc.Full_name, C.full_name \r\nFROM Executive_chef C \r\nJOIN Restaurant R ON c.chef_id = r.executive_chef_id\r\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\r\nJOIN Order_details OD ON O.order_id = OD.order_id\r\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\r\n JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id WHERE  m.item_name = 'Pizza'",
+    "ambig_queries": "[\"Select \\r\\nc.Full_name\\r\\nFROM Executive_chef C \\r\\nJOIN Restaurant R ON c.chef_id = r.executive_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\nWHERE  m.item_name = 'Pizza'\", \"Select \\r\\nc.Full_name\\r\\nFROM Sous_chef C \\r\\nJOIN Restaurant R ON c.Sous_id = r.Sous_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\nWHERE  m.item_name = 'Pizza'\", \"Select \\r\\nc.Full_name, C.full_name \\r\\nFROM Executive_chef C \\r\\nJOIN Restaurant R ON c.chef_id = r.executive_chef_id\\r\\nJOIN Orders O ON R.restaurant_id = O.restaurant_id\\r\\nJOIN Order_details OD ON O.order_id = OD.order_id\\r\\nJOIN Menu_items m ON OD.menu_item_id = m.menu_item_id\\r\\n JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id WHERE  m.item_name = 'Pizza'\"]",
+    "ambig_question": "Show me any chef who cooks pizza"
+  },
+  {
+    "question_id": 322,
+    "question": "Please list all the chefs in alphabetical order by their name",
+    "db_id": "vague_2tabs_chef",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT c.Full_name \\r\\nFROM Executive_chef C ORDER BY Full_name', 'SELECT c.Full_name\\r\\nFROM Sous_chef C ORDER BY Full_name', 'SELECT c.Full_name, C.full_name \\r\\nFROM Executive_chef C JOIN Restaurant R ON c.chef_id = r.executive_chef_id JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id ORDER BY C.Full_name, SC.Full_name']",
+    "ambig_question": "Please list all the chefs in alphabetical order by their name"
+  },
+  {
+    "question_id": 331,
+    "question": "Show all vacancies and required qualifications",
+    "db_id": "vague_2cols_qualifications",
+    "SQL": "ambiguous",
+    "ambig_queries": "['SELECT degree_level, job_post FROM Degrees', 'SELECT certification, job_post FROM Degrees', 'SELECT degree_level, certification, job_post FROM Degrees']",
+    "ambig_question": "Show all vacancies and required qualifications"
+  },
+  {
+    "question_id": 336,
+    "question": "List all the executive chefs in alphabetical order by their name.",
+    "db_id": "vague_2tabs_chef",
+    "SQL": "SELECT c.Full_name \r\nFROM Executive_chef C ORDER BY Full_name",
+    "ambig_queries": "['SELECT c.Full_name \\r\\nFROM Executive_chef C ORDER BY Full_name', 'SELECT c.Full_name\\r\\nFROM Sous_chef C ORDER BY Full_name', 'SELECT c.Full_name, C.full_name \\r\\nFROM Executive_chef C JOIN Restaurant R ON c.chef_id = r.executive_chef_id JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id ORDER BY C.Full_name, SC.Full_name']",
+    "ambig_question": "Please list all the chefs in alphabetical order by their name"
+  },
+  {
+    "question_id": 337,
+    "question": "List all the sous chefs in alphabetical order by their name.",
+    "db_id": "vague_2tabs_chef",
+    "SQL": "SELECT c.Full_name\r\nFROM Sous_chef C ORDER BY Full_name",
+    "ambig_queries": "['SELECT c.Full_name \\r\\nFROM Executive_chef C ORDER BY Full_name', 'SELECT c.Full_name\\r\\nFROM Sous_chef C ORDER BY Full_name', 'SELECT c.Full_name, C.full_name \\r\\nFROM Executive_chef C JOIN Restaurant R ON c.chef_id = r.executive_chef_id JOIN Sous_chef SC ON SC.Sous_id = r.Sous_chef_id ORDER BY C.Full_name, SC.Full_name']",
+    "ambig_question": "Please list all the chefs in alphabetical order by their name"
+  }
+]

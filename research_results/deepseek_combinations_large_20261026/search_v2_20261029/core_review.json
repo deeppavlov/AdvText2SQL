@@ -1,0 +1,704 @@
+{
+  "reviewed_at_utc": "2026-10-29T09:40:33.538272+00:00",
+  "scope": "train",
+  "processed_questions": 534,
+  "completed_benchmarks": 4,
+  "core_results": [
+    {
+      "scope": "train",
+      "case": "baseline",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [],
+      "questions": 131,
+      "correct": 67,
+      "accuracy": 51.14503816793893,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -5.343511450381683
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 11
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_14",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 131,
+      "correct": 71,
+      "accuracy": 54.19847328244275,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 3.05343511450382,
+        "sql_ambiguity": -2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 7,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_32",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 131,
+      "correct": 69,
+      "accuracy": 52.67175572519084,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.5267175572519136,
+        "sql_ambiguity": -3.81679389312977
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 2,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 10
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_35",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 131,
+      "correct": 71,
+      "accuracy": 54.19847328244275,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 3.05343511450382,
+        "sql_ambiguity": -2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 6,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 9
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_rules",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 131,
+      "correct": 74,
+      "accuracy": 56.48854961832061,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 5.343511450381683,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 12,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_ambiguity",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 131,
+      "correct": 74,
+      "accuracy": 56.48854961832061,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 5.343511450381683,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 11,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_tsv",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 4,
+      "prompt_tokens": 475385,
+      "completion_tokens": 30926,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.08
+      },
+      "features": [
+        14,
+        32
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065,
+        "feat_14": 0.7633587786259568,
+        "feat_32": 2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 8,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 6
+        },
+        "feat_14": {
+          "rescued": 1,
+          "harmed": 0
+        },
+        "feat_32": {
+          "rescued": 7,
+          "harmed": 4
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_rules",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 376485,
+      "completion_tokens": 31907,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.1
+      },
+      "features": [
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065,
+        "feat_32": 2.2900763358778633,
+        "feat_35": 0.7633587786259568
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 5,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        },
+        "feat_32": {
+          "rescued": 5,
+          "harmed": 2
+        },
+        "feat_35": {
+          "rescued": 4,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "baseline",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [],
+      "questions": 136,
+      "correct": 93,
+      "accuracy": 68.38235294117646,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 42,
+        "tn": 93,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "balanced_accuracy": 0.4946808510638298
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -10.294117647058826
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 19
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_14",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 136,
+      "correct": 94,
+      "accuracy": 69.11764705882354,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 3,
+        "fp": 3,
+        "fn": 39,
+        "tn": 91,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5,
+        "recall": 0.07142857142857142,
+        "f1": 0.125,
+        "balanced_accuracy": 0.5197568389057751
+      },
+      "delta_pp": {
+        "baseline": 0.7352941176470722,
+        "sql_ambiguity": -9.558823529411754
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 3,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 19
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_32",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 136,
+      "correct": 103,
+      "accuracy": 75.73529411764706,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 26,
+        "tn": 87,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6956521739130435,
+        "recall": 0.38095238095238093,
+        "f1": 0.49230769230769234,
+        "balanced_accuracy": 0.653242147922999
+      },
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_35",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 136,
+      "correct": 94,
+      "accuracy": 69.11764705882354,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 40,
+        "tn": 92,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5,
+        "recall": 0.047619047619047616,
+        "f1": 0.08695652173913043,
+        "balanced_accuracy": 0.5131712259371833
+      },
+      "delta_pp": {
+        "baseline": 0.7352941176470722,
+        "sql_ambiguity": -9.558823529411754
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 2,
+          "harmed": 1
+        },
+        "sql_ambiguity": {
+          "rescued": 7,
+          "harmed": 20
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_rules",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 136,
+      "correct": 92,
+      "accuracy": 67.6470588235294,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 41,
+        "tn": 91,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.25,
+        "recall": 0.023809523809523808,
+        "f1": 0.043478260869565216,
+        "balanced_accuracy": 0.4959473150962513
+      },
+      "delta_pp": {
+        "baseline": -0.735294117647058,
+        "sql_ambiguity": -11.029411764705884
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 1,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 20
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_ambiguity",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 136,
+      "correct": 107,
+      "accuracy": 78.67647058823529,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 18,
+        "fp": 5,
+        "fn": 24,
+        "tn": 89,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.782608695652174,
+        "recall": 0.42857142857142855,
+        "f1": 0.5538461538461539,
+        "balanced_accuracy": 0.6876899696048632
+      },
+      "delta_pp": {
+        "baseline": 10.294117647058826,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 19,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_tsv",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 77.20588235294117,
+      "correct": 105,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 17,
+        "fp": 6,
+        "fn": 25,
+        "tn": 88,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.7391304347826086,
+        "recall": 0.40476190476190477,
+        "f1": 0.5230769230769231,
+        "balanced_accuracy": 0.6704660587639311
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 313734,
+      "completion_tokens": 21828,
+      "recorded_calls": 200,
+      "balance_deltas": {
+        "USD": 0.05
+      },
+      "features": [
+        14,
+        32
+      ],
+      "delta_pp": {
+        "baseline": 8.82352941176471,
+        "sql_ambiguity": -1.470588235294116,
+        "feat_14": 8.088235294117638,
+        "feat_32": 1.470588235294116
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 18,
+          "harmed": 6
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 4
+        },
+        "feat_14": {
+          "rescued": 19,
+          "harmed": 8
+        },
+        "feat_32": {
+          "rescued": 3,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_rules",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 26,
+        "tn": 87,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6956521739130435,
+        "recall": 0.38095238095238093,
+        "f1": 0.49230769230769234,
+        "balanced_accuracy": 0.653242147922999
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 233866,
+      "completion_tokens": 21237,
+      "recorded_calls": 200,
+      "balance_deltas": {
+        "USD": 0.4
+      },
+      "features": [
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232,
+        "feat_32": 0.0,
+        "feat_35": 6.617647058823522
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        },
+        "feat_32": {
+          "rescued": 1,
+          "harmed": 1
+        },
+        "feat_35": {
+          "rescued": 18,
+          "harmed": 9
+        }
+      }
+    }
+  ],
+  "taxonomy_prompt_comparison": {
+    "core_without_tsv": {
+      "taxonomy_calls": 86,
+      "identical_messages": 0,
+      "changed_verdicts": []
+    },
+    "core_without_rules": {
+      "taxonomy_calls": 86,
+      "identical_messages": 86,
+      "changed_verdicts": [
+        {
+          "question_id": "19",
+          "historical_verdicts": [
+            false
+          ],
+          "current_verdict": true
+        },
+        {
+          "question_id": "32",
+          "historical_verdicts": [
+            true
+          ],
+          "current_verdict": false
+        },
+        {
+          "question_id": "55",
+          "historical_verdicts": [
+            false
+          ],
+          "current_verdict": true
+        },
+        {
+          "question_id": "59",
+          "historical_verdicts": [
+            false
+          ],
+          "current_verdict": true
+        },
+        {
+          "question_id": "60",
+          "historical_verdicts": [
+            true
+          ],
+          "current_verdict": false
+        },
+        {
+          "question_id": "279",
+          "historical_verdicts": [
+            true
+          ],
+          "current_verdict": false
+        }
+      ]
+    }
+  },
+  "usage": {
+    "prompt_tokens": 1399470,
+    "completion_tokens": 105898,
+    "recorded_calls": 926,
+    "account_balance_delta_usd": 0.63
+  },
+  "conclusion": "H leads observed mean accuracy among eight core masks; H and 14+35 tie on BIRD; not a global or causal optimum.",
+  "next_step": "Fresh train hybrid_control_repeat before stage additions; manual launch only.",
+  "limitations": [
+    "Historical controls and new runs are not replicated contemporaneous trials.",
+    "FEAT_14 does not alter the taxonomy input; six verdict changes under identical messages are response variation.",
+    "Balance deltas are account-wide snapshots, not exact per-run invoices."
+  ],
+  "source_sha256": {
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/experiment.json": "754fbde98963827261d16e95ddadc1141ab47f8f3c955abd2e512986f7a8cf46",
+    "research_results/deepseek_combinations_large_20261026/sql_ambiguity/ambrosia_227/raw_responses.jsonl": "cad5c92a90ab3a23a851f85dfb314f50169bcbeaf8a3e68464e18e4a5e45147d",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/bird/metadata.json": "4487ee1f28dfd673423faaaa34c766beba668d5efad5ef34d31cb89549016af9",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/bird/report.json": "1ba9e81ad8649f2b97cecc5a22eae631af2b5effbf07a944ecb95dd69bf4e233",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/bird/query_results.json": "e760a1caa6a595ed9dbe811797217474b89bcbab278faf8a7d5ace7f05e837a0",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/bird/raw_responses.jsonl": "3b9ce62951651f4380c23ca1a23a2c7c54d5a456a45fa5591760911f0d0c7a5b",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/ambrosia_227/metadata.json": "d74eb9e3c84465e3dddb65bf27da7b4a16877bff1ac46302b5bea8a0604a2079",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/ambrosia_227/report.json": "fdecddaa4d092e7533dc7955917a0f6c2c602831fa63161238cba6be8306e0e0",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/ambrosia_227/query_results.json": "1274d2135f586198e6022fc44d4f0c1ff60aa9798f840187fefa54b251912b16",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_tsv/ambrosia_227/raw_responses.jsonl": "2fe03bfc022dfe357dd2433641b4dbefa742d58ddf108423a3968c9c35429612",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/bird/metadata.json": "e79f8c170ccab6611e8b8e5d25e1a657fd5f342fc553985e65750f6eae3f636f",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/bird/report.json": "37d2c4f6d3fcd03a994070f313db4717b885665d4abe24ba5a382544759ab264",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/bird/query_results.json": "287264892234dc5f132c5be96c8fc6553cb95fb06708ad2cc0739adb3dfd72f7",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/bird/raw_responses.jsonl": "6663472171eeaa3d907ec3687f466543fca427f88afe6f48a17ac23dc4f3698e",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/ambrosia_227/metadata.json": "67bc7fc96c4c4ab35cb360573340200b2bfef3521f8e14c9c957875718e778ac",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/ambrosia_227/report.json": "5adf80b48e24165fc51be4c649fc7c60691897d047349e0910a9f9687962f424",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/ambrosia_227/query_results.json": "5d65c83a7dd0ffce7c584eb11349c4b968108d0f15c3bc87c1bf63d9d7ce6bcb",
+    "research_results/deepseek_combinations_large_20261026/search_v2_20261029/train/core_without_rules/ambrosia_227/raw_responses.jsonl": "2b7c46df6df887e13a2637831f94b7d5d449a5d5cada2fe070508c491a60160a"
+  }
+}

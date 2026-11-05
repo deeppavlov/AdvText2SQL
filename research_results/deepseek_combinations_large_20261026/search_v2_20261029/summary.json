@@ -1,0 +1,2842 @@
+{
+  "rows": [
+    {
+      "scope": "train",
+      "case": "baseline",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [],
+      "questions": 131,
+      "correct": 67,
+      "accuracy": 51.14503816793893,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -5.343511450381683
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 11
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_14",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 131,
+      "correct": 71,
+      "accuracy": 54.19847328244275,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 3.05343511450382,
+        "sql_ambiguity": -2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 7,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_32",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 131,
+      "correct": 69,
+      "accuracy": 52.67175572519084,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.5267175572519136,
+        "sql_ambiguity": -3.81679389312977
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 2,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 10
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_35",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 131,
+      "correct": 71,
+      "accuracy": 54.19847328244275,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 3.05343511450382,
+        "sql_ambiguity": -2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 6,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 9
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_rules",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 131,
+      "correct": 74,
+      "accuracy": 56.48854961832061,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 5.343511450381683,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 12,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_ambiguity",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 131,
+      "correct": 74,
+      "accuracy": 56.48854961832061,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 5.343511450381683,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 11,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_tsv",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 4,
+      "prompt_tokens": 475385,
+      "completion_tokens": 30926,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.08
+      },
+      "features": [
+        14,
+        32
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065,
+        "feat_14": 0.7633587786259568,
+        "feat_32": 2.2900763358778633
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 8,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 6
+        },
+        "feat_14": {
+          "rescued": 1,
+          "harmed": 0
+        },
+        "feat_32": {
+          "rescued": 7,
+          "harmed": 4
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_rules",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 376485,
+      "completion_tokens": 31907,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.1
+      },
+      "features": [
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065,
+        "feat_32": 2.2900763358778633,
+        "feat_35": 0.7633587786259568
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 5,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        },
+        "feat_32": {
+          "rescued": 5,
+          "harmed": 2
+        },
+        "feat_35": {
+          "rescued": 4,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_2",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 61.06870229007634,
+      "correct": 80,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 0,
+      "prompt_tokens": 782727,
+      "completion_tokens": 30556,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.24
+      },
+      "features": [
+        2,
+        14,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 9.92366412213741,
+        "sql_ambiguity": 4.580152671755727
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 16,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 8,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_15",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 56.48854961832061,
+      "correct": 74,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 468709,
+      "completion_tokens": 31038,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.42
+      },
+      "features": [
+        14,
+        15,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 5.343511450381683,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 11,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_16",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 1,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 468709,
+      "completion_tokens": 30447,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.04
+      },
+      "features": [
+        14,
+        16,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 11,
+          "harmed": 6
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_21",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 58.01526717557252,
+      "correct": 76,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 2,
+      "prompt_tokens": 476803,
+      "completion_tokens": 30415,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.04
+      },
+      "features": [
+        14,
+        21,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.87022900763359,
+        "sql_ambiguity": 1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 13,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_23",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 57.25190839694657,
+      "correct": 75,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 532725,
+      "completion_tokens": 32138,
+      "recorded_calls": 293,
+      "balance_deltas": {
+        "USD": 0.05
+      },
+      "features": [
+        14,
+        23,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.10687022900764,
+        "sql_ambiguity": 0.7633587786259568
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 12,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_25",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 58.01526717557252,
+      "correct": 76,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 544100,
+      "completion_tokens": 35205,
+      "recorded_calls": 394,
+      "balance_deltas": {
+        "USD": 0.06
+      },
+      "features": [
+        14,
+        25,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.87022900763359,
+        "sql_ambiguity": 1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 14,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_28",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 4,
+      "prompt_tokens": 898895,
+      "completion_tokens": 58485,
+      "recorded_calls": 525,
+      "balance_deltas": {
+        "USD": 0.09
+      },
+      "features": [
+        14,
+        28,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 10,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_29",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 58.01526717557252,
+      "correct": 76,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 438143,
+      "completion_tokens": 29341,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.04
+      },
+      "features": [
+        14,
+        29,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.87022900763359,
+        "sql_ambiguity": 1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 13,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_30",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 58.01526717557252,
+      "correct": 76,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 2,
+      "prompt_tokens": 547510,
+      "completion_tokens": 50564,
+      "recorded_calls": 394,
+      "balance_deltas": {
+        "USD": 0.33
+      },
+      "features": [
+        14,
+        30,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.87022900763359,
+        "sql_ambiguity": 1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 14,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 7,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_control_repeat",
+      "benchmark": "bird",
+      "status": "completed",
+      "saved": 131,
+      "questions": 131,
+      "accuracy": 54.961832061068705,
+      "correct": 72,
+      "errors": 0,
+      "ambiguity_metrics": {},
+      "execution_errors": 3,
+      "prompt_tokens": 468709,
+      "completion_tokens": 30636,
+      "recorded_calls": 263,
+      "balance_deltas": {
+        "USD": 0.12
+      },
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 3.816793893129777,
+        "sql_ambiguity": -1.5267175572519065
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 10,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "baseline",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [],
+      "questions": 136,
+      "correct": 93,
+      "accuracy": 68.38235294117646,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 42,
+        "tn": 93,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "balanced_accuracy": 0.4946808510638298
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -10.294117647058826
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 19
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_14",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 136,
+      "correct": 94,
+      "accuracy": 69.11764705882354,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 3,
+        "fp": 3,
+        "fn": 39,
+        "tn": 91,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5,
+        "recall": 0.07142857142857142,
+        "f1": 0.125,
+        "balanced_accuracy": 0.5197568389057751
+      },
+      "delta_pp": {
+        "baseline": 0.7352941176470722,
+        "sql_ambiguity": -9.558823529411754
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 3,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 19
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_32",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 136,
+      "correct": 103,
+      "accuracy": 75.73529411764706,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 26,
+        "tn": 87,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6956521739130435,
+        "recall": 0.38095238095238093,
+        "f1": 0.49230769230769234,
+        "balanced_accuracy": 0.653242147922999
+      },
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "feat_35",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 136,
+      "correct": 94,
+      "accuracy": 69.11764705882354,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 40,
+        "tn": 92,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5,
+        "recall": 0.047619047619047616,
+        "f1": 0.08695652173913043,
+        "balanced_accuracy": 0.5131712259371833
+      },
+      "delta_pp": {
+        "baseline": 0.7352941176470722,
+        "sql_ambiguity": -9.558823529411754
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 2,
+          "harmed": 1
+        },
+        "sql_ambiguity": {
+          "rescued": 7,
+          "harmed": 20
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_rules",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 136,
+      "correct": 92,
+      "accuracy": 67.6470588235294,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 41,
+        "tn": 91,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.25,
+        "recall": 0.023809523809523808,
+        "f1": 0.043478260869565216,
+        "balanced_accuracy": 0.4959473150962513
+      },
+      "delta_pp": {
+        "baseline": -0.735294117647058,
+        "sql_ambiguity": -11.029411764705884
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 1,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 20
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "sql_ambiguity",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 136,
+      "correct": 107,
+      "accuracy": 78.67647058823529,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 18,
+        "fp": 5,
+        "fn": 24,
+        "tn": 89,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.782608695652174,
+        "recall": 0.42857142857142855,
+        "f1": 0.5538461538461539,
+        "balanced_accuracy": 0.6876899696048632
+      },
+      "delta_pp": {
+        "baseline": 10.294117647058826,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 19,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_tsv",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 77.20588235294117,
+      "correct": 105,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 17,
+        "fp": 6,
+        "fn": 25,
+        "tn": 88,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.7391304347826086,
+        "recall": 0.40476190476190477,
+        "f1": 0.5230769230769231,
+        "balanced_accuracy": 0.6704660587639311
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 313734,
+      "completion_tokens": 21828,
+      "recorded_calls": 200,
+      "balance_deltas": {
+        "USD": 0.05
+      },
+      "features": [
+        14,
+        32
+      ],
+      "delta_pp": {
+        "baseline": 8.82352941176471,
+        "sql_ambiguity": -1.470588235294116,
+        "feat_14": 8.088235294117638,
+        "feat_32": 1.470588235294116
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 18,
+          "harmed": 6
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 4
+        },
+        "feat_14": {
+          "rescued": 19,
+          "harmed": 8
+        },
+        "feat_32": {
+          "rescued": 3,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "core_without_rules",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 26,
+        "tn": 87,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6956521739130435,
+        "recall": 0.38095238095238093,
+        "f1": 0.49230769230769234,
+        "balanced_accuracy": 0.653242147922999
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 233866,
+      "completion_tokens": 21237,
+      "recorded_calls": 200,
+      "balance_deltas": {
+        "USD": 0.4
+      },
+      "features": [
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232,
+        "feat_32": 0.0,
+        "feat_35": 6.617647058823522
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        },
+        "feat_32": {
+          "rescued": 1,
+          "harmed": 1
+        },
+        "feat_35": {
+          "rescued": 18,
+          "harmed": 9
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_2",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 17,
+        "fp": 8,
+        "fn": 25,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.68,
+        "recall": 0.40476190476190477,
+        "f1": 0.5074626865671642,
+        "balanced_accuracy": 0.6598277608915907
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 405611,
+      "completion_tokens": 21106,
+      "recorded_calls": 198,
+      "balance_deltas": {
+        "USD": 0.31
+      },
+      "features": [
+        2,
+        14,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 18,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_15",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.0,
+      "correct": 102,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6479229989868287
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 311946,
+      "completion_tokens": 21216,
+      "recorded_calls": 199,
+      "balance_deltas": {
+        "USD": 0.08
+      },
+      "features": [
+        14,
+        15,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.617647058823536,
+        "sql_ambiguity": -3.67647058823529
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_16",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 73.52941176470588,
+      "correct": 100,
+      "errors": 3,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 84,
+        "errors_ambiguous": 1,
+        "errors_unambiguous": 2,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6372847011144883
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 311946,
+      "completion_tokens": 21874,
+      "recorded_calls": 199,
+      "balance_deltas": {
+        "USD": 0.01
+      },
+      "features": [
+        14,
+        16,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 5.14705882352942,
+        "sql_ambiguity": -5.147058823529406
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 10
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 8
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_21",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.0,
+      "correct": 102,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6479229989868287
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 313566,
+      "completion_tokens": 21465,
+      "recorded_calls": 199,
+      "balance_deltas": {
+        "USD": 0.02
+      },
+      "features": [
+        14,
+        21,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.617647058823536,
+        "sql_ambiguity": -3.67647058823529
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_23",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 7,
+        "fn": 26,
+        "tn": 87,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6956521739130435,
+        "recall": 0.38095238095238093,
+        "f1": 0.49230769230769234,
+        "balanced_accuracy": 0.653242147922999
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 350844,
+      "completion_tokens": 26549,
+      "recorded_calls": 306,
+      "balance_deltas": {
+        "USD": 0.03
+      },
+      "features": [
+        14,
+        23,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_25",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 17,
+        "fp": 8,
+        "fn": 25,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.68,
+        "recall": 0.40476190476190477,
+        "f1": 0.5074626865671642,
+        "balanced_accuracy": 0.6598277608915907
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 356346,
+      "completion_tokens": 26255,
+      "recorded_calls": 313,
+      "balance_deltas": {
+        "USD": 0.05
+      },
+      "features": [
+        14,
+        25,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 18,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_28",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.0,
+      "correct": 102,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6479229989868287
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 634560,
+      "completion_tokens": 44596,
+      "recorded_calls": 423,
+      "balance_deltas": {
+        "USD": 0.08
+      },
+      "features": [
+        14,
+        28,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.617647058823536,
+        "sql_ambiguity": -3.67647058823529
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_29",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.0,
+      "correct": 102,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6479229989868287
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 262935,
+      "completion_tokens": 20529,
+      "recorded_calls": 199,
+      "balance_deltas": {
+        "USD": 0.02
+      },
+      "features": [
+        14,
+        29,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.617647058823536,
+        "sql_ambiguity": -3.67647058823529
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_plus_30",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.73529411764706,
+      "correct": 103,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 17,
+        "fp": 8,
+        "fn": 25,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.68,
+        "recall": 0.40476190476190477,
+        "f1": 0.5074626865671642,
+        "balanced_accuracy": 0.6598277608915907
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 355813,
+      "completion_tokens": 39449,
+      "recorded_calls": 309,
+      "balance_deltas": {
+        "USD": 0.3
+      },
+      "features": [
+        14,
+        30,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 7.352941176470594,
+        "sql_ambiguity": -2.941176470588232
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 18,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "train",
+      "case": "hybrid_control_repeat",
+      "benchmark": "ambrosia",
+      "status": "completed",
+      "saved": 136,
+      "questions": 136,
+      "accuracy": 75.0,
+      "correct": 102,
+      "errors": 0,
+      "ambiguity_metrics": {
+        "tp": 16,
+        "fp": 8,
+        "fn": 26,
+        "tn": 86,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.38095238095238093,
+        "f1": 0.48484848484848486,
+        "balanced_accuracy": 0.6479229989868287
+      },
+      "execution_errors": 0,
+      "prompt_tokens": 311946,
+      "completion_tokens": 21336,
+      "recorded_calls": 199,
+      "balance_deltas": {
+        "USD": 0.19
+      },
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "delta_pp": {
+        "baseline": 6.617647058823536,
+        "sql_ambiguity": -3.67647058823529
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 17,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 6
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "baseline",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [],
+      "questions": 55,
+      "correct": 20,
+      "accuracy": 36.36363636363637,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -1.818181818181813
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 4
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_14",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 55,
+      "correct": 21,
+      "accuracy": 38.18181818181818,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.818181818181813,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 3,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_32",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 55,
+      "correct": 20,
+      "accuracy": 36.36363636363637,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -1.818181818181813
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 3,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 4,
+          "harmed": 5
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_35",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 55,
+      "correct": 24,
+      "accuracy": 43.63636363636363,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 7.272727272727266,
+        "sql_ambiguity": 5.454545454545453
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 4,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 3
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "sql_rules",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 55,
+      "correct": 21,
+      "accuracy": 38.18181818181818,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.818181818181813,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 5,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 2,
+          "harmed": 2
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "sql_ambiguity",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 55,
+      "correct": 21,
+      "accuracy": 38.18181818181818,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.818181818181813,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 4,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "baseline",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [],
+      "questions": 46,
+      "correct": 34,
+      "accuracy": 73.91304347826087,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 12,
+        "tn": 33,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "balanced_accuracy": 0.5384615384615384
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -4.347826086956516
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_14",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 46,
+      "correct": 34,
+      "accuracy": 73.91304347826087,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 12,
+        "tn": 33,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "balanced_accuracy": 0.5384615384615384
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -4.347826086956516
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_32",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 46,
+      "correct": 36,
+      "accuracy": 78.26086956521739,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 6,
+        "fp": 3,
+        "fn": 7,
+        "tn": 30,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.46153846153846156,
+        "f1": 0.5454545454545454,
+        "balanced_accuracy": 0.6853146853146853
+      },
+      "delta_pp": {
+        "baseline": 4.347826086956516,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 6,
+          "harmed": 4
+        },
+        "sql_ambiguity": {
+          "rescued": 1,
+          "harmed": 1
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "feat_35",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 46,
+      "correct": 34,
+      "accuracy": 73.91304347826087,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 12,
+        "tn": 33,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "balanced_accuracy": 0.5384615384615384
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -4.347826086956516
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "sql_rules",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 46,
+      "correct": 34,
+      "accuracy": 73.91304347826087,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 12,
+        "tn": 33,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "balanced_accuracy": 0.5384615384615384
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -4.347826086956516
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 5,
+          "harmed": 7
+        }
+      }
+    },
+    {
+      "scope": "dev",
+      "case": "sql_ambiguity",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 46,
+      "correct": 36,
+      "accuracy": 78.26086956521739,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 6,
+        "tn": 29,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6363636363636364,
+        "recall": 0.5384615384615384,
+        "f1": 0.5833333333333334,
+        "balanced_accuracy": 0.7086247086247086
+      },
+      "delta_pp": {
+        "baseline": 4.347826086956516,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 7,
+          "harmed": 5
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "baseline",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [],
+      "questions": 241,
+      "correct": 104,
+      "accuracy": 43.15352697095436,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -5.39419087136929
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 8,
+          "harmed": 21
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_14",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 241,
+      "correct": 113,
+      "accuracy": 46.88796680497925,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 3.73443983402489,
+        "sql_ambiguity": -1.6597510373443995
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 16,
+          "harmed": 7
+        },
+        "sql_ambiguity": {
+          "rescued": 6,
+          "harmed": 10
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_32",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 241,
+      "correct": 108,
+      "accuracy": 44.81327800829875,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 1.6597510373443924,
+        "sql_ambiguity": -3.734439834024897
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 7,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 11,
+          "harmed": 20
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_35",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 241,
+      "correct": 114,
+      "accuracy": 47.302904564315355,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 4.149377593360995,
+        "sql_ambiguity": -1.2448132780082943
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 12,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 13,
+          "harmed": 16
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "sql_rules",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 241,
+      "correct": 116,
+      "accuracy": 48.13278008298755,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 4.9792531120331915,
+        "sql_ambiguity": -0.4149377593360981
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 22,
+          "harmed": 10
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 4
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "sql_ambiguity",
+      "benchmark": "bird",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 241,
+      "correct": 117,
+      "accuracy": 48.54771784232365,
+      "missing_observations": 0,
+      "delta_pp": {
+        "baseline": 5.39419087136929,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 21,
+          "harmed": 8
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "baseline",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [],
+      "questions": 227,
+      "correct": 161,
+      "accuracy": 70.9251101321586,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 65,
+        "tn": 159,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.029850746268656716,
+        "f1": 0.05714285714285714,
+        "balanced_accuracy": 0.5118003731343284
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -9.251101321585907
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 0,
+          "harmed": 0
+        },
+        "sql_ambiguity": {
+          "rescued": 11,
+          "harmed": 32
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_14",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14
+      ],
+      "questions": 227,
+      "correct": 161,
+      "accuracy": 70.9251101321586,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 5,
+        "fp": 4,
+        "fn": 62,
+        "tn": 156,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5555555555555556,
+        "recall": 0.07462686567164178,
+        "f1": 0.13157894736842105,
+        "balanced_accuracy": 0.5248134328358209
+      },
+      "delta_pp": {
+        "baseline": 0.0,
+        "sql_ambiguity": -9.251101321585907
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 3,
+          "harmed": 3
+        },
+        "sql_ambiguity": {
+          "rescued": 12,
+          "harmed": 33
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_32",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        32
+      ],
+      "questions": 227,
+      "correct": 176,
+      "accuracy": 77.5330396475771,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 26,
+        "fp": 10,
+        "fn": 41,
+        "tn": 150,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.7222222222222222,
+        "recall": 0.3880597014925373,
+        "f1": 0.5048543689320388,
+        "balanced_accuracy": 0.6627798507462687
+      },
+      "delta_pp": {
+        "baseline": 6.607929515418505,
+        "sql_ambiguity": -2.643171806167402
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 27,
+          "harmed": 12
+        },
+        "sql_ambiguity": {
+          "rescued": 3,
+          "harmed": 9
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "feat_35",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        35
+      ],
+      "questions": 227,
+      "correct": 162,
+      "accuracy": 71.36563876651982,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 4,
+        "fp": 2,
+        "fn": 63,
+        "tn": 158,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.6666666666666666,
+        "recall": 0.05970149253731343,
+        "f1": 0.1095890410958904,
+        "balanced_accuracy": 0.5236007462686567
+      },
+      "delta_pp": {
+        "baseline": 0.4405286343612289,
+        "sql_ambiguity": -8.810572687224678
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 2,
+          "harmed": 1
+        },
+        "sql_ambiguity": {
+          "rescued": 13,
+          "harmed": 33
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "sql_rules",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        35
+      ],
+      "questions": 227,
+      "correct": 160,
+      "accuracy": 70.48458149779735,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 3,
+        "fp": 3,
+        "fn": 64,
+        "tn": 157,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.5,
+        "recall": 0.04477611940298507,
+        "f1": 0.0821917808219178,
+        "balanced_accuracy": 0.5130130597014925
+      },
+      "delta_pp": {
+        "baseline": -0.4405286343612431,
+        "sql_ambiguity": -9.69162995594715
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 1,
+          "harmed": 2
+        },
+        "sql_ambiguity": {
+          "rescued": 11,
+          "harmed": 33
+        }
+      }
+    },
+    {
+      "scope": "full",
+      "case": "sql_ambiguity",
+      "benchmark": "ambrosia",
+      "status": "historical",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "questions": 227,
+      "correct": 182,
+      "accuracy": 80.1762114537445,
+      "missing_observations": 0,
+      "ambiguity_metrics": {
+        "tp": 31,
+        "fp": 9,
+        "fn": 36,
+        "tn": 151,
+        "errors_ambiguous": 0,
+        "errors_unambiguous": 0,
+        "precision": 0.775,
+        "recall": 0.4626865671641791,
+        "f1": 0.5794392523364486,
+        "balanced_accuracy": 0.7032182835820895
+      },
+      "delta_pp": {
+        "baseline": 9.251101321585907,
+        "sql_ambiguity": 0.0
+      },
+      "paired": {
+        "baseline": {
+          "rescued": 32,
+          "harmed": 11
+        },
+        "sql_ambiguity": {
+          "rescued": 0,
+          "harmed": 0
+        }
+      }
+    }
+  ],
+  "rankings": {
+    "train": [
+      {
+        "case": "hybrid_plus_2",
+        "features": [
+          2,
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 68.4019982038617,
+        "bird": 61.06870229007634,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 67.58251010327795,
+        "bird": 56.48854961832061,
+        "ambrosia": 78.67647058823529
+      },
+      {
+        "case": "hybrid_plus_25",
+        "features": [
+          14,
+          25,
+          32,
+          35
+        ],
+        "macro_accuracy": 66.87528064660978,
+        "bird": 58.01526717557252,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "hybrid_plus_30",
+        "features": [
+          14,
+          30,
+          32,
+          35
+        ],
+        "macro_accuracy": 66.87528064660978,
+        "bird": 58.01526717557252,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "hybrid_plus_21",
+        "features": [
+          14,
+          21,
+          32,
+          35
+        ],
+        "macro_accuracy": 66.50763358778626,
+        "bird": 58.01526717557252,
+        "ambrosia": 75.0
+      },
+      {
+        "case": "hybrid_plus_29",
+        "features": [
+          14,
+          29,
+          32,
+          35
+        ],
+        "macro_accuracy": 66.50763358778626,
+        "bird": 58.01526717557252,
+        "ambrosia": 75.0
+      },
+      {
+        "case": "hybrid_plus_23",
+        "features": [
+          14,
+          23,
+          32,
+          35
+        ],
+        "macro_accuracy": 66.49360125729682,
+        "bird": 57.25190839694657,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "core_without_tsv",
+        "features": [
+          14,
+          32
+        ],
+        "macro_accuracy": 66.08385720700494,
+        "bird": 54.961832061068705,
+        "ambrosia": 77.20588235294117
+      },
+      {
+        "case": "hybrid_plus_15",
+        "features": [
+          14,
+          15,
+          32,
+          35
+        ],
+        "macro_accuracy": 65.7442748091603,
+        "bird": 56.48854961832061,
+        "ambrosia": 75.0
+      },
+      {
+        "case": "core_without_rules",
+        "features": [
+          32,
+          35
+        ],
+        "macro_accuracy": 65.34856308935788,
+        "bird": 54.961832061068705,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "hybrid_control_repeat",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.98091603053436,
+        "bird": 54.961832061068705,
+        "ambrosia": 75.0
+      },
+      {
+        "case": "hybrid_plus_28",
+        "features": [
+          14,
+          28,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.98091603053436,
+        "bird": 54.961832061068705,
+        "ambrosia": 75.0
+      },
+      {
+        "case": "hybrid_plus_16",
+        "features": [
+          14,
+          16,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.24562191288729,
+        "bird": 54.961832061068705,
+        "ambrosia": 73.52941176470588
+      },
+      {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 64.20352492141895,
+        "bird": 52.67175572519084,
+        "ambrosia": 75.73529411764706
+      },
+      {
+        "case": "sql_rules",
+        "features": [
+          14,
+          35
+        ],
+        "macro_accuracy": 62.06780422092501,
+        "bird": 56.48854961832061,
+        "ambrosia": 67.6470588235294
+      },
+      {
+        "case": "feat_14",
+        "features": [
+          14
+        ],
+        "macro_accuracy": 61.65806017063314,
+        "bird": 54.19847328244275,
+        "ambrosia": 69.11764705882354
+      },
+      {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 61.65806017063314,
+        "bird": 54.19847328244275,
+        "ambrosia": 69.11764705882354
+      },
+      {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 59.7636955545577,
+        "bird": 51.14503816793893,
+        "ambrosia": 68.38235294117646
+      }
+    ],
+    "dev": [
+      {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 58.77470355731225,
+        "bird": 43.63636363636363,
+        "ambrosia": 73.91304347826087
+      },
+      {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 58.22134387351778,
+        "bird": 38.18181818181818,
+        "ambrosia": 78.26086956521739
+      },
+      {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 57.312252964426875,
+        "bird": 36.36363636363637,
+        "ambrosia": 78.26086956521739
+      },
+      {
+        "case": "feat_14",
+        "features": [
+          14
+        ],
+        "macro_accuracy": 56.04743083003953,
+        "bird": 38.18181818181818,
+        "ambrosia": 73.91304347826087
+      },
+      {
+        "case": "sql_rules",
+        "features": [
+          14,
+          35
+        ],
+        "macro_accuracy": 56.04743083003953,
+        "bird": 38.18181818181818,
+        "ambrosia": 73.91304347826087
+      },
+      {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 55.138339920948624,
+        "bird": 36.36363636363637,
+        "ambrosia": 73.91304347826087
+      }
+    ],
+    "full": [
+      {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.36196464803407,
+        "bird": 48.54771784232365,
+        "ambrosia": 80.1762114537445
+      },
+      {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 61.173158827937925,
+        "bird": 44.81327800829875,
+        "ambrosia": 77.5330396475771
+      },
+      {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 59.33427166541759,
+        "bird": 47.302904564315355,
+        "ambrosia": 71.36563876651982
+      },
+      {
+        "case": "sql_rules",
+        "features": [
+          14,
+          35
+        ],
+        "macro_accuracy": 59.30868079039245,
+        "bird": 48.13278008298755,
+        "ambrosia": 70.48458149779735
+      },
+      {
+        "case": "feat_14",
+        "features": [
+          14
+        ],
+        "macro_accuracy": 58.906538468568925,
+        "bird": 46.88796680497925,
+        "ambrosia": 70.9251101321586
+      },
+      {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 57.03931855155648,
+        "bird": 43.15352697095436,
+        "ambrosia": 70.9251101321586
+      }
+    ]
+  },
+  "leaders": {
+    "train": {
+      "bird": {
+        "case": "hybrid_plus_2",
+        "features": [
+          2,
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 68.4019982038617,
+        "bird": 61.06870229007634,
+        "ambrosia": 75.73529411764706
+      },
+      "ambrosia": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 67.58251010327795,
+        "bird": 56.48854961832061,
+        "ambrosia": 78.67647058823529
+      },
+      "macro_accuracy": {
+        "case": "hybrid_plus_2",
+        "features": [
+          2,
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 68.4019982038617,
+        "bird": 61.06870229007634,
+        "ambrosia": 75.73529411764706
+      }
+    },
+    "dev": {
+      "bird": {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 58.77470355731225,
+        "bird": 43.63636363636363,
+        "ambrosia": 73.91304347826087
+      },
+      "ambrosia": {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 57.312252964426875,
+        "bird": 36.36363636363637,
+        "ambrosia": 78.26086956521739
+      },
+      "macro_accuracy": {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 58.77470355731225,
+        "bird": 43.63636363636363,
+        "ambrosia": 73.91304347826087
+      }
+    },
+    "full": {
+      "bird": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.36196464803407,
+        "bird": 48.54771784232365,
+        "ambrosia": 80.1762114537445
+      },
+      "ambrosia": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.36196464803407,
+        "bird": 48.54771784232365,
+        "ambrosia": 80.1762114537445
+      },
+      "macro_accuracy": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.36196464803407,
+        "bird": 48.54771784232365,
+        "ambrosia": 80.1762114537445
+      }
+    }
+  },
+  "best_by_flag_count": {
+    "train": {
+      "0": {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 59.7636955545577,
+        "bird": 51.14503816793893,
+        "ambrosia": 68.38235294117646
+      },
+      "1": {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 64.20352492141895,
+        "bird": 52.67175572519084,
+        "ambrosia": 75.73529411764706
+      },
+      "2": {
+        "case": "core_without_tsv",
+        "features": [
+          14,
+          32
+        ],
+        "macro_accuracy": 66.08385720700494,
+        "bird": 54.961832061068705,
+        "ambrosia": 77.20588235294117
+      },
+      "3": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 67.58251010327795,
+        "bird": 56.48854961832061,
+        "ambrosia": 78.67647058823529
+      },
+      "4": {
+        "case": "hybrid_plus_2",
+        "features": [
+          2,
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 68.4019982038617,
+        "bird": 61.06870229007634,
+        "ambrosia": 75.73529411764706
+      }
+    },
+    "dev": {
+      "0": {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 55.138339920948624,
+        "bird": 36.36363636363637,
+        "ambrosia": 73.91304347826087
+      },
+      "1": {
+        "case": "feat_35",
+        "features": [
+          35
+        ],
+        "macro_accuracy": 58.77470355731225,
+        "bird": 43.63636363636363,
+        "ambrosia": 73.91304347826087
+      },
+      "2": {
+        "case": "sql_rules",
+        "features": [
+          14,
+          35
+        ],
+        "macro_accuracy": 56.04743083003953,
+        "bird": 38.18181818181818,
+        "ambrosia": 73.91304347826087
+      },
+      "3": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 58.22134387351778,
+        "bird": 38.18181818181818,
+        "ambrosia": 78.26086956521739
+      }
+    },
+    "full": {
+      "0": {
+        "case": "baseline",
+        "features": [],
+        "macro_accuracy": 57.03931855155648,
+        "bird": 43.15352697095436,
+        "ambrosia": 70.9251101321586
+      },
+      "1": {
+        "case": "feat_32",
+        "features": [
+          32
+        ],
+        "macro_accuracy": 61.173158827937925,
+        "bird": 44.81327800829875,
+        "ambrosia": 77.5330396475771
+      },
+      "2": {
+        "case": "sql_rules",
+        "features": [
+          14,
+          35
+        ],
+        "macro_accuracy": 59.30868079039245,
+        "bird": 48.13278008298755,
+        "ambrosia": 70.48458149779735
+      },
+      "3": {
+        "case": "sql_ambiguity",
+        "features": [
+          14,
+          32,
+          35
+        ],
+        "macro_accuracy": 64.36196464803407,
+        "bird": 48.54771784232365,
+        "ambrosia": 80.1762114537445
+      }
+    }
+  }
+}

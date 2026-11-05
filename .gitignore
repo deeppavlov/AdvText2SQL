@@ -2,6 +2,7 @@
 __pycache__/
 .venv/
 .ruff_cache/
+/.cache/classifier/
 *.py[codz]
 *$py.class
 
@@ -35,7 +36,22 @@ all_predicted_results.json
 
 # Логи (большие, в git не нужны — достаточно summary и query_results)
 *.log
-ablation_odd_master.log
+*.log.[0-9]*
+*.log.gz
+/logs/
+# Журналы запросов и диагностики остаются рядом с локальными результатами.
+# Не исключаем все JSONL: data/** и решения селектора нужны для обучения/оценки.
+/research_results/**/raw_responses.jsonl
+/research_results/**/attempt_history.jsonl
+/research_results/**/question_usage.jsonl
+/research_results/**/schema_preflight.jsonl
+/research_results/**/invalid_outputs.jsonl
+/research_results/**/transport_events.jsonl
+/research_results/**/monitor_stop.json
+/research_results/**/suite_status.json
+/research_results/**/key_usage_snapshot.json
+# Локальные инструменты и результаты проверки перед коммитом.
+/.cache/precommit_review/
 
 # local/ скрипты — трекаем (убрана строка local/*)
 
@@ -53,3 +69,4 @@ presentations/
 
 plan.md
 docs/security_review.md
+docs/13_ilya_repository_review.md

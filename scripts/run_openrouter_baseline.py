@@ -2,6 +2,7 @@
 
 import argparse
 import asyncio
+from contextvars import ContextVar
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -57,7 +58,12 @@ async def run(args):
     backend = api_backend(os.environ.get("LLM_BASE_URL", ""))
     if backend == "deepseek" and args.provider:
         raise ValueError("--provider is only supported with OpenRouter")
-    flags = feature_flags(args.configuration, args.enabled_features)
+    learned = args.configuration == "multilabel"
+    dynamic = args.configuration in ("selector", "multilabel")
+    experimental = bool(args.protocol_sha256) or learned
+    flags = (feature_flags("baseline") if learned else feature_flags("ablation", [35])
+             if dynamic else feature_flags(args.configuration, args.enabled_features))
+    question_context = ContextVar("classifier_question", default=None)
     for flag, enabled in flags.items():
         os.environ[flag] = str(enabled).lower()
     retries = 5 if args.configuration != "baseline" or args.protocol_sha256 else 1
@@ -74,6 +80,40 @@ async def run(args):
     from ambrosia_subset import prepare_subset
     from adv_text2sql.mcp_servers.text2sql_tool.src import text2sql_implementation as implementation
 
+    selector = selector_info = None
+    if args.configuration == "selector":
+        from adv_text2sql.mcp_servers.text2sql_tool.src.feature_selector import RuleBasedFeatureSelector
+        from adv_text2sql.mcp_servers.text2sql_tool.src.selective_generator import SelectiveText2SQLGenerator
+        policy_path = (ROOT / args.selector_policy).resolve()
+        selector = RuleBasedFeatureSelector.from_file(policy_path)
+        policy_data = json.loads(policy_path.read_text(encoding="utf-8-sig"))
+        if any(hashlib.sha256((ROOT / file).read_bytes()).hexdigest() != expected
+               for file, expected in policy_data["source_files_sha256"].items()):
+            raise ValueError("Code changed since selector selection; prepare a new experiment")
+        model = policy_data["model"]
+        if (args.model != model["model"] or os.environ["LLM_BASE_URL"].rstrip("/") != model["base_url"].rstrip("/")
+                or os.environ.get("LLM_MODEL_VERSION") != model["model_version"]):
+            raise ValueError("Selector policy requires the original model, version, and API endpoint")
+        selector_info = {"policy": selector.policy, "policy_sha256": hashlib.sha256(policy_path.read_bytes()).hexdigest(),
+                         "candidate_features": policy_data["configurations"], "schema_preparation_flags": flags}
+
+    classifier_rows = None
+    if learned:
+        from adv_text2sql.mcp_servers.text2sql_tool.src.multilabel_classifier import MultilabelFeatureSelector
+        from adv_text2sql.mcp_servers.text2sql_tool.src.multilabel_generator import MultilabelText2SQLGenerator
+        from train_multilabel_classifier import validate_artifact, load_rows
+        classifier_path = (ROOT / args.classifier_model).resolve()
+        classifier_data, classifier_dataset = validate_artifact(classifier_path)
+        _, classifier_rows = load_rows(classifier_dataset)
+        selector = MultilabelFeatureSelector(classifier_path, ROOT / args.classifier_encoder)
+        model = classifier_data["generator_model"]
+        if (args.model != model["model"] or os.environ["LLM_BASE_URL"].rstrip("/") != model["base_url"].rstrip("/")
+                or os.environ.get("LLM_MODEL_VERSION") != model["model_version"]):
+            raise ValueError("Classifier requires its original generator model/version/endpoint")
+        selector_info = {"classifier_sha256": hashlib.sha256((classifier_path / "model.json").read_bytes()).hexdigest(),
+                         "features": classifier_data["feature_numbers"], "threshold": classifier_data["threshold"],
+                         "max_features": classifier_data["max_features"], "partition": args.classifier_split}
+
     prompt_info = None
     if args.ambiguity_prompt == "main":
         from prompt_versions import load_main_prompt
@@ -86,7 +126,34 @@ async def run(args):
             self.engine.dispose()
             self.engine = database_engine(db_uri)
 
-    if args.configuration in ("ablation", "combination") and not args.output:
+    if dynamic:
+        class RoutedGenerator(MultilabelText2SQLGenerator if learned else SelectiveText2SQLGenerator):
+            def __init__(self, db_uri, llm_client):
+                super().__init__(db_uri, llm_client, selector=selector, engine_factory=database_engine)
+
+            async def query(self, user_query):
+                context = {"db_id": self.db_uri.rsplit("/", 1)[-1] if learned else None,
+                           "question_sha256": hashlib.sha256(user_query.encode("utf-8")).hexdigest(),
+                           "prompt_tokens": 0, "completion_tokens": 0, "recorded_calls": 0}
+                token = question_context.set(context)
+                try:
+                    result = await super().query(user_query)
+                finally:
+                    question_context.reset(token)
+                record = {"question_sha256": hashlib.sha256(user_query.encode("utf-8")).hexdigest(),
+                          **result["feature_selection"], "response_status": result["status"]}
+                if learned:
+                    record.update(db_id=context["db_id"], usage={key: context[key] for key in
+                                  ("prompt_tokens", "completion_tokens", "recorded_calls")},
+                                  includes_lazy_schema_preparation=True)
+                try:
+                    with Path("selector_decisions.jsonl").open("a", encoding="utf-8") as stream:
+                        stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+                except OSError as error:
+                    raise ArtifactWriteError("Cannot preserve selector decision; benchmark stopped") from error
+                return result
+
+    if args.configuration in ("ablation", "combination", "selector", "multilabel") and not args.output:
         raise ValueError("Feature experiments require an explicit --output folder")
     default_output = {
         "baseline": "research_results/runs/gpt54mini_baseline_large_20261016",
@@ -123,13 +190,29 @@ async def run(args):
         else:
             items = json.loads(dataset.read_text(encoding="utf-8"))
             dataset_sha256 = hashlib.sha256(dataset.read_bytes()).hexdigest()
+        partition_info = None
+        if learned:
+            wanted = {row["question_id"] for row in classifier_rows if row["benchmark"] == name and
+                      (args.classifier_split == "all" or row["split"] == args.classifier_split)}
+            items = [item for item in items if str(item["question_id"]) in wanted]
+            if {str(item["question_id"]) for item in items} != wanted or not items:
+                raise ValueError("Classifier partition differs from benchmark question coverage")
+            partition_info = {"name": args.classifier_split, "source_dataset_sha256": dataset_sha256,
+                              "question_ids": [str(item["question_id"]) for item in items]}
+            dataset_content = json.dumps(items, ensure_ascii=False, indent=2)
+            dataset_sha256 = hashlib.sha256(dataset_content.encode("utf-8")).hexdigest()
+            dataset = directory / "dataset.json"
         identity = {
             "model": args.model, "reasoning_effort": "none", "temperature": 0,
             "max_output_tokens": 4096,
             "dataset_sha256": dataset_sha256,
-            "feature_flags": flags,
+            "feature_flags": None if dynamic else flags,
             "use_evidence": name == "bird",
         }
+        if dynamic:
+            identity["selector"] = selector_info
+        if learned:
+            identity.update(classifier_partition=partition_info, request_options=client_options(backend, True, args.provider))
         if args.protocol_sha256:
             identity.update(protocol_sha256=args.protocol_sha256, max_retries=retries,
                             api_backend=backend, base_url=os.environ["LLM_BASE_URL"].rstrip("/"),
@@ -151,7 +234,8 @@ async def run(args):
                               "questions": len(items), "databases": len({x['db_id'] for x in items}),
                               "model": args.model, "api_backend": backend, "output": str(directory),
                               "enabled_features": [f for f, enabled in flags.items() if enabled],
-                              "max_retries": retries, "ambiguity_prompt": args.ambiguity_prompt}, indent=2))
+                              "max_retries": retries, "ambiguity_prompt": args.ambiguity_prompt,
+                              **({"selector": selector_info} if dynamic else {})}, indent=2))
             continue
         metadata_path = directory / "metadata.json"
         if metadata_path.exists():
@@ -172,6 +256,8 @@ async def run(args):
         if bird_selection is not None:
             dataset.write_bytes(dataset_content.encode("utf-8"))
             save(directory / "selection_manifest.json", bird_selection)
+        if learned:
+            dataset.write_bytes(dataset_content.encode("utf-8"))
 
         metadata = {"configuration": identity, "status": "running", "questions": len(items),
                     "started_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -197,7 +283,7 @@ async def run(args):
                 temperature=0, max_tokens=4096, max_retries=2, timeout=90,
                 model_info={"json_output": False, "function_calling": True, "vision": False,
                             "family": "unknown", "structured_output": False},
-                **client_options(backend, bool(args.protocol_sha256), args.provider),
+                **client_options(backend, experimental, args.provider),
             )
             benchmark = None
             tools = {}
@@ -206,10 +292,10 @@ async def run(args):
                 async def create(self, *call_args, **call_kwargs):
                     try:
                         response = await client.create(*call_args, **call_kwargs)
-                        if args.protocol_sha256 and (not isinstance(response.content, str) or not response.content.strip()):
+                        if experimental and (not isinstance(response.content, str) or not response.content.strip()):
                             raise ValueError("Provider returned empty or non-text content")
                     except Exception as error:
-                        if args.protocol_sha256:
+                        if experimental:
                             failures = metadata.get("consecutive_api_errors", 0) + 1
                             metadata.update(consecutive_api_errors=failures,
                                             last_api_error_type=type(error).__name__)
@@ -217,7 +303,7 @@ async def run(args):
                             if failures >= 3 or getattr(error, "status_code", None) in (401, 402, 403, 404):
                                 raise ProviderUnavailable("Provider failed; ablation stopped to preserve the budget") from None
                         raise
-                    if args.protocol_sha256:
+                    if experimental:
                         metadata["consecutive_api_errors"] = 0
                         metadata["last_llm_activity_utc"] = datetime.now(timezone.utc).isoformat()
                     messages = call_args[0] if call_args else call_kwargs.get("messages", [])
@@ -228,12 +314,18 @@ async def run(args):
                         "prompt_tokens": response.usage.prompt_tokens,
                         "completion_tokens": response.usage.completion_tokens,
                     }
+                    context = question_context.get()
+                    if learned and context is not None:
+                        record["question_context"] = {key: context[key] for key in ("db_id", "question_sha256")}
+                        context["prompt_tokens"] += response.usage.prompt_tokens
+                        context["completion_tokens"] += response.usage.completion_tokens
+                        context["recorded_calls"] += 1
                     try:
                         with (directory / "raw_responses.jsonl").open("a", encoding="utf-8") as stream:
                             stream.write(json.dumps(record, ensure_ascii=False) + "\n")
                     except OSError as error:
                         raise ArtifactWriteError("Cannot preserve the model response; benchmark stopped") from error
-                    if args.protocol_sha256:
+                    if experimental:
                         # Preserve a paid response before updating observational metadata.
                         save(metadata_path, metadata)
                     return response
@@ -246,7 +338,10 @@ async def run(args):
                 if backend == "deepseek" and not metadata["key_before"]["is_available"]:
                     raise RuntimeError("DeepSeek account has insufficient balance; top up before running")
                 print(f"Starting {name}: {len(items)} questions, {args.model}, {args.configuration}", flush=True)
-                print("Enabled features:", [f for f, enabled in flags.items() if enabled], flush=True)
+                if dynamic:
+                    print("Selector:", selector_info, flush=True)
+                else:
+                    print("Enabled features:", [f for f, enabled in flags.items() if enabled], flush=True)
                 cls = BenchmarkBIRD if name == "bird" else BenchmarkAmbrosia
                 kwargs = {"use_evidence": True} if name == "bird" else {}
                 benchmark = cls(db_url="127.0.0.1:5444", query_file=str(dataset),
@@ -257,7 +352,7 @@ async def run(args):
                     metadata.update(update)
                     save(metadata_path, metadata)
 
-                if args.protocol_sha256:
+                if experimental:
                     # Fail before schema enrichment, which can itself call the model (FEAT_23).
                     probe = await RecordingClient().create(
                         [UserMessage(content="Reply with exactly OK.", source="user")],
@@ -265,14 +360,15 @@ async def run(args):
                     if probe.content.strip().upper().rstrip(".") != "OK":
                         raise RuntimeError("Model probe did not return OK; check model and reasoning settings")
                 build_items = items
-                if args.protocol_sha256 and (directory / "query_results.json").exists():
+                if experimental and (directory / "query_results.json").exists():
                     checkpoint = json.loads((directory / "query_results.json").read_text(encoding="utf-8-sig"))
                     if not set(checkpoint) <= {str(item["question_id"]) for item in items}:
                         raise RuntimeError("Checkpoint contains IDs outside the dataset")
                     build_items = [item for item in items if str(item["question_id"]) not in checkpoint]
-                tools = await build_tools(build_items, BaselineGenerator, benchmark.llm_client, progress)
+                tools = await build_tools(build_items, RoutedGenerator if dynamic else BaselineGenerator,
+                                          benchmark.llm_client, progress)
                 # Schema preparation is free of LLM calls; test the provider only once it succeeds.
-                if not args.protocol_sha256:
+                if not experimental:
                     await client.create([UserMessage(content="Reply with exactly OK.", source="user")],
                                         extra_create_args={"max_tokens": 16})
                 progress({"phase": "predicting"})
@@ -306,6 +402,10 @@ async def run(args):
                         "dataset_sha256": subset["dataset_sha256"],
                     }
                 save(directory / "report.json", report)
+                if learned:
+                    from classifier_benchmark import compare_with_controls
+                    comparison = compare_with_controls(classifier_rows, name, items, predictions, report)
+                    save(directory / "comparison.json", comparison)
                 if bird_selection is not None:
                     from bird_subset import compare_subset
                     save(directory / "comparison.json", compare_subset(ROOT, directory, bird_selection, report))
@@ -335,7 +435,10 @@ async def run(args):
                 metadata["finished_at_utc"] = datetime.now(timezone.utc).isoformat()
                 save(metadata_path, metadata)
                 for tool in tools.values():
-                    tool.engine.dispose()
+                    if dynamic:
+                        tool.close()
+                    else:
+                        tool.engine.dispose()
                 await client.close()
                 logger = logging.getLogger("text2sql_tool")
                 for handler in list(logger.handlers):
@@ -349,7 +452,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--benchmark", choices=["bird", "ambrosia", "both"], default="both")
     parser.add_argument("--model", default="openai/gpt-5.4-mini")
-    parser.add_argument("--configuration", choices=["baseline", "hybrid", "hybrid_no32_33", "ablation", "combination"], default="baseline")
+    parser.add_argument("--configuration", choices=["baseline", "hybrid", "hybrid_no32_33", "ablation", "combination", "selector", "multilabel"], default="baseline")
+    parser.add_argument("--selector-policy", help="Frozen selection.json produced by evaluate_rule_selector.py prepare")
+    parser.add_argument("--classifier-model", help="Frozen classifier directory containing model.json and head.npz")
+    parser.add_argument("--classifier-encoder", default=".cache/classifier/minilm")
+    parser.add_argument("--classifier-split", choices=["test", "dev", "all"], default="test")
     parser.add_argument("--evaluation-policy", choices=["legacy", "strict"], default="legacy",
                         help="Strict Ambrosia scoring counts generation errors as incorrect")
     parser.add_argument("--enabled-features", nargs="+", type=int)
@@ -367,6 +474,18 @@ if __name__ == "__main__":
                         help="Ambrosia defaults to the explicit historical 227-question subset")
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
+    if args.configuration == "selector":
+        if (not args.selector_policy or not args.output or args.enabled_features or args.ambiguity_prompt != "current"
+                or args.evaluation_policy != "strict"):
+            parser.error("selector requires --selector-policy, --output, --evaluation-policy strict, current prompts, no explicit flags")
+    elif args.selector_policy:
+        parser.error("--selector-policy requires --configuration selector")
+    if args.configuration == "multilabel":
+        if (not args.classifier_model or not args.output or args.enabled_features or args.ambiguity_prompt != "current"
+                or args.evaluation_policy != "strict" or args.ambrosia_subset != "available227"):
+            parser.error("multilabel requires --classifier-model, --output, strict evaluation, current prompts, available227 and no explicit flags")
+    elif args.classifier_model:
+        parser.error("--classifier-model requires --configuration multilabel")
     if args.bird_ambiguous_source and (args.benchmark != "bird" or args.configuration != "hybrid_no32_33"):
         parser.error("--bird-ambiguous-source requires --benchmark bird --configuration hybrid_no32_33")
     if args.configuration == "hybrid_no32_33" and args.benchmark != "bird":

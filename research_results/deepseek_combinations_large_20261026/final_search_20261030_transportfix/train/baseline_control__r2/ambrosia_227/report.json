@@ -1,0 +1,22 @@
+{
+  "evaluation_policy": "ambrosia-strict-v1",
+  "accuracy": 68.33333333333333,
+  "legacy_accuracy": 68.33333333333333,
+  "total": 120,
+  "gold_ambiguous": 38,
+  "pred_ambiguous": 0,
+  "true_positive": 0,
+  "generation_errors": 0,
+  "ambiguity_metrics": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 38,
+    "tn": 82,
+    "errors_ambiguous": 0,
+    "errors_unambiguous": 0,
+    "precision": null,
+    "recall": 0.0,
+    "f1": 0.0,
+    "balanced_accuracy": 0.5
+  }
+}

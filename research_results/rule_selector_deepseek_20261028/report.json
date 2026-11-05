@@ -1,0 +1,688 @@
+{
+  "cost_policy": "run-mean proxy only; exact per-question costs are unavailable",
+  "dataset_manifest_sha256": "33dc04cf8e6bfab1d098634bcc7a6255317ba5f195cada617f2fd064c3306e9c",
+  "format_version": "rule-selector-replay-v1",
+  "live_llm_calls": 0,
+  "possible_prompt_example_overlap": {
+    "dev": {
+      "family_rows": 6,
+      "questions": 5
+    },
+    "test": {
+      "family_rows": 6,
+      "questions": 5
+    },
+    "train": {
+      "family_rows": 6,
+      "questions": 3
+    }
+  },
+  "retrospective_test": true,
+  "selected_policy": "strong_signals",
+  "selection_sha256": "3f0820efd58028e1398b44b35ee874f818006e2fe758a7b1ff6d09f6028da0cb",
+  "splits": {
+    "dev": {
+      "economical": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 73.91304347826087,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5384615384615384,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.14285714285714285,
+              "fn": 12,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 0.07692307692307693,
+              "tn": 33,
+              "tp": 1
+            },
+            "choices": {
+              "economical": 46,
+              "hybrid": 0
+            },
+            "correct": 34,
+            "estimated_calls_from_run_means": 90.98678414096916,
+            "estimated_tokens_from_run_means": 58594.88105726872,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 41,
+            "questions": 46,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 7,
+                "net_correct": -2,
+                "rescued": 5
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 43.63636363636363,
+            "choices": {
+              "economical": 55,
+              "hybrid": 0
+            },
+            "correct": 24,
+            "estimated_calls_from_run_means": 110.22821576763485,
+            "estimated_tokens_from_run_means": 107873.02904564315,
+            "exact_selected_cost_available": false,
+            "execution_errors": 4,
+            "generation_errors": 0,
+            "oracle_correct": 27,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 3,
+                "net_correct": 3,
+                "rescued": 6
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 166467.91010291188,
+        "macro_accuracy": 58.77470355731225,
+        "policy": "always_economical"
+      },
+      "hybrid": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 78.26086956521739,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.7086247086247086,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.5833333333333334,
+              "fn": 6,
+              "fp": 4,
+              "precision": 0.6363636363636364,
+              "recall": 0.5384615384615384,
+              "tn": 29,
+              "tp": 7
+            },
+            "choices": {
+              "economical": 0,
+              "hybrid": 46
+            },
+            "correct": 36,
+            "estimated_calls_from_run_means": 66.4669603524229,
+            "estimated_tokens_from_run_means": 112061.47136563876,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 41,
+            "questions": 46,
+            "vs_static": {
+              "economical": {
+                "lost": 5,
+                "net_correct": 2,
+                "rescued": 7
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 38.18181818181818,
+            "choices": {
+              "economical": 0,
+              "hybrid": 55
+            },
+            "correct": 21,
+            "estimated_calls_from_run_means": 109.5435684647303,
+            "estimated_tokens_from_run_means": 223515.43568464732,
+            "exact_selected_cost_available": false,
+            "execution_errors": 2,
+            "generation_errors": 0,
+            "oracle_correct": 27,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 6,
+                "net_correct": -3,
+                "rescued": 3
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 335576.90705028607,
+        "macro_accuracy": 58.22134387351778,
+        "policy": "always_hybrid"
+      },
+      "selector": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 71.73913043478261,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.0,
+              "fn": 13,
+              "fp": 0,
+              "precision": null,
+              "recall": 0.0,
+              "tn": 33,
+              "tp": 0
+            },
+            "choices": {
+              "economical": 41,
+              "hybrid": 5
+            },
+            "correct": 33,
+            "estimated_calls_from_run_means": 88.3215859030837,
+            "estimated_tokens_from_run_means": 64406.46696035242,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 41,
+            "questions": 46,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": -1,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 7,
+                "net_correct": -3,
+                "rescued": 4
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 47.27272727272727,
+            "choices": {
+              "economical": 35,
+              "hybrid": 20
+            },
+            "correct": 26,
+            "estimated_calls_from_run_means": 109.97925311203319,
+            "estimated_tokens_from_run_means": 149924.8132780083,
+            "exact_selected_cost_available": false,
+            "execution_errors": 4,
+            "generation_errors": 0,
+            "oracle_correct": 27,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": 2,
+                "rescued": 3
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 5,
+                "rescued": 5
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 214331.28023836075,
+        "macro_accuracy": 59.50592885375494,
+        "policy": "strong_signals"
+      }
+    },
+    "test": {
+      "economical": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 75.55555555555556,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5416666666666666,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.15384615384615385,
+              "fn": 11,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 0.08333333333333333,
+              "tn": 33,
+              "tp": 1
+            },
+            "choices": {
+              "economical": 45,
+              "hybrid": 0
+            },
+            "correct": 34,
+            "estimated_calls_from_run_means": 89.00881057268722,
+            "estimated_tokens_from_run_means": 57321.07929515419,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 40,
+            "questions": 45,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 6,
+                "net_correct": -5,
+                "rescued": 1
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 34.54545454545455,
+            "choices": {
+              "economical": 55,
+              "hybrid": 0
+            },
+            "correct": 19,
+            "estimated_calls_from_run_means": 110.22821576763485,
+            "estimated_tokens_from_run_means": 107873.02904564315,
+            "exact_selected_cost_available": false,
+            "execution_errors": 3,
+            "generation_errors": 0,
+            "oracle_correct": 23,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 4,
+                "net_correct": -3,
+                "rescued": 1
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 165194.10834079733,
+        "macro_accuracy": 55.05050505050505,
+        "policy": "always_economical"
+      },
+      "hybrid": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 86.66666666666667,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.75,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.6666666666666666,
+              "fn": 6,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 0.5,
+              "tn": 33,
+              "tp": 6
+            },
+            "choices": {
+              "economical": 0,
+              "hybrid": 45
+            },
+            "correct": 39,
+            "estimated_calls_from_run_means": 65.02202643171806,
+            "estimated_tokens_from_run_means": 109625.35242290748,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 40,
+            "questions": 45,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": 5,
+                "rescued": 6
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 40.0,
+            "choices": {
+              "economical": 0,
+              "hybrid": 55
+            },
+            "correct": 22,
+            "estimated_calls_from_run_means": 109.5435684647303,
+            "estimated_tokens_from_run_means": 223515.43568464732,
+            "exact_selected_cost_available": false,
+            "execution_errors": 1,
+            "generation_errors": 0,
+            "oracle_correct": 23,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": 3,
+                "rescued": 4
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 333140.7881075548,
+        "macro_accuracy": 63.333333333333336,
+        "policy": "always_hybrid"
+      },
+      "selector": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 73.33333333333333,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.0,
+              "fn": 12,
+              "fp": 0,
+              "precision": null,
+              "recall": 0.0,
+              "tn": 33,
+              "tp": 0
+            },
+            "choices": {
+              "economical": 43,
+              "hybrid": 2
+            },
+            "correct": 33,
+            "estimated_calls_from_run_means": 87.94273127753304,
+            "estimated_tokens_from_run_means": 59645.71365638767,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 40,
+            "questions": 45,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": -1,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 6,
+                "net_correct": -6,
+                "rescued": 0
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 32.72727272727273,
+            "choices": {
+              "economical": 43,
+              "hybrid": 12
+            },
+            "correct": 18,
+            "estimated_calls_from_run_means": 110.07883817427386,
+            "estimated_tokens_from_run_means": 133104.09958506224,
+            "exact_selected_cost_available": false,
+            "execution_errors": 3,
+            "generation_errors": 0,
+            "oracle_correct": 23,
+            "questions": 55,
+            "vs_static": {
+              "economical": {
+                "lost": 1,
+                "net_correct": -1,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 4,
+                "net_correct": -4,
+                "rescued": 0
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 192749.8132414499,
+        "macro_accuracy": 53.03030303030303,
+        "policy": "strong_signals"
+      }
+    },
+    "train": {
+      "economical": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 69.11764705882354,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5131712259371833,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.08695652173913043,
+              "fn": 40,
+              "fp": 2,
+              "precision": 0.5,
+              "recall": 0.047619047619047616,
+              "tn": 92,
+              "tp": 2
+            },
+            "choices": {
+              "economical": 136,
+              "hybrid": 0
+            },
+            "correct": 94,
+            "estimated_calls_from_run_means": 269.0044052863436,
+            "estimated_tokens_from_run_means": 173237.0396475771,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 114,
+            "questions": 136,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 20,
+                "net_correct": -13,
+                "rescued": 7
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 54.19847328244275,
+            "choices": {
+              "economical": 131,
+              "hybrid": 0
+            },
+            "correct": 71,
+            "estimated_calls_from_run_means": 262.5435684647303,
+            "estimated_tokens_from_run_means": 256933.9419087137,
+            "exact_selected_cost_available": false,
+            "execution_errors": 2,
+            "generation_errors": 0,
+            "oracle_correct": 80,
+            "questions": 131,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              },
+              "hybrid": {
+                "lost": 9,
+                "net_correct": -3,
+                "rescued": 6
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 430170.98155629076,
+        "macro_accuracy": 61.65806017063314,
+        "policy": "always_economical"
+      },
+      "hybrid": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 78.67647058823529,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.6876899696048632,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.5538461538461539,
+              "fn": 24,
+              "fp": 5,
+              "precision": 0.782608695652174,
+              "recall": 0.42857142857142855,
+              "tn": 89,
+              "tp": 18
+            },
+            "choices": {
+              "economical": 0,
+              "hybrid": 136
+            },
+            "correct": 107,
+            "estimated_calls_from_run_means": 196.511013215859,
+            "estimated_tokens_from_run_means": 331312.17621145374,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 114,
+            "questions": 136,
+            "vs_static": {
+              "economical": {
+                "lost": 7,
+                "net_correct": 13,
+                "rescued": 20
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 56.48854961832061,
+            "choices": {
+              "economical": 0,
+              "hybrid": 131
+            },
+            "correct": 74,
+            "estimated_calls_from_run_means": 260.9128630705394,
+            "estimated_tokens_from_run_means": 532373.1286307054,
+            "exact_selected_cost_available": false,
+            "execution_errors": 3,
+            "generation_errors": 0,
+            "oracle_correct": 80,
+            "questions": 131,
+            "vs_static": {
+              "economical": {
+                "lost": 6,
+                "net_correct": 3,
+                "rescued": 9
+              },
+              "hybrid": {
+                "lost": 0,
+                "net_correct": 0,
+                "rescued": 0
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 863685.3048421592,
+        "macro_accuracy": 67.58251010327795,
+        "policy": "always_hybrid"
+      },
+      "selector": {
+        "benchmarks": {
+          "ambrosia": {
+            "accuracy": 69.8529411764706,
+            "ambiguity_metrics": {
+              "balanced_accuracy": 0.5250759878419453,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "f1": 0.1276595744680851,
+              "fn": 39,
+              "fp": 2,
+              "precision": 0.6,
+              "recall": 0.07142857142857142,
+              "tn": 92,
+              "tp": 3
+            },
+            "choices": {
+              "economical": 125,
+              "hybrid": 11
+            },
+            "correct": 95,
+            "estimated_calls_from_run_means": 263.1409691629956,
+            "estimated_tokens_from_run_means": 186022.52863436122,
+            "exact_selected_cost_available": false,
+            "execution_errors": 0,
+            "generation_errors": 0,
+            "oracle_correct": 114,
+            "questions": 136,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 1,
+                "rescued": 1
+              },
+              "hybrid": {
+                "lost": 19,
+                "net_correct": -12,
+                "rescued": 7
+              }
+            }
+          },
+          "bird": {
+            "accuracy": 54.961832061068705,
+            "choices": {
+              "economical": 115,
+              "hybrid": 16
+            },
+            "correct": 72,
+            "estimated_calls_from_run_means": 262.344398340249,
+            "estimated_tokens_from_run_means": 290575.3692946058,
+            "exact_selected_cost_available": false,
+            "execution_errors": 3,
+            "generation_errors": 0,
+            "oracle_correct": 80,
+            "questions": 131,
+            "vs_static": {
+              "economical": {
+                "lost": 0,
+                "net_correct": 1,
+                "rescued": 1
+              },
+              "hybrid": {
+                "lost": 8,
+                "net_correct": -2,
+                "rescued": 6
+              }
+            }
+          }
+        },
+        "estimated_total_tokens_from_run_means": 476597.897928967,
+        "macro_accuracy": 62.40738661876965,
+        "policy": "strong_signals"
+      }
+    }
+  }
+}

@@ -1,0 +1,489 @@
+{
+  "protocol_sha256": "4c81121bd6fcb86a24a3ee87d6ac66074741965b5ffabbdd3885c308e0309542",
+  "screen": [
+    {
+      "configuration": "baseline_control",
+      "round": 1,
+      "scope": "train",
+      "features": [],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "hybrid_control_repeat",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "hybrid_plus_2",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        14,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "core_without_tsv",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        32
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "statistics_compact",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        7,
+        14,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "statistics_types",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        3,
+        7,
+        14,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "statistics_counts",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        3,
+        4,
+        7,
+        14,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "sanitize_validate",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        15,
+        16,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "validated_retry",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        15,
+        16,
+        17,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "validated_feedback",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        15,
+        16,
+        17,
+        27,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "judged_feedback",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        15,
+        16,
+        17,
+        20,
+        27,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "validated_voting",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        15,
+        16,
+        28,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "routed_decomposition",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        14,
+        29,
+        30,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "statistics_repair",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        14,
+        15,
+        16,
+        17,
+        20,
+        27,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    },
+    {
+      "configuration": "statistics_routing",
+      "round": 1,
+      "scope": "train",
+      "features": [
+        2,
+        14,
+        29,
+        30,
+        32,
+        35
+      ],
+      "completed": false,
+      "benchmarks": {
+        "bird": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 131,
+          "accuracy": null
+        },
+        "ambrosia": {
+          "status": "pending",
+          "saved": 0,
+          "questions": 120,
+          "accuracy": null
+        }
+      },
+      "macro_accuracy": null,
+      "tokens": 0,
+      "calls": 0,
+      "comparisons": {}
+    }
+  ],
+  "finalists_and_controls": [],
+  "replicated": {
+    "train": [],
+    "dev": []
+  },
+  "cohorts": {
+    "train": {
+      "bird": 131,
+      "ambrosia": 120
+    },
+    "dev": {
+      "bird": 55,
+      "ambrosia": 46
+    }
+  },
+  "selection_status": "screening"
+}

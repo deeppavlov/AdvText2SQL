@@ -1,0 +1,28 @@
+{
+  "accuracy": 82.22222222222223,
+  "total": 45,
+  "gold_ambiguous": 12,
+  "pred_ambiguous": 6,
+  "true_positive": 5,
+  "generation_errors": 0,
+  "ambiguity_metrics": {
+    "tp": 5,
+    "fp": 1,
+    "fn": 7,
+    "tn": 32,
+    "errors_ambiguous": 0,
+    "errors_unambiguous": 0,
+    "precision": 0.8333333333333334,
+    "recall": 0.4166666666666667,
+    "f1": 0.5555555555555556,
+    "balanced_accuracy": 0.6931818181818182
+  },
+  "evaluation_policy": "ambrosia-strict-v1",
+  "legacy_accuracy": 82.22222222222223,
+  "dataset_coverage": {
+    "source_questions": 240,
+    "evaluated_questions": 45,
+    "excluded_questions": 13,
+    "dataset_sha256": "506b82add40b7e64d1f508191c57450c1466be0759f4ffb1959e32c124cc4231"
+  }
+}

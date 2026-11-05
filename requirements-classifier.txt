@@ -1,0 +1,4 @@
+# Optional classifier environment; the original project dependencies are unchanged.
+torch>=2.6,<3
+transformers>=4.45,<5
+safetensors>=0.4

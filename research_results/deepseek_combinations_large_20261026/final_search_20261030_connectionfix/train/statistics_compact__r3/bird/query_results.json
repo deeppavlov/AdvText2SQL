@@ -1,0 +1,10 @@
+{
+  "309": "error",
+  "223": "SELECT DISTINCT c.\"atom_id\"\nFROM \"connected\" c\nWHERE c.\"bond_id\" = 'TR000_2_5'\n\nUNION\n\n\nSELECT DISTINCT c.\"atom_id2\"\nFROM \"connected\" c\nWHERE c.\"bond_id\" = 'TR000_2_5';",
+  "326": "error",
+  "292": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nWHERE a.\"element\" = 'c'\n  AND CAST(SUBSTRING(a.\"molecule_id\" FROM 3 FOR 3) AS INTEGER) BETWEEN 10 AND 50;",
+  "199": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS non_carcinogenic_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND LOWER(a.\"element\") = 'na';",
+  "295": "SELECT COUNT(a.\"atom_id\") AS atom_count\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"element\" = 'h'\n  AND m.\"label\" = '+';",
+  "336": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS molecule_count\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND m.\"label\" = '-';",
+  "323": "error"
+}

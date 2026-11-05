@@ -2,6 +2,12 @@
 
 Единое место хранения исходных ответов, логов, абляций и диагностик.
 Краткие выводы по этапам находятся в [`docs/`](../docs/README.md).
+Текстовые логи и JSONL-журналы запросов/попыток/диагностики пишутся локально
+в подпапки соответствующих прогонов и исключены через [`.gitignore`](../.gitignore).
+В Git сохраняем итоговые отчёты, metadata, манифесты и ответы для датасетов.
+JSONL-датасеты и решения селектора не относятся к журналам и остаются доступными
+для версионирования. Для проверки протоколов, закрепляющих хеши сырых журналов,
+после чистого клонирования понадобятся локальные артефакты из архива экспериментов.
 Презентации и исторические Markdown-отчёты перенесены в
 [`защита/`](../защита/README.md). В папках абляций остаются исходные данные прогонов.
 
@@ -13,7 +19,19 @@
 | `deepseek_flash_ablation_large_20261024/` | Создаётся при ручном запуске новой серии: baseline и отдельные фичи; [протокол](../docs/03_deepseek_ablation.md) |
 | `deepseek_direct_ablation_large_20261024/` | Отдельная серия через прямой API DeepSeek и `.env.deepseek`; создаётся при ручном запуске |
 | `deepseek_combinations_large_20261026/` | Три этапа комбинаций на BIRD/Ambrosia, строгий подсчёт ошибок и сравнение с прежними контролями; [протокол](../docs/04_deepseek_combinations.md) |
+| `deepseek_combinations_large_20261026/search_v2_20261029/` | Продолжение поиска: 20 новых гипотез по этапам и отдельный повтор H, grouped train/dev/full, новые summary; [запуск](../docs/11_static_hybrid_experiments.md) |
+| `deepseek_combinations_large_20261026/quality_audit_20261029/` | Аудит всех 468 вопросов, 16 несоответствий Ambrosia, невалидные ответы и отдельные пересчёты; [выводы и v3](../docs/12_results_and_data_quality.md) |
+| `deepseek_combinations_large_20261026/search_v3_20261029/` | Создаётся при ручной подготовке/запуске нового протокола с проверкой ответов и реального каталога; по умолчанию несоответствия блокируют запуск |
+| `deepseek_combinations_large_20261026/final_search_20261030/` | Ограниченная серия: 15 масок, свежие контроли, фиксация финалистов и три повтора train/dev; [команды и объём](../docs/13_static_hybrid_confirmation.md) |
+| `deepseek_combinations_large_20261026/final_search_20261030_connectionfix/` | Продолжение с теми же масками и cohorts в отдельной версии подключения: retries preflight, диагностические папки до child; [исправление](../docs/14_static_hybrid_connection_fix.md) |
+| `deepseek_combinations_large_20261026/final_search_20261030_transportfix/` | Ограниченный поиск завершён, recovery сохранён; static_hybrid_conclusion.json фиксирует 14+32 как лучший наблюдаемый dev-профиль без доказанного выигрыша над H; [итоги](../docs/17_static_hybrid_dev.md) |
+| `deepseek_full_static_20261103/` | Завершены восемь full-запусков: BIRD 241 / Ambrosia 211; compact лучший BIRD/среднее, 14+32 лучшая Ambrosia; [результаты, ошибки и расходы](../docs/18_full_static_hybrid.md) |
 | `deepseek_relationships_large_20261026/` | FEAT_1 к выбранному гибриду 14+32+35; два новых запуска с прежними контролями; [протокол](../docs/04_deepseek_combinations.md) |
+| `rule_selector_deepseek_20261028/` | Офлайн-селектор: зафиксированный выбор по dev, сравнение train/dev/test и решения по вопросам; [отчёт](../docs/06_rule_selector.md) |
+| `multilabel_classifier_deepseek_20261029/` | Обученная линейная голова, замороженный encoder manifest, scaler и оценка меток; [протокол и ручной DeepSeek](../docs/08_multilabel_classifier.md) |
+| `multilabel_deepseek_test_20261029/` | Завершённый test 100 с выбранными фичами: BIRD 18/55, Ambrosia 37/45; [сравнение с контролями](multilabel_deepseek_test_20261029/comparison.md) |
+| `multilabel_structured_dev_20261029/` | Офлайн-эксперимент совместного выбора 35 / 14+35 / 14+32+35, четыре train CV-варианта и dev replay; [анализ](../docs/09_classifier_improvement.md) |
+| `static_hybrid_audit_20261029/` | Офлайн-аудит одиночных эффектов и предложение 20 новых масок; новые прогоны не запускались; [семантика и план](../docs/10_static_hybrid_search.md) |
 | `legacy_notes/` | Старые планы и заметки из `local/old`; это исторический контекст, не актуальные инструкции |
 | `legacy_snapshots/` | Прежние корневые JSON-снимки схем и результатов; не опорные метрики новых прогонов |
 | `organization_20261023/` | Проверка целостности переноса и список удалённых служебных файлов |
