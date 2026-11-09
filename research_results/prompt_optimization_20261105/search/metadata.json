@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "phase": "search",
+  "manifest_sha256": "637e096b04e2fd9ac9b990b896ce41c7ebecb1812b1b962026c7669cff03e5ef",
+  "current_database": "toxicology",
+  "databases_ready": 4,
+  "databases_total": 4,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "event": "schema_verified",
+  "question_id": "1394",
+  "build_attempt": 1,
+  "candidate": "6b8873e5a41ea99d4b7ad385e7809db738ca1a0b921d4826cc3865d27601818d",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-05T07:07:34.806405+00:00",
+  "saved_evaluations": 42,
+  "finished_at_utc": "2026-11-05T07:07:39.327952+00:00"
+}

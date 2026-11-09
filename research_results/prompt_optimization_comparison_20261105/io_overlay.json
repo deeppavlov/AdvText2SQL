@@ -1,0 +1,11 @@
+{
+  "version": "synced-io-overlay-v1",
+  "manifest_file_sha256": "ac77afd4bcbc522b283b984049b5b9a1d9a9bd5bf74d215ff04406505d2fd3d9",
+  "files_sha256": {
+    "scripts/durable_prompt_store.py": "ee2d42c843465ec299fc2a1a8c08affbd924f1b9e57feaaed34cc8df6e766633",
+    "scripts/prompt_comparison_durable.py": "9a658cc9678531226182ca22b708744678cf8c1a75f0654a92452129024c73e1",
+    "local/run_prompt_comparison_durable.ps1": "845f095fdf872f536a407ba59652d623b9c3e361fbc2b0a7920963641f86c07d",
+    "local/run_prompt_comparison_durable.sh": "6eead48b3613da4fb0427f2298dbc4f6ee031f02440508aaa74db167ccf0d311"
+  },
+  "policy": "Same prompts/generator/evaluator/budgets; flush+fsync before replace and after journal append"
+}

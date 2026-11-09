@@ -1,0 +1,4507 @@
+{
+  "candidates": [
+    {
+      "rules": "\n## Паттерн 1 — AND-scope (тип A3a)\n\nНАЙДИ в запросе структуру: \"[Тип A] and [Тип B] (with|who|which|that|where|serving) [условие]\"\nНеоднозначность: условие относится к обоим типам или только к последнему?\n\nОБРАТИ ВНИМАНИЕ: паттерн требует ДВА РАЗНЫХ ТИПА объектов через and, после которых\nидёт ограничительный клауз. Числа, даты и одиночные типы паттерн НЕ образуют.\n\nПримеры → is_ambiguous=true:\n- \"List all banquet halls and conference rooms with a 200 person capacity.\"\n  СТРУКТУРА: [banquet halls] and [conference rooms] WITH [a 200 person capacity]\n  ВОПРОС: with 200 — к halls тоже или только к rooms?\n\n- \"Give me restaurants and cafes that serve Italian cuisine.\"\n  СТРУКТУРА: [restaurants] and [cafes] THAT [serve Italian cuisine]\n  ВОПРОС: that serve — к restaurants тоже или только к cafes?\n\n- \"Show me chefs and servers who speak English.\"\n  СТРУКТУРА: [chefs] and [servers] WHO [speak English]\n  ВОПРОС: who speak — к chefs тоже или только к servers?\n\nПримеры → is_ambiguous=false:\n- \"Show all banquet halls and conference rooms where either can hold 200 people.\"\n  ПРИЧИНА: \"either\" после where = явная дизъюнкция, неоднозначности нет.\n\n- \"List all restaurants and also list cafes that serve Italian cuisine.\"\n  ПРИЧИНА: \"also list\" / \"also provide\" разбивает перечисление явно, это два раздельных запроса.\n\n- \"Provide a list of all chefs and also provide a list of servers who speak English.\"\n  ПРИЧИНА: \"also provide a list of\" = явное разделение на два отдельных запроса.\n\n- \"Which chefs speak English and which servers speak the same language?\"\n  ПРИЧИНА: \"which X [глагол] and which Y [глагол]\" = два параллельных полных предложения,\n  каждая часть имеет своё подлежащее и глагол. Ограничительного клауза нет.\n\n- \"What restaurants serve Italian cuisine and what cafes serve the same cuisine?\"\n  ПРИЧИНА: \"what X [глагол] and what Y [глагол]\" = параллельная структура двух вопросов.\n\n- \"How many schools have avg math > 560 and are directly funded?\"\n  ПРИЧИНА: один тип объектов (schools), два условия — нет двух типов.\n\n- \"Please provide a list of clients who were born between 1983 and 1987 and whose...\"\n  ПРИЧИНА: \"between 1983 and 1987\" — числовой диапазон, не два типа объектов.\n\n---\n\n## Паттерн 2 — Every/Each (тип A3b)\n\nНАЙДИ в запросе \"every\" или \"each\" в позиции универсального квантора над множеством сущностей.\nНеоднозначность: пересечение (то что есть у ВСЕХ) или перечисление (то что есть у КАЖДОЙ)?\n\nИСКЛЮЧЕНИЕ: \"For each X, ...\" = явная итерация — паттерна НЕТ.\n\nПримеры → is_ambiguous=true:\n- \"Tell me the systems every support specialist works with.\"\n  ВОПРОС: системы которые используют ВСЕ специалисты? Или список систем для каждого?\n\n- \"which system names and active statuses are associated with every IT support specialist?\"\n  ВОПРОС: те системы что у ВСЕХ или перечисление для каждого?\n\n- \"Which responsibilities are associated with each internship?\"\n  ВОПРОС: общие обязанности (INTERSECT)? Или список для каждой стажировки?\n\nПримеры → is_ambiguous=false:\n- \"For each IT support specialist, what are the corresponding systems?\"\n  ПРИЧИНА: \"For each X, ...\" = явная итерация, перечисление задано структурой предложения.\n\n- \"For each internship, could you provide the corresponding responsibilities?\"\n  ПРИЧИНА: то же — явная итерация.\n\n- \"What is the salary for a position that is common to all hospitals?\"\n  ПРИЧИНА: \"common to all\" = агрегат (EXISTS ALL / пересечение), семантика уже задана словом \"common\".\n  Это не квантор every/each — неоднозначности между INTERSECT и перечислением нет.\n\n- \"Which responsibility is shared among all internships?\"\n  ПРИЧИНА: \"shared among all\" = то же — слово \"shared\" само означает пересечение.\n  Паттерна every/each нет.\n\n---\n\n## Паттерн 3 — Расплывчатый термин (тип A1)\n\nИспользуй схему базы данных для этого паттерна:\n[DATABASE_SCHEMA]\n\nНАЙДИ: запрос содержит абстрактный термин (compensation, experience, location, contact,\nschedule, performance), И в схеме выше есть 2+ РАЗНЫХ колонки которые его означают.\n\nПримеры → is_ambiguous=true:\n- \"What compensation is offered?\" + схема имеет [salary_range] И [hourly_rate] → A1\n- \"What are the locations of rental properties?\" + схема имеет [street_address] И [city] как отдельные колонки → A1\n- \"What experience do I need?\" + схема имеет [minimum_years] И [preferred_years] → A1\n  (оба поля означают \"опыт\" — минимальный требуемый и предпочтительный)\n\nПримеры → is_ambiguous=false:\n- \"What is the salary of developers?\" → конкретная колонка, нет расплывчатости.\n- \"Where is the office located?\" → очевидно одна колонка address.\n- \"What are the street addresses and cities of properties?\" → запрос уже перечисляет обе колонки явно.\n"
+    },
+    {
+      "rules": "## Паттерн 1 — AND-scope (тип A3a)\n\nНАЙДИ в запросе структуру: \"[Тип A] and [Тип B] (with|who|which|that|where|serving) [условие]\"\nНеоднозначность: условие относится к обоим типам или только к последнему?\n\nОБРАТИ ВНИМАНИЕ: паттерн требует ДВА РАЗНЫХ ТИПА объектов через and, после которых\nидёт ограничительный клауз. Числа, даты и одиночные типы паттерн НЕ образуют.\n\nПримеры → is_ambiguous=true:\n- \"List all banquet halls and conference rooms with a 200 person capacity.\"\n  СТРУКТУРА: [banquet halls] and [conference rooms] WITH [a 200 person capacity]\n  ВОПРОС: with 200 — к halls тоже или только к rooms?\n\n- \"Give me restaurants and cafes that serve Italian cuisine.\"\n  СТРУКТУРА: [restaurants] and [cafes] THAT [serve Italian cuisine]\n  ВОПРОС: that serve — к restaurants тоже или только к cafes?\n\n- \"Show me chefs and servers who speak English.\"\n  СТРУКТУРА: [chefs] and [servers] WHO [speak English]\n  ВОПРОС: who speak — к chefs тоже или только к servers?\n\nПримеры → is_ambiguous=false:\n- \"Show all banquet halls and conference rooms where either can hold 200 people.\"\n  ПРИЧИНА: \"either\" после where = явная дизъюнкция, неоднозначности нет.\n\n- \"List all restaurants and also list cafes that serve Italian cuisine.\"\n  ПРИЧИНА: \"also list\" / \"also provide\" разбивает перечисление явно, это два раздельных запроса.\n\n- \"Provide a list of all chefs and also provide a list of servers who speak English.\"\n  ПРИЧИНА: \"also provide a list of\" = явное разделение на два отдельных запроса.\n\n- \"Which chefs speak English and which servers speak the same language?\"\n  ПРИЧИНА: \"which X [глагол] and which Y [глагол]\" = два параллельных полных предложения,\n  каждая часть имеет своё подлежащее и глагол. Ограничительного клауза нет.\n\n- \"What restaurants serve Italian cuisine and what cafes serve the same cuisine?\"\n  ПРИЧИНА: \"what X [глагол] and what Y [глагол]\" = параллельная структура двух вопросов.\n\n- \"How many schools have avg math > 560 and are directly funded?\"\n  ПРИЧИНА: один тип объектов (schools), два условия — нет двух типов.\n\n- \"Please provide a list of clients who were born between 1983 and 1987 and whose...\"\n  ПРИЧИНА: \"between 1983 and 1987\" — числовой диапазон, не два типа объектов.\n\n---\n\n## Паттерн 2 — Every/Each (тип A3b)\n\nНАЙДИ в запросе \"every\" или \"each\" в позиции универсального квантора над множеством сущностей.\nНеоднозначность: пересечение (то что есть у ВСЕХ) или перечисление (то что есть у КАЖДОЙ)?\n\nИСКЛЮЧЕНИЕ: \"For each X, ...\" = явная итерация — паттерна НЕТ.\n\nПримеры → is_ambiguous=true:\n- \"Tell me the systems every support specialist works with.\"\n  ВОПРОС: системы которые используют ВСЕ специалисты? Или список систем для каждого?\n\n- \"which system names and active statuses are associated with every IT support specialist?\"\n  ВОПРОС: те системы что у ВСЕХ или перечисление для каждого?\n\n- \"Which responsibilities are associated with each internship?\"\n  ВОПРОС: общие обязанности (INTERSECT)? Или список для каждой стажировки?\n\nПримеры → is_ambiguous=false:\n- \"For each IT support specialist, what are the corresponding systems?\"\n  ПРИЧИНА: \"For each X, ...\" = явная итерация, перечисление задано структурой предложения.\n\n- \"For each internship, could you provide the corresponding responsibilities?\"\n  ПРИЧИНА: то же — явная итерация.\n\n- \"What is the salary for a position that is common to all hospitals?\"\n  ПРИЧИНА: \"common to all\" = агрегат (EXISTS ALL / пересечение), семантика уже задана словом \"common\".\n  Это не квантор every/each — неоднозначности между INTERSECT и перечислением нет.\n\n- \"Which responsibility is shared among all internships?\"\n  ПРИЧИНА: \"shared among all\" = то же — слово \"shared\" само означает пересечение.\n  Паттерна every/each нет.\n\n---\n\n## Паттерн 3 — Расплывчатый термин (тип A1)\n\nИспользуй схему базы данных для этого паттерна:\n[DATABASE_SCHEMA]\n\nНАЙДИ: запрос содержит абстрактный термин (compensation, experience, location, contact,\nschedule, performance), И в схеме выше есть 2+ РАЗНЫХ колонки которые его означают.\n\nПримеры → is_ambiguous=true:\n- \"What compensation is offered?\" + схема имеет [salary_range] И [hourly_rate] → A1\n- \"What are the locations of rental properties?\" + схема имеет [street_address] И [city] как отдельные колонки → A1\n- \"What experience do I need?\" + схема имеет [minimum_years] И [preferred_years] → A1\n  (оба поля означают \"опыт\" — минимальный требуемый и предпочтительный)\n\nПримеры → is_ambiguous=false:\n- \"What is the salary of developers?\" → конкретная колонка, нет расплывчатости.\n- \"Where is the office located?\" → очевидно одна колонка address.\n- \"What are the street addresses and cities of properties?\" → запрос уже перечисляет обе колонки явно."
+    },
+    {
+      "rules": "## Паттерн 1 — AND-scope (тип A3a)\n\nНАЙДИ в запросе структуру: \"[Тип A] and [Тип B] (with|who|which|that|where|serving) [условие]\"\nНеоднозначность: условие относится к обоим типам или только к последнему?\n\nОБРАТИ ВНИМАНИЕ: паттерн требует ДВА РАЗНЫХ ТИПА объектов через and, после которых\nидёт ограничительный клауз. Числа, даты и одиночные типы паттерн НЕ образуют.\n\nПримеры → is_ambiguous=true:\n- \"List all banquet halls and conference rooms with a 200 person capacity.\"\n  СТРУКТУРА: [banquet halls] and [conference rooms] WITH [a 200 person capacity]\n  ВОПРОС: with 200 — к halls тоже или только к rooms?\n\n- \"Give me restaurants and cafes that serve Italian cuisine.\"\n  СТРУКТУРА: [restaurants] and [cafes] THAT [serve Italian cuisine]\n  ВОПРОС: that serve — к restaurants тоже или только к cafes?\n\n- \"Show me chefs and servers who speak English.\"\n  СТРУКТУРА: [chefs] and [servers] WHO [speak English]\n  ВОПРОС: who speak — к chefs тоже или только к servers?\n\nПримеры → is_ambiguous=false:\n- \"Show all banquet halls and conference rooms where either can hold 200 people.\"\n  ПРИЧИНА: \"either\" после where = явная дизъюнкция, неоднозначности нет.\n\n- \"List all restaurants and also list cafes that serve Italian cuisine.\"\n  ПРИЧИНА: \"also list\" / \"also provide\" разбивает перечисление явно, это два раздельных запроса.\n\n- \"Provide a list of all chefs and also provide a list of servers who speak English.\"\n  ПРИЧИНА: \"also provide a list of\" = явное разделение на два отдельных запроса.\n\n- \"Which chefs speak English and which servers speak the same language?\"\n  ПРИЧИНА: \"which X [глагол] and which Y [глагол]\" = два параллельных полных предложения,\n  каждая часть имеет своё подлежащее и глагол. Ограничительного клауза нет.\n\n- \"What restaurants serve Italian cuisine and what cafes serve the same cuisine?\"\n  ПРИЧИНА: \"what X [глагол] and what Y [глагол]\" = параллельная структура двух вопросов.\n\n- \"How many schools have avg math > 560 and are directly funded?\"\n  ПРИЧИНА: один тип объектов (schools), два условия — нет двух типов.\n\n- \"Please provide a list of clients who were born between 1983 and 1987 and whose...\"\n  ПРИЧИНА: \"between 1983 and 1987\" — числовой диапазон, не два типа объектов.\n\n---\n\n## Паттерн 2 — Every/Each (тип A3b)\n\nНАЙДИ в запросе \"every\" или \"each\" в позиции универсального квантора над множеством сущностей.\nНеоднозначность: пересечение (то что есть у ВСЕХ) или перечисление (то что есть у КАЖДОЙ)?\n\nИСКЛЮЧЕНИЕ: \"For each X, ...\" = явная итерация — паттерна НЕТ.\n\nПримеры → is_ambiguous=true:\n- \"Tell me the systems every support specialist works with.\"\n  ВОПРОС: системы которые используют ВСЕ специалисты? Или список систем для каждого?\n\n- \"which system names and active statuses are associated with every IT support specialist?\"\n  ВОПРОС: те системы что у ВСЕХ или перечисление для каждого?\n\n- \"Which responsibilities are associated with each internship?\"\n  ВОПРОС: общие обязанности (INTERSECT)? Или список для каждой стажировки?\n\nПримеры → is_ambiguous=false:\n- \"For each IT support specialist, what are the corresponding systems?\"\n  ПРИЧИНА: \"For each X, ...\" = явная итерация, перечисление задано структурой предложения.\n\n- \"For each internship, could you provide the corresponding responsibilities?\"\n  ПРИЧИНА: то же — явная итерация.\n\n- \"What is the salary for a position that is common to all hospitals?\"\n  ПРИЧИНА: \"common to all\" = агрегат (EXISTS ALL / пересечение), семантика уже задана словом \"common\".\n  Это не квантор every/each — неоднозначности между INTERSECT и перечислением нет.\n\n- \"Which responsibility is shared among all internships?\"\n  ПРИЧИНА: \"shared among all\" = то же — слово \"shared\" само означает пересечение.\n  Паттерна every/each нет.\n\n---\n\n## Паттерн 3 — Расплывчатый термин (тип A1)\n\nИспользуй схему базы данных для этого паттерна:\n[DATABASE_SCHEMA]\n\nНАЙДИ: запрос содержит абстрактный термин (compensation, experience, location, contact,\nschedule, performance), И в схеме выше есть 2+ РАЗНЫХ колонки которые его означают.\n\nПримеры → is_ambiguous=true:\n- \"What compensation is offered?\" + схема имеет [salary_range] И [hourly_rate] → A1\n- \"What are the locations of rental properties?\" + схема имеет [street_address] И [city] как отдельные колонки → A1\n- \"What experience do I need?\" + схема имеет [minimum_years] И [preferred_years] → A1\n  (оба поля означают \"опыт\" — минимальный требуемый и предпочтительный)\n\nПримеры → is_ambiguous=false:\n- \"What is the salary of developers?\" → конкретная колонка, нет расплывчатости.\n- \"Where is the office located?\" → очевидно одна колонка address.\n- \"What are the street addresses and cities of properties?\" → запрос уже перечисляет обе колонки явно."
+    },
+    {
+      "rules": "## Паттерн 1 — AND-scope (тип A3a)\n\nНАЙДИ в запросе структуру: \"[Тип A] and [Тип B] (with|who|which|that|where|serving) [условие]\"\nНеоднозначность: условие относится к обоим типам или только к последнему?\n\nОБРАТИ ВНИМАНИЕ: паттерн требует ДВА РАЗНЫХ ТИПА объектов через and, после которых\nидёт ограничительный клауз. Числа, даты и одиночные типы паттерн НЕ образуют.\n\nПримеры → is_ambiguous=true:\n- \"List all banquet halls and conference rooms with a 200 person capacity.\"\n  СТРУКТУРА: [banquet halls] and [conference rooms] WITH [a 200 person capacity]\n  ВОПРОС: with 200 — к halls тоже или только к rooms?\n\n- \"Give me restaurants and cafes that serve Italian cuisine.\"\n  СТРУКТУРА: [restaurants] and [cafes] THAT [serve Italian cuisine]\n  ВОПРОС: that serve — к restaurants тоже или только к cafes?\n\n- \"Show me chefs and servers who speak English.\"\n  СТРУКТУРА: [chefs] and [servers] WHO [speak English]\n  ВОПРОС: who speak — к chefs тоже или только к servers?\n\nПримеры → is_ambiguous=false:\n- \"Show all banquet halls and conference rooms where either can hold 200 people.\"\n  ПРИЧИНА: \"either\" после where = явная дизъюнкция, неоднозначности нет.\n\n- \"List all restaurants and also list cafes that serve Italian cuisine.\"\n  ПРИЧИНА: \"also list\" / \"also provide\" разбивает перечисление явно, это два раздельных запроса.\n\n- \"Provide a list of all chefs and also provide a list of servers who speak English.\"\n  ПРИЧИНА: \"also provide a list of\" = явное разделение на два отдельных запроса.\n\n- \"Which chefs speak English and which servers speak the same language?\"\n  ПРИЧИНА: \"which X [глагол] and which Y [глагол]\" = два параллельных полных предложения,\n  каждая часть имеет своё подлежащее и глагол. Ограничительного клауза нет.\n\n- \"What restaurants serve Italian cuisine and what cafes serve the same cuisine?\"\n  ПРИЧИНА: \"what X [глагол] and what Y [глагол]\" = параллельная структура двух вопросов.\n\n- \"How many schools have avg math > 560 and are directly funded?\"\n  ПРИЧИНА: один тип объектов (schools), два условия — нет двух типов.\n\n- \"Please provide a list of clients who were born between 1983 and 1987 and whose...\"\n  ПРИЧИНА: \"between 1983 and 1987\" — числовой диапазон, не два типа объектов.\n\n---\n\n## Паттерн 2 — Every/Each (тип A3b)\n\nНАЙДИ в запросе \"every\" или \"each\" в позиции универсального квантора над множеством сущностей.\nНеоднозначность: пересечение (то что есть у ВСЕХ) или перечисление (то что есть у КАЖДОЙ)?\n\nИСКЛЮЧЕНИЕ: \"For each X, ...\" = явная итерация — паттерна НЕТ.\n\nПримеры → is_ambiguous=true:\n- \"Tell me the systems every support specialist works with.\"\n  ВОПРОС: системы которые используют ВСЕ специалисты? Или список систем для каждого?\n\n- \"which system names and active statuses are associated with every IT support specialist?\"\n  ВОПРОС: те системы что у ВСЕХ или перечисление для каждого?\n\n- \"Which responsibilities are associated with each internship?\"\n  ВОПРОС: общие обязанности (INTERSECT)? Или список для каждой стажировки?\n\nПримеры → is_ambiguous=false:\n- \"For each IT support specialist, what are the corresponding systems?\"\n  ПРИЧИНА: \"For each X, ...\" = явная итерация, перечисление задано структурой предложения.\n\n- \"For each internship, could you provide the corresponding responsibilities?\"\n  ПРИЧИНА: то же — явная итерация.\n\n- \"What is the salary for a position that is common to all hospitals?\"\n  ПРИЧИНА: \"common to all\" = агрегат (EXISTS ALL / пересечение), семантика уже задана словом \"common\".\n  Это не квантор every/each — неоднозначности между INTERSECT и перечислением нет.\n\n- \"Which responsibility is shared among all internships?\"\n  ПРИЧИНА: \"shared among all\" = то же — слово \"shared\" само означает пересечение.\n  Паттерна every/each нет.\n\n---\n\n## Паттерн 3 — Расплывчатый термин (тип A1)\n\nИспользуй схему базы данных для этого паттерна:\n[DATABASE_SCHEMA]\n\nНАЙДИ: запрос содержит абстрактный термин (compensation, experience, location, contact,\nschedule, performance), И в схеме выше есть 2+ РАЗНЫХ колонки которые его означают.\n\nПримеры → is_ambiguous=true:\n- \"What compensation is offered?\" + схема имеет [salary_range] И [hourly_rate] → A1\n- \"What are the locations of rental properties?\" + схема имеет [street_address] И [city] как отдельные колонки → A1\n- \"What experience do I need?\" + схема имеет [minimum_years] И [preferred_years] → A1\n  (оба поля означают \"опыт\" — минимальный требуемый и предпочтительный)\n\nПримеры → is_ambiguous=false:\n- \"What is the salary of developers?\" → конкретная колонка, нет расплывчатости.\n- \"Where is the office located?\" → очевидно одна колонка address.\n- \"What are the street addresses and cities of properties?\" → запрос уже перечисляет обе колонки явно."
+    }
+  ],
+  "parents": [
+    [
+      null
+    ],
+    [
+      0
+    ],
+    [
+      0
+    ],
+    [
+      0
+    ]
+  ],
+  "val_aggregate_scores": [
+    0.8333333333333334,
+    0.8166666666666667,
+    0.8166666666666667,
+    0.8166666666666667
+  ],
+  "val_subscores": [
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 1.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 1.0,
+      "16": 0.0,
+      "17": 1.0,
+      "18": 1.0,
+      "19": 1.0,
+      "20": 1.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 1.0,
+      "24": 1.0,
+      "25": 1.0,
+      "26": 0.0,
+      "27": 1.0,
+      "28": 1.0,
+      "29": 1.0,
+      "30": 1.0,
+      "31": 1.0,
+      "32": 1.0,
+      "33": 1.0,
+      "34": 0.0,
+      "35": 1.0,
+      "36": 1.0,
+      "37": 1.0,
+      "38": 1.0,
+      "39": 1.0,
+      "40": 1.0,
+      "41": 0.0,
+      "42": 1.0,
+      "43": 1.0,
+      "44": 1.0,
+      "45": 1.0,
+      "46": 0.0,
+      "47": 1.0,
+      "48": 0.0,
+      "49": 1.0,
+      "50": 0.0,
+      "51": 1.0,
+      "52": 1.0,
+      "53": 1.0,
+      "54": 1.0,
+      "55": 1.0,
+      "56": 0.0,
+      "57": 1.0,
+      "58": 0.0,
+      "59": 1.0
+    },
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 1.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 1.0,
+      "16": 0.0,
+      "17": 1.0,
+      "18": 1.0,
+      "19": 1.0,
+      "20": 1.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 1.0,
+      "24": 1.0,
+      "25": 1.0,
+      "26": 0.0,
+      "27": 1.0,
+      "28": 1.0,
+      "29": 1.0,
+      "30": 1.0,
+      "31": 1.0,
+      "32": 1.0,
+      "33": 1.0,
+      "34": 0.0,
+      "35": 1.0,
+      "36": 0.0,
+      "37": 1.0,
+      "38": 1.0,
+      "39": 1.0,
+      "40": 1.0,
+      "41": 0.0,
+      "42": 0.0,
+      "43": 1.0,
+      "44": 1.0,
+      "45": 1.0,
+      "46": 0.0,
+      "47": 1.0,
+      "48": 0.0,
+      "49": 1.0,
+      "50": 1.0,
+      "51": 1.0,
+      "52": 1.0,
+      "53": 1.0,
+      "54": 1.0,
+      "55": 1.0,
+      "56": 0.0,
+      "57": 1.0,
+      "58": 0.0,
+      "59": 1.0
+    },
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 1.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 1.0,
+      "16": 0.0,
+      "17": 1.0,
+      "18": 1.0,
+      "19": 1.0,
+      "20": 1.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 1.0,
+      "24": 1.0,
+      "25": 1.0,
+      "26": 0.0,
+      "27": 1.0,
+      "28": 1.0,
+      "29": 1.0,
+      "30": 1.0,
+      "31": 1.0,
+      "32": 1.0,
+      "33": 1.0,
+      "34": 0.0,
+      "35": 1.0,
+      "36": 0.0,
+      "37": 1.0,
+      "38": 1.0,
+      "39": 1.0,
+      "40": 1.0,
+      "41": 0.0,
+      "42": 0.0,
+      "43": 1.0,
+      "44": 1.0,
+      "45": 1.0,
+      "46": 0.0,
+      "47": 1.0,
+      "48": 0.0,
+      "49": 1.0,
+      "50": 1.0,
+      "51": 1.0,
+      "52": 1.0,
+      "53": 1.0,
+      "54": 1.0,
+      "55": 1.0,
+      "56": 0.0,
+      "57": 1.0,
+      "58": 0.0,
+      "59": 1.0
+    },
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 1.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 1.0,
+      "16": 0.0,
+      "17": 1.0,
+      "18": 1.0,
+      "19": 1.0,
+      "20": 1.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 1.0,
+      "24": 1.0,
+      "25": 1.0,
+      "26": 0.0,
+      "27": 1.0,
+      "28": 1.0,
+      "29": 1.0,
+      "30": 1.0,
+      "31": 1.0,
+      "32": 1.0,
+      "33": 1.0,
+      "34": 0.0,
+      "35": 1.0,
+      "36": 0.0,
+      "37": 1.0,
+      "38": 1.0,
+      "39": 1.0,
+      "40": 1.0,
+      "41": 0.0,
+      "42": 0.0,
+      "43": 1.0,
+      "44": 1.0,
+      "45": 1.0,
+      "46": 0.0,
+      "47": 1.0,
+      "48": 0.0,
+      "49": 1.0,
+      "50": 1.0,
+      "51": 1.0,
+      "52": 1.0,
+      "53": 1.0,
+      "54": 1.0,
+      "55": 1.0,
+      "56": 0.0,
+      "57": 1.0,
+      "58": 0.0,
+      "59": 1.0
+    }
+  ],
+  "best_outputs_valset": {
+    "0": [
+      [
+        0,
+        {
+          "question_id": "16",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%steakhouse%'\n\nUNION ALL\n\n\nSELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%seafood%'\n  AND r.\"year_of_establishment\" >= 1980",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3240,
+            "completion_tokens": 237
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "16",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%steakhouse%'\n\nUNION ALL\n\n\nSELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%seafood%'\n  AND r.\"year_of_establishment\" >= 1980;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3240,
+            "completion_tokens": 264
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "16",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%steakhouse%'\n\nUNION ALL\n\n\nSELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%seafood%'\n  AND r.\"year_of_establishment\" >= 1980;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3240,
+            "completion_tokens": 264
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "16",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%steakhouse%'\n\nUNION ALL\n\n\nSELECT r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") LIKE '%seafood%'\n  AND r.\"year_of_establishment\" >= 1980;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3240,
+            "completion_tokens": 264
+          }
+        }
+      ]
+    ],
+    "1": [
+      [
+        0,
+        {
+          "question_id": "17",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 85
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "17",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "17",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "17",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 77
+          }
+        }
+      ]
+    ],
+    "2": [
+      [
+        0,
+        {
+          "question_id": "31",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"year_of_establishment\" = 1980\n  AND (r.\"type\" LIKE '%steakhouse%' OR r.\"type\" LIKE '%seafood%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3242,
+            "completion_tokens": 208
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "31",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" AS r\nWHERE r.\"year_of_establishment\" = 1980\n  AND (LOWER(r.\"type\") LIKE '%steakhouse%' OR LOWER(r.\"type\") LIKE '%seafood%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3242,
+            "completion_tokens": 213
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "31",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" AS r\nWHERE r.\"year_of_establishment\" = 1980\n  AND (LOWER(r.\"type\") LIKE '%steakhouse%' OR LOWER(r.\"type\") LIKE '%seafood%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3242,
+            "completion_tokens": 213
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "31",
+          "db_id": "attachment_1tab_val_restaurant",
+          "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" AS r\nWHERE r.\"year_of_establishment\" = 1980\n  AND (LOWER(r.\"type\") LIKE '%steakhouse%' OR LOWER(r.\"type\") LIKE '%seafood%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3242,
+            "completion_tokens": 213
+          }
+        }
+      ]
+    ],
+    "3": [
+      [
+        0,
+        {
+          "question_id": "51",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1725,
+            "completion_tokens": 69
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "51",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1725,
+            "completion_tokens": 93
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "51",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1725,
+            "completion_tokens": 93
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "51",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1725,
+            "completion_tokens": 93
+          }
+        }
+      ]
+    ],
+    "4": [
+      [
+        0,
+        {
+          "question_id": "52",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'Hotel'\n  AND \"a\".\"price\" = 50\n\nUNION ALL\n\n\nSELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'Youth Hostel'\n  AND \"a\".\"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1436,
+            "completion_tokens": 116
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "52",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'hotel'\n  AND \"a\".\"price\" = 50\n\nUNION ALL\n\n\nSELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'youth hostel'\n  AND \"a\".\"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1436,
+            "completion_tokens": 113
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "52",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'hotel'\n  AND \"a\".\"price\" = 50\n\nUNION ALL\n\n\nSELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'youth hostel'\n  AND \"a\".\"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1436,
+            "completion_tokens": 113
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "52",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'hotel'\n  AND \"a\".\"price\" = 50\n\nUNION ALL\n\n\nSELECT \"a\".\"name\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'youth hostel'\n  AND \"a\".\"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1436,
+            "completion_tokens": 113
+          }
+        }
+      ]
+    ],
+    "5": [
+      [
+        0,
+        {
+          "question_id": "53",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT \"a\".\"roomnumber\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"pricepernight\" = 150\n  AND (\"a\".\"typeofaccomodation\" LIKE '%family suite%'\n       OR \"a\".\"typeofaccomodation\" LIKE '%single room%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3238,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "53",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT \"a\".\"roomnumber\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"pricepernight\" = 150\n  AND (\"a\".\"typeofaccomodation\" ILIKE '%family suite%' OR \"a\".\"typeofaccomodation\" ILIKE '%single room%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3238,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "53",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT \"a\".\"roomnumber\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"pricepernight\" = 150\n  AND (\"a\".\"typeofaccomodation\" ILIKE '%family suite%' OR \"a\".\"typeofaccomodation\" ILIKE '%single room%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3238,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "53",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT \"a\".\"roomnumber\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"pricepernight\" = 150\n  AND (\"a\".\"typeofaccomodation\" ILIKE '%family suite%' OR \"a\".\"typeofaccomodation\" ILIKE '%single room%');",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3238,
+            "completion_tokens": 224
+          }
+        }
+      ]
+    ],
+    "6": [
+      [
+        0,
+        {
+          "question_id": "54",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") LIKE '%family%'\n   OR (LOWER(a.\"typeofaccomodation\") LIKE '%single%' AND a.\"pricepernight\" = 150)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3236,
+            "completion_tokens": 183
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "54",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") LIKE '%family%'\n   OR (LOWER(a.\"typeofaccomodation\") LIKE '%single%' AND a.\"pricepernight\" = 150)\nORDER BY a.\"typeofaccomodation\" ASC NULLS FIRST, a.\"roomnumber\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3236,
+            "completion_tokens": 216
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "54",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") LIKE '%family%'\n   OR (LOWER(a.\"typeofaccomodation\") LIKE '%single%' AND a.\"pricepernight\" = 150)\nORDER BY a.\"typeofaccomodation\" ASC NULLS FIRST, a.\"roomnumber\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3236,
+            "completion_tokens": 216
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "54",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "SELECT\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") LIKE '%family%'\n   OR (LOWER(a.\"typeofaccomodation\") LIKE '%single%' AND a.\"pricepernight\" = 150)\nORDER BY a.\"typeofaccomodation\" ASC NULLS FIRST, a.\"roomnumber\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3236,
+            "completion_tokens": 216
+          }
+        }
+      ]
+    ],
+    "7": [
+      [
+        0,
+        {
+          "question_id": "55",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 84
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "55",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 73
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "55",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 73
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "55",
+          "db_id": "attachment_1tab_val_accommodation2",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1762,
+            "completion_tokens": 73
+          }
+        }
+      ]
+    ],
+    "8": [
+      [
+        0,
+        {
+          "question_id": "65",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hotel%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hostel%'\n  AND \"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1440,
+            "completion_tokens": 86
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "65",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hotel%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hostel%'\n  AND \"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1440,
+            "completion_tokens": 86
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "65",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hotel%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hostel%'\n  AND \"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1440,
+            "completion_tokens": 86
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "65",
+          "db_id": "attachment_1tab_val_accommodation1",
+          "prediction": "SELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hotel%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"accommodations\"\nWHERE \"type_of_accommodation\" LIKE '%hostel%'\n  AND \"price\" = 50;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1440,
+            "completion_tokens": 86
+          }
+        }
+      ]
+    ],
+    "9": [
+      [
+        0,
+        {
+          "question_id": "72",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT g.\"room\", g.\"floor_no\", g.\"capacity\", g.\"amenities\"\nFROM \"guestrooms\" g\nWHERE LOWER(g.\"amenities\") LIKE '%air condition%'\n\nUNION ALL\n\n\nSELECT s.\"suite_name\", s.\"area_sqft\", s.\"occupancy\", s.\"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air condition%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1535,
+            "completion_tokens": 124
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "72",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT g.\"room\", g.\"floor_no\", g.\"capacity\", g.\"amenities\"\nFROM \"guestrooms\" g\nWHERE LOWER(g.\"amenities\") LIKE '%air conditioning%'\n\nUNION ALL\n\n\nSELECT s.\"suite_name\", s.\"area_sqft\", s.\"occupancy\", s.\"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1535,
+            "completion_tokens": 125
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "72",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT g.\"room\", g.\"floor_no\", g.\"capacity\", g.\"amenities\"\nFROM \"guestrooms\" g\nWHERE LOWER(g.\"amenities\") LIKE '%air conditioning%'\n\nUNION ALL\n\n\nSELECT s.\"suite_name\", s.\"area_sqft\", s.\"occupancy\", s.\"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1535,
+            "completion_tokens": 125
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "72",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT g.\"room\", g.\"floor_no\", g.\"capacity\", g.\"amenities\"\nFROM \"guestrooms\" g\nWHERE LOWER(g.\"amenities\") LIKE '%air conditioning%'\n\nUNION ALL\n\n\nSELECT s.\"suite_name\", s.\"area_sqft\", s.\"occupancy\", s.\"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1535,
+            "completion_tokens": 125
+          }
+        }
+      ]
+    ],
+    "10": [
+      [
+        0,
+        {
+          "question_id": "73",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1820,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "73",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1820,
+            "completion_tokens": 72
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "73",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1820,
+            "completion_tokens": 72
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "73",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1820,
+            "completion_tokens": 72
+          }
+        }
+      ]
+    ],
+    "11": [
+      [
+        0,
+        {
+          "question_id": "74",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT gr.\"room\"\nFROM \"guestrooms\" gr\nWHERE LOWER(gr.\"amenities\") LIKE '%air conditioning%'\n\nUNION\n\n\nSELECT s.\"suite_name\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1531,
+            "completion_tokens": 75
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "74",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT gr.\"room\"\nFROM \"guestrooms\" gr\nWHERE gr.\"amenities\" ILIKE '%air conditioning%'\n\nUNION\n\n\nSELECT s.\"suite_name\"\nFROM \"suites\" s\nWHERE s.\"amenities\" ILIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1531,
+            "completion_tokens": 80
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "74",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT gr.\"room\"\nFROM \"guestrooms\" gr\nWHERE gr.\"amenities\" ILIKE '%air conditioning%'\n\nUNION\n\n\nSELECT s.\"suite_name\"\nFROM \"suites\" s\nWHERE s.\"amenities\" ILIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1531,
+            "completion_tokens": 80
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "74",
+          "db_id": "attachment_2tab_val_overnight_stay",
+          "prediction": "SELECT gr.\"room\"\nFROM \"guestrooms\" gr\nWHERE gr.\"amenities\" ILIKE '%air conditioning%'\n\nUNION\n\n\nSELECT s.\"suite_name\"\nFROM \"suites\" s\nWHERE s.\"amenities\" ILIKE '%air conditioning%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1531,
+            "completion_tokens": 80
+          }
+        }
+      ]
+    ],
+    "12": [
+      [
+        0,
+        {
+          "question_id": "109",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1688,
+            "completion_tokens": 69
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "109",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1688,
+            "completion_tokens": 74
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "109",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1688,
+            "completion_tokens": 74
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "109",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1688,
+            "completion_tokens": 74
+          }
+        }
+      ]
+    ],
+    "13": [
+      [
+        0,
+        {
+          "question_id": "110",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 81
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "110",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "110",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "110",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 77
+          }
+        }
+      ]
+    ],
+    "14": [
+      [
+        0,
+        {
+          "question_id": "111",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1401,
+            "completion_tokens": 130
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "111",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1401,
+            "completion_tokens": 130
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "111",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1401,
+            "completion_tokens": 130
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "111",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1401,
+            "completion_tokens": 130
+          }
+        }
+      ]
+    ],
+    "15": [
+      [
+        0,
+        {
+          "question_id": "114",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\" AS system_name\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1396,
+            "completion_tokens": 121
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "114",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\" AS system_name\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1396,
+            "completion_tokens": 121
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "114",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\" AS system_name\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1396,
+            "completion_tokens": 121
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "114",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\" AS system_name\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1396,
+            "completion_tokens": 121
+          }
+        }
+      ]
+    ],
+    "16": [
+      [
+        0,
+        {
+          "question_id": "117",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(DISTINCT \"id\") FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3214,
+            "completion_tokens": 228
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "117",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3214,
+            "completion_tokens": 253
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "117",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3214,
+            "completion_tokens": 253
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "117",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3214,
+            "completion_tokens": 253
+          }
+        }
+      ]
+    ],
+    "17": [
+      [
+        0,
+        {
+          "question_id": "118",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT\n    hp.\"name\" AS hr_professional_name,\n    f.\"description\" AS function_description\nFROM \"hr_professionals\" hp\nJOIN \"hr_professionals_functions\" hpf\n    ON hpf.\"hrprofessionalid\" = hp.\"id\"\nJOIN \"functions\" f\n    ON f.\"functionid\" = hpf.\"functionid\"\nORDER BY hp.\"name\" ASC NULLS FIRST, f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1460,
+            "completion_tokens": 122
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "118",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT\n    hp.\"name\" AS hr_professional_name,\n    f.\"description\" AS function_description\nFROM \"hr_professionals\" hp\nJOIN \"hr_professionals_functions\" hpf\n    ON hpf.\"hrprofessionalid\" = hp.\"id\"\nJOIN \"functions\" f\n    ON f.\"functionid\" = hpf.\"functionid\"\nORDER BY hp.\"name\" ASC NULLS FIRST, f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1460,
+            "completion_tokens": 122
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "118",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT\n    hp.\"name\" AS hr_professional_name,\n    f.\"description\" AS function_description\nFROM \"hr_professionals\" hp\nJOIN \"hr_professionals_functions\" hpf\n    ON hpf.\"hrprofessionalid\" = hp.\"id\"\nJOIN \"functions\" f\n    ON f.\"functionid\" = hpf.\"functionid\"\nORDER BY hp.\"name\" ASC NULLS FIRST, f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1460,
+            "completion_tokens": 122
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "118",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT\n    hp.\"name\" AS hr_professional_name,\n    f.\"description\" AS function_description\nFROM \"hr_professionals\" hp\nJOIN \"hr_professionals_functions\" hpf\n    ON hpf.\"hrprofessionalid\" = hp.\"id\"\nJOIN \"functions\" f\n    ON f.\"functionid\" = hpf.\"functionid\"\nORDER BY hp.\"name\" ASC NULLS FIRST, f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1460,
+            "completion_tokens": 122
+          }
+        }
+      ]
+    ],
+    "18": [
+      [
+        0,
+        {
+          "question_id": "122",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 83
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "122",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 71
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "122",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 71
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "122",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1693,
+            "completion_tokens": 71
+          }
+        }
+      ]
+    ],
+    "19": [
+      [
+        0,
+        {
+          "question_id": "125",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(DISTINCT \"id\") FROM \"hr_professionals\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1458,
+            "completion_tokens": 100
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "125",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1458,
+            "completion_tokens": 106
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "125",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1458,
+            "completion_tokens": 106
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "125",
+          "db_id": "scope_hr_professionals_functions",
+          "prediction": "SELECT f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(*) FROM \"hr_professionals\")\nORDER BY f.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1458,
+            "completion_tokens": 106
+          }
+        }
+      ]
+    ],
+    "20": [
+      [
+        0,
+        {
+          "question_id": "126",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"is_active\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists);",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1398,
+            "completion_tokens": 100
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "126",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"is_active\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists);",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1398,
+            "completion_tokens": 100
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "126",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"is_active\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists);",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1398,
+            "completion_tokens": 100
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "126",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"is_active\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists);",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1398,
+            "completion_tokens": 100
+          }
+        }
+      ]
+    ],
+    "21": [
+      [
+        0,
+        {
+          "question_id": "127",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 261
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "127",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "127",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "127",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 224
+          }
+        }
+      ]
+    ],
+    "22": [
+      [
+        0,
+        {
+          "question_id": "128",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"is_active\" AS system_state\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 122
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "128",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"is_active\" AS system_state\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 124
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "128",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"is_active\" AS system_state\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 124
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "128",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"is_active\" AS system_state\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 124
+          }
+        }
+      ]
+    ],
+    "23": [
+      [
+        0,
+        {
+          "question_id": "129",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"description\"\nFROM instruments i\nJOIN lab_technicians_instruments lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM lab_technicians);",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 82
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "129",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"description\"\nFROM instruments i\nJOIN lab_technicians_instruments lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(DISTINCT \"id\") FROM lab_technicians)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 87
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "129",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"description\"\nFROM instruments i\nJOIN lab_technicians_instruments lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(DISTINCT \"id\") FROM lab_technicians)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 87
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "129",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"description\"\nFROM instruments i\nJOIN lab_technicians_instruments lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(DISTINCT \"id\") FROM lab_technicians)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 87
+          }
+        }
+      ]
+    ],
+    "24": [
+      [
+        0,
+        {
+          "question_id": "130",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1364,
+            "completion_tokens": 133
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "130",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1364,
+            "completion_tokens": 131
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "130",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1364,
+            "completion_tokens": 131
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "130",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1364,
+            "completion_tokens": 131
+          }
+        }
+      ]
+    ],
+    "25": [
+      [
+        0,
+        {
+          "question_id": "131",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1655,
+            "completion_tokens": 71
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "131",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1655,
+            "completion_tokens": 72
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "131",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1655,
+            "completion_tokens": 72
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "131",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1655,
+            "completion_tokens": 72
+          }
+        }
+      ]
+    ],
+    "26": [
+      [
+        0,
+        {
+          "question_id": "134",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3010,
+            "completion_tokens": 227
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "134",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3010,
+            "completion_tokens": 253
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "134",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3010,
+            "completion_tokens": 253
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "134",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3010,
+            "completion_tokens": 253
+          }
+        }
+      ]
+    ],
+    "27": [
+      [
+        0,
+        {
+          "question_id": "135",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3028,
+            "completion_tokens": 237
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "135",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3028,
+            "completion_tokens": 248
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "135",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3028,
+            "completion_tokens": 248
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "135",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3028,
+            "completion_tokens": 248
+          }
+        }
+      ]
+    ],
+    "28": [
+      [
+        0,
+        {
+          "question_id": "136",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"instrumentname\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1355,
+            "completion_tokens": 92
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "136",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"instrumentname\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1355,
+            "completion_tokens": 111
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "136",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"instrumentname\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1355,
+            "completion_tokens": 111
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "136",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT i.\"instrumentname\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\")",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1355,
+            "completion_tokens": 111
+          }
+        }
+      ]
+    ],
+    "29": [
+      [
+        0,
+        {
+          "question_id": "137",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 119
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "137",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 119
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "137",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 119
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "137",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 119
+          }
+        }
+      ]
+    ],
+    "30": [
+      [
+        0,
+        {
+          "question_id": "138",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"it_support_specialists\"\n)\nORDER BY s.\"system_name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 148
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "138",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM \"it_support_specialists\")\nORDER BY s.\"system_name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 141
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "138",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM \"it_support_specialists\")\nORDER BY s.\"system_name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 141
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "138",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM \"it_support_specialists\")\nORDER BY s.\"system_name\" ASC NULLS FIRST, s.\"is_active\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1399,
+            "completion_tokens": 141
+          }
+        }
+      ]
+    ],
+    "31": [
+      [
+        0,
+        {
+          "question_id": "139",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 119
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "139",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 118
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "139",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 118
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "139",
+          "db_id": "scope_lab_technicians_instruments",
+          "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\" ASC NULLS FIRST, i.\"instrumentname\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 118
+          }
+        }
+      ]
+    ],
+    "32": [
+      [
+        0,
+        {
+          "question_id": "148",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"system_name\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(DISTINCT \"id\") FROM it_support_specialists)\nORDER BY s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1394,
+            "completion_tokens": 106
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "148",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"system_name\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists)\nORDER BY s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1394,
+            "completion_tokens": 101
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "148",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"system_name\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists)\nORDER BY s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1394,
+            "completion_tokens": 101
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "148",
+          "db_id": "scope_it_support_specialists_systems",
+          "prediction": "SELECT s.\"system_name\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists)\nORDER BY s.\"system_name\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1394,
+            "completion_tokens": 101
+          }
+        }
+      ]
+    ],
+    "33": [
+      [
+        0,
+        {
+          "question_id": "178",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT DISTINCT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 105
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "178",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT DISTINCT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 106
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "178",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT DISTINCT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 106
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "178",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT DISTINCT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1358,
+            "completion_tokens": 106
+          }
+        }
+      ]
+    ],
+    "34": [
+      [
+        0,
+        {
+          "question_id": "179",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 256
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "179",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 219
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "179",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 219
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "179",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"name\" ASC NULLS FIRST, gs.\"specimentype\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 219
+          }
+        }
+      ]
+    ],
+    "35": [
+      [
+        0,
+        {
+          "question_id": "180",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"type\" AS specimen_type,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"type\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 130
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "180",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"type\" AS specimen_type,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"type\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "180",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"type\" AS specimen_type,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"type\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "180",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"type\" AS specimen_type,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"type\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ]
+    ],
+    "36": [
+      [
+        0,
+        {
+          "question_id": "181",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1650,
+            "completion_tokens": 78
+          }
+        }
+      ]
+    ],
+    "37": [
+      [
+        0,
+        {
+          "question_id": "182",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"description\"\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"description\"\nORDER BY COUNT(DISTINCT gs.\"geologistid\") DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 181
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "182",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"description\"\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"description\"\nORDER BY COUNT(DISTINCT gs.\"geologistid\") DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 220
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "182",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"description\"\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"description\"\nORDER BY COUNT(DISTINCT gs.\"geologistid\") DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 220
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "182",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"description\"\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"description\"\nORDER BY COUNT(DISTINCT gs.\"geologistid\") DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3000,
+            "completion_tokens": 220
+          }
+        }
+      ]
+    ],
+    "38": [
+      [
+        0,
+        {
+          "question_id": "183",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nWHERE NOT EXISTS (\n    \n    SELECT 1\n    FROM \"geologists\" g\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM \"geologists_specimens\" gs\n        WHERE gs.\"geologistid\" = g.\"id\"\n          AND gs.\"specimentype\" = s.\"type\"\n    )\n)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 127
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "183",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nWHERE NOT EXISTS (\n    \n    SELECT 1\n    FROM \"geologists\" g\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM \"geologists_specimens\" gs\n        WHERE gs.\"geologistid\" = g.\"id\"\n          AND gs.\"specimentype\" = s.\"type\"\n    )\n)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "183",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nWHERE NOT EXISTS (\n    \n    SELECT 1\n    FROM \"geologists\" g\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM \"geologists_specimens\" gs\n        WHERE gs.\"geologistid\" = g.\"id\"\n          AND gs.\"specimentype\" = s.\"type\"\n    )\n)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "183",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nWHERE NOT EXISTS (\n    \n    SELECT 1\n    FROM \"geologists\" g\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM \"geologists_specimens\" gs\n        WHERE gs.\"geologistid\" = g.\"id\"\n          AND gs.\"specimentype\" = s.\"type\"\n    )\n)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 126
+          }
+        }
+      ]
+    ],
+    "39": [
+      [
+        0,
+        {
+          "question_id": "184",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT gs.\"specimentype\"\nFROM \"geologists_specimens\" gs\nGROUP BY gs.\"specimentype\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(DISTINCT g.\"id\") FROM \"geologists\" g)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 82
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "184",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT gs.\"specimentype\"\nFROM \"geologists_specimens\" gs\nGROUP BY gs.\"specimentype\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(DISTINCT g.\"id\") FROM \"geologists\" g)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 82
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "184",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT gs.\"specimentype\"\nFROM \"geologists_specimens\" gs\nGROUP BY gs.\"specimentype\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(DISTINCT g.\"id\") FROM \"geologists\" g)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 82
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "184",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT gs.\"specimentype\"\nFROM \"geologists_specimens\" gs\nGROUP BY gs.\"specimentype\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(DISTINCT g.\"id\") FROM \"geologists\" g)",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1357,
+            "completion_tokens": 82
+          }
+        }
+      ]
+    ],
+    "40": [
+      [
+        0,
+        {
+          "question_id": "185",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\";",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 103
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "185",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 114
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "185",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 114
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "185",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1356,
+            "completion_tokens": 114
+          }
+        }
+      ]
+    ],
+    "41": [
+      [
+        0,
+        {
+          "question_id": "187",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 226
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "187",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 214
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "187",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 214
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "187",
+          "db_id": "scope_geologists_specimens",
+          "prediction": "SELECT\n    g.\"name\",\n    s.\"description\"\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\" ASC NULLS FIRST, s.\"description\" ASC NULLS FIRST;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3004,
+            "completion_tokens": 214
+          }
+        }
+      ]
+    ],
+    "42": [
+      [
+        0,
+        {
+          "question_id": "261",
+          "db_id": "vague_2cols_experience",
+          "prediction": "SELECT\n    j.\"minimum_years\",\n    j.\"preferred_years\"\nFROM \"jobs\" j\nORDER BY j.\"salary\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3140,
+            "completion_tokens": 155
+          }
+        }
+      ]
+    ],
+    "43": [
+      [
+        0,
+        {
+          "question_id": "262",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1775,
+            "completion_tokens": 79
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "262",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1775,
+            "completion_tokens": 66
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "262",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1775,
+            "completion_tokens": 66
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "262",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1775,
+            "completion_tokens": 66
+          }
+        }
+      ]
+    ],
+    "44": [
+      [
+        0,
+        {
+          "question_id": "263",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT AVG(sd.\"hourly_rate\") AS \"average_hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nWHERE p.\"title\" ILIKE '%software developer%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3266,
+            "completion_tokens": 160
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "263",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT sd.\"hourly_rate\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3266,
+            "completion_tokens": 187
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "263",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT sd.\"hourly_rate\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3266,
+            "completion_tokens": 187
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "263",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT sd.\"hourly_rate\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3266,
+            "completion_tokens": 187
+          }
+        }
+      ]
+    ],
+    "45": [
+      [
+        0,
+        {
+          "question_id": "264",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\" AS \"job_position\",\n    sd.\"salary_range\" AS \"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3262,
+            "completion_tokens": 193
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "264",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\" AS \"position\",\n    sd.\"salary_range\" AS \"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3262,
+            "completion_tokens": 197
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "264",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\" AS \"position\",\n    sd.\"salary_range\" AS \"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3262,
+            "completion_tokens": 197
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "264",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\" AS \"position\",\n    sd.\"salary_range\" AS \"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3262,
+            "completion_tokens": 197
+          }
+        }
+      ]
+    ],
+    "46": [
+      [
+        0,
+        {
+          "question_id": "265",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1715,
+            "completion_tokens": 77
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "265",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1715,
+            "completion_tokens": 76
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "265",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1715,
+            "completion_tokens": 76
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "265",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1715,
+            "completion_tokens": 76
+          }
+        }
+      ]
+    ],
+    "47": [
+      [
+        0,
+        {
+          "question_id": "266",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1713,
+            "completion_tokens": 61
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "266",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1713,
+            "completion_tokens": 61
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "266",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1713,
+            "completion_tokens": 61
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "266",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1713,
+            "completion_tokens": 61
+          }
+        }
+      ]
+    ],
+    "48": [
+      [
+        0,
+        {
+          "question_id": "268",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1718,
+            "completion_tokens": 63
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "268",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1718,
+            "completion_tokens": 63
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "268",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1718,
+            "completion_tokens": 63
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "268",
+          "db_id": "vague_2cols_experience",
+          "prediction": "ambiguous",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1718,
+            "completion_tokens": 63
+          }
+        }
+      ]
+    ],
+    "49": [
+      [
+        0,
+        {
+          "question_id": "269",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT DISTINCT sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\n   OR LOWER(p.\"description\") LIKE '%software engineer%'\n   OR LOWER(p.\"description\") LIKE '%разработчик%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 239
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "269",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT DISTINCT sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\n   OR LOWER(p.\"description\") LIKE '%software engineer%'\n   OR LOWER(p.\"description\") LIKE '%разработчик%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 278
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "269",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT DISTINCT sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\n   OR LOWER(p.\"description\") LIKE '%software engineer%'\n   OR LOWER(p.\"description\") LIKE '%разработчик%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 278
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "269",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT DISTINCT sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\n   OR LOWER(p.\"description\") LIKE '%software engineer%'\n   OR LOWER(p.\"description\") LIKE '%разработчик%';",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 278
+          }
+        }
+      ]
+    ],
+    "50": [
+      [
+        1,
+        {
+          "question_id": "270",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3274,
+            "completion_tokens": 267
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "270",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3274,
+            "completion_tokens": 267
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "270",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"salarydetails\" sd\nJOIN \"position\" p ON p.\"id\" = sd.\"positionid\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3274,
+            "completion_tokens": 267
+          }
+        }
+      ]
+    ],
+    "51": [
+      [
+        0,
+        {
+          "question_id": "273",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3276,
+            "completion_tokens": 218
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "273",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3276,
+            "completion_tokens": 191
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "273",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3276,
+            "completion_tokens": 191
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "273",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\",\n    sd.\"salary_range\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3276,
+            "completion_tokens": 191
+          }
+        }
+      ]
+    ],
+    "52": [
+      [
+        0,
+        {
+          "question_id": "274",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 150
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "274",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 184
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "274",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 184
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "274",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "SELECT\n    p.\"title\",\n    sd.\"hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\" ASC NULLS FIRST;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3260,
+            "completion_tokens": 184
+          }
+        }
+      ]
+    ],
+    "53": [
+      [
+        0,
+        {
+          "question_id": "280",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3230,
+            "completion_tokens": 200
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "280",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3230,
+            "completion_tokens": 214
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "280",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3230,
+            "completion_tokens": 214
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "280",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3230,
+            "completion_tokens": 214
+          }
+        }
+      ]
+    ],
+    "54": [
+      [
+        0,
+        {
+          "question_id": "282",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1776,
+            "completion_tokens": 66
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "282",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1776,
+            "completion_tokens": 66
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "282",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1776,
+            "completion_tokens": 66
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "282",
+          "db_id": "vague_2cols_compensation",
+          "prediction": "ambiguous",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1776,
+            "completion_tokens": 66
+          }
+        }
+      ]
+    ],
+    "55": [
+      [
+        0,
+        {
+          "question_id": "283",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"email\", e.\"number_of_completed_projects\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1464,
+            "completion_tokens": 91
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "283",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" DESC NULLS LAST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1464,
+            "completion_tokens": 86
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "283",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" DESC NULLS LAST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1464,
+            "completion_tokens": 86
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "283",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" DESC NULLS LAST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 1,
+            "prompt_tokens": 1464,
+            "completion_tokens": 86
+          }
+        }
+      ]
+    ],
+    "56": [
+      [
+        0,
+        {
+          "question_id": "285",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3220,
+            "completion_tokens": 215
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "285",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3220,
+            "completion_tokens": 219
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "285",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3220,
+            "completion_tokens": 219
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "285",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3220,
+            "completion_tokens": 219
+          }
+        }
+      ]
+    ],
+    "57": [
+      [
+        0,
+        {
+          "question_id": "296",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" ASC NULLS FIRST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3234,
+            "completion_tokens": 224
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "296",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3234,
+            "completion_tokens": 218
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "296",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3234,
+            "completion_tokens": 218
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "296",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" ASC NULLS FIRST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3234,
+            "completion_tokens": 218
+          }
+        }
+      ]
+    ],
+    "58": [
+      [
+        0,
+        {
+          "question_id": "306",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nGROUP BY a.\"id\", a.\"name\", a.\"email\"\nORDER BY SUM(e.\"years_of_experience\") DESC NULLS LAST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3218,
+            "completion_tokens": 239
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "306",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3218,
+            "completion_tokens": 210
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "306",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3218,
+            "completion_tokens": 210
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "306",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 0.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3218,
+            "completion_tokens": 210
+          }
+        }
+      ]
+    ],
+    "59": [
+      [
+        0,
+        {
+          "question_id": "307",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3222,
+            "completion_tokens": 188
+          }
+        }
+      ],
+      [
+        1,
+        {
+          "question_id": "307",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3222,
+            "completion_tokens": 199
+          }
+        }
+      ],
+      [
+        2,
+        {
+          "question_id": "307",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3222,
+            "completion_tokens": 199
+          }
+        }
+      ],
+      [
+        3,
+        {
+          "question_id": "307",
+          "db_id": "vague_2cols_experience_level",
+          "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+          "score": 1.0,
+          "error": null,
+          "effective_demo_ids": [],
+          "usage": {
+            "task_calls": 2,
+            "prompt_tokens": 3222,
+            "completion_tokens": 199
+          }
+        }
+      ]
+    ]
+  },
+  "per_val_instance_best_candidates": {
+    "0": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "1": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "2": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "3": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "4": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "5": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "6": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "7": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "8": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "9": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "10": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "11": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "12": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "13": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "14": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "15": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "16": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "17": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "18": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "19": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "20": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "21": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "22": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "23": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "24": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "25": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "26": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "27": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "28": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "29": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "30": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "31": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "32": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "33": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "34": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "35": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "36": [
+      0
+    ],
+    "37": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "38": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "39": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "40": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "41": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "42": [
+      0
+    ],
+    "43": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "44": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "45": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "46": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "47": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "48": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "49": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "50": [
+      1,
+      2,
+      3
+    ],
+    "51": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "52": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "53": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "54": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "55": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "56": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "57": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "58": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "59": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "val_aggregate_subscores": null,
+  "per_objective_best_candidates": null,
+  "objective_pareto_front": null,
+  "discovery_eval_counts": [
+    0,
+    156,
+    264,
+    612
+  ],
+  "total_metric_calls": 720,
+  "num_full_val_evals": 4,
+  "run_dir": "D:\\Linux\\onik110\\DeepPavlov\\AdvText2SQL\\research_results\\prompt_optimization_comparison_20261105\\jobs\\ambiguity__gepa_zero__r1\\gepa",
+  "seed": 42,
+  "_str_candidate_key": null,
+  "best_idx": 0,
+  "validation_schema_version": 2
+}

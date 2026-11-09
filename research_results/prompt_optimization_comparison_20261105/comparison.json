@@ -1,0 +1,245 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "rows": [
+    {
+      "name": "sql__gepa_zero__r1",
+      "slot": "sql",
+      "method": "gepa_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.5441176470588235,
+      "selected_inner": 0.5441176470588235,
+      "tokens": 3343634
+    },
+    {
+      "name": "sql__mipro_zero__r1",
+      "slot": "sql",
+      "method": "mipro_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.5,
+      "selected_inner": 0.5,
+      "tokens": 1211130
+    },
+    {
+      "name": "sql__textgrad_zero__r1",
+      "slot": "sql",
+      "method": "textgrad_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.5294117647058824,
+      "selected_inner": 0.5882352941176471,
+      "tokens": 2981043
+    },
+    {
+      "name": "sql__mipro_few__r1",
+      "slot": "sql",
+      "method": "mipro_few",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.4852941176470588,
+      "selected_inner": 0.5735294117647058,
+      "tokens": 2913232
+    },
+    {
+      "name": "sql__gepa_zero__r2",
+      "slot": "sql",
+      "method": "gepa_zero",
+      "seed": 43,
+      "status": "completed",
+      "original_inner": 0.5,
+      "selected_inner": 0.5588235294117647,
+      "tokens": 3523244
+    },
+    {
+      "name": "sql__mipro_zero__r2",
+      "slot": "sql",
+      "method": "mipro_zero",
+      "seed": 43,
+      "status": "completed",
+      "original_inner": 0.5294117647058824,
+      "selected_inner": 0.5588235294117647,
+      "tokens": 1477279
+    },
+    {
+      "name": "sql__textgrad_zero__r2",
+      "slot": "sql",
+      "method": "textgrad_zero",
+      "seed": 43,
+      "status": "completed",
+      "original_inner": 0.5,
+      "selected_inner": 0.5735294117647058,
+      "tokens": 2990568
+    },
+    {
+      "name": "sql__mipro_few__r2",
+      "slot": "sql",
+      "method": "mipro_few",
+      "seed": 43,
+      "status": "completed",
+      "original_inner": 0.5147058823529411,
+      "selected_inner": 0.5588235294117647,
+      "tokens": 2234375
+    },
+    {
+      "name": "sql__gepa_zero__r3",
+      "slot": "sql",
+      "method": "gepa_zero",
+      "seed": 44,
+      "status": "completed",
+      "original_inner": 0.5,
+      "selected_inner": 0.5441176470588235,
+      "tokens": 3405557
+    },
+    {
+      "name": "sql__mipro_zero__r3",
+      "slot": "sql",
+      "method": "mipro_zero",
+      "seed": 44,
+      "status": "completed",
+      "original_inner": 0.5147058823529411,
+      "selected_inner": 0.5735294117647058,
+      "tokens": 1444722
+    },
+    {
+      "name": "sql__textgrad_zero__r3",
+      "slot": "sql",
+      "method": "textgrad_zero",
+      "seed": 44,
+      "status": "completed",
+      "original_inner": 0.5147058823529411,
+      "selected_inner": 0.5441176470588235,
+      "tokens": 3066401
+    },
+    {
+      "name": "sql__mipro_few__r3",
+      "slot": "sql",
+      "method": "mipro_few",
+      "seed": 44,
+      "status": "completed",
+      "original_inner": 0.5147058823529411,
+      "selected_inner": 0.5441176470588235,
+      "tokens": 2301528
+    },
+    {
+      "name": "ambiguity__gepa_zero__r1",
+      "slot": "ambiguity",
+      "method": "gepa_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.8333333333333334,
+      "selected_inner": 0.8333333333333334,
+      "tokens": 1003860
+    },
+    {
+      "name": "ambiguity__mipro_zero__r1",
+      "slot": "ambiguity",
+      "method": "mipro_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.8333333333333334,
+      "selected_inner": 0.95,
+      "tokens": 926593
+    },
+    {
+      "name": "ambiguity__textgrad_zero__r1",
+      "slot": "ambiguity",
+      "method": "textgrad_zero",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.8333333333333334,
+      "selected_inner": 0.85,
+      "tokens": 1729476
+    },
+    {
+      "name": "ambiguity__mipro_few__r1",
+      "slot": "ambiguity",
+      "method": "mipro_few",
+      "seed": 42,
+      "status": "completed",
+      "original_inner": 0.85,
+      "selected_inner": 0.85,
+      "tokens": 1260384
+    },
+    {
+      "name": "ambiguity__gepa_zero__r2",
+      "slot": "ambiguity",
+      "method": "gepa_zero",
+      "seed": 43,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    },
+    {
+      "name": "ambiguity__mipro_zero__r2",
+      "slot": "ambiguity",
+      "method": "mipro_zero",
+      "seed": 43,
+      "status": "completed",
+      "original_inner": 0.8333333333333334,
+      "selected_inner": 0.9,
+      "tokens": 852763
+    },
+    {
+      "name": "ambiguity__textgrad_zero__r2",
+      "slot": "ambiguity",
+      "method": "textgrad_zero",
+      "seed": 43,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    },
+    {
+      "name": "ambiguity__mipro_few__r2",
+      "slot": "ambiguity",
+      "method": "mipro_few",
+      "seed": 43,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    },
+    {
+      "name": "ambiguity__gepa_zero__r3",
+      "slot": "ambiguity",
+      "method": "gepa_zero",
+      "seed": 44,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    },
+    {
+      "name": "ambiguity__mipro_zero__r3",
+      "slot": "ambiguity",
+      "method": "mipro_zero",
+      "seed": 44,
+      "status": "completed",
+      "original_inner": 0.8333333333333334,
+      "selected_inner": 0.8333333333333334,
+      "tokens": 851647
+    },
+    {
+      "name": "ambiguity__textgrad_zero__r3",
+      "slot": "ambiguity",
+      "method": "textgrad_zero",
+      "seed": 44,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    },
+    {
+      "name": "ambiguity__mipro_few__r3",
+      "slot": "ambiguity",
+      "method": "mipro_few",
+      "seed": 44,
+      "status": "pending",
+      "original_inner": null,
+      "selected_inner": null,
+      "tokens": 0
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "job": {
+    "name": "sql__textgrad_zero__r3",
+    "slot": "sql",
+    "method": "textgrad_zero",
+    "seed": 44
+  },
+  "candidate": {
+    "instruction": "2. Aggregate, grouping, and window scoping:\n   a. Grouping trigger: use GROUP BY only when the request implies per-entity aggregation (a measure computed per group), thresholds on aggregated measures, or per-category ranking. Ranking or ordering alone does not imply grouping; a pure row-level ranking over individual rows must not introduce GROUP BY.\n   b. Grouping keys: group only by the entity the question asks about. Every non-aggregated column in SELECT must appear in GROUP BY, and no unrelated columns should be added to the grouping key.\n   c. Aggregate source path: when an aggregate is requested per entity, the grouping key must be the entity identified in the question, and joins should follow the schema's foreign-key path from that entity to the measure rather than shortcutting through denormalized columns.\n   d. Thresholds: thresholds on aggregated measures use HAVING; thresholds on row-level attributes use WHERE. Do not move a row-level filter into HAVING or vice versa.\n   e. Window functions: use a window function only when the question asks for a rank/ordering label or per-category ranking. Window functions must not introduce GROUP BY. Use PARTITION BY only when the question implies per-category ranking; otherwise rank over the whole result. The ORDER BY inside OVER() must match the requested sort direction.\n   f. Ordering vs. ranking: \"rank ... by X\" or \"order by X\" implies ORDER BY. Add a RANK()/ROW_NUMBER() column only when the question explicitly asks for a rank value; adding a rank column when only ordering was requested changes the result shape.\n   g. Projection minimality: the SELECT list must contain exactly the entities and measures the question requests. Do not add extra columns (identifiers, names, or measures) that were not asked for, and do not add a rank/ordering column unless requested.\n   h. NULL handling: add NULLS LAST or IS NOT NULL filters only when the question implies excluding nulls; otherwise they alter results.\n   i. DISTINCT: apply DISTINCT only when the question asks for distinct values.",
+    "demos": []
+  },
+  "inner_accuracy": 0.5441176470588235,
+  "complete_candidates": 10,
+  "external_dev_used": false,
+  "selected_at_utc": "2026-11-07T08:36:57.208165+00:00",
+  "sha256": "1b0fdc163e8880b7453bf85c21d0c1316267276ad7aed773bc7aee1bd8bd2595"
+}

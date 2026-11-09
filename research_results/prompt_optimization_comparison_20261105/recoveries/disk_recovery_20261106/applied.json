@@ -1,0 +1,20 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "recovered_questions": 53,
+  "known_api_calls": 106,
+  "known_tokens": 189723,
+  "unknown_budget_tokens": 616722,
+  "unknown_budget_calls": 6,
+  "next_question": "1323",
+  "script_sha256": "87e68f2cdc68f5c04568f496dc01c2480d69e5b09be3003293b1a152fe2a9ba5",
+  "state": "applied",
+  "at_utc": "2026-11-06T11:04:25.459515+00:00",
+  "restored_sha256": {
+    "budget.json": "8827b195b75a0ad9cd204f91272d4fc7e83a20e3c7549080dc6225f4c7c0ec5b",
+    "jobs/sql__mipro_few__r1/candidates.json": "e8f9079727833e3363a2492e6ed140698e66671216716afab8c6e55668405cf2",
+    "jobs/sql__mipro_few__r1/evaluations.json": "af6d00c299a1b027fecd4a628abab5123ff0b19ccfc9dec6febc1163a86e067e",
+    "jobs/sql__mipro_few__r1/search/budget.json": "d8be74dfbad852d333d33110f83a83a99ca8921bf7fb2483ce31bb8aec4fa05e",
+    "jobs/sql__mipro_few__r1/search/metadata.json": "85bad8536ff5ebf96b45189e56b61095ab416da232fea640490923f998daf9de",
+    "jobs/sql__mipro_few__r1/search/raw_responses.jsonl": "763279b8430ed0c0ff927af9fcc85a5f1e179051da4542e252abc9dbf74e8082"
+  }
+}

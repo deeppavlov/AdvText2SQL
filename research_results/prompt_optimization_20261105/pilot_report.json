@@ -1,0 +1,93 @@
+{
+  "manifest_sha256": "637e096b04e2fd9ac9b990b896ce41c7ebecb1812b1b962026c7669cff03e5ef",
+  "states": {
+    "search": "completed",
+    "confirm": "pending"
+  },
+  "rows": [
+    {
+      "original": true,
+      "profile": "baseline",
+      "candidate_id": "4187007240931df828494e6eb45f849f24303997ef7011a391f95268bc838577",
+      "benchmarks": {
+        "bird": {
+          "saved": 0,
+          "questions": 55,
+          "accuracy": null,
+          "generation_errors": 0
+        },
+        "ambrosia": {
+          "saved": 0,
+          "questions": 46,
+          "accuracy": null,
+          "generation_errors": 0
+        }
+      },
+      "ambiguity_metrics": null,
+      "task_tokens": 0
+    },
+    {
+      "original": true,
+      "profile": "hybrid",
+      "candidate_id": "f28640c3f17039fb0fa5855cdd57dce7c4b266b1db1ec8892bdf289f0b9dec3a",
+      "benchmarks": {
+        "bird": {
+          "saved": 0,
+          "questions": 55,
+          "accuracy": null,
+          "generation_errors": 0
+        },
+        "ambrosia": {
+          "saved": 0,
+          "questions": 46,
+          "accuracy": null,
+          "generation_errors": 0
+        }
+      },
+      "ambiguity_metrics": null,
+      "task_tokens": 0
+    },
+    {
+      "original": false,
+      "profile": "baseline",
+      "candidate_id": "a9fdcd9303b09fc29112bc3f77de3f002f1f40cbb023a9f4b39370c7ac95f1a9",
+      "benchmarks": {
+        "bird": {
+          "saved": 0,
+          "questions": 55,
+          "accuracy": null,
+          "generation_errors": 0
+        },
+        "ambrosia": {
+          "saved": 0,
+          "questions": 46,
+          "accuracy": null,
+          "generation_errors": 0
+        }
+      },
+      "ambiguity_metrics": null,
+      "task_tokens": 0
+    },
+    {
+      "original": false,
+      "profile": "hybrid",
+      "candidate_id": "71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727",
+      "benchmarks": {
+        "bird": {
+          "saved": 0,
+          "questions": 55,
+          "accuracy": null,
+          "generation_errors": 0
+        },
+        "ambrosia": {
+          "saved": 0,
+          "questions": 46,
+          "accuracy": null,
+          "generation_errors": 0
+        }
+      },
+      "ambiguity_metrics": null,
+      "task_tokens": 0
+    }
+  ]
+}

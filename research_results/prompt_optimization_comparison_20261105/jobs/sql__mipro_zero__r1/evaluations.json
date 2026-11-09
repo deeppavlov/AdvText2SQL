@@ -1,0 +1,3846 @@
+{
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    a.\"atom_id\",\n    (SELECT COUNT(DISTINCT b.\"bond_type\")\n     FROM \"bond\" b\n     WHERE b.\"molecule_id\" = m.\"molecule_id\") AS bond_type_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" LIKE '%TR346%'\nORDER BY a.\"atom_id\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3090,
+      "completion_tokens": 308
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:223": {
+    "question_id": "223",
+    "db_id": "toxicology",
+    "prediction": "SELECT c.\"atom_id\", c.\"atom_id2\"\nFROM \"connected\" c\nWHERE c.\"bond_id\" = 'TR000_2_5'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3092,
+      "completion_tokens": 194
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:326": {
+    "question_id": "326",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE LOWER(a.\"element\") = 's'\n  AND b.\"bond_type\" = ' = '",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3102,
+      "completion_tokens": 263
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:292": {
+    "question_id": "292",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'c'\n  AND CAST(SUBSTRING(m.\"molecule_id\", 3, 3) AS INTEGER) >= 10\n  AND CAST(SUBSTRING(m.\"molecule_id\", 3, 3) AS INTEGER) <= 50;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3172,
+      "completion_tokens": 285
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'na'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3108,
+      "completion_tokens": 249
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:295": {
+    "question_id": "295",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(a.\"atom_id\") AS atom_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND EXISTS (\n    SELECT 1\n    FROM \"atom\" a2\n    WHERE a2.\"molecule_id\" = m.\"molecule_id\"\n      AND LOWER(a2.\"element\") = 'h'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3108,
+      "completion_tokens": 264
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:336": {
+    "question_id": "336",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS molecule_count\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3112,
+      "completion_tokens": 221
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:323": {
+    "question_id": "323",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"molecule\" m\nWHERE m.\"molecule_id\" = 'TR000';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3100,
+      "completion_tokens": 189
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS \"count\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'n';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3094,
+      "completion_tokens": 240
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:279": {
+    "question_id": "279",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"bond\" b\nJOIN \"molecule\" m ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_id\" = 'TR001_10_11';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3108,
+      "completion_tokens": 150
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:276": {
+    "question_id": "276",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    c.\"atom_id\"  AS atom_id,\n    c.\"atom_id2\" AS atom_id2\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE b.\"bond_type\" = '#'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3122,
+      "completion_tokens": 201
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") AS connections_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3100,
+      "completion_tokens": 218
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:260": {
+    "question_id": "260",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") AS total_atoms\nFROM \"atom\" a\nJOIN \"molecule\" m ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE LOWER(a.\"element\") IN ('p', 'br')\n  AND EXISTS (\n    SELECT 1\n    FROM \"bond\" b\n    JOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\n    WHERE b.\"molecule_id\" = m.\"molecule_id\"\n      AND b.\"bond_type\" = '#'\n      AND (c.\"atom_id\" = a.\"atom_id\" OR c.\"atom_id2\" = a.\"atom_id\")\n  );",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3126,
+      "completion_tokens": 334
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    b.\"bond_type\",\n    b.\"bond_id\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE SUBSTR(c.\"atom_id\", 7, 2)::int = 45;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3180,
+      "completion_tokens": 302
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND b.\"bond_type\" = '-'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3152,
+      "completion_tokens": 266
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:283": {
+    "question_id": "283",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'ca'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3120,
+      "completion_tokens": 233
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:317": {
+    "question_id": "317",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    COUNT(DISTINCT CASE WHEN m.\"label\" = '+' AND a.\"element\" = 'cl' THEN m.\"molecule_id\" END)::NUMERIC\n    / NULLIF(COUNT(DISTINCT m.\"molecule_id\"), 0) AS percentage\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3132,
+      "completion_tokens": 250
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3172,
+      "completion_tokens": 209
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3164,
+      "completion_tokens": 247
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:338": {
+    "question_id": "338",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"atom_id\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON m.\"molecule_id\" = a.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE m.\"label\" LIKE '%TR012%'\n  AND LOWER(a.\"element\") = 'c'\n  AND b.\"bond_type\" = ' = ';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3106,
+      "completion_tokens": 222
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:327": {
+    "question_id": "327",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY m.\"molecule_id\", m.\"label\"\nHAVING COUNT(a.\"atom_id\") > 5",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3124,
+      "completion_tokens": 234
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:267": {
+    "question_id": "267",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    m.\"molecule_id\",\n    b.\"bond_type\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" >= 'TR000'\n  AND m.\"molecule_id\" <= 'TR050'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, b.\"bond_type\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3130,
+      "completion_tokens": 230
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:298": {
+    "question_id": "298",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    (COUNT(DISTINCT CASE WHEN m.\"label\" = '+' AND a.\"element\" = 'h' THEN m.\"molecule_id\" END)::numeric\n     / NULLIF(COUNT(DISTINCT m.\"molecule_id\"), 0)) * 100.0 AS percentage\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"element\" = 'h';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3154,
+      "completion_tokens": 288
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    m.\"label\",\n    SUM(CASE WHEN a.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC\n        / COUNT(a.\"atom_id\") AS ratio\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3182,
+      "completion_tokens": 235
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:249": {
+    "question_id": "249",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR144_8_19'\nUNION\nSELECT DISTINCT a.\"element\"\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id2\"\nWHERE c.\"bond_id\" = 'TR144_8_19';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3094,
+      "completion_tokens": 240
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:319": {
+    "question_id": "319",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") AS element_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR001_3_4';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3328,
+      "completion_tokens": 201
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:212": {
+    "question_id": "212",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY a.\"element\"\nORDER BY COUNT(a.\"atom_id\") ASC NULLS FIRST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3106,
+      "completion_tokens": 206
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:219": {
+    "question_id": "219",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    (SUM(CASE WHEN b.\"bond_type\" = '#' THEN 1 ELSE 0 END) * 100.0)\n    / NULLIF(COUNT(b.\"bond_id\"), 0) AS percent\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3160,
+      "completion_tokens": 255
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:328": {
+    "question_id": "328",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE m.\"molecule_id\" = 'TR024'\n  AND b.\"bond_type\" = '='\nORDER BY a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3346,
+      "completion_tokens": 253
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:290": {
+    "question_id": "290",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = 'TR151'\n  AND LOWER(a.\"element\") IN ('cl', 'br', 'f', 'i', 'pb', 'sn', 'te', 'hg', 'as', 'cd')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3322,
+      "completion_tokens": 247
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:302": {
+    "question_id": "302",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR001_2_4'\nORDER BY a.\"element\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3330,
+      "completion_tokens": 234
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT\n    m.\"molecule_id\",\n    a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b\n    ON b.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"atom\" a\n    ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3344,
+      "completion_tokens": 260
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3362,
+      "completion_tokens": 229
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:230": {
+    "question_id": "230",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    a.\"element\",\n    m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR060';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3086,
+      "completion_tokens": 204
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_type\" = '='\nORDER BY a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3080,
+      "completion_tokens": 211
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1377": {
+    "question_id": "1377",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(*) AS president_count\nFROM \"member\" m\nWHERE LOWER(m.\"position\") LIKE '%president%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3690,
+      "completion_tokens": 160
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1342": {
+    "question_id": "1342",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"cost\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN \"event\" ev ON b.\"link_to_event\" = ev.\"event_id\"\nWHERE ev.\"event_name\" LIKE '%Poster%'\n  AND ev.\"event_date\"::date = DATE '2019-09-04';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3750,
+      "completion_tokens": 259
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1349": {
+    "question_id": "1349",
+    "db_id": "student_club",
+    "prediction": "SELECT SUM(b.\"amount\") AS total_budget_amount\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" LIKE '%September Speaker%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3722,
+      "completion_tokens": 214
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1447": {
+    "question_id": "1447",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    e.\"event_name\",\n    e.\"location\"\nFROM \"event\" e\nJOIN \"budget\" b\n    ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"remaining\" > 0\nORDER BY e.\"event_name\" ASC NULLS FIRST, e.\"location\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3716,
+      "completion_tokens": 236
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1462": {
+    "question_id": "1462",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    b.\"category\",\n    b.\"amount\"\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" LIKE '%January Speaker%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3732,
+      "completion_tokens": 211
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") AS member_count\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Physics Teaching%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3702,
+      "completion_tokens": 205
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1385": {
+    "question_id": "1385",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\"\nFROM \"member\" m\nJOIN \"income\" i\n    ON i.\"link_to_member\" = m.\"member_id\"\nWHERE i.\"amount\" > 40\nORDER BY m.\"first_name\" ASC NULLS FIRST, m.\"last_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3742,
+      "completion_tokens": 220
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1436": {
+    "question_id": "1436",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"link_to_event\"\nFROM expense e\nJOIN member m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"cost\" > 50",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3712,
+      "completion_tokens": 201
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1420": {
+    "question_id": "1420",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT mj.\"major_name\"\nFROM \"member\" m\nJOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE m.\"position\" LIKE '%Vice President%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3712,
+      "completion_tokens": 217
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1468": {
+    "question_id": "1468",
+    "db_id": "student_club",
+    "prediction": "SELECT zc.\"city\"\nFROM \"member\" m\nJOIN \"zip_code\" zc ON zc.\"zip_code\" = m.\"zip\"\nWHERE m.\"first_name\" LIKE '%Garrett%'\n  AND m.\"last_name\" LIKE '%Gerke%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3680,
+      "completion_tokens": 166
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1328": {
+    "question_id": "1328",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"last_name\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Law and Constitutional Studies%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3710,
+      "completion_tokens": 177
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1365": {
+    "question_id": "1365",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"expense_description\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE b.\"remaining\" = (\n    SELECT MIN(\"remaining\")\n    FROM \"budget\"\n);",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3708,
+      "completion_tokens": 239
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1388": {
+    "question_id": "1388",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"first_name\",\n    m.\"last_name\",\n    i.\"source\"\nFROM \"income\" i\nJOIN \"member\" m ON m.\"member_id\" = i.\"link_to_member\"\nWHERE i.\"amount\" = (SELECT MAX(\"amount\") FROM \"income\")\nORDER BY m.\"first_name\" ASC NULLS FIRST, m.\"last_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3752,
+      "completion_tokens": 249
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1426": {
+    "question_id": "1426",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"last_name\",\n    mj.\"department\",\n    mj.\"college\"\nFROM \"member\" m\nJOIN \"major\" mj\n    ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Environmental Engineering%'\nORDER BY m.\"last_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3710,
+      "completion_tokens": 248
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1456": {
+    "question_id": "1456",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"first_name\",\n    m.\"last_name\",\n    MAX(e.\"cost\") AS max_cost\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nGROUP BY m.\"member_id\", m.\"first_name\", m.\"last_name\"\nORDER BY max_cost DESC NULLS LAST\nLIMIT 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3740,
+      "completion_tokens": 249
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1453": {
+    "question_id": "1453",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM event e\nJOIN budget b ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"category\" = 'Parking'\n  AND b.\"spent\" < (\n    SELECT SUM(b2.\"spent\") / COUNT(DISTINCT b2.\"link_to_event\")\n    FROM budget b2\n    WHERE b2.\"category\" = 'Parking'\n  )",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3746,
+      "completion_tokens": 266
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1439": {
+    "question_id": "1439",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"phone\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Business%'\n  AND mj.\"college\" LIKE '%College of Agriculture and Applied Sciences%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3756,
+      "completion_tokens": 197
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1428": {
+    "question_id": "1428",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    zc.\"city\",\n    zc.\"state\"\nFROM \"member\" m\nJOIN \"major\" mj\n    ON m.\"link_to_major\" = mj.\"major_id\"\nJOIN \"zip_code\" zc\n    ON m.\"zip\" = zc.\"zip_code\"\nWHERE mj.\"department\" LIKE '%Electrical and Computer Engineering%'\n  AND m.\"position\" = 'Member'\nORDER BY zc.\"state\" ASC NULLS FIRST, zc.\"city\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3722,
+      "completion_tokens": 273
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" NOT LIKE '%fundrais%'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20\nORDER BY e.\"event_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3740,
+      "completion_tokens": 273
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\",\n    mj.\"major_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nLEFT JOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE e.\"cost\" > 100\nORDER BY m.\"first_name\" ASC NULLS FIRST, m.\"last_name\" ASC NULLS FIRST, mj.\"major_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3762,
+      "completion_tokens": 279
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1340": {
+    "question_id": "1340",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\") = 2019 THEN b.\"spent\" ELSE 0 END)\n    - SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\") = 2020 THEN b.\"spent\" ELSE 0 END) AS difference\nFROM event e\nJOIN budget b ON b.\"link_to_event\" = e.\"event_id\"\nWHERE EXTRACT(YEAR FROM e.\"event_date\") IN (2019, 2020);",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3806,
+      "completion_tokens": 284
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1399": {
+    "question_id": "1399",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"event_name\"\nFROM \"member\" m\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"event\" e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"first_name\" LIKE '%Maya%'\n  AND m.\"last_name\" LIKE '%Mclean%'\n  AND e.\"event_name\" LIKE '%Women''s Soccer%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3734,
+      "completion_tokens": 209
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1401": {
+    "question_id": "1401",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"cost\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN \"event\" ev ON b.\"link_to_event\" = ev.\"event_id\"\nWHERE e.\"expense_description\" LIKE '%Posters%'\n  AND ev.\"event_name\" LIKE '%September Speaker%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3714,
+      "completion_tokens": 238
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1431": {
+    "question_id": "1431",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"last_name\"\nFROM \"member\" m\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"event\" e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"position\" = 'Member'\n  AND e.\"event_name\" LIKE '%Women%s Soccer%'\nORDER BY m.\"last_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3728,
+      "completion_tokens": 254
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(e.\"cost\") AS average_cost\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE m.\"first_name\" LIKE '%Elijah%'\n  AND m.\"last_name\" LIKE '%Allen%'\n  AND EXTRACT(MONTH FROM e.\"expense_date\") IN (9, 10);",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3818,
+      "completion_tokens": 271
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    SUM(CASE WHEN e.\"event_name\" = 'Yearly Kickoff' THEN b.\"amount\" ELSE 0 END)::NUMERIC\n    /\n    NULLIF(SUM(CASE WHEN e.\"event_name\" = 'October Meeting' THEN b.\"amount\" ELSE 0 END), 0)::NUMERIC\n    AS ratio\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"category\" = 'Advertisement'\n  AND e.\"event_name\" IN ('Yearly Kickoff', 'October Meeting');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3782,
+      "completion_tokens": 312
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_name\"\nFROM event e\nJOIN attendance a ON a.\"link_to_event\" = e.\"event_id\"\nJOIN member m ON m.\"member_id\" = a.\"link_to_member\"\nWHERE e.\"type\" = 'Social'\n  AND m.\"position\" LIKE '%Vice President%'\n  AND m.\"link_to_major\" IS NOT NULL\n  AND EXISTS (\n    SELECT 1\n    FROM major mj\n    WHERE mj.\"major_id\" = m.\"link_to_major\"\n  )\n  AND m.\"member_id\" IN (\n    SELECT m2.\"member_id\"\n    FROM member m2\n    WHERE m2.\"position\" LIKE '%Vice President%'\n  )\n  AND m.\"zip\" IN (\n    SELECT z.\"zip_code\"\n    FROM zip_code z\n    WHERE z.\"city\" LIKE '%900 E. Washington St.%'\n       OR z.\"county\" LIKE '%900 E. Washington St.%'\n       OR z.\"state\" LIKE '%900 E. Washington St.%'\n  )",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3768,
+      "completion_tokens": 414
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\",\n    a.\"link_to_event\"\nFROM \"member\" m\nJOIN \"expense\" e\n    ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a\n    ON a.\"link_to_member\" = m.\"member_id\"\nWHERE LOWER(e.\"approved\") = 'true'\n  AND e.\"expense_date\"::date BETWEEN DATE '2019-01-10' AND DATE '2019-11-19';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3816,
+      "completion_tokens": 343
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1448": {
+    "question_id": "1448",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    e.\"event_name\",\n    e.\"event_date\"\nFROM \"event\" e\nJOIN \"budget\" b ON b.\"link_to_event\" = e.\"event_id\"\nJOIN \"expense\" ex ON ex.\"link_to_budget\" = b.\"budget_id\"\nWHERE ex.\"expense_description\" LIKE '%Pizza%'\n  AND ex.\"cost\" > 50\n  AND ex.\"cost\" < 100\nORDER BY e.\"event_date\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3778,
+      "completion_tokens": 310
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1451": {
+    "question_id": "1451",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"first_name\",\n    m.\"last_name\",\n    MAX(e.\"cost\") AS max_cost\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nGROUP BY m.\"member_id\", m.\"first_name\", m.\"last_name\"\nHAVING COUNT(DISTINCT b.\"link_to_event\") > 1\nORDER BY max_cost DESC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3744,
+      "completion_tokens": 272
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1457": {
+    "question_id": "1457",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\",\n    m.\"phone\"\nFROM \"member\" m\nJOIN \"expense\" e\n    ON e.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"cost\" > (\n    \n    SELECT AVG(e2.\"cost\")\n    FROM \"expense\" e2\n)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3758,
+      "completion_tokens": 297
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1460": {
+    "question_id": "1460",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"first_name\",\n    m.\"last_name\",\n    e.\"cost\"\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"expense_description\" LIKE '%Water%'\n  AND e.\"expense_description\" LIKE '%Veggie tray%'\n  AND e.\"expense_description\" LIKE '%supplies%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3760,
+      "completion_tokens": 254
+    }
+  },
+  "search:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:1464": {
+    "question_id": "1464",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    m.\"first_name\",\n    m.\"last_name\",\n    i.\"amount\"\nFROM \"income\" i\nJOIN \"member\" m ON m.\"member_id\" = i.\"link_to_member\"\nWHERE i.\"date_received\" = TO_DATE('9/9/2019', 'MM/DD/YYYY');",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3760,
+      "completion_tokens": 303
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\", COUNT(DISTINCT b.\"bond_type\") AS \"bond_type_count\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nLEFT JOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nLEFT JOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE m.\"label\" LIKE '%TR346%'\nGROUP BY a.\"atom_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4542,
+      "completion_tokens": 255
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:223": {
+    "question_id": "223",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR000_2_5'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4544,
+      "completion_tokens": 166
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:326": {
+    "question_id": "326",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE a.\"element\" = 's'\n  AND b.\"bond_type\" = ' = ';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4554,
+      "completion_tokens": 230
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:292": {
+    "question_id": "292",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nINNER JOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'c'\n  AND CAST(SUBSTRING(m.\"molecule_id\", 3, 3) AS INTEGER) BETWEEN 10 AND 50;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4624,
+      "completion_tokens": 193
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") \nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND LOWER(a.\"element\") = 'na'\n  AND m.\"molecule_id\" IN (\n    SELECT a2.\"molecule_id\"\n    FROM \"atom\" a2\n    WHERE LOWER(a2.\"element\") = 'na'\n  )",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4560,
+      "completion_tokens": 259
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:295": {
+    "question_id": "295",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(a.\"atom_id\") AS atom_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'h'\n  AND m.\"label\" = '+'\n  AND EXISTS (\n    SELECT 1\n    FROM \"atom\" a2\n    WHERE a2.\"molecule_id\" = m.\"molecule_id\"\n      AND LOWER(a2.\"element\") = 'c'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4560,
+      "completion_tokens": 257
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:336": {
+    "question_id": "336",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") \nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND m.\"label\" = '-'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4564,
+      "completion_tokens": 212
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:323": {
+    "question_id": "323",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"molecule\" AS m\nWHERE m.\"molecule_id\" = 'TR000'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4552,
+      "completion_tokens": 165
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") \nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'n'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4546,
+      "completion_tokens": 217
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:279": {
+    "question_id": "279",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"bond\" b\nJOIN \"molecule\" m ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_id\" = 'TR001_10_11'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4560,
+      "completion_tokens": 112
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:276": {
+    "question_id": "276",
+    "db_id": "toxicology",
+    "prediction": "SELECT c.\"atom_id\", c.\"atom_id2\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '#';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4574,
+      "completion_tokens": 177
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") \nFROM \"connected\" c\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4552,
+      "completion_tokens": 177
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:260": {
+    "question_id": "260",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") \nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND LOWER(a.\"element\") IN ('p', 'br');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4578,
+      "completion_tokens": 191
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\", b.\"bond_id\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (SUBSTR(c.\"atom_id\", 7, 2)::int = 45 OR SUBSTR(c.\"atom_id2\", 7, 2)::int = 45)\n  AND b.\"bond_type\" IN ('=', '-', '#');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4632,
+      "completion_tokens": 269
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nWHERE m.\"label\" = '-'\n  AND b.\"bond_type\" = '-'\nGROUP BY m.\"molecule_id\"\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4604,
+      "completion_tokens": 256
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:283": {
+    "question_id": "283",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'ca'\n  AND m.\"label\" IN ('+', '-');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4572,
+      "completion_tokens": 192
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:317": {
+    "question_id": "317",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  COUNT(DISTINCT CASE WHEN m.\"label\" = '+' AND LOWER(a.\"element\") = 'cl' THEN m.\"molecule_id\" END)::NUMERIC\n  / NULLIF(COUNT(DISTINCT m.\"molecule_id\"), 0) AS percentage\nFROM \"molecule\" m\nLEFT JOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4584,
+      "completion_tokens": 242
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4624,
+      "completion_tokens": 220
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4616,
+      "completion_tokens": 228
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:338": {
+    "question_id": "338",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE m.\"label\" = 'TR012'\n  AND a.\"element\" = 'c'\n  AND b.\"bond_type\" = ' = ';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4558,
+      "completion_tokens": 213
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:327": {
+    "question_id": "327",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY m.\"molecule_id\", m.\"label\"\nHAVING COUNT(a.\"atom_id\") > 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4576,
+      "completion_tokens": 213
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:267": {
+    "question_id": "267",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT b.\"bond_type\"\nFROM \"bond\" b\nJOIN \"molecule\" m ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" BETWEEN 'TR000' AND 'TR050'\nORDER BY b.\"bond_type\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4582,
+      "completion_tokens": 177
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:298": {
+    "question_id": "298",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  SUM(CASE WHEN b.\"bond_type\" = '+' AND a.\"element\" = 'h' THEN 1 ELSE 0 END) * 100.0\n  / COUNT(DISTINCT m.\"molecule_id\") AS percentage\nFROM \"molecule\" m\nLEFT JOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nLEFT JOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nLEFT JOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\" AND b.\"molecule_id\" = m.\"molecule_id\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4606,
+      "completion_tokens": 230
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  SUM(CASE WHEN a.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC / COUNT(a.\"atom_id\") AS ratio,\n  \n  m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4634,
+      "completion_tokens": 210
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:249": {
+    "question_id": "249",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR144_8_19'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4546,
+      "completion_tokens": 132
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:319": {
+    "question_id": "319",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") \nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR001_3_4'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4780,
+      "completion_tokens": 182
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:212": {
+    "question_id": "212",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY a.\"element\"\nORDER BY COUNT(a.\"atom_id\") ASC NULLS FIRST\nLIMIT 1",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4558,
+      "completion_tokens": 186
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:219": {
+    "question_id": "219",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  SUM(CASE WHEN b.\"bond_type\" = '#' THEN 1 ELSE 0 END) * 100.0 / COUNT(b.\"bond_id\") AS percent\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4612,
+      "completion_tokens": 234
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:328": {
+    "question_id": "328",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE m.\"label\" = 'TR024'\n  AND b.\"bond_type\" = '=';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4798,
+      "completion_tokens": 209
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:290": {
+    "question_id": "290",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = 'TR151'\n  AND LOWER(a.\"element\") IN ('cl', 'br', 'f', 'i', 'pb', 'te', 'sn', 'p')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4774,
+      "completion_tokens": 238
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:302": {
+    "question_id": "302",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR001_2_4'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4782,
+      "completion_tokens": 184
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\", a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"label\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4796,
+      "completion_tokens": 231
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4814,
+      "completion_tokens": 123
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:230": {
+    "question_id": "230",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\", m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR060'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4538,
+      "completion_tokens": 141
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '=';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4532,
+      "completion_tokens": 173
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1377": {
+    "question_id": "1377",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(*) AS \"count\"\nFROM \"member\" AS m\nWHERE LOWER(m.\"position\") LIKE '%president%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5142,
+      "completion_tokens": 142
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1342": {
+    "question_id": "1342",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\", ex.\"cost\"\nFROM \"event\" e\nJOIN \"budget\" b ON e.\"event_id\" = b.\"link_to_event\"\nJOIN \"expense\" ex ON b.\"budget_id\" = ex.\"link_to_budget\"\nWHERE e.\"event_name\" LIKE '%Posters%'\n  AND e.\"event_date\" = TO_DATE('2019-09-04', 'YYYY-MM-DD');",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5202,
+      "completion_tokens": 212
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1349": {
+    "question_id": "1349",
+    "db_id": "student_club",
+    "prediction": "SELECT SUM(b.\"amount\") \nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" LIKE '%September Speaker%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5174,
+      "completion_tokens": 178
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1447": {
+    "question_id": "1447",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\", e.\"location\"\nFROM \"event\" e\nJOIN \"budget\" b ON e.\"event_id\" = b.\"link_to_event\"\nWHERE b.\"remaining\" > 0;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5168,
+      "completion_tokens": 180
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1462": {
+    "question_id": "1462",
+    "db_id": "student_club",
+    "prediction": "SELECT b.\"category\", b.\"amount\"\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" LIKE '%January Speaker%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5184,
+      "completion_tokens": 200
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") \nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Physics Teaching%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5154,
+      "completion_tokens": 197
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1385": {
+    "question_id": "1385",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\"\nFROM \"member\" m\nJOIN \"income\" i ON i.\"link_to_member\" = m.\"member_id\"\nWHERE i.\"amount\" > 40;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5194,
+      "completion_tokens": 178
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1436": {
+    "question_id": "1436",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_id\", e.\"event_name\"\nFROM \"member\" m\nJOIN \"expense\" ex ON ex.\"link_to_member\" = m.\"member_id\"\nJOIN \"budget\" b ON b.\"budget_id\" = ex.\"link_to_budget\"\nJOIN \"event\" e ON e.\"event_id\" = b.\"link_to_event\"\nWHERE ex.\"cost\" > 50;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5164,
+      "completion_tokens": 230
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1420": {
+    "question_id": "1420",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"major_name\"\nFROM \"member\" mem\nJOIN \"major\" m ON mem.\"link_to_major\" = m.\"major_id\"\nWHERE mem.\"position\" LIKE '%Vice President%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5164,
+      "completion_tokens": 184
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1468": {
+    "question_id": "1468",
+    "db_id": "student_club",
+    "prediction": "SELECT z.\"city\"\nFROM \"member\" m\nJOIN \"zip_code\" z ON m.\"zip\" = z.\"zip_code\"\nWHERE m.\"first_name\" LIKE '%Garrett%' AND m.\"last_name\" LIKE '%Gerke%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5132,
+      "completion_tokens": 155
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1328": {
+    "question_id": "1328",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"last_name\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Law and Constitutional Studies%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5162,
+      "completion_tokens": 161
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1365": {
+    "question_id": "1365",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"expense_description\"\nFROM \"expense\" e\nINNER JOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE b.\"remaining\" = (SELECT MIN(\"remaining\") FROM \"budget\");",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5160,
+      "completion_tokens": 180
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1388": {
+    "question_id": "1388",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", i.\"source\"\nFROM \"income\" i\nJOIN \"member\" m ON i.\"link_to_member\" = m.\"member_id\"\nWHERE i.\"amount\" = (SELECT MAX(\"amount\") FROM \"income\")",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5204,
+      "completion_tokens": 188
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1426": {
+    "question_id": "1426",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"last_name\", mj.\"department\", mj.\"college\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Environmental Engineering%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5162,
+      "completion_tokens": 224
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1456": {
+    "question_id": "1456",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", MAX(e.\"cost\") AS max_cost\nFROM \"member\" m\nJOIN \"expense\" e ON m.\"member_id\" = e.\"link_to_member\"\nGROUP BY m.\"member_id\", m.\"first_name\", m.\"last_name\"\nORDER BY max_cost DESC NULLS LAST\nLIMIT 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5192,
+      "completion_tokens": 219
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1453": {
+    "question_id": "1453",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"budget\" b ON e.\"event_id\" = b.\"link_to_event\"\nWHERE b.\"category\" = 'Parking'\n  AND b.\"spent\" < (\n    SELECT SUM(b2.\"spent\") / COUNT(DISTINCT b2.\"link_to_event\")\n    FROM \"budget\" b2\n    WHERE b2.\"category\" = 'Parking'\n  )\nGROUP BY e.\"event_name\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5198,
+      "completion_tokens": 267
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1439": {
+    "question_id": "1439",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"phone\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Business%'\n  AND mj.\"college\" LIKE '%College of Agriculture and Applied Sciences%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5208,
+      "completion_tokens": 162
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1428": {
+    "question_id": "1428",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT z.\"city\", z.\"state\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nJOIN \"zip_code\" z ON m.\"zip\" = z.\"zip_code\"\nWHERE mj.\"department\" LIKE '%Electrical and Computer Engineering%'\n  AND m.\"position\" = 'Member'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5174,
+      "completion_tokens": 240
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" NOT LIKE '%fundraiser%'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5192,
+      "completion_tokens": 214
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\", mj.\"major_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE e.\"cost\" > 100;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5214,
+      "completion_tokens": 250
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1340": {
+    "question_id": "1340",
+    "db_id": "student_club",
+    "prediction": "SELECT\n  SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\") = 2019 THEN b.\"spent\" ELSE 0 END)\n  - SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\") = 2020 THEN b.\"spent\" ELSE 0 END) AS \"difference\"\nFROM event e\nJOIN budget b ON b.\"link_to_event\" = e.\"event_id\"\nWHERE EXTRACT(YEAR FROM e.\"event_date\") IN (2019, 2020);",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5258,
+      "completion_tokens": 206
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1399": {
+    "question_id": "1399",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"event_name\"\nFROM member m\nJOIN attendance a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN event e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"first_name\" LIKE '%Maya%'\n  AND m.\"last_name\" LIKE '%Mclean%'\n  AND e.\"event_name\" LIKE '%Women''s Soccer%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5186,
+      "completion_tokens": 231
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1401": {
+    "question_id": "1401",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"cost\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN \"event\" ev ON b.\"link_to_event\" = ev.\"event_id\"\nWHERE e.\"expense_description\" LIKE '%Posters%'\n  AND ev.\"event_name\" LIKE '%September Speaker%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5166,
+      "completion_tokens": 217
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1431": {
+    "question_id": "1431",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"last_name\"\nFROM \"member\" m\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"event\" e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"position\" = 'Member'\n  AND e.\"event_name\" LIKE '%Women%s Soccer%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5180,
+      "completion_tokens": 228
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(e.\"cost\") \nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE m.\"first_name\" LIKE '%Elijah%'\n  AND m.\"last_name\" LIKE '%Allen%'\n  AND EXTRACT(MONTH FROM e.\"expense_date\") IN (9, 10)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5270,
+      "completion_tokens": 224
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT\n  \n  SUM(CASE WHEN e.\"event_name\" LIKE '%Yearly Kickoff%' THEN b.\"amount\" ELSE 0 END)\n  /\n  \n  NULLIF(SUM(CASE WHEN e.\"event_name\" LIKE '%October Meeting%' THEN b.\"amount\" ELSE 0 END), 0)\n  AS ratio\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"category\" LIKE '%Advertisement%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5234,
+      "completion_tokens": 263
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nJOIN \"member\" m ON m.\"member_id\" = a.\"link_to_member\"\nWHERE e.\"type\" = 'Social'\n  AND m.\"position\" LIKE '%Vice President%'\n  AND m.\"link_to_major\" IS NOT NULL\n  AND EXISTS (\n    SELECT 1 FROM \"major\" mj\n    WHERE mj.\"major_id\" = m.\"link_to_major\"\n      AND mj.\"college\" LIKE '%900 E. Washington St.%'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5220,
+      "completion_tokens": 292
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", a.\"link_to_event\"\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"approved\" = 'true'\n  AND e.\"expense_date\"::date BETWEEN '2019-01-10' AND '2019-11-19'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5268,
+      "completion_tokens": 290
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1448": {
+    "question_id": "1448",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\", e.\"event_date\"\nFROM event e\nJOIN budget b ON e.\"event_id\" = b.\"link_to_event\"\nJOIN expense ex ON b.\"budget_id\" = ex.\"link_to_budget\"\nWHERE ex.\"expense_description\" LIKE '%Pizza%'\n  AND ex.\"cost\" > 50\n  AND ex.\"cost\" < 100;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5230,
+      "completion_tokens": 246
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1451": {
+    "question_id": "1451",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"cost\"\nFROM expense e\nJOIN member m ON e.\"link_to_member\" = m.\"member_id\"\nJOIN budget b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE e.\"link_to_member\" IN (\n    SELECT e2.\"link_to_member\"\n    FROM expense e2\n    JOIN budget b2 ON e2.\"link_to_budget\" = b2.\"budget_id\"\n    GROUP BY e2.\"link_to_member\"\n    HAVING COUNT(DISTINCT b2.\"link_to_event\") > 1\n)\nORDER BY e.\"cost\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5196,
+      "completion_tokens": 287
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1457": {
+    "question_id": "1457",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\", m.\"phone\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"cost\" > (SELECT AVG(\"cost\") FROM \"expense\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5210,
+      "completion_tokens": 233
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1460": {
+    "question_id": "1460",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"cost\"\nFROM member m\nJOIN expense e ON m.\"member_id\" = e.\"link_to_member\"\nWHERE e.\"expense_description\" LIKE '%Water%'\n  AND e.\"expense_description\" LIKE '%Veggie tray%'\n  AND e.\"expense_description\" LIKE '%supplies%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5212,
+      "completion_tokens": 239
+    }
+  },
+  "search:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:1464": {
+    "question_id": "1464",
+    "db_id": "student_club",
+    "prediction": "SELECT m.\"first_name\", m.\"last_name\", i.\"amount\"\nFROM \"income\" i\nJOIN \"member\" m ON i.\"link_to_member\" = m.\"member_id\"\nWHERE i.\"date_received\"::date = TO_DATE('9/9/2019', 'MM/DD/YYYY')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 5212,
+      "completion_tokens": 228
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1340": {
+    "question_id": "1340",
+    "db_id": "student_club",
+    "prediction": "SELECT\n  SUM(CASE WHEN EXTRACT(YEAR FROM T1.\"event_date\") = 2019 THEN T2.\"spent\" ELSE 0 END)\n  - SUM(CASE WHEN EXTRACT(YEAR FROM T1.\"event_date\") = 2020 THEN T2.\"spent\" ELSE 0 END) AS \"difference\"\nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE EXTRACT(YEAR FROM T1.\"event_date\") IN (2019, 2020)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3854,
+      "completion_tokens": 261
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"atom_id\", COUNT(DISTINCT T3.\"bond_type\") AS \"bond_type_count\"\nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"connected\" T4 ON T2.\"atom_id\" = T4.\"atom_id\"\nJOIN \"bond\" T3 ON T4.\"bond_id\" = T3.\"bond_id\"\nWHERE T1.\"label\" = 'TR346'\nGROUP BY T2.\"atom_id\"\nORDER BY T2.\"atom_id\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3138,
+      "completion_tokens": 322
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:319": {
+    "question_id": "319",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"element\") AS element_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR001_3_4'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3376,
+      "completion_tokens": 165
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1365": {
+    "question_id": "1365",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"expense_description\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE b.\"remaining\" = (SELECT MIN(\"remaining\") FROM \"budget\")",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3756,
+      "completion_tokens": 204
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1464": {
+    "question_id": "1464",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T2.\"amount\"\nFROM \"member\" T1\nJOIN \"income\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"date_received\" = TO_DATE('9/9/2019', 'MM/DD/YYYY')",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3808,
+      "completion_tokens": 211
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS \"non_carcinogenic_count\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND LOWER(a.\"element\") = 'na'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3156,
+      "completion_tokens": 215
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT\n  SUM(CASE WHEN T2.\"event_name\" = 'Yearly Kickoff' THEN T1.\"amount\" ELSE 0 END) * 1.0\n  / NULLIF(SUM(CASE WHEN T2.\"event_name\" = 'October Meeting' THEN T1.\"amount\" ELSE 0 END), 0) AS \"ratio\"\nFROM \"budget\" T1\nJOIN \"event\" T2 ON T1.\"link_to_event\" = T2.\"event_id\"\nWHERE T1.\"category\" = 'Advertisement'\n  AND T2.\"event_name\" IN ('Yearly Kickoff', 'October Meeting')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3830,
+      "completion_tokens": 285
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1436": {
+    "question_id": "1436",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_id\", e.\"event_name\", e.\"event_date\", e.\"location\", e.\"status\"\nFROM \"event\" e\nJOIN \"attendance\" a ON e.\"event_id\" = a.\"link_to_event\"\nJOIN \"member\" m ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"expense\" ex ON m.\"member_id\" = ex.\"link_to_member\"\nWHERE ex.\"cost\" > 50",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3760,
+      "completion_tokens": 242
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1436": {
+    "question_id": "1436",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT \"t1\".\"link_to_event\" FROM \"expense\" AS \"t1\" WHERE \"t1\".\"cost\" > 50",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3566,
+      "completion_tokens": 161
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"member_id\") FROM \"member\" T1 JOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\" WHERE T2.\"major_name\" = 'Physics Teaching'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3556,
+      "completion_tokens": 177
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:283": {
+    "question_id": "283",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T1.\"label\" \nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE LOWER(T2.\"element\") = 'ca'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2974,
+      "completion_tokens": 194
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1447": {
+    "question_id": "1447",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"event_name\", T1.\"location\" FROM \"event\" T1 JOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\" WHERE T2.\"remaining\" > 0",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3570,
+      "completion_tokens": 184
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1462": {
+    "question_id": "1462",
+    "db_id": "student_club",
+    "prediction": "SELECT T2.\"category\", T2.\"amount\" \nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE T1.\"event_name\" LIKE '%January Speaker%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3586,
+      "completion_tokens": 193
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1464": {
+    "question_id": "1464",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T2.\"amount\"\nFROM \"member\" T1\nJOIN \"income\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"date_received\" = TO_DATE('9/9/2019', 'MM/DD/YYYY')\nORDER BY T1.\"last_name\" ASC NULLS FIRST, T1.\"first_name\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3614,
+      "completion_tokens": 266
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:212": {
+    "question_id": "212",
+    "db_id": "toxicology",
+    "prediction": "SELECT T3.\"element\" FROM \"molecule\" T1 JOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\" WHERE T1.\"label\" = '-' GROUP BY T3.\"element\" ORDER BY COUNT(T3.\"element\") ASC NULLS FIRST LIMIT 1",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2960,
+      "completion_tokens": 167
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:327": {
+    "question_id": "327",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"label\" \nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"label\" = '-'\nGROUP BY T1.\"molecule_id\", T1.\"label\"\nHAVING COUNT(T2.\"atom_id\") > 5\nORDER BY T1.\"label\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2978,
+      "completion_tokens": 233
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1439": {
+    "question_id": "1439",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"phone\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T2.\"major_name\" LIKE '%Business%'\n  AND T2.\"college\" LIKE '%College of Agriculture and Applied Sciences%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3804,
+      "completion_tokens": 188
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1349": {
+    "question_id": "1349",
+    "db_id": "student_club",
+    "prediction": "SELECT SUM(T2.\"amount\") AS total_budget_amount\nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE T1.\"event_name\" LIKE '%September Speaker%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3770,
+      "completion_tokens": 171
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:317": {
+    "question_id": "317",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  SUM(CASE WHEN m.\"label\" = '+' AND a.\"element\" = 'cl' THEN 1 ELSE 0 END)::NUMERIC\n  / COUNT(DISTINCT m.\"molecule_id\") AS percentage\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3180,
+      "completion_tokens": 236
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:249": {
+    "question_id": "249",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR144_8_19'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3142,
+      "completion_tokens": 132
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" <> 'Fundraiser'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3788,
+      "completion_tokens": 211
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1451": {
+    "question_id": "1451",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", MAX(T3.\"cost\") AS max_cost\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nJOIN \"budget\" T2 ON T3.\"link_to_budget\" = T2.\"budget_id\"\nGROUP BY T1.\"member_id\", T1.\"first_name\", T1.\"last_name\"\nHAVING COUNT(DISTINCT T2.\"link_to_event\") > 1\nORDER BY max_cost DESC NULLS LAST\nLIMIT 1",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3792,
+      "completion_tokens": 269
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", COUNT(DISTINCT T3.\"bond_type\") AS bond_type_count\nFROM atom T1\nJOIN molecule T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN bond T3 ON T2.\"molecule_id\" = T3.\"molecule_id\"\nWHERE T2.\"label\" = 'TR346'\nGROUP BY T1.\"atom_id\"\nORDER BY T1.\"atom_id\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2944,
+      "completion_tokens": 284
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:223": {
+    "question_id": "223",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T1.\"atom_id2\" \nFROM \"connected\" T1\nWHERE T1.\"bond_id\" = 'TR000_2_5'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2946,
+      "completion_tokens": 167
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:326": {
+    "question_id": "326",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\" \nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"connected\" T3 ON T2.\"atom_id\" = T3.\"atom_id\"\nJOIN \"bond\" T4 ON T3.\"bond_id\" = T4.\"bond_id\"\nWHERE LOWER(T2.\"element\") = 's'\n  AND T4.\"bond_type\" = ' = '",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2956,
+      "completion_tokens": 245
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:292": {
+    "question_id": "292",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T1.\"element\"\nFROM \"atom\" T1\nJOIN \"molecule\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"element\" = 'c'\n  AND CAST(SUBSTRING(T2.\"molecule_id\", 3, 3) AS INTEGER) >= 10\n  AND CAST(SUBSTRING(T2.\"molecule_id\", 3, 3) AS INTEGER) <= 50",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3026,
+      "completion_tokens": 215
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(*) FROM \"molecule\" AS T1 JOIN \"atom\" AS T2 ON T1.\"molecule_id\" = T2.\"molecule_id\" WHERE T1.\"label\" = '-' AND T2.\"element\" = 'na'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2962,
+      "completion_tokens": 154
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:295": {
+    "question_id": "295",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(T1.\"atom_id\") \nFROM \"atom\" T1\nJOIN \"molecule\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"element\" = 'h'\n  AND T2.\"label\" = '+'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2962,
+      "completion_tokens": 222
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:336": {
+    "question_id": "336",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") \nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND m.\"label\" = '-'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2966,
+      "completion_tokens": 200
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:323": {
+    "question_id": "323",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"label\" FROM \"molecule\" T1 WHERE T1.\"molecule_id\" = 'TR000'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2954,
+      "completion_tokens": 156
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"molecule_id\") \nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"label\" = '+'\n  AND LOWER(T2.\"element\") = 'n'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2948,
+      "completion_tokens": 224
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:279": {
+    "question_id": "279",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\" FROM \"bond\" b JOIN \"molecule\" m ON b.\"molecule_id\" = m.\"molecule_id\" WHERE b.\"bond_id\" = 'TR001_10_11'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2962,
+      "completion_tokens": 110
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:276": {
+    "question_id": "276",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T2.\"atom_id2\"\nFROM \"connected\" T1\nJOIN \"bond\" T3 ON T1.\"bond_id\" = T3.\"bond_id\"\nJOIN \"connected\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nWHERE T3.\"bond_type\" = '#'\n  AND T1.\"atom_id\" <> T2.\"atom_id2\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2976,
+      "completion_tokens": 263
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(T1.\"bond_id\") AS connection_count\nFROM \"connected\" T1\nJOIN \"atom\" T2 ON T1.\"atom_id\" = T2.\"atom_id\"\nWHERE T2.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2954,
+      "completion_tokens": 169
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:260": {
+    "question_id": "260",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"atom_id\") \nFROM \"atom\" T1\nJOIN \"molecule\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"bond\" T3 ON T2.\"molecule_id\" = T3.\"molecule_id\"\nWHERE T3.\"bond_type\" = '#'\n  AND LOWER(T1.\"element\") IN ('p', 'br')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2980,
+      "completion_tokens": 229
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"bond_type\", T2.\"bond_id\"\nFROM \"connected\" T1\nJOIN \"bond\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nWHERE (SUBSTR(T1.\"atom_id\", 7, 2) + 0) = 45",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3034,
+      "completion_tokens": 242
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND b.\"bond_type\" = '-'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3006,
+      "completion_tokens": 212
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:317": {
+    "question_id": "317",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  \n  ROUND(\n    100.0 * COUNT(DISTINCT CASE WHEN T1.\"label\" = '+' AND T3.\"element\" = 'cl' THEN T1.\"molecule_id\" END)\n    / NULLIF(COUNT(DISTINCT T1.\"molecule_id\"), 0)::NUMERIC,\n    2\n  ) AS \"percentage\"\nFROM \"molecule\" T1\nLEFT JOIN \"atom\" T3\n  ON T1.\"molecule_id\" = T3.\"molecule_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2986,
+      "completion_tokens": 265
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"bond_type\" FROM \"connected\" T1 JOIN \"bond\" T2 ON T1.\"bond_id\" = T2.\"bond_id\" WHERE (T1.\"atom_id\" = 'TR004_8' AND T1.\"atom_id2\" = 'TR004_20') OR (T1.\"atom_id\" = 'TR004_20' AND T1.\"atom_id2\" = 'TR004_8')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3026,
+      "completion_tokens": 246
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3018,
+      "completion_tokens": 215
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:338": {
+    "question_id": "338",
+    "db_id": "toxicology",
+    "prediction": "SELECT T3.\"atom_id\" \nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nJOIN \"connected\" T4 ON T3.\"atom_id\" = T4.\"atom_id\"\nJOIN \"bond\" T2 ON T4.\"bond_id\" = T2.\"bond_id\"\nWHERE T1.\"label\" = 'TR012'\n  AND T3.\"element\" = 'c'\n  AND T2.\"bond_type\" = ' = '",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2960,
+      "completion_tokens": 189
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:267": {
+    "question_id": "267",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\", b.\"bond_type\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE m.\"molecule_id\" >= 'TR000' AND m.\"molecule_id\" <= 'TR050'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, b.\"bond_type\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2984,
+      "completion_tokens": 200
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:298": {
+    "question_id": "298",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  (SUM(CASE WHEN T1.\"label\" = '+' AND T3.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(DISTINCT T1.\"molecule_id\")) * 100.0 AS percentage\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3008,
+      "completion_tokens": 239
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT SUM(CASE WHEN T2.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC / COUNT(T2.\"element\") AS ratio, T1.\"label\"\nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"molecule_id\" = 'TR006'\nGROUP BY T1.\"label\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3036,
+      "completion_tokens": 189
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:249": {
+    "question_id": "249",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\" \nFROM \"bond\" T1\nJOIN \"connected\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nJOIN \"atom\" T3 ON T2.\"atom_id\" = T3.\"atom_id\"\nWHERE T1.\"bond_id\" = 'TR144_8_19'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2948,
+      "completion_tokens": 160
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:319": {
+    "question_id": "319",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT T2.\"atom_id\") AS element_count \nFROM \"connected\" T1\nJOIN \"atom\" T2 ON T1.\"atom_id\" = T2.\"atom_id\"\nWHERE T1.\"bond_id\" = 'TR001_3_4'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3182,
+      "completion_tokens": 183
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:219": {
+    "question_id": "219",
+    "db_id": "toxicology",
+    "prediction": "SELECT ROUND(SUM(CASE WHEN T2.\"bond_type\" = '#' THEN 1 ELSE 0 END) * 100.0 / COUNT(T2.\"bond_id\")::NUMERIC, 2) AS \"percent\"\nFROM \"molecule\" T1\nJOIN \"bond\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"label\" = '+'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3014,
+      "completion_tokens": 230
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:328": {
+    "question_id": "328",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\"\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nJOIN \"connected\" T4 ON T3.\"atom_id\" = T4.\"atom_id\"\nJOIN \"bond\" T2 ON T4.\"bond_id\" = T2.\"bond_id\"\nWHERE T1.\"label\" = 'TR024' AND T2.\"bond_type\" = '='\nORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3200,
+      "completion_tokens": 232
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:290": {
+    "question_id": "290",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\"  FROM \"molecule\" T1 JOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\" WHERE T1.\"label\" = 'TR151' AND LOWER(T3.\"element\") IN ('cl', 'br', 'f', 'i', 'pb', 'te')  ORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3176,
+      "completion_tokens": 240
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:302": {
+    "question_id": "302",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\" \nFROM \"bond\" T1\nJOIN \"connected\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nJOIN \"atom\" T3 ON T2.\"atom_id\" = T3.\"atom_id\"\nWHERE T1.\"bond_id\" = 'TR001_2_4'\nORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3184,
+      "completion_tokens": 225
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\", a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"label\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3198,
+      "completion_tokens": 275
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT T3.\"element\" \nFROM \"atom\" T1\nJOIN \"molecule\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"atom\" T3 ON T3.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"atom_id\" = 'TR004_7'\n  AND T2.\"label\" = '-'\n  AND T3.\"atom_id\" = 'TR004_7'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3216,
+      "completion_tokens": 223
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:230": {
+    "question_id": "230",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"element\", T1.\"label\"\nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"molecule_id\" = 'TR060'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2940,
+      "completion_tokens": 158
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\" \nFROM \"bond\" T1\nJOIN \"connected\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nJOIN \"atom\" T3 ON T2.\"atom_id\" = T3.\"atom_id\"\nWHERE T1.\"bond_type\" = '='",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2934,
+      "completion_tokens": 195
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1377": {
+    "question_id": "1377",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"member_id\") AS \"student_count\" \nFROM \"member\" T1\nWHERE LOWER(T1.\"position\") LIKE '%president%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3544,
+      "completion_tokens": 170
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1342": {
+    "question_id": "1342",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"cost\" \nFROM \"expense\" AS T1\nJOIN \"budget\" AS T2 ON T1.\"link_to_budget\" = T2.\"budget_id\"\nJOIN \"event\" AS T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"expense_description\" LIKE '%Poster%'\n  AND T3.\"event_date\" = TO_DATE('2019-09-04', 'YYYY-MM-DD')",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3604,
+      "completion_tokens": 270
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1349": {
+    "question_id": "1349",
+    "db_id": "student_club",
+    "prediction": "SELECT SUM(T2.\"amount\") AS total_budget_amount \nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE T1.\"event_name\" = 'September Speaker'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3576,
+      "completion_tokens": 215
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1385": {
+    "question_id": "1385",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"income\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"amount\" > 40\nGROUP BY T1.\"first_name\", T1.\"last_name\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3596,
+      "completion_tokens": 198
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1420": {
+    "question_id": "1420",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"major_name\" FROM \"member\" T1 JOIN \"major\" m ON T1.\"link_to_major\" = m.\"major_id\" WHERE T1.\"position\" = 'Vice President' ORDER BY m.\"major_name\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3566,
+      "completion_tokens": 195
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1468": {
+    "question_id": "1468",
+    "db_id": "student_club",
+    "prediction": "SELECT T3.\"city\" FROM \"member\" T1 JOIN \"zip_code\" T3 ON T1.\"zip\" = T3.\"zip_code\" WHERE T1.\"first_name\" LIKE '%Garrett%' AND T1.\"last_name\" LIKE '%Gerke%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3534,
+      "completion_tokens": 171
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1328": {
+    "question_id": "1328",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T2.\"major_name\" LIKE '%Law and Constitutional Studies%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3564,
+      "completion_tokens": 159
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1365": {
+    "question_id": "1365",
+    "db_id": "student_club",
+    "prediction": "SELECT T2.\"expense_description\" FROM \"budget\" AS T1 JOIN \"expense\" AS T2 ON T1.\"budget_id\" = T2.\"link_to_budget\" WHERE T1.\"remaining\" = (SELECT MIN(\"remaining\") FROM \"budget\")",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3562,
+      "completion_tokens": 204
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1388": {
+    "question_id": "1388",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T3.\"source\"\nFROM \"member\" T1\nJOIN \"income\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T3.\"amount\" = (SELECT MAX(\"amount\") FROM \"income\")\nORDER BY T3.\"amount\" DESC NULLS LAST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3606,
+      "completion_tokens": 207
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1426": {
+    "question_id": "1426",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"last_name\", T2.\"department\", T2.\"college\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T2.\"major_name\" LIKE '%Environmental Engineering%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3564,
+      "completion_tokens": 201
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1456": {
+    "question_id": "1456",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", SUM(T3.\"cost\") AS total_spent\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nGROUP BY T1.\"member_id\", T1.\"first_name\", T1.\"last_name\"\nORDER BY total_spent DESC NULLS LAST\nLIMIT 5",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3594,
+      "completion_tokens": 233
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1453": {
+    "question_id": "1453",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.event_name\nFROM event T1\nJOIN budget T2 ON T1.event_id = T2.link_to_event\nWHERE T2.category = 'Parking'\n  AND T2.spent < (\n    SELECT SUM(T3.spent) / COUNT(T3.link_to_event)\n    FROM budget T3\n    WHERE T3.category = 'Parking'\n  )",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3600,
+      "completion_tokens": 222
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1439": {
+    "question_id": "1439",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"phone\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T2.\"major_name\" = 'Business'\n  AND T2.\"college\" = 'College of Agriculture and Applied Sciences'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3610,
+      "completion_tokens": 141
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1428": {
+    "question_id": "1428",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT T3.\"city\", T3.\"state\" \nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nJOIN \"zip_code\" T3 ON T1.\"zip\" = T3.\"zip_code\"\nWHERE T2.\"department\" LIKE '%Electrical and Computer Engineering%'\n  AND T1.\"position\" = 'Member'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3576,
+      "completion_tokens": 267
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.event_name\nFROM event e\nJOIN attendance a ON a.link_to_event = e.event_id\nWHERE e.type <> 'Fundraiser'\nGROUP BY e.event_id, e.event_name\nHAVING COUNT(a.link_to_member) > 20\nORDER BY e.event_name ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3594,
+      "completion_tokens": 220
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.first_name, m.last_name, mj.major_name\nFROM member m\nJOIN expense e ON e.link_to_member = m.member_id\nJOIN major mj ON mj.major_id = m.link_to_major\nWHERE e.cost > 100\nORDER BY m.first_name ASC NULLS FIRST, m.last_name ASC NULLS FIRST, mj.major_name ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3616,
+      "completion_tokens": 254
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1340": {
+    "question_id": "1340",
+    "db_id": "student_club",
+    "prediction": "SELECT\n  SUM(CASE WHEN EXTRACT(YEAR FROM T2.\"event_date\") = 2019 THEN T3.\"spent\" ELSE 0 END)\n  - SUM(CASE WHEN EXTRACT(YEAR FROM T2.\"event_date\") = 2020 THEN T3.\"spent\" ELSE 0 END) AS \"spent_difference\"\nFROM \"event\" T2\nJOIN \"budget\" T3 ON T3.\"link_to_event\" = T2.\"event_id\"\nWHERE EXTRACT(YEAR FROM T2.\"event_date\") IN (2019, 2020)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3660,
+      "completion_tokens": 223
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1399": {
+    "question_id": "1399",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T3.\"event_name\"\nFROM \"member\" T1\nJOIN \"attendance\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"event\" T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"first_name\" LIKE '%Maya%'\n  AND T1.\"last_name\" LIKE '%Mclean%'\n  AND T3.\"event_name\" LIKE '%Women''s Soccer%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3588,
+      "completion_tokens": 204
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1401": {
+    "question_id": "1401",
+    "db_id": "student_club",
+    "prediction": "SELECT T3.\"cost\" \nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nJOIN \"expense\" T3 ON T2.\"budget_id\" = T3.\"link_to_budget\"\nWHERE T1.\"event_name\" LIKE '%September Speaker%'\n  AND T3.\"expense_description\" LIKE '%Posters%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3568,
+      "completion_tokens": 233
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1431": {
+    "question_id": "1431",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"attendance\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"event\" T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"position\" = 'Member'\n  AND T3.\"event_name\" LIKE '%Women''s Soccer%'\nORDER BY T1.\"last_name\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3582,
+      "completion_tokens": 213
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(T3.\"cost\") AS \"average_cost\"\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T1.\"first_name\" LIKE '%Elijah%'\n  AND T1.\"last_name\" LIKE '%Allen%'\n  AND EXTRACT(MONTH FROM T3.\"expense_date\") IN (9, 10)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3672,
+      "completion_tokens": 225
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT SUM(CASE WHEN T2.\"event_name\" = 'Yearly Kickoff' THEN T1.\"amount\" ELSE 0 END) / NULLIF(SUM(CASE WHEN T2.\"event_name\" = 'October Meeting' THEN T1.\"amount\" ELSE 0 END), 0) AS \"ratio\" FROM \"budget\" T1 JOIN \"event\" T2 ON T1.\"link_to_event\" = T2.\"event_id\" WHERE T1.\"category\" = 'Advertisement' AND T2.\"event_name\" IN ('Yearly Kickoff', 'October Meeting')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3636,
+      "completion_tokens": 257
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT T3.\"event_name\" \nFROM \"member\" T1\nJOIN \"attendance\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"event\" T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"position\" = 'Vice President'\n  AND T1.\"link_to_major\" IS NOT NULL\n  AND T3.\"type\" = 'Social'\n  AND T1.\"zip\" IN (\n    SELECT T4.\"zip_code\"\n    FROM \"zip_code\" T4\n    WHERE T4.\"city\" = '900 E. Washington St.'\n  )",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3622,
+      "completion_tokens": 297
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT T1.\"first_name\", T1.\"last_name\", T3.\"link_to_event\"\nFROM \"member\" T1\nJOIN \"expense\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"attendance\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T2.\"approved\" = 'true'\n  AND T2.\"expense_date\" BETWEEN TO_DATE('2019-01-10', 'YYYY-MM-DD') AND TO_DATE('2019-11-19', 'YYYY-MM-DD')",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3670,
+      "completion_tokens": 316
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1448": {
+    "question_id": "1448",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"event_name\", T1.\"event_date\"\nFROM \"event\" T1\nJOIN \"expense\" T2 ON T1.\"event_id\" = T2.\"link_to_budget\"\nWHERE T2.\"expense_description\" = 'Pizza'\n  AND T2.\"cost\" > 50\n  AND T2.\"cost\" < 100",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3632,
+      "completion_tokens": 244
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1451": {
+    "question_id": "1451",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", MAX(T3.\"cost\") AS max_cost\nFROM member T1\nJOIN expense T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nJOIN budget T2 ON T3.\"link_to_budget\" = T2.\"budget_id\"\nGROUP BY T1.\"member_id\", T1.\"first_name\", T1.\"last_name\"\nHAVING COUNT(DISTINCT T2.\"link_to_event\") > 1\nORDER BY max_cost DESC NULLS LAST\nLIMIT 1",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3598,
+      "completion_tokens": 258
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1457": {
+    "question_id": "1457",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.first_name, T1.last_name, T1.phone\nFROM member T1\nJOIN expense T2 ON T1.member_id = T2.link_to_member\nWHERE T2.cost > (SELECT AVG(T3.cost) FROM expense T3)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3612,
+      "completion_tokens": 229
+    }
+  },
+  "search:f7ab87e14170c9e1752a384aa6ce6d0180a6b021f76d7cd941163320d9a4cfd1:hybrid:False:bird:1460": {
+    "question_id": "1460",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T3.\"cost\"\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T3.\"expense_description\" = 'Water, Veggie tray, supplies'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3614,
+      "completion_tokens": 223
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:298": {
+    "question_id": "298",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  (SUM(CASE WHEN T2.\"label\" = '+' AND T3.\"element\" = 'h' THEN 1 ELSE 0 END)::numeric\n   / COUNT(DISTINCT T1.\"molecule_id\")::numeric) * 100.0 AS percentage\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T3.\"molecule_id\" = T1.\"molecule_id\"\nJOIN \"bond\" T2 ON T2.\"molecule_id\" = T1.\"molecule_id\"\nWHERE T3.\"element\" = 'h'",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3202,
+      "completion_tokens": 274
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1447": {
+    "question_id": "1447",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\", e.\"location\"\nFROM \"event\" e\nJOIN \"budget\" b ON e.\"event_id\" = b.\"link_to_event\"\nWHERE b.\"remaining\" > 0",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3764,
+      "completion_tokens": 182
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1460": {
+    "question_id": "1460",
+    "db_id": "student_club",
+    "prediction": "SELECT m.first_name, m.last_name, e.cost\nFROM member m\nJOIN expense e ON m.member_id = e.link_to_member\nWHERE e.expense_description = 'Water, Veggie tray, supplies'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3808,
+      "completion_tokens": 212
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3212,
+      "completion_tokens": 207
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"bond_type\", T2.\"bond_id\"\nFROM \"connected\" T1\nJOIN \"bond\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nWHERE (SUBSTR(T1.\"atom_id\", 7, 2) + 0) = 45",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3228,
+      "completion_tokens": 237
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:219": {
+    "question_id": "219",
+    "db_id": "toxicology",
+    "prediction": "SELECT ROUND(SUM(CASE WHEN T2.\"bond_type\" = '#' THEN 1 ELSE 0 END) * 100.0 / COUNT(T2.\"bond_id\")::NUMERIC, 2) AS percent\nFROM \"molecule\" T1\nJOIN \"bond\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"label\" = '+'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3208,
+      "completion_tokens": 223
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"bond_type\", T2.\"bond_id\"\nFROM \"connected\" T1\nJOIN \"bond\" T2 ON T1.\"bond_id\" = T2.\"bond_id\"\nWHERE SUBSTR(T1.\"atom_id\", 7, 2)::int = 45",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3096,
+      "completion_tokens": 239
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T3.\"major_name\"\nFROM \"member\" T1\nJOIN \"expense\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"major\" T3 ON T1.\"link_to_major\" = T3.\"major_id\"\nWHERE T2.\"cost\" > 100",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3678,
+      "completion_tokens": 245
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:328": {
+    "question_id": "328",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\"\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nJOIN \"connected\" T4 ON T3.\"atom_id\" = T4.\"atom_id\"\nJOIN \"bond\" T2 ON T4.\"bond_id\" = T2.\"bond_id\"\nWHERE T1.\"label\" = 'TR024' AND T2.\"bond_type\" = '='\nORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3262,
+      "completion_tokens": 232
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:298": {
+    "question_id": "298",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  (SUM(CASE WHEN T2.\"label\" = '+' AND T3.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(DISTINCT T1.\"molecule_id\")::NUMERIC) * 100.0 AS percentage\nFROM \"molecule\" T1\nJOIN \"bond\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"connected\" T4 ON T2.\"bond_id\" = T4.\"bond_id\"\nJOIN \"atom\" T3 ON T4.\"atom_id\" = T3.\"atom_id\" AND T3.\"molecule_id\" = T1.\"molecule_id\"",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3070,
+      "completion_tokens": 299
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(T3.\"cost\") AS \"average_cost\"\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T1.\"first_name\" LIKE '%Elijah%'\n  AND T1.\"last_name\" LIKE '%Allen%'\n  AND (EXTRACT(MONTH FROM T3.\"expense_date\") = 9\n       OR EXTRACT(MONTH FROM T3.\"expense_date\") = 10)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3734,
+      "completion_tokens": 244
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:292": {
+    "question_id": "292",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T1.\"element\"\nFROM \"atom\" T1\nWHERE T1.\"molecule_id\" LIKE 'TR%'\n  AND CAST(SUBSTR(T1.\"molecule_id\", 3, 3) AS INTEGER) BETWEEN 10 AND 50\n  AND LOWER(T1.\"element\") = 'c'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3088,
+      "completion_tokens": 194
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:1377": {
+    "question_id": "1377",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"member_id\") AS \"student_count\" \nFROM \"member\" T1\nWHERE T1.\"position\" LIKE '%President%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3606,
+      "completion_tokens": 158
+    }
+  },
+  "search:3fbbf4250b4aa8d572dced233ba492390e0278f7e887a44ff31d350838257751:hybrid:False:bird:283": {
+    "question_id": "283",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T1.\"label\" \nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE LOWER(T2.\"element\") = 'ca'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3036,
+      "completion_tokens": 194
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1399": {
+    "question_id": "1399",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T2.\"event_name\"\nFROM \"member\" T1\nJOIN \"attendance\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nJOIN \"event\" T2 ON T3.\"link_to_event\" = T2.\"event_id\"\nWHERE T1.\"first_name\" LIKE '%Maya%'\n  AND T1.\"last_name\" LIKE '%Mclean%'\n  AND T2.\"event_name\" LIKE '%Women''s Soccer%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3782,
+      "completion_tokens": 263
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T3.\"major_name\"\nFROM \"member\" T1\nJOIN \"expense\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"major\" T3 ON T1.\"link_to_major\" = T3.\"major_id\"\nWHERE T2.\"cost\" > 100\nGROUP BY T1.\"first_name\", T1.\"last_name\", T3.\"major_name\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3810,
+      "completion_tokens": 267
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1401": {
+    "question_id": "1401",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"cost\"\nFROM expense e\nJOIN budget b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN event ev ON b.\"link_to_event\" = ev.\"event_id\"\nWHERE e.\"expense_description\" LIKE '%Posters%'\n  AND ev.\"event_name\" LIKE '%September Speaker%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3762,
+      "completion_tokens": 209
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:327": {
+    "question_id": "327",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\" \nFROM \"molecule\" AS T1\nJOIN \"atom\" AS T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"label\" = '-'\nGROUP BY T1.\"molecule_id\", T1.\"label\"\nHAVING COUNT(T2.\"atom_id\") > 5",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3172,
+      "completion_tokens": 235
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1388": {
+    "question_id": "1388",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T2.\"source\"\nFROM \"member\" T1\nJOIN \"income\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"amount\" = (SELECT MAX(\"amount\") FROM \"income\")",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3800,
+      "completion_tokens": 195
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:302": {
+    "question_id": "302",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR001_2_4'\nORDER BY a.\"element\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3378,
+      "completion_tokens": 194
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:223": {
+    "question_id": "223",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T1.\"atom_id2\" \nFROM \"connected\" T1\nWHERE T1.\"bond_id\" = 'TR000_2_5'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3140,
+      "completion_tokens": 179
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:326": {
+    "question_id": "326",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE LOWER(a.\"element\") = 's'\n  AND b.\"bond_type\" = ' = '",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3150,
+      "completion_tokens": 232
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:292": {
+    "question_id": "292",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T1.\"atom_id\", T1.\"element\"\nFROM \"atom\" T1\nJOIN \"molecule\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE LOWER(T1.\"element\") = 'c'\n  AND CAST(SUBSTRING(T2.\"molecule_id\" FROM 3 FOR 3) AS INTEGER) BETWEEN 10 AND 50",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3220,
+      "completion_tokens": 206
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:295": {
+    "question_id": "295",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") AS atom_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'h'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3156,
+      "completion_tokens": 148
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:336": {
+    "question_id": "336",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS \"non_carcinogenic_triple_bond_molecules\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND m.\"label\" = '-'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3160,
+      "completion_tokens": 209
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:323": {
+    "question_id": "323",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"label\" FROM \"molecule\" T1 WHERE T1.\"molecule_id\" = 'TR000'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3148,
+      "completion_tokens": 166
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS \"carcinogenic_nitrogen_molecules_count\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'n'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3142,
+      "completion_tokens": 210
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:279": {
+    "question_id": "279",
+    "db_id": "toxicology",
+    "prediction": "SELECT m.\"label\" \nFROM \"bond\" b\nJOIN \"molecule\" m ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_id\" = 'TR001_10_11'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3156,
+      "completion_tokens": 144
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:276": {
+    "question_id": "276",
+    "db_id": "toxicology",
+    "prediction": "SELECT T1.\"atom_id\", T2.\"atom_id2\"\nFROM \"connected\" T1\nJOIN \"bond\" T3 ON T1.\"bond_id\" = T3.\"bond_id\"\nJOIN \"connected\" T2 ON T3.\"bond_id\" = T2.\"bond_id\"\nWHERE T3.\"bond_type\" = '#'\n  AND T1.\"atom_id\" <> T2.\"atom_id2\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3170,
+      "completion_tokens": 208
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") AS connection_count\nFROM \"connected\" c\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3148,
+      "completion_tokens": 178
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:260": {
+    "question_id": "260",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") AS \"total_atoms\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND LOWER(a.\"element\") IN ('p', 'br')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3174,
+      "completion_tokens": 185
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" T1\nJOIN \"bond\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nJOIN \"connected\" T3 ON T2.\"bond_id\" = T3.\"bond_id\"\nWHERE T2.\"bond_type\" = '-'\n  AND T1.\"label\" = '-'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3200,
+      "completion_tokens": 239
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:283": {
+    "question_id": "283",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" AS T1\nJOIN \"atom\" AS T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE LOWER(T2.\"element\") = 'ca'\n  AND T1.\"label\" IN ('+', '-')",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3168,
+      "completion_tokens": 209
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3220,
+      "completion_tokens": 258
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:338": {
+    "question_id": "338",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"atom_id\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE m.\"label\" = 'TR012'\n  AND a.\"element\" = 'c'\n  AND b.\"bond_type\" = ' = '",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3154,
+      "completion_tokens": 178
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:267": {
+    "question_id": "267",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\", b.\"bond_type\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE m.\"molecule_id\" >= 'TR000' AND m.\"molecule_id\" <= 'TR050'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, b.\"bond_type\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3178,
+      "completion_tokens": 200
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  CAST(SUM(CASE WHEN T2.\"element\" = 'h' THEN 1 ELSE 0 END) AS NUMERIC) / COUNT(T2.\"element\") AS ratio,\n  T1.\"label\"\nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"molecule_id\" = 'TR006'\nGROUP BY T1.\"label\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3230,
+      "completion_tokens": 199
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:212": {
+    "question_id": "212",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\", COUNT(*) AS \"count\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY a.\"element\"\nORDER BY \"count\" ASC NULLS FIRST\nLIMIT 1",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3154,
+      "completion_tokens": 144
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:328": {
+    "question_id": "328",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\"\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nJOIN \"connected\" T4 ON T3.\"atom_id\" = T4.\"atom_id\"\nJOIN \"bond\" T2 ON T4.\"bond_id\" = T2.\"bond_id\"\nWHERE T1.\"label\" = 'TR024'\n  AND T2.\"bond_type\" = '='\nORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3394,
+      "completion_tokens": 233
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:290": {
+    "question_id": "290",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT T3.\"element\" \nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nWHERE T1.\"label\" = 'TR151'\n  AND LOWER(T3.\"element\") IN ('cl', 'br', 'f', 'i', 'pb', 'te', 'sn')\nORDER BY T3.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3370,
+      "completion_tokens": 229
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"label\", a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"label\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3392,
+      "completion_tokens": 276
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT T3.\"element\"\nFROM \"molecule\" T1\nJOIN \"atom\" T3 ON T1.\"molecule_id\" = T3.\"molecule_id\"\nWHERE T1.\"label\" = '-'\n  AND T3.\"atom_id\" = 'TR004_7'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3410,
+      "completion_tokens": 132
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:230": {
+    "question_id": "230",
+    "db_id": "toxicology",
+    "prediction": "SELECT T2.\"element\", T1.\"label\"\nFROM \"molecule\" T1\nJOIN \"atom\" T2 ON T1.\"molecule_id\" = T2.\"molecule_id\"\nWHERE T1.\"molecule_id\" = 'TR060'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3134,
+      "completion_tokens": 149
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE b.\"bond_type\" = '='",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3128,
+      "completion_tokens": 177
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1377": {
+    "question_id": "1377",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"member_id\") AS \"student_count\" \nFROM \"member\" T1\nWHERE LOWER(T1.\"position\") LIKE '%president%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3738,
+      "completion_tokens": 165
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1342": {
+    "question_id": "1342",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"cost\" FROM \"expense\" AS T1 JOIN \"budget\" AS T2 ON T1.\"link_to_budget\" = T2.\"budget_id\" JOIN \"event\" AS T3 ON T2.\"link_to_event\" = T3.\"event_id\" WHERE T3.\"event_name\" LIKE '%Posters%' AND T3.\"event_date\" = '2019-09-04'",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3798,
+      "completion_tokens": 240
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1462": {
+    "question_id": "1462",
+    "db_id": "student_club",
+    "prediction": "SELECT b.\"category\", b.\"amount\" \nFROM \"budget\" AS b\nJOIN \"event\" AS e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" LIKE '%January Speaker%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3780,
+      "completion_tokens": 215
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") AS member_count\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Physics Teaching%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3750,
+      "completion_tokens": 184
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1385": {
+    "question_id": "1385",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"income\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"amount\" > 40\nGROUP BY T1.\"first_name\", T1.\"last_name\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3790,
+      "completion_tokens": 204
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1420": {
+    "question_id": "1420",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"major_name\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T1.\"position\" LIKE '%Vice President%'",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3760,
+      "completion_tokens": 204
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1468": {
+    "question_id": "1468",
+    "db_id": "student_club",
+    "prediction": "SELECT \"z\".\"city\"\nFROM \"member\" AS \"t1\"\nJOIN \"zip_code\" AS \"z\" ON \"t1\".\"zip\" = \"z\".\"zip_code\"\nWHERE \"t1\".\"first_name\" LIKE '%Garrett%' AND \"t1\".\"last_name\" LIKE '%Gerke%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3728,
+      "completion_tokens": 189
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1328": {
+    "question_id": "1328",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"major\" T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nWHERE T2.\"major_name\" LIKE '%Law and Constitutional Studies%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3758,
+      "completion_tokens": 161
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1426": {
+    "question_id": "1426",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"last_name\", T3.\"department\", T3.\"college\"\nFROM \"member\" T1\nJOIN \"major\" T3 ON T1.\"link_to_major\" = T3.\"major_id\"\nWHERE T3.\"major_name\" LIKE '%Environmental Engineering%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3758,
+      "completion_tokens": 195
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1456": {
+    "question_id": "1456",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"expense\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nGROUP BY T1.\"member_id\", T1.\"first_name\", T1.\"last_name\"\nORDER BY MAX(T2.\"cost\") DESC NULLS LAST\nLIMIT 5",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3788,
+      "completion_tokens": 235
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1453": {
+    "question_id": "1453",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"event_name\"\nFROM \"event\" T1\nJOIN \"budget\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE T2.\"category\" = 'Parking'\n  AND T2.\"spent\" < (\n    SELECT SUM(T3.\"spent\") / COUNT(T3.\"link_to_event\")\n    FROM \"budget\" T3\n    WHERE T3.\"category\" = 'Parking'\n  )",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3794,
+      "completion_tokens": 264
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1428": {
+    "question_id": "1428",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT z.\"city\", z.\"state\"\nFROM \"member\" AS T1\nJOIN \"major\" AS T2 ON T1.\"link_to_major\" = T2.\"major_id\"\nJOIN \"zip_code\" AS T3 ON T1.\"zip\" = T3.\"zip_code\"\nWHERE T2.\"department\" LIKE '%Electrical and Computer Engineering%'\n  AND T1.\"position\" = 'Member'\nORDER BY z.\"city\" ASC NULLS FIRST, z.\"state\" ASC NULLS FIRST",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3770,
+      "completion_tokens": 251
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1431": {
+    "question_id": "1431",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT T1.\"last_name\"\nFROM \"member\" T1\nJOIN \"attendance\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"event\" T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"position\" = 'Member'\n  AND T3.\"event_name\" LIKE '%Women%s Soccer%'\nORDER BY T1.\"last_name\" ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3776,
+      "completion_tokens": 244
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(T3.\"cost\") AS average_cost\nFROM \"member\" T1\nJOIN \"expense\" T3 ON T1.\"member_id\" = T3.\"link_to_member\"\nWHERE T1.\"first_name\" LIKE '%Elijah%'\n  AND T1.\"last_name\" LIKE '%Allen%'\n  AND EXTRACT(MONTH FROM T3.\"expense_date\") IN (9, 10)",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3866,
+      "completion_tokens": 260
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_name\"\nFROM \"member\" AS T1\nJOIN \"attendance\" AS T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nJOIN \"event\" AS T3 ON T2.\"link_to_event\" = T3.\"event_id\"\nWHERE T1.\"position\" LIKE '%Vice President%'\n  AND T1.\"link_to_major\" IS NOT NULL\n  AND T3.\"type\" = 'Social'\n  AND T3.\"location\" LIKE '%900 E. Washington St.%'",
+    "score": 0.0,
+    "error": "postgresql:42P01:UndefinedTable",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3816,
+      "completion_tokens": 265
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\", a.\"link_to_event\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"approved\" = 'true'\n  AND e.\"expense_date\" BETWEEN TO_DATE('2019-01-10', 'YYYY-MM-DD') AND TO_DATE('2019-11-19', 'YYYY-MM-DD')",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3864,
+      "completion_tokens": 314
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1448": {
+    "question_id": "1448",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"event_name\", T1.\"event_date\"\nFROM \"event\" T1\nJOIN \"expense\" T2 ON T1.\"event_id\" = T2.\"link_to_event\"\nWHERE T2.\"expense_description\" = 'Pizza'\n  AND T2.\"cost\" > 50\n  AND T2.\"cost\" < 100",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3826,
+      "completion_tokens": 230
+    }
+  },
+  "search:436ff6d36062fc85d518b7f13f8e1bc59491aa8e6e571548ca4cdc7f5905c0f1:hybrid:False:bird:1457": {
+    "question_id": "1457",
+    "db_id": "student_club",
+    "prediction": "SELECT T1.\"first_name\", T1.\"last_name\", T1.\"phone\"\nFROM \"member\" T1\nJOIN \"expense\" T2 ON T1.\"member_id\" = T2.\"link_to_member\"\nWHERE T2.\"cost\" > (SELECT AVG(T3.\"cost\") FROM \"expense\" T3)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3806,
+      "completion_tokens": 142
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "version": "bird-full-integrity-review-v1",
+  "manifest_sha256": "0b63afcd0a120697118486777c198d074aa51187c236713c759c37fd0ab06ad9",
+  "created_at_utc": "2026-11-07T20:06:34.959161+00:00",
+  "unique_evaluations": 482,
+  "exact_question_ids": true,
+  "feature_mask": [
+    2,
+    7,
+    14,
+    32,
+    35
+  ],
+  "frozen_candidate": "fb9b0607f7f656a62c4e58482c6f638268ca4fab9fbabe097dcfb9953b523ffb",
+  "original_generation_sql_errors": [
+    {
+      "question_id": "27",
+      "error": "postgresql:22007:InvalidDatetimeFormat",
+      "selected_correct": false
+    },
+    {
+      "question_id": "83",
+      "error": "multiple_statements",
+      "selected_correct": true
+    },
+    {
+      "question_id": "173",
+      "error": "multiple_statements",
+      "selected_correct": false
+    },
+    {
+      "question_id": "506",
+      "error": "postgresql:42703:UndefinedColumn",
+      "selected_correct": false
+    },
+    {
+      "question_id": "1529",
+      "error": "multiple_statements",
+      "selected_correct": false
+    },
+    {
+      "question_id": "1482",
+      "error": "multiple_statements",
+      "selected_correct": false
+    }
+  ],
+  "rescued_question_ids": [
+    "10",
+    "57",
+    "4",
+    "83",
+    "136",
+    "102",
+    "179",
+    "371",
+    "487",
+    "549",
+    "637",
+    "803",
+    "1377",
+    "1439",
+    "1340",
+    "1511",
+    "1501"
+  ],
+  "harmed_question_ids": [
+    "36",
+    "163",
+    "149",
+    "223",
+    "345",
+    "744",
+    "1436",
+    "1527",
+    "1512",
+    "1472",
+    "1526"
+  ],
+  "rescued_original_generation_sql_errors": 1,
+  "paired_mcnemar_exact_two_sided_p": 0.34492845088243484,
+  "independent_test": false,
+  "deployed": false,
+  "source_files_sha256": {
+    "experiment.json": "6b658d94dd7f5ac0357e171bb152df891c6f5e48b0a4058acfb38f148f3d5f68",
+    "jobs\\bird_full__paired\\evaluations.json": "4a12167f487b83bc1d9c1e709cbab095a7d7d73f903390b565c1a1e7d43e3361",
+    "jobs\\bird_full__paired\\confirm\\metadata.json": "c2400cf91f27af5d42a6f1efe9905bf9db7eac0ac3da94d804761b3e5a4db0e2",
+    "jobs\\bird_full__paired\\confirm\\budget.json": "4a1d876ab3f3fcc3af6805e052813d51677b65afa903eaaa7bdd766a515537bb",
+    "budget.json": "8c59b641eaacdd8a7b5983294638bbf670fee2aee884132b51315350a2bf991b",
+    "report.json": "a0290676cfd721ed5627d8aec34ce176e989db76368998911b0e0020d9eb9ce4",
+    "conclusion.json": "37d7eca1ee7340e7afa36669e3b5eeadc856fd64d3a816a4397e40484c501158"
+  }
+}

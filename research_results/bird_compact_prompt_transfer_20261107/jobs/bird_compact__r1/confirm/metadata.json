@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "phase": "confirm",
+  "manifest_sha256": "b874cea6462b40a0b3f6c6d5c6b499a6ea09616bf62923d090a163d3c915b637",
+  "current_database": "card_games",
+  "databases_ready": 2,
+  "databases_total": 2,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "feature_mask": [
+    2,
+    7,
+    14,
+    32,
+    35
+  ],
+  "compact_version": "bird-compact-prompt-transfer-v1",
+  "event": "schema_verified",
+  "question_id": "477",
+  "build_attempt": 1,
+  "candidate": "d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-07T14:22:56.558192+00:00",
+  "saved_evaluations": 220,
+  "finished_at_utc": "2026-11-07T14:23:00.194471+00:00"
+}

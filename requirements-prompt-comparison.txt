@@ -1,0 +1,11 @@
+# Install without changing .venv; see docs/20_prompt_optimizer_comparison.md.
+dspy==3.4.1
+textgrad==0.1.8
+optuna==4.5.0
+gepa==0.1.4
+litellm==1.82.0
+json-repair==0.54.2
+graphviz==0.21
+gdown==5.2.0
+alembic==1.17.1
+colorlog==6.10.1

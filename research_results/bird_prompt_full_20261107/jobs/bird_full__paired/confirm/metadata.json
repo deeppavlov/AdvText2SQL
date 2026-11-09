@@ -1,0 +1,28 @@
+{
+  "status": "completed",
+  "phase": "predicting",
+  "manifest_sha256": "0b63afcd0a120697118486777c198d074aa51187c236713c759c37fd0ab06ad9",
+  "feature_mask": [
+    2,
+    7,
+    14,
+    32,
+    35
+  ],
+  "full_prompt_version": "bird-prompt-full-v1",
+  "evaluation_scope": "full_retrospective",
+  "current_database": "toxicology",
+  "databases_ready": 8,
+  "databases_total": 8,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "event": "schema_verified",
+  "question_id": "1526",
+  "build_attempt": 1,
+  "candidate": "fb9b0607f7f656a62c4e58482c6f638268ca4fab9fbabe097dcfb9953b523ffb",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-07T19:55:07.986331+00:00",
+  "saved_evaluations": 482,
+  "finished_at_utc": "2026-11-07T19:55:11.566341+00:00"
+}

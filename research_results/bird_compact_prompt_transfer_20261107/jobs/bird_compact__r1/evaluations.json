@@ -1,0 +1,3192 @@
+{
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:9": {
+    "question_id": "9",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(DISTINCT s.\"cdscode\") AS \"charter_funded_schools_count\"\nFROM \"satscores\" sc\nJOIN \"schools\" s\n  ON s.\"cdscode\" = sc.\"cds\"\nWHERE sc.\"avgscrmath\"::NUMERIC > 560\n  AND s.\"fundingtype\" = 'Directly funded'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8036,
+      "completion_tokens": 274
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:13": {
+    "question_id": "13",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.phone\nFROM satscores AS sat\nJOIN schools AS s\n  ON s.cdscode = sat.cds\nWHERE sat.numtsttakr > 0\nORDER BY (sat.numge1500::numeric / sat.numtsttakr) DESC NULLS LAST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8046,
+      "completion_tokens": 257
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:17": {
+    "question_id": "17",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS school_name,\n    s.\"charternum\" AS charter_number,\n    sc.\"avgscrwrite\" AS avg_writing_score\nFROM \"satscores\" sc\nJOIN \"schools\" s\n    ON s.\"cdscode\" = sc.\"cds\"\nWHERE sc.\"avgscrwrite\"::NUMERIC > 499\n  AND s.\"charternum\" IS NOT NULL\nORDER BY sc.\"avgscrwrite\"::NUMERIC DESC NULLS LAST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8048,
+      "completion_tokens": 284
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:10": {
+    "question_id": "10",
+    "db_id": "california_schools",
+    "prediction": "WITH top_school AS (\n    SELECT s.\"cds\", s.\"avgscrread\"\n    FROM \"satscores\" s\n    WHERE s.\"avgscrread\" IS NOT NULL\n    ORDER BY s.\"avgscrread\"::NUMERIC DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT f.\"FRPM Count (Ages 5-17)\"\nFROM \"frpm\" f\nJOIN top_school t ON f.\"cdscode\" = t.\"cds\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8044,
+      "completion_tokens": 286
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:84": {
+    "question_id": "84",
+    "db_id": "california_schools",
+    "prediction": "WITH admin_names AS (\n    SELECT \"admfname1\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname1\" IS NOT NULL AND \"admfname1\" <> ''\n    UNION ALL\n    SELECT \"admfname2\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname2\" IS NOT NULL AND \"admfname2\" <> ''\n    UNION ALL\n    SELECT \"admfname3\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname3\" IS NOT NULL AND \"admfname3\" <> ''\n),\nname_counts AS (\n    SELECT \"first_name\", COUNT(*) AS cnt\n    FROM admin_names\n    GROUP BY \"first_name\"\n    ORDER BY cnt DESC NULLS LAST\n    LIMIT 2\n)\nSELECT an.\"first_name\", an.\"district\"\nFROM admin_names an\nJOIN name_counts nc ON an.\"first_name\" = nc.\"first_name\"\nGROUP BY an.\"first_name\", an.\"district\"\nORDER BY an.\"first_name\" ASC NULLS FIRST, an.\"district\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8030,
+      "completion_tokens": 422
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:73": {
+    "question_id": "73",
+    "db_id": "california_schools",
+    "prediction": "SELECT f.\"FRPM Count (Ages 5-17)\"\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nWHERE s.school LIKE '%Youth Authority%'\n  AND s.mailstreet LIKE '%PO Box 1040%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8052,
+      "completion_tokens": 227
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:14": {
+    "question_id": "14",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS school_name,\n    s.\"ncesschool\" AS nces_school_id,\n    f.\"Enrollment (Ages 5-17)\" AS enrollment_ages_5_17\nFROM \"frpm\" f\nJOIN \"schools\" s ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Enrollment (Ages 5-17)\" IS NOT NULL\nORDER BY f.\"Enrollment (Ages 5-17)\"::NUMERIC DESC NULLS LAST\nLIMIT 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8064,
+      "completion_tokens": 271
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:39": {
+    "question_id": "39",
+    "db_id": "california_schools",
+    "prediction": "SELECT AVG(s.numtsttakr::NUMERIC) AS avg_numtsttakr\nFROM schools AS sc\nJOIN satscores AS s\n  ON s.cds = sc.cdscode\nWHERE sc.city LIKE '%Fresno%'\n  AND EXTRACT(YEAR FROM sc.opendate) = 1980;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8096,
+      "completion_tokens": 284
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:82": {
+    "question_id": "82",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"gsoffered\"\nFROM \"schools\" AS s\nWHERE s.\"longitude\" IS NOT NULL\nORDER BY ABS(s.\"longitude\"::NUMERIC) DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8040,
+      "completion_tokens": 227
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:50": {
+    "question_id": "50",
+    "db_id": "california_schools",
+    "prediction": "WITH ranked AS (\n    SELECT\n        s.\"sname\" AS school_name,\n        sc.\"mailstreet\" AS postal_street,\n        s.\"avgscrmath\"::NUMERIC AS math_avg,\n        DENSE_RANK() OVER (ORDER BY s.\"avgscrmath\"::NUMERIC DESC NULLS LAST) AS rnk\n    FROM \"satscores\" s\n    JOIN \"schools\" sc\n        ON sc.\"cdscode\" = s.\"cds\"\n    WHERE s.\"avgscrmath\" IS NOT NULL\n)\nSELECT\n    \"school_name\",\n    \"postal_street\"\nFROM ranked\nWHERE rnk = 7\nORDER BY \"school_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8050,
+      "completion_tokens": 344
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:57": {
+    "question_id": "57",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"phone\",\n    s.\"ext\"\nFROM \"schools\" s\nJOIN \"satscores\" sat\n    ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"avgscrwrite\" IS NOT NULL\nORDER BY sat.\"avgscrwrite\" DESC NULLS LAST\nOFFSET 332 ROWS FETCH NEXT 1 ROWS ONLY;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8030,
+      "completion_tokens": 231
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:43": {
+    "question_id": "43",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"avgscrmath\" AS \"avgscrmath\",\n    s.\"cname\" AS \"cname\"\nFROM \"satscores\" s\nWHERE (s.\"avgscrmath\" + s.\"avgscrread\" + s.\"avgscrwrite\") IS NOT NULL\nORDER BY (s.\"avgscrmath\" + s.\"avgscrread\" + s.\"avgscrwrite\") ASC NULLS FIRST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8084,
+      "completion_tokens": 268
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:37": {
+    "question_id": "37",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.street,\n    s.city,\n    s.zip,\n    s.state\nFROM satscores AS sat\nJOIN schools AS s\n    ON s.cdscode = sat.cds\nWHERE sat.numtsttakr IS NOT NULL\n  AND sat.numtsttakr::numeric > 0\n  AND sat.numge1500 IS NOT NULL\nORDER BY (sat.numge1500::numeric / sat.numtsttakr::numeric) ASC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8090,
+      "completion_tokens": 294
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:27": {
+    "question_id": "27",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS \"school\",\n    sc.\"avgscrwrite\" AS \"avgscrwrite\",\n    s.\"phone\" AS \"phone\"\nFROM \"schools\" s\nJOIN \"satscores\" sc\n    ON s.\"cdscode\" = sc.\"cds\"\nWHERE\n    \n    (s.\"opendate\" IS NOT NULL AND s.\"opendate\" <> '' AND s.\"opendate\"::date > DATE '1991-12-31')\n    OR\n    \n    (s.\"closeddate\" IS NOT NULL AND s.\"closeddate\" <> '' AND s.\"closeddate\"::date < DATE '2000-01-01')\nORDER BY sc.\"avgscrwrite\" DESC NULLS LAST;",
+    "score": 0.0,
+    "error": "postgresql:22007:InvalidDatetimeFormat",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8092,
+      "completion_tokens": 351
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:34": {
+    "question_id": "34",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    f.\"Free Meal Count (Ages 5-17)\" / NULLIF(f.\"Enrollment (Ages 5-17)\", 0) AS \"free_rate\"\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nWHERE (s.admfname1 LIKE '%Kacey%' AND s.admlname1 LIKE '%Gibson%')\n   OR (s.admfname2 LIKE '%Kacey%' AND s.admlname2 LIKE '%Gibson%')\n   OR (s.admfname3 LIKE '%Kacey%' AND s.admlname3 LIKE '%Gibson%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8106,
+      "completion_tokens": 320
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:49": {
+    "question_id": "49",
+    "db_id": "california_schools",
+    "prediction": "WITH closed_counts AS (\n    SELECT\n        s.\"county\",\n        COUNT(*) AS closed_cnt\n    FROM \"schools\" s\n    WHERE s.\"statustype\" = 'Closed'\n    GROUP BY s.\"county\"\n    ORDER BY closed_cnt DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT\n    s.\"school\",\n    s.\"closeddate\"\nFROM \"schools\" s\nJOIN closed_counts cc\n    ON s.\"county\" = cc.\"county\"\nWHERE s.\"statustype\" = 'Closed'\nORDER BY s.\"closeddate\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 5584,
+      "completion_tokens": 170
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:4": {
+    "question_id": "4",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"phone\"\nFROM schools AS s\nJOIN frpm AS f ON f.\"cdscode\" = s.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\n  AND f.\"Charter Funding Type\" = 'Directly funded'\n  AND s.\"opendate\"::date > DATE '2000-01-01';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8070,
+      "completion_tokens": 268
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:85": {
+    "question_id": "85",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    f.\"District Code\",\n    f.\"Percent (%) Eligible Free (K-12)\"\nFROM frpm f\nJOIN schools s\n    ON s.cdscode = f.cdscode\nWHERE s.admfname1 LIKE '%Alusine%'\n   OR s.admfname2 LIKE '%Alusine%'\n   OR s.admfname3 LIKE '%Alusine%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8118,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:81": {
+    "question_id": "81",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"city\",\n    s.\"school\",\n    s.\"gsoffered\" AS \"lowest_grade\"\nFROM \"schools\" s\nWHERE s.\"state\" = 'CA'\n  AND s.\"latitude\" IS NOT NULL\nORDER BY s.\"latitude\"::REAL ASC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 5582,
+      "completion_tokens": 99
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:35": {
+    "question_id": "35",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"admemail1\"\nFROM frpm AS f\nJOIN schools AS s ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\nORDER BY f.\"Enrollment (K-12)\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8118,
+      "completion_tokens": 217
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:28": {
+    "question_id": "28",
+    "db_id": "california_schools",
+    "prediction": "WITH avg_diff AS (\n    SELECT AVG(\n               CAST(f.\"Enrollment (K-12)\" AS NUMERIC) - CAST(f.\"Enrollment (Ages 5-17)\" AS NUMERIC)\n           ) AS avg_difference\n    FROM frpm f\n    JOIN schools s ON s.cdscode = f.cdscode\n    WHERE s.fundingtype = 'Locally funded'\n)\n\nSELECT\n    s.school,\n    s.doctype\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nCROSS JOIN avg_diff a\nWHERE s.fundingtype = 'Locally funded'\n  AND (CAST(f.\"Enrollment (K-12)\" AS NUMERIC) - CAST(f.\"Enrollment (Ages 5-17)\" AS NUMERIC)) > a.avg_difference",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8134,
+      "completion_tokens": 403
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:36": {
+    "question_id": "36",
+    "db_id": "california_schools",
+    "prediction": "WITH top_school AS (\n    SELECT ss.\"cds\", ss.\"sname\", ss.\"numge1500\"\n    FROM \"satscores\" ss\n    ORDER BY ss.\"numge1500\"::BIGINT DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT s.\"admfname1\", s.\"admlname1\"\nFROM \"schools\" s\nJOIN top_school ts ON s.\"cdscode\" = ts.\"cds\"\nWHERE s.\"admfname1\" IS NOT NULL AND s.\"admlname1\" IS NOT NULL\n\nUNION\n\nSELECT s.\"admfname2\", s.\"admlname2\"\nFROM \"schools\" s\nJOIN top_school ts ON s.\"cdscode\" = ts.\"cds\"\nWHERE s.\"admfname2\" IS NOT NULL AND s.\"admlname2\" IS NOT NULL\n\nUNION\n\nSELECT s.\"admfname3\", s.\"admlname3\"\nFROM \"schools\" s\nJOIN top_school ts ON s.\"cdscode\" = ts.\"cds\"\nWHERE s.\"admfname3\" IS NOT NULL AND s.\"admlname3\" IS NOT NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8114,
+      "completion_tokens": 402
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:62": {
+    "question_id": "62",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(*) AS total_non_chartered_schools\nFROM schools s\nJOIN frpm f ON s.cdscode = f.cdscode\nWHERE s.county = 'Los Angeles'\n  AND s.charter = 0\n  AND f.\"Enrollment (K-12)\" > 0\n  AND (f.\"Free Meal Count (K-12)\" * 100.0 / f.\"Enrollment (K-12)\") < 0.18;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8182,
+      "completion_tokens": 313
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:83": {
+    "question_id": "83",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"city\",\n    COUNT(DISTINCT s.\"cdscode\") AS school_count\nFROM schools s\nJOIN frpm f\n    ON f.\"cdscode\" = s.\"cdscode\"\nWHERE s.\"magnet\" = 1\n  AND s.\"gsserved\" = 'K-8'\n  AND f.\"NSLP Provision Status\" = 'Multiple Provision Types'\nGROUP BY s.\"city\"\nORDER BY s.\"city\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 8182,
+      "completion_tokens": 297
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:510": {
+    "question_id": "510",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"artist\"\nFROM \"cards\" c\nWHERE c.\"side\" IS NULL\n  AND c.\"convertedmanacost\" IS NOT NULL\nORDER BY c.\"convertedmanacost\"::NUMERIC DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12367,
+      "completion_tokens": 265
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:393": {
+    "question_id": "393",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS card_count\nFROM \"cards\" c\nWHERE c.\"artist\" LIKE '%John Avon%'\n  AND c.\"cardkingdomid\" IS NOT NULL\n  AND c.\"cardkingdomfoilid\" IS NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12359,
+      "completion_tokens": 233
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:351": {
+    "question_id": "351",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE fd.\"language\" = 'Japanese'\nORDER BY c.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12307,
+      "completion_tokens": 217
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:377": {
+    "question_id": "377",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS card_count\nFROM \"cards\" c\nWHERE c.\"originaltype\" = 'Summon - Angel'\n  AND c.\"subtypes\" IS NOT NULL\n  AND c.\"subtypes\" <> ''\n  AND c.\"subtypes\" NOT LIKE '%Angel%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12339,
+      "completion_tokens": 171
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:435": {
+    "question_id": "435",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    \"id\",\n    COUNT(*) OVER () AS \"count\"\nFROM \"cards\" AS c\nWHERE c.\"bordercolor\" = 'black'\nORDER BY c.\"id\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12325,
+      "completion_tokens": 202
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:421": {
+    "question_id": "421",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nWHERE (c.\"power\" IS NULL OR c.\"power\" = '*')\n  AND c.\"promotypes\" LIKE '%arenaleague%'\nORDER BY c.\"name\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12365,
+      "completion_tokens": 242
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:445": {
+    "question_id": "445",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    fd.\"language\",\n    fd.\"flavortext\",\n    c.\"type\"\nFROM cards c\nJOIN foreign_data fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"watermark\" = 'colorpie'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12323,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:355": {
+    "question_id": "355",
+    "db_id": "card_games",
+    "prediction": "SELECT \"c\".\"keywords\"\nFROM \"cards\" AS \"c\"\nWHERE \"c\".\"name\" LIKE '%Angel of Mercy%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12319,
+      "completion_tokens": 173
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:453": {
+    "question_id": "453",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"convertedmanacost\"\nFROM \"cards\" c\nWHERE c.\"name\" LIKE 'Ancestor%Chosen'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12353,
+      "completion_tokens": 141
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:509": {
+    "question_id": "509",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"id\"\nFROM \"sets\" AS s\nORDER BY s.\"basesetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12341,
+      "completion_tokens": 197
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:450": {
+    "question_id": "450",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS count\nFROM \"cards\" c\nWHERE c.\"artist\" LIKE '%Aaron Miller%'\n  AND c.\"cardkingdomfoilid\" IS NOT NULL\n  AND c.\"cardkingdomid\" IS NOT NULL;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12383,
+      "completion_tokens": 224
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:515": {
+    "question_id": "515",
+    "db_id": "card_games",
+    "prediction": "WITH oldest_mythic AS (\n    SELECT\n        c.\"name\",\n        c.\"originalreleasedate\",\n        c.\"uuid\"\n    FROM \"cards\" c\n    WHERE c.\"rarity\" = 'mythic'\n      AND c.\"originalreleasedate\" IS NOT NULL\n      AND c.\"originalreleasedate\" <> ''\n    ORDER BY c.\"originalreleasedate\" ASC NULLS LAST\n    LIMIT 1\n)\n\nSELECT\n    om.\"originalreleasedate\",\n    l.\"format\"\nFROM oldest_mythic om\nJOIN \"legalities\" l\n    ON l.\"uuid\" = om.\"uuid\"\nWHERE LOWER(l.\"status\") = 'legal'\nORDER BY l.\"format\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 9819,
+      "completion_tokens": 224
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:498": {
+    "question_id": "498",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT st.\"translation\"\nFROM \"foreign_data\" fd\nJOIN \"cards\" c ON c.\"uuid\" = fd.\"uuid\"\nJOIN \"set_translations\" st ON st.\"setcode\" = c.\"setcode\"\nWHERE fd.\"name\" LIKE '%Tendo Ice Bridge%'\n  AND st.\"language\" = 'French';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12369,
+      "completion_tokens": 225
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:417": {
+    "question_id": "417",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        COUNT(CASE WHEN s.\"type\" = 'expansion' THEN 1 END)::NUMERIC\n        / NULLIF(COUNT(*), 0) * 100,\n        2\n    ) AS percentage\nFROM \"set_translations\" st\nJOIN \"sets\" s ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12365,
+      "completion_tokens": 244
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:345": {
+    "question_id": "345",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT\n    l.\"status\"\nFROM \"cards\" c\nJOIN \"legalities\" l\n    ON l.\"uuid\" = c.\"uuid\"\nWHERE c.\"types\" LIKE '%Artifact%'\n  AND c.\"side\" IS NULL\n  AND l.\"format\" = 'vintage';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12405,
+      "completion_tokens": 220
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:409": {
+    "question_id": "409",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS card_count\nFROM \"cards\" c\nJOIN \"legalities\" l\n  ON l.\"uuid\" = c.\"uuid\"\nJOIN \"rulings\" r\n  ON r.\"uuid\" = c.\"uuid\"\nWHERE l.\"format\" = 'premodern'\n  AND r.\"text\" = 'This is a triggered mana ability.'\n  AND c.\"side\" IS NULL;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12379,
+      "completion_tokens": 261
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:402": {
+    "question_id": "402",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"id\",\n    ROUND(\n        100.0 * SUM(CASE WHEN c.\"isstoryspotlight\" = 1 AND c.\"istextless\" = 0 THEN 1 ELSE 0 END)\n        / NULLIF(COUNT(*), 0)::NUMERIC,\n        2\n    ) AS percentage\nFROM \"cards\" c\nWHERE c.\"isstoryspotlight\" = 1\n  AND c.\"istextless\" = 0\nGROUP BY c.\"id\"\nORDER BY c.\"id\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12433,
+      "completion_tokens": 290
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:434": {
+    "question_id": "434",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT s.\"code\") AS \"set_count\"\nFROM \"sets\" s\nJOIN \"set_translations\" st\n  ON st.\"setcode\" = s.\"code\"\nWHERE st.\"language\" = 'Japanese'\n  AND (s.\"mtgocode\" IS NULL OR s.\"mtgocode\" = '');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12365,
+      "completion_tokens": 228
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:517": {
+    "question_id": "517",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS \"count\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON l.\"uuid\" = c.\"uuid\"\nWHERE c.\"name\" LIKE '%Abundance%'\n  AND c.\"rarity\" = 'rare'\n  AND c.\"types\" LIKE '%Enchantment%'\n  AND l.\"status\" = 'Legal'\n  \n  AND NOT EXISTS (\n    SELECT 1\n    FROM \"legalities\" l2\n    WHERE l2.\"uuid\" = c.\"uuid\"\n      AND l2.\"status\" <> 'Legal'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12395,
+      "completion_tokens": 306
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:347": {
+    "question_id": "347",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"id\",\n    c.\"hascontentwarning\",\n    r.\"text\"\nFROM \"cards\" c\nLEFT JOIN \"rulings\" r\n    ON r.\"uuid\" = c.\"uuid\"\nWHERE c.\"artist\" LIKE '%Stephen Daniel%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12401,
+      "completion_tokens": 236
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:469": {
+    "question_id": "469",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT\n    s.\"name\" AS set_name,\n    s.\"mtgocode\" AS mtgo_code\nFROM \"cards\" c\nJOIN \"sets\" s\n    ON c.\"setcode\" = s.\"code\"\nWHERE c.\"name\" LIKE '%Angel of Mercy%'\n  AND s.\"mtgocode\" IS NOT NULL\n  AND s.\"mtgocode\" <> ''",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12381,
+      "completion_tokens": 295
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:513": {
+    "question_id": "513",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"id\"\nFROM \"sets\" s\nWHERE s.\"type\" = 'commander'\nORDER BY s.\"totalsetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12447,
+      "completion_tokens": 233
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:494": {
+    "question_id": "494",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"name\" AS card_name,\n    r.\"text\" AS ruling_text,\n    c.\"hascontentwarning\" AS has_content_warning\nFROM \"cards\" c\nLEFT JOIN \"rulings\" r\n    ON r.\"uuid\" = c.\"uuid\"\nWHERE c.\"artist\" LIKE '%Jim Pavelec%'\nORDER BY c.\"name\" ASC NULLS FIRST, r.\"text\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12433,
+      "completion_tokens": 290
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:528": {
+    "question_id": "528",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT\n    c.\"name\"   AS card_name,\n    l.\"format\" AS format\nFROM \"cards\" c\nJOIN \"sets\" s\n    ON c.\"setcode\" = s.\"code\"\nJOIN \"legalities\" l\n    ON l.\"uuid\" = c.\"uuid\"\nWHERE s.\"name\" = 'Hour of Devastation'\n  AND l.\"status\" = 'Legal'\nORDER BY c.\"name\" ASC NULLS FIRST, l.\"format\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12419,
+      "completion_tokens": 306
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:415": {
+    "question_id": "415",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        100.0 * COUNT(CASE WHEN c.\"hascontentwarning\" = '0' THEN 1 END) / COUNT(c.\"id\")::NUMERIC,\n        2\n    ) AS percentage\nFROM \"cards\" c\nJOIN \"legalities\" l\n    ON l.\"uuid\" = c.\"uuid\"\nWHERE l.\"format\" = 'commander'\n  AND l.\"status\" = 'Legal';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12401,
+      "completion_tokens": 260
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:506": {
+    "question_id": "506",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        SUM(CASE WHEN c.\"isnonfoilonly\" = 1 THEN 1 ELSE 0 END)::NUMERIC\n        / NULLIF(SUM(CASE WHEN fd.\"language\" = 'Japanese' THEN 1 ELSE 0 END), 0) * 100,\n        2\n    ) AS percentage\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE fd.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12437,
+      "completion_tokens": 293
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:416": {
+    "question_id": "416",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        100.0 * COUNT(DISTINCT CASE WHEN fd.\"language\" = 'French' THEN c.\"uuid\" END)\n        / NULLIF(COUNT(DISTINCT c.\"uuid\"), 0)::NUMERIC,\n        2\n    ) AS percentage\nFROM \"cards\" c\nLEFT JOIN \"foreign_data\" fd\n    ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"power\" IS NULL OR c.\"power\" = '*';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12405,
+      "completion_tokens": 280
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:431": {
+    "question_id": "431",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT s.\"id\"\nFROM \"sets\" s\nJOIN \"cards\" c ON c.\"setcode\" = s.\"code\"\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE s.\"isforeignonly\" = 1\n  AND s.\"isfoilonly\" = 1\n  AND fd.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12411,
+      "completion_tokens": 287
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:371": {
+    "question_id": "371",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        100.0 * COUNT(DISTINCT CASE WHEN fd.\"language\" = 'French' THEN c.\"id\" END)\n        / NULLIF(COUNT(DISTINCT c.\"id\"), 0)::NUMERIC,\n        2\n    ) AS percentage\nFROM \"cards\" c\nJOIN \"foreign_data\" fd\n    ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"isstoryspotlight\" = 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12413,
+      "completion_tokens": 273
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:487": {
+    "question_id": "487",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    ROUND(\n        SUM(\n            CASE\n                WHEN c.\"cardkingdomfoilid\" IS NOT NULL\n                 AND c.\"cardkingdomfoilid\" <> ''\n                 AND c.\"cardkingdomid\" IS NOT NULL\n                 AND c.\"cardkingdomid\" <> ''\n                THEN 1 ELSE 0\n            END\n        )::NUMERIC\n        / NULLIF(COUNT(*), 0) * 100, 2) AS percentage\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" LIKE '%Coldsnap%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12437,
+      "completion_tokens": 325
+    }
+  },
+  "confirm:1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56:hybrid:False:bird:477": {
+    "question_id": "477",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"artist\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" LIKE '%Coldsnap%'\n  AND c.\"artist\" IN ('Jeremy Jarvis', 'Aaron Miller', 'Chippy')\nORDER BY c.\"artist\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12421,
+      "completion_tokens": 240
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:9": {
+    "question_id": "9",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(DISTINCT s.\"cds\") \nFROM \"satscores\" AS s\nINNER JOIN \"schools\" AS sc ON s.\"cds\" = sc.\"cdscode\"\nWHERE s.\"avgscrmath\"::NUMERIC > 560\n  AND sc.\"fundingtype\" = 'Directly funded';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9488,
+      "completion_tokens": 236
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:13": {
+    "question_id": "13",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.phone\nFROM satscores AS sat\nINNER JOIN schools AS s ON sat.cds = s.cdscode\nWHERE sat.numtsttakr::numeric > 0\nORDER BY (sat.numge1500::numeric / sat.numtsttakr::numeric) DESC NULLS LAST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9498,
+      "completion_tokens": 181
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:17": {
+    "question_id": "17",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"sname\", s.\"avgscrwrite\", sc.\"charternum\"\nFROM \"satscores\" s\nJOIN \"schools\" sc ON s.\"cds\" = sc.\"cdscode\"\nWHERE s.\"avgscrwrite\" > 499\n  AND sc.\"charternum\" IS NOT NULL\nORDER BY s.\"avgscrwrite\" DESC NULLS LAST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9500,
+      "completion_tokens": 232
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:10": {
+    "question_id": "10",
+    "db_id": "california_schools",
+    "prediction": "SELECT f.\"FRPM Count (Ages 5-17)\"\nFROM frpm AS f\nINNER JOIN satscores AS s ON f.cdscode = s.cds\nORDER BY s.avgscrread::numeric DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9496,
+      "completion_tokens": 136
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:84": {
+    "question_id": "84",
+    "db_id": "california_schools",
+    "prediction": "WITH admin_names AS (\n    SELECT \"admfname1\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname1\" IS NOT NULL AND \"admfname1\" <> ''\n    UNION ALL\n    SELECT \"admfname2\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname2\" IS NOT NULL AND \"admfname2\" <> ''\n    UNION ALL\n    SELECT \"admfname3\" AS first_name, \"district\" FROM \"schools\" WHERE \"admfname3\" IS NOT NULL AND \"admfname3\" <> ''\n),\n\ntop_names AS (\n    SELECT \"first_name\", COUNT(*) AS cnt\n    FROM admin_names\n    GROUP BY \"first_name\"\n    ORDER BY cnt DESC NULLS LAST\n    LIMIT 2\n)\n\nSELECT DISTINCT tn.\"first_name\", an.\"district\"\nFROM top_names tn\nJOIN admin_names an ON an.\"first_name\" = tn.\"first_name\"\nORDER BY tn.\"first_name\" ASC NULLS FIRST, an.\"district\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9482,
+      "completion_tokens": 453
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:73": {
+    "question_id": "73",
+    "db_id": "california_schools",
+    "prediction": "SELECT f.\"FRPM Count (Ages 5-17)\"\nFROM frpm AS f\nINNER JOIN schools AS s ON f.cdscode = s.cdscode\nWHERE s.mailstreet LIKE '%PO Box 1040%'\n  AND s.school LIKE '%Youth Authority%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9504,
+      "completion_tokens": 155
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:14": {
+    "question_id": "14",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"ncesschool\", f.\"Enrollment (Ages 5-17)\"::NUMERIC AS enrollment_ages_5_17\nFROM frpm f\nJOIN schools s ON f.\"cdscode\" = s.\"cdscode\"\nORDER BY enrollment_ages_5_17 DESC NULLS LAST\nLIMIT 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9516,
+      "completion_tokens": 154
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:39": {
+    "question_id": "39",
+    "db_id": "california_schools",
+    "prediction": "SELECT AVG(ss.\"numtsttakr\"::NUMERIC) AS \"average_test_takers\"\nFROM \"satscores\" ss\nJOIN \"schools\" s ON ss.\"cds\" = s.\"cdscode\"\nWHERE s.\"city\" LIKE '%Fresno%'\n  AND EXTRACT(YEAR FROM s.\"opendate\"::DATE) = 1980;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9548,
+      "completion_tokens": 266
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:82": {
+    "question_id": "82",
+    "db_id": "california_schools",
+    "prediction": "SELECT \"gsoffered\"  FROM \"schools\" ORDER BY ABS(CAST(\"longitude\" AS DOUBLE PRECISION)) DESC NULLS LAST LIMIT 1",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9492,
+      "completion_tokens": 203
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:50": {
+    "question_id": "50",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"school\", s.\"street\"\nFROM \"schools\" s\nJOIN \"satscores\" sat ON s.\"cdscode\" = sat.\"cds\"\nORDER BY sat.\"avgscrmath\"::numeric DESC NULLS LAST\nOFFSET 6 LIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9502,
+      "completion_tokens": 181
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:57": {
+    "question_id": "57",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"phone\", s.\"ext\"\nFROM \"schools\" AS s\nINNER JOIN \"satscores\" AS sat ON s.\"cdscode\" = sat.\"cds\"\nORDER BY sat.\"avgscrwrite\" DESC NULLS LAST\nOFFSET 332 LIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9482,
+      "completion_tokens": 152
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:43": {
+    "question_id": "43",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"avgscrmath\", s.\"cname\"\nFROM \"satscores\" s\nWHERE (s.\"avgscrmath\" + s.\"avgscrread\" + s.\"avgscrwrite\") = (\n    SELECT MIN(\"avgscrmath\" + \"avgscrread\" + \"avgscrwrite\")\n    FROM \"satscores\"\n)\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9536,
+      "completion_tokens": 201
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:37": {
+    "question_id": "37",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.street, s.city, s.zip, s.state\nFROM schools AS s\nINNER JOIN satscores AS sat ON s.cdscode = sat.cds\nWHERE sat.numtsttakr > 0\nORDER BY (sat.numge1500::numeric / sat.numtsttakr::numeric) ASC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9542,
+      "completion_tokens": 184
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:27": {
+    "question_id": "27",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"school\", sa.\"avgscrwrite\", s.\"phone\"\nFROM \"schools\" s\nJOIN \"satscores\" sa ON s.\"cdscode\" = sa.\"cds\"\nWHERE (s.\"opendate\" IS NOT NULL AND s.\"opendate\"::date > DATE '1991-12-31')\n   OR (s.\"closeddate\" IS NOT NULL AND s.\"closeddate\"::date < DATE '2000-01-01');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9544,
+      "completion_tokens": 234
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:34": {
+    "question_id": "34",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n  f.\"Free Meal Count (Ages 5-17)\"::NUMERIC / NULLIF(f.\"Enrollment (Ages 5-17)\"::NUMERIC, 0) AS \"free_rate\"\nFROM frpm AS f\nJOIN schools AS s ON s.cdscode = f.cdscode\nWHERE s.admfname1 LIKE '%Kacey%'\n  AND s.admlname1 LIKE '%Gibson%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9558,
+      "completion_tokens": 229
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:49": {
+    "question_id": "49",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"county\", s.\"school\", s.\"closeddate\"\nFROM \"schools\" AS s\nWHERE s.\"statustype\" = 'Closed'\n  AND s.\"county\" = (\n    SELECT s2.\"county\"\n    FROM \"schools\" AS s2\n    WHERE s2.\"statustype\" = 'Closed'\n    GROUP BY s2.\"county\"\n    ORDER BY COUNT(*) DESC NULLS LAST\n    LIMIT 1\n  )\nORDER BY s.\"closeddate\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 7036,
+      "completion_tokens": 113
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:4": {
+    "question_id": "4",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"phone\"\nFROM schools AS s\nINNER JOIN frpm AS f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\n  AND f.\"Charter Funding Type\" = 'Directly funded'\n  AND s.\"opendate\" > '2000-01-01';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9522,
+      "completion_tokens": 206
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:85": {
+    "question_id": "85",
+    "db_id": "california_schools",
+    "prediction": "SELECT DISTINCT f.\"District Code\", f.\"Percent (%) Eligible Free (K-12)\"\nFROM frpm AS f\nINNER JOIN schools AS s ON f.cdscode = s.cdscode\nWHERE s.admfname1 LIKE '%Alusine%'\n   OR s.admfname2 LIKE '%Alusine%'\n   OR s.admfname3 LIKE '%Alusine%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9570,
+      "completion_tokens": 219
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:81": {
+    "question_id": "81",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.city, s.school, f.\"Low Grade\"\nFROM schools AS s\nJOIN frpm AS f ON s.cdscode = f.cdscode\nWHERE s.state = 'CA'\nORDER BY CAST(s.latitude AS DOUBLE PRECISION) ASC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 7034,
+      "completion_tokens": 66
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:35": {
+    "question_id": "35",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"admemail1\"\nFROM schools AS s\nINNER JOIN frpm AS f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\nORDER BY CAST(f.\"Enrollment (K-12)\" AS NUMERIC) ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9570,
+      "completion_tokens": 176
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:28": {
+    "question_id": "28",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"school\", s.\"doctype\"\nFROM schools s\nJOIN frpm f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE s.\"fundingtype\" = 'Locally funded'\n  AND (f.\"Enrollment (K-12)\"::NUMERIC - f.\"Enrollment (Ages 5-17)\"::NUMERIC) > (\n    SELECT AVG(f2.\"Enrollment (K-12)\"::NUMERIC - f2.\"Enrollment (Ages 5-17)\"::NUMERIC)\n    FROM schools s2\n    JOIN frpm f2 ON s2.\"cdscode\" = f2.\"cdscode\"\n    WHERE s2.\"fundingtype\" = 'Locally funded'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9586,
+      "completion_tokens": 325
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:36": {
+    "question_id": "36",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"admfname1\", s.\"admlname1\", s.\"admfname2\", s.\"admlname2\", s.\"admfname3\", s.\"admlname3\"\nFROM schools AS s\nINNER JOIN satscores AS sat ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"numge1500\" = (\n    SELECT MAX(\"numge1500\") FROM satscores\n)\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9566,
+      "completion_tokens": 250
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:62": {
+    "question_id": "62",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(*) AS \"total_non_chartered_schools\"\nFROM schools AS s\nINNER JOIN frpm AS f ON s.cdscode = f.cdscode\nWHERE s.county = 'Los Angeles'\n  AND s.charter = 0\n  AND (f.\"Free Meal Count (K-12)\" * 100.0 / NULLIF(f.\"Enrollment (K-12)\", 0)) < 0.18;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9634,
+      "completion_tokens": 190
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:83": {
+    "question_id": "83",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"city\", COUNT(DISTINCT s.\"cdscode\") AS school_count\nFROM schools s\nJOIN frpm f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE s.\"gsoffered\" = 'K-8'\n  AND s.\"magnet\" = 1\n  AND f.\"NSLP Provision Status\" = 'Multiple Provision Types'\nGROUP BY s.\"city\"\nORDER BY s.\"city\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 9634,
+      "completion_tokens": 257
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:510": {
+    "question_id": "510",
+    "db_id": "card_games",
+    "prediction": "SELECT \"c\".\"artist\"\nFROM \"cards\" AS \"c\"\nWHERE \"c\".\"side\" IS NULL\nORDER BY CAST(\"c\".\"convertedmanacost\" AS NUMERIC) DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13819,
+      "completion_tokens": 215
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:393": {
+    "question_id": "393",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"id\") \nFROM \"cards\" AS c\nWHERE c.\"artist\" LIKE '%John Avon%'\n  AND c.\"cardkingdomfoilid\" IS NOT NULL\n  AND c.\"cardkingdomid\" IS NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13811,
+      "completion_tokens": 240
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:351": {
+    "question_id": "351",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE fd.\"language\" = 'Japanese'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13759,
+      "completion_tokens": 153
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:377": {
+    "question_id": "377",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS \"count\"\nFROM \"cards\" AS c\nWHERE c.\"originaltype\" = 'Summon - Angel'\n  AND c.\"subtypes\" IS NOT NULL\n  AND c.\"subtypes\" <> 'Angel';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13791,
+      "completion_tokens": 181
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:435": {
+    "question_id": "435",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS count, \"id\" FROM \"cards\" WHERE \"bordercolor\" = 'black' GROUP BY \"id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13777,
+      "completion_tokens": 148
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:421": {
+    "question_id": "421",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nWHERE (c.\"power\" IS NULL OR c.\"power\" = '*')\n  AND c.\"promotypes\" LIKE '%arenaleague%'\nORDER BY c.\"name\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13817,
+      "completion_tokens": 195
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:445": {
+    "question_id": "445",
+    "db_id": "card_games",
+    "prediction": "SELECT fd.\"language\", fd.\"flavortext\", c.\"type\"\nFROM cards c\nJOIN foreign_data fd ON c.\"uuid\" = fd.\"uuid\"\nWHERE c.\"watermark\" = 'colorpie'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13775,
+      "completion_tokens": 174
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:355": {
+    "question_id": "355",
+    "db_id": "card_games",
+    "prediction": "SELECT \"keywords\" FROM \"cards\" WHERE \"name\" LIKE '%Angel of Mercy%' LIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13771,
+      "completion_tokens": 134
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:453": {
+    "question_id": "453",
+    "db_id": "card_games",
+    "prediction": "SELECT \"convertedmanacost\" FROM \"cards\" WHERE \"name\" LIKE 'Ancestor%s Chosen'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13805,
+      "completion_tokens": 112
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:509": {
+    "question_id": "509",
+    "db_id": "card_games",
+    "prediction": "SELECT \"id\" \nFROM \"sets\"\nORDER BY \"basesetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13793,
+      "completion_tokens": 127
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:450": {
+    "question_id": "450",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS \"count\"\nFROM \"cards\" AS c\nWHERE c.\"artist\" LIKE '%Aaron Miller%'\n  AND c.\"cardkingdomfoilid\" IS NOT NULL\n  AND c.\"cardkingdomid\" IS NOT NULL;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13835,
+      "completion_tokens": 213
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:515": {
+    "question_id": "515",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"originalreleasedate\", l.\"format\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE c.\"rarity\" = 'mythic'\n  AND l.\"status\" = 'Legal'\n  AND c.\"originalreleasedate\" = (\n    SELECT MIN(c2.\"originalreleasedate\")\n    FROM \"cards\" c2\n    WHERE c2.\"rarity\" = 'mythic'\n  )\nORDER BY l.\"format\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 11271,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:498": {
+    "question_id": "498",
+    "db_id": "card_games",
+    "prediction": "SELECT st.\"translation\"\nFROM \"cards\" AS c\nJOIN \"set_translations\" AS st ON c.\"setcode\" = st.\"setcode\"\nWHERE c.\"name\" LIKE '%Tendo Ice Bridge%'\n  AND st.\"language\" = 'French';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13821,
+      "completion_tokens": 203
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:417": {
+    "question_id": "417",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  COUNT(CASE WHEN s.\"type\" = 'expansion' THEN 1 END) * 100.0 / COUNT(*) AS percentage\nFROM set_translations AS st\nJOIN sets AS s ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13817,
+      "completion_tokens": 207
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:345": {
+    "question_id": "345",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"name\", l.\"status\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE c.\"types\" = 'Artifact'\n  AND c.\"side\" IS NULL\n  AND l.\"format\" = 'vintage'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13857,
+      "completion_tokens": 203
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:409": {
+    "question_id": "409",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") \nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nJOIN \"rulings\" r ON c.\"uuid\" = r.\"uuid\"\nWHERE l.\"format\" = 'premodern'\n  AND r.\"text\" LIKE '%This is a triggered mana ability.%'\n  AND c.\"side\" IS NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13831,
+      "completion_tokens": 275
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:402": {
+    "question_id": "402",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  \"c\".\"id\",\n  \n  ROUND(\n    (SUM(CASE WHEN \"c\".\"isstoryspotlight\" = '1' AND \"c\".\"istextless\" = '0' THEN 1 ELSE 0 END)::NUMERIC\n     / NULLIF(COUNT(\"c\".\"id\"), 0)) * 100,\n    2\n  ) AS \"percentage\"\nFROM \"cards\" AS \"c\"\nWHERE \"c\".\"isstoryspotlight\" = '1' AND \"c\".\"istextless\" = '0'\nGROUP BY \"c\".\"id\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13885,
+      "completion_tokens": 279
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:434": {
+    "question_id": "434",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT st.\"setcode\") \nFROM \"set_translations\" st\nJOIN \"sets\" s ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese'\n  AND (s.\"mtgocode\" IS NULL OR s.\"mtgocode\" = '')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13817,
+      "completion_tokens": 208
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:517": {
+    "question_id": "517",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") \nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE c.\"name\" = 'Abundance'\n  AND c.\"rarity\" = 'rare'\n  AND c.\"types\" LIKE '%Enchantment%'\n  AND l.\"status\" = 'Legal';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13847,
+      "completion_tokens": 180
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:347": {
+    "question_id": "347",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"id\", r.\"text\", c.\"hascontentwarning\"\nFROM \"cards\" AS c\nLEFT JOIN \"rulings\" AS r ON c.\"uuid\" = r.\"uuid\"\nWHERE c.\"artist\" LIKE '%Stephen Daniel%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13853,
+      "completion_tokens": 209
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:469": {
+    "question_id": "469",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"name\", s.\"mtgocode\"\nFROM \"cards\" c\nINNER JOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE c.\"name\" LIKE '%Angel of Mercy%'\n  AND s.\"mtgocode\" IS NOT NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13833,
+      "completion_tokens": 227
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:513": {
+    "question_id": "513",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"id\"\nFROM \"sets\" AS s\nWHERE s.\"type\" = 'commander'\nORDER BY s.\"totalsetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13899,
+      "completion_tokens": 202
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:494": {
+    "question_id": "494",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"name\", r.\"text\", c.\"hascontentwarning\"\nFROM \"cards\" AS c\nLEFT JOIN \"rulings\" AS r ON c.\"uuid\" = r.\"uuid\"\nWHERE c.\"artist\" LIKE '%Jim Pavelec%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13885,
+      "completion_tokens": 197
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:528": {
+    "question_id": "528",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"name\", l.\"format\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE s.\"name\" = 'Hour of Devastation'\n  AND l.\"status\" = 'Legal';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13871,
+      "completion_tokens": 205
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:415": {
+    "question_id": "415",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  ROUND(\n    COUNT(CASE WHEN c.\"hascontentwarning\" = '0' THEN 1 END)::NUMERIC\n    / COUNT(c.\"id\")::NUMERIC * 100,\n    2\n  ) AS percentage\nFROM legalities AS l\nINNER JOIN cards AS c\n  ON c.\"uuid\" = l.\"uuid\"\nWHERE l.\"format\" = 'commander'\n  AND l.\"status\" = 'Legal';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13853,
+      "completion_tokens": 271
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:506": {
+    "question_id": "506",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  ROUND(\n    SUM(CASE WHEN c.\"isnonfoilonly\" = '1' THEN 1 ELSE 0 END)::NUMERIC\n    / NULLIF(SUM(CASE WHEN fd.\"language\" = 'Japanese' THEN 1 ELSE 0 END), 0) * 100,\n    2\n  ) AS percentage\nFROM cards c\nJOIN foreign_data fd ON c.\"uuid\" = fd.\"uuid\"\nWHERE fd.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13889,
+      "completion_tokens": 265
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:416": {
+    "question_id": "416",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  ROUND(\n    100.0 * COUNT(CASE WHEN fd.\"language\" = 'French' THEN 1 END)\n    / NULLIF(COUNT(*), 0)::NUMERIC, 2) AS percentage\nFROM cards AS c\nLEFT JOIN foreign_data AS fd\n  ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"power\" IS NULL OR c.\"power\" = '*';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13857,
+      "completion_tokens": 256
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:431": {
+    "question_id": "431",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT s.\"id\"\nFROM \"sets\" AS s\nJOIN \"cards\" AS c ON c.\"setcode\" = s.\"code\"\nJOIN \"foreign_data\" AS fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE s.\"isforeignonly\" = 1\n  AND s.\"isfoilonly\" = 1\n  AND fd.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13863,
+      "completion_tokens": 176
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:371": {
+    "question_id": "371",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  ROUND(\n    100.0 * COUNT(*) FILTER (WHERE fd.\"language\" = 'French') / NULLIF(COUNT(*), 0)::NUMERIC,\n    2\n  ) AS \"percentage\"\nFROM \"cards\" c\nLEFT JOIN \"foreign_data\" fd\n  ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"isstoryspotlight\" = 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13865,
+      "completion_tokens": 243
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:487": {
+    "question_id": "487",
+    "db_id": "card_games",
+    "prediction": "SELECT\n  \n  (SUM(CASE WHEN c.\"cardkingdomfoilid\" IS NOT NULL AND c.\"cardkingdomid\" IS NOT NULL THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(*)) * 100 AS percentage\nFROM \"cards\" c\nINNER JOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" LIKE '%Coldsnap%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13889,
+      "completion_tokens": 247
+    }
+  },
+  "confirm:bbbd40c720aedbe64f587b732793cef7ca165882c622eb2ee225c42e6b93b7a7:hybrid:False:bird:477": {
+    "question_id": "477",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"artist\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" LIKE '%Coldsnap%'\n  AND c.\"artist\" IN ('Jeremy Jarvis', 'Aaron Miller', 'Chippy');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "726",
+      "708"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 13873,
+      "completion_tokens": 213
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:9": {
+    "question_id": "9",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(DISTINCT s.\"cdscode\") AS charter_funded_schools_count\nFROM \"satscores\" sat\nJOIN \"schools\" s\n  ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"avgscrmath\"::numeric > 560\n  AND s.\"fundingtype\" = 'Directly funded';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7766,
+      "completion_tokens": 275
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:13": {
+    "question_id": "13",
+    "db_id": "california_schools",
+    "prediction": "WITH rates AS (\n    SELECT\n        s.\"cds\",\n        s.\"numge1500\"::numeric / NULLIF(s.\"numtsttakr\"::numeric, 0) AS excellence_rate\n    FROM \"satscores\" s\n    WHERE s.\"numtsttakr\" IS NOT NULL\n      AND s.\"numtsttakr\"::numeric > 0\n)\n\nSELECT sch.\"phone\"\nFROM rates r\nJOIN \"schools\" sch ON sch.\"cdscode\" = r.\"cds\"\nORDER BY r.excellence_rate DESC NULLS LAST\nLIMIT 3",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7776,
+      "completion_tokens": 294
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:17": {
+    "question_id": "17",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS school_name,\n    sc.\"charternum\" AS charter_number,\n    sc.\"avgscrwrite\" AS avg_writing_score\nFROM \"satscores\" sc\nJOIN \"schools\" s\n    ON s.\"cdscode\" = sc.\"cds\"\nWHERE sc.\"avgscrwrite\"::numeric > 499\n  AND sc.\"charternum\" IS NOT NULL\nORDER BY sc.\"avgscrwrite\"::numeric DESC NULLS LAST;",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7778,
+      "completion_tokens": 305
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:10": {
+    "question_id": "10",
+    "db_id": "california_schools",
+    "prediction": "WITH top_school AS (\n    SELECT ss.\"cds\", ss.\"sname\", ss.\"avgscrread\"\n    FROM \"satscores\" ss\n    ORDER BY ss.\"avgscrread\" DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT f.\"FRPM Count (Ages 5-17)\"\nFROM \"frpm\" f\nJOIN \"schools\" s ON s.\"cdscode\" = f.\"cdscode\"\nJOIN top_school ts ON ts.\"cds\" = s.\"cdscode\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7774,
+      "completion_tokens": 241
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:84": {
+    "question_id": "84",
+    "db_id": "california_schools",
+    "prediction": "WITH admin_names AS (\n    SELECT \"admfname1\" AS fname, \"district\" FROM \"schools\" WHERE \"admfname1\" IS NOT NULL AND \"admfname1\" <> ''\n    UNION ALL\n    SELECT \"admfname2\" AS fname, \"district\" FROM \"schools\" WHERE \"admfname2\" IS NOT NULL AND \"admfname2\" <> ''\n    UNION ALL\n    SELECT \"admfname3\" AS fname, \"district\" FROM \"schools\" WHERE \"admfname3\" IS NOT NULL AND \"admfname3\" <> ''\n)\nSELECT\n    \"fname\",\n    \"district\",\n    COUNT(*) AS name_count\nFROM admin_names\nGROUP BY \"fname\", \"district\"\nORDER BY name_count DESC NULLS LAST\nLIMIT 2;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7760,
+      "completion_tokens": 367
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:73": {
+    "question_id": "73",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    f.\"FRPM Count (Ages 5-17)\" AS frpm_count_ages_5_17\nFROM frpm AS f\nJOIN schools AS s\n    ON s.cdscode = f.cdscode\nWHERE s.school = 'Youth Authority School'\n  AND s.mailstreet = 'PO Box 1040';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7782,
+      "completion_tokens": 204
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:14": {
+    "question_id": "14",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS school_name,\n    s.\"ncesschool\" AS nces_school_id,\n    f.\"Enrollment (Ages 5-17)\" AS enrollment_ages_5_17\nFROM \"frpm\" f\nJOIN \"schools\" s\n    ON s.\"cdscode\" = f.\"cdscode\"\nORDER BY f.\"Enrollment (Ages 5-17)\" DESC NULLS LAST\nLIMIT 5;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7794,
+      "completion_tokens": 250
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:39": {
+    "question_id": "39",
+    "db_id": "california_schools",
+    "prediction": "SELECT AVG(ss.\"numtsttakr\") AS avg_test_takers\nFROM \"satscores\" ss\nJOIN \"schools\" s ON s.\"cdscode\" = ss.\"cds\"\nWHERE s.\"city\" = 'Fresno'\n  AND EXTRACT(YEAR FROM s.\"opendate\"::date) = 1980;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7826,
+      "completion_tokens": 294
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:82": {
+    "question_id": "82",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"gsoffered\"\nFROM \"schools\" s\nWHERE s.\"longitude\" IS NOT NULL\nORDER BY CAST(s.\"longitude\" AS DOUBLE PRECISION) DESC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7770,
+      "completion_tokens": 247
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:50": {
+    "question_id": "50",
+    "db_id": "california_schools",
+    "prediction": "WITH ranked AS (\n    SELECT\n        s.\"sname\" AS school_name,\n        s.\"avgscrmath\" AS math_avg,\n        ROW_NUMBER() OVER (ORDER BY s.\"avgscrmath\" DESC NULLS LAST) AS rn\n    FROM \"satscores\" s\n    WHERE s.\"avgscrmath\" IS NOT NULL\n)\nSELECT\n    sc.\"school\" AS school_name,\n    sc.\"mailstreet\" AS postal_street_address\nFROM ranked r\nJOIN \"schools\" sc\n    ON sc.\"school\" = r.school_name\nWHERE r.rn = 7",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7780,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:57": {
+    "question_id": "57",
+    "db_id": "california_schools",
+    "prediction": "WITH ranked AS (\n    SELECT\n        s.\"cds\" AS cds,\n        s.\"avgscrwrite\" AS avgscrwrite,\n        DENSE_RANK() OVER (ORDER BY s.\"avgscrwrite\" DESC NULLS LAST) AS rnk\n    FROM \"satscores\" s\n    WHERE s.\"avgscrwrite\" IS NOT NULL\n)\nSELECT\n    sch.\"phone\",\n    sch.\"ext\"\nFROM ranked r\nJOIN \"schools\" sch\n    ON sch.\"cdscode\" = r.cds\nWHERE r.rnk = 333;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7760,
+      "completion_tokens": 248
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:43": {
+    "question_id": "43",
+    "db_id": "california_schools",
+    "prediction": "WITH school_totals AS (\n    SELECT\n        s.\"cds\",\n        s.\"sname\",\n        s.\"avgscrmath\",\n        (s.\"avgscrmath\" + s.\"avgscrread\" + s.\"avgscrwrite\") AS total_score\n    FROM \"satscores\" s\n    WHERE s.\"avgscrmath\" IS NOT NULL\n      AND s.\"avgscrread\" IS NOT NULL\n      AND s.\"avgscrwrite\" IS NOT NULL\n)\nSELECT\n    st.\"avgscrmath\" AS average_math_score,\n    sc.\"county\"\nFROM school_totals st\nJOIN \"schools\" sc\n    ON sc.\"cdscode\" = st.\"cds\"\nORDER BY st.\"total_score\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7814,
+      "completion_tokens": 354
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:37": {
+    "question_id": "37",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"street\",\n    s.\"city\",\n    s.\"zip\",\n    s.\"state\"\nFROM \"satscores\" AS sat\nJOIN \"schools\" AS s\n    ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"numtsttakr\" IS NOT NULL\n  AND sat.\"numtsttakr\" <> '0'\n  AND sat.\"numge1500\" IS NOT NULL\nORDER BY (CAST(sat.\"numge1500\" AS NUMERIC) / CAST(sat.\"numtsttakr\" AS NUMERIC)) ASC NULLS FIRST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7820,
+      "completion_tokens": 359
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:27": {
+    "question_id": "27",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"school\" AS school_name,\n    sat.\"avgscrwrite\" AS avg_writing_score,\n    s.\"phone\" AS communication_number\nFROM \"schools\" s\nJOIN \"satscores\" sat\n    ON sat.\"cds\" = s.\"cdscode\"\nWHERE\n    \n    (s.\"opendate\" IS NOT NULL AND s.\"opendate\" <> '' AND s.\"opendate\"::date > DATE '1991-12-31')\n    OR\n    \n    (s.\"closeddate\" IS NOT NULL AND s.\"closeddate\" <> '' AND s.\"closeddate\"::date < DATE '2000-01-01')",
+    "score": 0.0,
+    "error": "postgresql:22007:InvalidDatetimeFormat",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7822,
+      "completion_tokens": 362
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:34": {
+    "question_id": "34",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    f.\"Free Meal Count (Ages 5-17)\" / NULLIF(f.\"Enrollment (Ages 5-17)\", 0) AS free_rate\nFROM frpm AS f\nJOIN schools AS s\n    ON s.cdscode = f.cdscode\nWHERE (s.admfname1 = 'Kacey' AND s.admlname1 = 'Gibson')\n   OR (s.admfname2 = 'Kacey' AND s.admlname2 = 'Gibson')\n   OR (s.admfname3 = 'Kacey' AND s.admlname3 = 'Gibson');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7836,
+      "completion_tokens": 310
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:49": {
+    "question_id": "49",
+    "db_id": "california_schools",
+    "prediction": "WITH closed_by_county AS (\n    SELECT\n        s.\"county\",\n        COUNT(*) AS closed_count\n    FROM \"schools\" s\n    WHERE s.\"statustype\" = 'Closed'\n    GROUP BY s.\"county\"\n    ORDER BY closed_count DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT\n    s.\"school\",\n    s.\"closeddate\"\nFROM \"schools\" s\nJOIN closed_by_county c ON s.\"county\" = c.\"county\"\nWHERE s.\"statustype\" = 'Closed'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 5314,
+      "completion_tokens": 158
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:4": {
+    "question_id": "4",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"phone\"\nFROM \"schools\" s\nJOIN \"frpm\" f ON f.\"cdscode\" = s.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\n  AND s.\"fundingtype\" = 'Directly funded'\n  AND s.\"opendate\"::date > DATE '2000-01-01';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7800,
+      "completion_tokens": 272
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:85": {
+    "question_id": "85",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    f.\"Percent (%) Eligible Free (K-12)\" AS \"Percent Eligible Free (K-12)\",\n    f.\"District Code\" AS \"District Code\"\nFROM frpm AS f\nJOIN schools AS s\n    ON s.cdscode = f.cdscode\nWHERE s.admfname1 = 'Alusine'\n   OR s.admfname2 = 'Alusine'\n   OR s.admfname3 = 'Alusine';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7848,
+      "completion_tokens": 278
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:81": {
+    "question_id": "81",
+    "db_id": "california_schools",
+    "prediction": "SELECT\n    s.\"city\",           \n    f.\"Low Grade\",      \n    s.\"school\"          \nFROM \"schools\" s\nJOIN \"frpm\" f\n    ON f.\"cdscode\" = s.\"cdscode\"\nWHERE s.\"state\" = 'CA'\nORDER BY s.\"latitude\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 5312,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:35": {
+    "question_id": "35",
+    "db_id": "california_schools",
+    "prediction": "SELECT s.\"admemail1\"\nFROM frpm AS f\nJOIN schools AS s ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\nORDER BY f.\"Enrollment (K-12)\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7848,
+      "completion_tokens": 204
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:28": {
+    "question_id": "28",
+    "db_id": "california_schools",
+    "prediction": "WITH avg_diff AS (\n    SELECT AVG(\n        CAST(f.\"Enrollment (K-12)\" AS DOUBLE PRECISION) -\n        CAST(f.\"Enrollment (Ages 5-17)\" AS DOUBLE PRECISION)\n    ) AS avg_difference\n    FROM frpm f\n    JOIN schools s ON s.cdscode = f.cdscode\n    WHERE s.fundingtype = 'Locally funded'\n)\n\nSELECT\n    s.school,\n    s.doctype\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nCROSS JOIN avg_diff a\nWHERE s.fundingtype = 'Locally funded'\n  AND (\n      CAST(f.\"Enrollment (K-12)\" AS DOUBLE PRECISION) -\n      CAST(f.\"Enrollment (Ages 5-17)\" AS DOUBLE PRECISION)\n  ) > a.avg_difference",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7864,
+      "completion_tokens": 421
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:36": {
+    "question_id": "36",
+    "db_id": "california_schools",
+    "prediction": "WITH top_school AS (\n    SELECT ss.\"cds\", ss.\"sname\", ss.\"numge1500\"\n    FROM \"satscores\" ss\n    ORDER BY ss.\"numge1500\" DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT\n    s.\"admfname1\" AS \"first_name_1\",\n    s.\"admlname1\" AS \"last_name_1\",\n    s.\"admfname2\" AS \"first_name_2\",\n    s.\"admlname2\" AS \"last_name_2\",\n    s.\"admfname3\" AS \"first_name_3\",\n    s.\"admlname3\" AS \"last_name_3\"\nFROM \"schools\" s\nJOIN top_school ts ON s.\"cdscode\" = ts.\"cds\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7844,
+      "completion_tokens": 320
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:62": {
+    "question_id": "62",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(*) AS total_non_chartered_schools\nFROM schools s\nJOIN frpm f ON f.\"cdscode\" = s.\"cdscode\"\nWHERE s.\"county\" = 'Los Angeles'\n  AND s.\"charter\" = 0\n  AND (f.\"Free Meal Count (K-12)\" * 100.0 / NULLIF(f.\"Enrollment (K-12)\", 0)) < 0.18;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7912,
+      "completion_tokens": 231
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:83": {
+    "question_id": "83",
+    "db_id": "california_schools",
+    "prediction": "error",
+    "score": 0.0,
+    "error": "multiple_statements",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 7912,
+      "completion_tokens": 357
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:510": {
+    "question_id": "510",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"artist\"\nFROM \"cards\" c\nWHERE c.\"side\" IS NULL\nORDER BY c.\"convertedmanacost\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12097,
+      "completion_tokens": 241
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:393": {
+    "question_id": "393",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS card_count\nFROM \"cards\" c\nWHERE c.\"artist\" = 'John Avon'\n  AND c.\"cardkingdomfoilid\" IS NULL;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12089,
+      "completion_tokens": 228
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:351": {
+    "question_id": "351",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE fd.\"language\" = 'Japanese';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12037,
+      "completion_tokens": 185
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:377": {
+    "question_id": "377",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS card_count\nFROM \"cards\" c\nWHERE c.\"originaltype\" = 'Summon - Angel'\n  AND c.\"subtypes\" IS NOT NULL\n  AND c.\"subtypes\" <> 'Angel';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12069,
+      "completion_tokens": 219
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:435": {
+    "question_id": "435",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"id\",\n    COUNT(*) OVER () AS \"black_border_card_count\"\nFROM \"cards\" AS c\nWHERE c.\"bordercolor\" = 'black'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12055,
+      "completion_tokens": 181
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:421": {
+    "question_id": "421",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"name\"\nFROM \"cards\" c\nWHERE (c.\"power\" IS NULL OR c.\"power\" = '*')\n  AND c.\"promotypes\" = 'arenaleague'\nORDER BY c.\"name\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12095,
+      "completion_tokens": 229
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:445": {
+    "question_id": "445",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    fd.\"language\",\n    fd.\"flavortext\",\n    c.\"type\"\nFROM \"cards\" c\nJOIN \"foreign_data\" fd\n    ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"watermark\" = 'colorpie';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12053,
+      "completion_tokens": 180
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:355": {
+    "question_id": "355",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"keywords\"\nFROM \"cards\" c\nWHERE c.\"name\" = 'Angel of Mercy'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12049,
+      "completion_tokens": 178
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:453": {
+    "question_id": "453",
+    "db_id": "card_games",
+    "prediction": "SELECT c.\"convertedmanacost\"\nFROM \"cards\" c\nWHERE c.\"name\" = 'Ancestor''s Chosen'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12083,
+      "completion_tokens": 156
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:509": {
+    "question_id": "509",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"id\"\nFROM \"sets\" AS s\nORDER BY s.\"basesetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12071,
+      "completion_tokens": 145
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:450": {
+    "question_id": "450",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) AS \"count\"\nFROM \"cards\" AS c\nWHERE c.\"artist\" = 'Aaron Miller'\n  AND c.\"cardkingdomfoilid\" IS NOT NULL\n  AND c.\"cardkingdomid\" IS NOT NULL;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12113,
+      "completion_tokens": 244
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:515": {
+    "question_id": "515",
+    "db_id": "card_games",
+    "prediction": "WITH oldest_mythic AS (\n    SELECT\n        c.\"uuid\",\n        c.\"name\",\n        c.\"originalreleasedate\"\n    FROM \"cards\" c\n    WHERE c.\"rarity\" = 'mythic'\n      AND c.\"originalreleasedate\" IS NOT NULL\n      AND c.\"originalreleasedate\" <> ''\n    ORDER BY c.\"originalreleasedate\" ASC NULLS FIRST\n    LIMIT 1\n)\n\nSELECT\n    om.\"originalreleasedate\" AS \"release_date\",\n    l.\"format\" AS \"legal_format\"\nFROM oldest_mythic om\nJOIN \"legalities\" l\n    ON l.\"uuid\" = om.\"uuid\"\nWHERE l.\"status\" = 'Legal'\nORDER BY l.\"format\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 9549,
+      "completion_tokens": 232
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:498": {
+    "question_id": "498",
+    "db_id": "card_games",
+    "prediction": "SELECT st.\"translation\"\nFROM \"cards\" c\nJOIN \"set_translations\" st\n  ON st.\"setcode\" = c.\"setcode\"\n AND st.\"language\" = 'French'\nWHERE c.\"name\" = 'Tendo Ice Bridge'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12099,
+      "completion_tokens": 235
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:417": {
+    "question_id": "417",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    COUNT(CASE WHEN s.\"type\" = 'expansion' THEN 1 END) * 100.0 / COUNT(*) AS percentage\nFROM \"set_translations\" st\nJOIN \"sets\" s ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12095,
+      "completion_tokens": 218
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:345": {
+    "question_id": "345",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    l.\"status\"\nFROM \"cards\" c\nJOIN \"legalities\" l\n    ON l.\"uuid\" = c.\"uuid\"\nWHERE c.\"types\" = 'Artifact'\n  AND c.\"side\" IS NULL\n  AND l.\"format\" = 'vintage'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12135,
+      "completion_tokens": 247
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:409": {
+    "question_id": "409",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS card_count\nFROM \"cards\" c\nJOIN \"legalities\" l\n  ON l.\"uuid\" = c.\"uuid\"\nJOIN \"rulings\" r\n  ON r.\"uuid\" = c.\"uuid\"\nWHERE l.\"format\" = 'premodern'\n  AND r.\"text\" = 'This is a triggered mana ability.'\n  AND c.\"side\" IS NULL;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12109,
+      "completion_tokens": 300
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:402": {
+    "question_id": "402",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"id\",\n    \n    (COUNT(*) FILTER (WHERE c.\"isstoryspotlight\" = '1' AND c.\"istextless\" = '1')::numeric\n     / NULLIF(COUNT(*), 0)) * 100 AS percentage\nFROM \"cards\" c\nWHERE c.\"isstoryspotlight\" = '1' AND c.\"istextless\" = '1'\nGROUP BY c.\"id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12163,
+      "completion_tokens": 276
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:434": {
+    "question_id": "434",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT s.\"code\") AS \"sets_count\"\nFROM \"sets\" s\nJOIN \"set_translations\" st\n  ON st.\"setcode\" = s.\"code\"\nWHERE st.\"language\" = 'Japanese'\n  AND (s.\"mtgocode\" IS NULL OR s.\"mtgocode\" = '');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12095,
+      "completion_tokens": 232
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:517": {
+    "question_id": "517",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS \"count\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON l.\"uuid\" = c.\"uuid\"\nWHERE c.\"name\" = 'Abundance'\n  AND c.\"rarity\" = 'rare'\n  AND c.\"types\" = 'Enchantment'\n  AND l.\"status\" = 'Legal';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12125,
+      "completion_tokens": 218
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:347": {
+    "question_id": "347",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"id\" AS card_id,\n    r.\"text\" AS ruling_text,\n    CASE\n        WHEN c.\"hascontentwarning\" = '1' THEN 'missing_or_degraded'\n        ELSE 'ok'\n    END AS property_status\nFROM \"cards\" c\nLEFT JOIN \"rulings\" r\n    ON r.\"uuid\" = c.\"uuid\"\nWHERE c.\"artist\" = 'Stephen Daniel'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12131,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:469": {
+    "question_id": "469",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT\n    s.\"name\" AS \"set_name\",\n    s.\"mtgocode\" AS \"mtgo_code\"\nFROM \"cards\" c\nJOIN \"sets\" s\n    ON s.\"code\" = c.\"setcode\"\nWHERE c.\"name\" = 'Angel of Mercy'\n  AND s.\"mtgocode\" IS NOT NULL",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12111,
+      "completion_tokens": 271
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:513": {
+    "question_id": "513",
+    "db_id": "card_games",
+    "prediction": "SELECT s.\"id\"\nFROM \"sets\" AS s\nWHERE s.\"type\" = 'commander'\nORDER BY s.\"totalsetsize\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12177,
+      "completion_tokens": 221
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:494": {
+    "question_id": "494",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"name\"                AS card_name,\n    r.\"text\"                AS ruling_text,\n    c.\"hascontentwarning\"   AS has_content_warning\nFROM \"cards\" c\nLEFT JOIN \"rulings\" r\n    ON r.\"uuid\" = c.\"uuid\"\nWHERE c.\"artist\" = 'Jim Pavelec'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12163,
+      "completion_tokens": 267
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:528": {
+    "question_id": "528",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    c.\"name\"   AS card_name,\n    l.\"format\" AS format\nFROM \"cards\" c\nJOIN \"sets\" s\n    ON s.\"code\" = c.\"setcode\"\nJOIN \"legalities\" l\n    ON l.\"uuid\" = c.\"uuid\"\nWHERE s.\"name\" = 'Hour of Devastation'\n  AND l.\"status\" = 'Legal'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12149,
+      "completion_tokens": 275
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:415": {
+    "question_id": "415",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    COUNT(CASE WHEN c.\"hascontentwarning\" = 0 THEN 1 END) * 100.0 / COUNT(c.\"id\") AS percentage\nFROM \"cards\" c\nJOIN \"legalities\" l ON l.\"uuid\" = c.\"uuid\"\nWHERE l.\"format\" = 'commander'\n  AND l.\"status\" = 'Legal';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12131,
+      "completion_tokens": 258
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:506": {
+    "question_id": "506",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    \n    SUM(CASE WHEN c.\"isnonfoilonly\" = 1 THEN 1 ELSE 0 END) * 100.0\n    / NULLIF(COUNT(*), 0) AS percentage\nFROM \"cards\" c\nJOIN \"set_translations\" st\n    ON st.\"setcode\" = c.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12167,
+      "completion_tokens": 306
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:416": {
+    "question_id": "416",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    COUNT(CASE WHEN fd.\"language\" = 'French' THEN 1 END) * 100.0\n    / NULLIF(COUNT(*), 0) AS percentage\nFROM \"cards\" c\nJOIN \"foreign_data\" fd\n    ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"power\" IS NULL OR c.\"power\" = '*';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12135,
+      "completion_tokens": 252
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:431": {
+    "question_id": "431",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT s.\"id\"\nFROM \"sets\" s\nJOIN \"cards\" c ON c.\"setcode\" = s.\"code\"\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE s.\"isforeignonly\" = 1\n  AND s.\"isfoilonly\" = 1\n  AND fd.\"language\" = 'Japanese';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12141,
+      "completion_tokens": 194
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:371": {
+    "question_id": "371",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    COUNT(CASE WHEN fd.\"language\" = 'French' THEN 1 END) * 100.0\n    / NULLIF(COUNT(*), 0) AS percentage\nFROM \"cards\" c\nJOIN \"foreign_data\" fd\n    ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"isstoryspotlight\" = 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12143,
+      "completion_tokens": 232
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:487": {
+    "question_id": "487",
+    "db_id": "card_games",
+    "prediction": "SELECT\n    (SUM(CASE WHEN c.\"cardkingdomfoilid\" IS NOT NULL AND c.\"cardkingdomid\" IS NOT NULL THEN 1 ELSE 0 END)::numeric\n     / NULLIF(COUNT(*), 0)) * 100 AS percentage\nFROM \"cards\" c\nJOIN \"sets\" s ON s.\"code\" = c.\"setcode\"\nWHERE s.\"name\" = 'Coldsnap';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12167,
+      "completion_tokens": 266
+    }
+  },
+  "confirm:301b659fe8f71829fa3ff07d1911362d7daf89e968f541db1c1bcc3a70f60658:hybrid:False:bird:477": {
+    "question_id": "477",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT c.\"artist\"\nFROM \"cards\" c\nJOIN \"sets\" s ON s.\"code\" = c.\"setcode\"\nWHERE s.\"name\" = 'Coldsnap'\n  AND c.\"artist\" IN ('Jeremy Jarvis', 'Aaron Miller', 'Chippy');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 12151,
+      "completion_tokens": 239
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:9": {
+    "question_id": "9",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"cds\") FROM \"satscores\" AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cds\" = T2.\"cdscode\" WHERE T1.\"avgscrmath\"::numeric > 560 AND T2.\"fundingtype\" = 'Directly funded'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10160,
+      "completion_tokens": 232
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:13": {
+    "question_id": "13",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.cdscode WHERE T1.numtsttakr > 0 ORDER BY (CAST(T1.numge1500 AS REAL) / CAST(T1.numtsttakr AS REAL)) DESC NULLS LAST LIMIT 3",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10170,
+      "completion_tokens": 184
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:17": {
+    "question_id": "17",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"sname\", T1.\"avgscrwrite\", T2.\"charternum\" FROM \"satscores\" AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cds\" = T2.\"cdscode\" WHERE T1.\"avgscrwrite\" > 499 AND T2.\"charternum\" IS NOT NULL ORDER BY T1.\"avgscrwrite\" DESC NULLS LAST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10172,
+      "completion_tokens": 249
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:10": {
+    "question_id": "10",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"FRPM Count (Ages 5-17)\" FROM satscores AS T1 INNER JOIN frpm AS T2 ON T1.cds = T2.cdscode WHERE T1.avgscrread = (SELECT MAX(avgscrread) FROM satscores)",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10168,
+      "completion_tokens": 200
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:84": {
+    "question_id": "84",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.admfname1, T1.district\nFROM schools AS T1\nWHERE T1.admfname1 IN (\n    SELECT admfname1\n    FROM schools\n    WHERE admfname1 IS NOT NULL AND admfname1 <> ''\n    GROUP BY admfname1\n    ORDER BY COUNT(*) DESC NULLS LAST\n    LIMIT 2\n)\nGROUP BY T1.admfname1, T1.district\nORDER BY T1.admfname1 ASC NULLS FIRST, T1.district ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10154,
+      "completion_tokens": 233
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:73": {
+    "question_id": "73",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"FRPM Count (Ages 5-17)\" FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.cdscode = T2.cdscode WHERE T1.mailstreet LIKE '%PO Box 1040%' AND T1.school LIKE '%Youth Authority%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10176,
+      "completion_tokens": 157
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:14": {
+    "question_id": "14",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"School Name\", T2.ncesschool FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.cdscode = T2.cdscode ORDER BY T1.\"Enrollment (Ages 5-17)\"::REAL DESC NULLS LAST LIMIT 5",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10188,
+      "completion_tokens": 198
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:39": {
+    "question_id": "39",
+    "db_id": "california_schools",
+    "prediction": "SELECT AVG(T2.\"numtsttakr\") FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.\"cdscode\" = T2.\"cds\" WHERE T1.\"city\" LIKE '%Fresno%' AND EXTRACT(YEAR FROM T1.\"opendate\"::date) = 1980",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10220,
+      "completion_tokens": 257
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:82": {
+    "question_id": "82",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"gsoffered\" FROM \"schools\" AS T1 WHERE T1.\"longitude\" = (SELECT MAX(T2.\"longitude\") FROM \"schools\" AS T2)",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10164,
+      "completion_tokens": 201
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:50": {
+    "question_id": "50",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"school\", T1.\"mailstreet\" FROM \"satscores\" AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cds\" = T2.\"cdscode\" ORDER BY T1.\"avgscrmath\"::numeric DESC NULLS LAST LIMIT 1 OFFSET 6",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10174,
+      "completion_tokens": 149
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:57": {
+    "question_id": "57",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"phone\", T2.\"ext\" FROM (SELECT \"cds\", \"avgscrwrite\" FROM \"satscores\" ORDER BY \"avgscrwrite\" DESC NULLS LAST LIMIT 1 OFFSET 332) AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cds\" = T2.\"cdscode\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10154,
+      "completion_tokens": 168
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:43": {
+    "question_id": "43",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"avgscrmath\", T2.\"county\" FROM \"satscores\" AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cds\" = T2.\"cdscode\" WHERE (T1.\"avgscrmath\" + T1.\"avgscrread\" + T1.\"avgscrwrite\") = (SELECT MIN(T3.\"avgscrmath\" + T3.\"avgscrread\" + T3.\"avgscrwrite\") FROM \"satscores\" AS T3)",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10208,
+      "completion_tokens": 267
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:37": {
+    "question_id": "37",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.street, T2.city, T2.zip, T2.state FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.cdscode WHERE T1.numtsttakr > 0 AND (T1.numge1500::REAL / T1.numtsttakr::REAL) = (SELECT MIN(s.numge1500::REAL / s.numtsttakr::REAL) FROM satscores AS s WHERE s.numtsttakr > 0)",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10214,
+      "completion_tokens": 284
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:27": {
+    "question_id": "27",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"school\", T2.\"avgscrwrite\", T1.\"phone\" FROM \"schools\" AS T1 INNER JOIN \"satscores\" AS T2 ON T1.\"cdscode\" = T2.\"cds\" WHERE (T1.\"opendate\" > '1991-12-31' OR T1.\"closeddate\" < '2000-01-01')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10216,
+      "completion_tokens": 218
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:34": {
+    "question_id": "34",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"Free Meal Count (Ages 5-17)\"::REAL / NULLIF(T2.\"Enrollment (Ages 5-17)\"::REAL, 0) FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.cdscode = T2.cdscode WHERE T1.admfname1 LIKE '%Kacey%' AND T1.admlname1 LIKE '%Gibson%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10230,
+      "completion_tokens": 265
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:49": {
+    "question_id": "49",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.county, T1.school, T1.closeddate\nFROM schools AS T1\nWHERE T1.statustype = 'Closed'\nAND T1.county = (\n    SELECT T2.county\n    FROM schools AS T2\n    WHERE T2.statustype = 'Closed'\n    GROUP BY T2.county\n    ORDER BY COUNT(*) DESC NULLS LAST\n    LIMIT 1\n)\nORDER BY T1.school ASC NULLS FIRST",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 7708,
+      "completion_tokens": 100
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:4": {
+    "question_id": "4",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"phone\" FROM \"schools\" AS T1 INNER JOIN \"frpm\" AS T2 ON T1.\"cdscode\" = T2.\"cdscode\" WHERE T2.\"Charter School (Y/N)\" = 1 AND T2.\"Charter Funding Type\" = 'Directly funded' AND T1.\"opendate\" > '2000-01-01'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10194,
+      "completion_tokens": 223
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:85": {
+    "question_id": "85",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"Percent (%) Eligible Free (K-12)\", T2.\"District Code\" FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.cdscode = T2.cdscode WHERE T1.admfname1 LIKE '%Alusine%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10242,
+      "completion_tokens": 195
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:81": {
+    "question_id": "81",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.city, T2.\"Low Grade\", T1.school FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.cdscode = T2.cdscode WHERE T1.state = 'CA' AND T1.latitude = (SELECT MIN(latitude) FROM schools WHERE state = 'CA')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 7706,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:35": {
+    "question_id": "35",
+    "db_id": "california_schools",
+    "prediction": "SELECT T2.\"admemail1\" FROM \"frpm\" AS T1 INNER JOIN \"schools\" AS T2 ON T1.\"cdscode\" = T2.\"cdscode\" WHERE T1.\"Charter School (Y/N)\" = 1 AND T1.\"Enrollment (K-12)\" = (SELECT MIN(\"Enrollment (K-12)\") FROM \"frpm\" WHERE \"Charter School (Y/N)\" = 1)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10242,
+      "completion_tokens": 201
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:28": {
+    "question_id": "28",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"school\", T1.\"doctype\"\nFROM \"schools\" AS T1\nINNER JOIN \"frpm\" AS T2 ON T1.\"cdscode\" = T2.\"cdscode\"\nWHERE T1.\"fundingtype\" = 'Locally funded'\n  AND (T2.\"Enrollment (K-12)\" - T2.\"Enrollment (Ages 5-17)\") > (\n    SELECT AVG(T3.\"Enrollment (K-12)\" - T3.\"Enrollment (Ages 5-17)\")\n    FROM \"schools\" AS T3\n    INNER JOIN \"frpm\" AS T4 ON T3.\"cdscode\" = T4.\"cdscode\"\n    WHERE T3.\"fundingtype\" = 'Locally funded'\n  )",
+    "score": 0.0,
+    "error": "postgresql:42703:UndefinedColumn",
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10258,
+      "completion_tokens": 349
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:36": {
+    "question_id": "36",
+    "db_id": "california_schools",
+    "prediction": "SELECT T3.\"admfname1\", T3.\"admlname1\" FROM \"satscores\" AS T1 INNER JOIN \"schools\" AS T3 ON T1.\"cds\" = T3.\"cdscode\" WHERE T1.\"numge1500\" = (SELECT MAX(\"numge1500\") FROM \"satscores\")",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10238,
+      "completion_tokens": 227
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:62": {
+    "question_id": "62",
+    "db_id": "california_schools",
+    "prediction": "SELECT COUNT(*) FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.cdscode = T2.cdscode WHERE T1.county = 'Los Angeles' AND T1.charter = 0 AND (T2.\"Free Meal Count (K-12)\" * 100.0 / NULLIF(T2.\"Enrollment (K-12)\", 0)) < 0.18",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10306,
+      "completion_tokens": 228
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:83": {
+    "question_id": "83",
+    "db_id": "california_schools",
+    "prediction": "SELECT T1.\"city\", COUNT(DISTINCT T1.\"cdscode\") FROM \"schools\" AS T1 INNER JOIN \"frpm\" AS T2 ON T1.\"cdscode\" = T2.\"cdscode\" WHERE T1.\"magnet\" = 1 AND T1.\"gsserved\" = 'K-8' AND T2.\"NSLP Provision Status\" = 'Multiple Provision Types' GROUP BY T1.\"city\"",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 10306,
+      "completion_tokens": 255
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:510": {
+    "question_id": "510",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.artist FROM cards AS T1 WHERE T1.side IS NULL AND T1.convertedmanacost = (SELECT MAX(T2.convertedmanacost) FROM cards AS T2 WHERE T2.side IS NULL)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14491,
+      "completion_tokens": 203
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:393": {
+    "question_id": "393",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"uuid\") FROM \"cards\" AS T1 WHERE T1.\"artist\" LIKE '%John Avon%' AND T1.\"cardkingdomid\" IS NOT NULL AND T1.\"cardkingdomfoilid\" IS NOT NULL",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14483,
+      "completion_tokens": 199
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:351": {
+    "question_id": "351",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT T1.\"name\" FROM \"cards\" AS T1 INNER JOIN \"foreign_data\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T2.\"language\" = 'Japanese'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14431,
+      "completion_tokens": 202
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:377": {
+    "question_id": "377",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(*) FROM \"cards\" AS T1 WHERE T1.\"originaltype\" = 'Summon - Angel' AND T1.\"subtypes\" IS NOT NULL AND T1.\"subtypes\" <> 'Angel'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14463,
+      "completion_tokens": 183
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:435": {
+    "question_id": "435",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(T1.\"id\"), T1.\"id\" FROM \"cards\" AS T1 WHERE T1.\"bordercolor\" = 'black' GROUP BY T1.\"id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14449,
+      "completion_tokens": 171
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:421": {
+    "question_id": "421",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT T1.\"name\" FROM \"cards\" AS T1 WHERE (T1.\"power\" IS NULL OR T1.\"power\" = '*') AND T1.\"promotypes\" LIKE '%arenaleague%' ORDER BY T1.\"name\" ASC NULLS FIRST LIMIT 3",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14489,
+      "completion_tokens": 193
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:445": {
+    "question_id": "445",
+    "db_id": "card_games",
+    "prediction": "SELECT T2.\"language\", T1.\"flavortext\", T1.\"type\" FROM \"cards\" AS T1 INNER JOIN \"foreign_data\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T1.\"watermark\" = 'colorpie'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14447,
+      "completion_tokens": 207
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:355": {
+    "question_id": "355",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"keywords\" FROM \"cards\" AS T1 WHERE T1.\"name\" LIKE '%Angel of Mercy%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14443,
+      "completion_tokens": 129
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:453": {
+    "question_id": "453",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"convertedmanacost\" FROM \"cards\" AS T1 WHERE T1.\"name\" LIKE '%Ancestor%Chosen%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14477,
+      "completion_tokens": 101
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:509": {
+    "question_id": "509",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"id\" FROM \"sets\" AS T1 WHERE T1.\"basesetsize\"::BIGINT = (SELECT MAX(T2.\"basesetsize\"::BIGINT) FROM \"sets\" AS T2)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14465,
+      "completion_tokens": 197
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:450": {
+    "question_id": "450",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(T1.\"id\") FROM \"cards\" AS T1 WHERE T1.\"artist\" LIKE '%Aaron Miller%' AND T1.\"cardkingdomfoilid\" IS NOT NULL AND T1.\"cardkingdomid\" IS NOT NULL",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14507,
+      "completion_tokens": 205
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:515": {
+    "question_id": "515",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"originalreleasedate\", T3.\"format\" FROM \"cards\" AS T1 INNER JOIN \"legalities\" AS T3 ON T1.\"uuid\" = T3.\"uuid\" WHERE T1.\"rarity\" = 'mythic' AND T3.\"status\" = 'Legal' AND T1.\"originalreleasedate\" = (SELECT MIN(T2.\"originalreleasedate\") FROM \"cards\" AS T2 WHERE T2.\"rarity\" = 'mythic')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 11943,
+      "completion_tokens": 107
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:498": {
+    "question_id": "498",
+    "db_id": "card_games",
+    "prediction": "SELECT T3.\"translation\" FROM \"foreign_data\" AS T1 INNER JOIN \"cards\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" INNER JOIN \"set_translations\" AS T3 ON T2.\"setcode\" = T3.\"setcode\" WHERE T1.\"name\" LIKE '%Tendo Ice Bridge%' AND T3.\"language\" = 'French'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14493,
+      "completion_tokens": 199
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:417": {
+    "question_id": "417",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(COUNT(CASE WHEN T1.\"language\" = 'Japanese' AND T2.\"type\" = 'expansion' THEN 1 END) AS REAL) / NULLIF(COUNT(CASE WHEN T1.\"language\" = 'Japanese' THEN 1 END), 0) * 100 FROM \"set_translations\" AS T1 INNER JOIN \"sets\" AS T2 ON T1.\"setcode\" = T2.\"code\" WHERE T1.\"language\" = 'Japanese'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14489,
+      "completion_tokens": 236
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:345": {
+    "question_id": "345",
+    "db_id": "card_games",
+    "prediction": "SELECT T2.\"status\" FROM \"cards\" AS T1 INNER JOIN \"legalities\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T1.\"types\" = 'Artifact' AND T1.\"side\" IS NULL AND T2.\"format\" = 'vintage'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14529,
+      "completion_tokens": 222
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:409": {
+    "question_id": "409",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"uuid\") FROM \"cards\" AS T1 INNER JOIN \"legalities\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" INNER JOIN \"rulings\" AS T3 ON T1.\"uuid\" = T3.\"uuid\" WHERE T2.\"format\" = 'premodern' AND T3.\"text\" LIKE '%This is a triggered mana ability.%' AND T1.\"side\" IS NULL",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14503,
+      "completion_tokens": 275
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:402": {
+    "question_id": "402",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(SUM(CASE WHEN T1.\"isstoryspotlight\" = 1 AND T1.\"istextless\" = 0 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.\"id\") AS \"percentage\", T1.\"id\" FROM \"cards\" AS T1 WHERE T1.\"isstoryspotlight\" = 1 AND T1.\"istextless\" = 0 GROUP BY T1.\"id\"",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14557,
+      "completion_tokens": 233
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:434": {
+    "question_id": "434",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"code\") FROM \"sets\" AS T1 INNER JOIN \"set_translations\" AS T2 ON T1.\"code\" = T2.\"setcode\" WHERE T2.\"language\" = 'Japanese' AND (T1.\"mtgocode\" IS NULL OR T1.\"mtgocode\" = '')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14489,
+      "completion_tokens": 210
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:517": {
+    "question_id": "517",
+    "db_id": "card_games",
+    "prediction": "SELECT COUNT(DISTINCT T1.\"uuid\") FROM \"cards\" AS T1 INNER JOIN \"legalities\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T1.\"rarity\" = 'rare' AND T1.\"types\" LIKE '%Enchantment%' AND T1.\"name\" LIKE '%Abundance%' AND T2.\"status\" = 'Legal'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14519,
+      "completion_tokens": 151
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:347": {
+    "question_id": "347",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"id\", T3.\"text\", T1.\"hascontentwarning\" FROM \"cards\" AS T1 INNER JOIN \"rulings\" AS T3 ON T1.\"uuid\" = T3.\"uuid\" WHERE T1.\"artist\" LIKE '%Stephen Daniel%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14525,
+      "completion_tokens": 209
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:469": {
+    "question_id": "469",
+    "db_id": "card_games",
+    "prediction": "SELECT T2.\"name\", T1.\"mtgocode\" FROM \"sets\" AS T1 INNER JOIN \"cards\" AS T2 ON T1.\"code\" = T2.\"setcode\" WHERE T2.\"name\" LIKE '%Angel of Mercy%' AND T1.\"mtgocode\" IS NOT NULL",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14505,
+      "completion_tokens": 239
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:513": {
+    "question_id": "513",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.id FROM sets AS T1 WHERE T1.type = 'commander' AND T1.totalsetsize::BIGINT = (SELECT MAX(T2.totalsetsize::BIGINT) FROM sets AS T2 WHERE T2.type = 'commander')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14571,
+      "completion_tokens": 214
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:494": {
+    "question_id": "494",
+    "db_id": "card_games",
+    "prediction": "SELECT T1.\"name\", T2.\"text\", T1.\"hascontentwarning\" FROM \"cards\" AS T1 INNER JOIN \"rulings\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T1.\"artist\" LIKE '%Jim Pavelec%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14557,
+      "completion_tokens": 207
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:528": {
+    "question_id": "528",
+    "db_id": "card_games",
+    "prediction": "SELECT T2.name, T3.format FROM sets AS T1 INNER JOIN cards AS T2 ON T1.code = T2.setcode INNER JOIN legalities AS T3 ON T2.uuid = T3.uuid WHERE T1.name = 'Hour of Devastation' AND T3.status = 'Legal'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14543,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:415": {
+    "question_id": "415",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(SUM(CASE WHEN T1.\"hascontentwarning\" = '0' THEN 1 ELSE 0 END) AS REAL) / COUNT(T1.\"id\") * 100 FROM \"cards\" AS T1 INNER JOIN \"legalities\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T2.\"format\" = 'commander' AND T2.\"status\" = 'Legal'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14525,
+      "completion_tokens": 242
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:506": {
+    "question_id": "506",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(SUM(CASE WHEN T1.\"isnonfoilonly\" = 1 THEN 1 ELSE 0 END) AS REAL) * 100.0 / COUNT(*) FROM \"sets\" AS T1 INNER JOIN \"set_translations\" AS T2 ON T1.\"code\" = T2.\"setcode\" WHERE T2.\"language\" = 'Japanese'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14561,
+      "completion_tokens": 229
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:416": {
+    "question_id": "416",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(COUNT(CASE WHEN T1.\"language\" = 'French' THEN 1 END) AS REAL) * 100.0 / COUNT(*) FROM \"foreign_data\" AS T1 INNER JOIN \"cards\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T2.\"power\" IS NULL OR T2.\"power\" = '*'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14529,
+      "completion_tokens": 224
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:431": {
+    "question_id": "431",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT T1.\"code\" FROM \"sets\" AS T1 INNER JOIN \"cards\" AS T2 ON T1.\"code\" = T2.\"setcode\" INNER JOIN \"foreign_data\" AS T3 ON T2.\"uuid\" = T3.\"uuid\" WHERE T1.\"isforeignonly\" = 1 AND T1.\"isfoilonly\" = 1 AND T3.\"language\" = 'Japanese'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14535,
+      "completion_tokens": 215
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:371": {
+    "question_id": "371",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(COUNT(CASE WHEN T2.\"language\" = 'French' THEN 1 END) AS REAL) * 100.0 / COUNT(*) FROM \"cards\" AS T1 INNER JOIN \"foreign_data\" AS T2 ON T1.\"uuid\" = T2.\"uuid\" WHERE T1.\"isstoryspotlight\" = 1",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14537,
+      "completion_tokens": 201
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:487": {
+    "question_id": "487",
+    "db_id": "card_games",
+    "prediction": "SELECT CAST(SUM(CASE WHEN T2.\"cardkingdomfoilid\" IS NOT NULL AND T2.\"cardkingdomid\" IS NOT NULL THEN 1 ELSE 0 END) AS REAL) / NULLIF(COUNT(*), 0) * 100 FROM \"sets\" AS T1 INNER JOIN \"cards\" AS T2 ON T1.\"code\" = T2.\"setcode\" WHERE T1.\"name\" LIKE '%Coldsnap%'",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14561,
+      "completion_tokens": 236
+    }
+  },
+  "confirm:d44389f4fad37abc14bfc30b1f0920b2800364ab7ea19ca2ed93a79dbeee4860:hybrid:False:bird:477": {
+    "question_id": "477",
+    "db_id": "card_games",
+    "prediction": "SELECT DISTINCT T1.\"artist\" FROM \"cards\" AS T1 INNER JOIN \"sets\" AS T2 ON T1.\"setcode\" = T2.\"code\" WHERE T2.\"name\" LIKE '%Coldsnap%' AND T1.\"artist\" IN ('Jeremy Jarvis', 'Aaron Miller', 'Chippy')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [
+      "631",
+      "699"
+    ],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 14545,
+      "completion_tokens": 235
+    }
+  }
+}

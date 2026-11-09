@@ -3,6 +3,8 @@ __pycache__/
 .venv/
 .ruff_cache/
 /.cache/classifier/
+# Machine-local assistant permissions and preferences.
+/.claude/settings.local.json
 *.py[codz]
 *$py.class
 
@@ -47,13 +49,29 @@ all_predicted_results.json
 /research_results/**/schema_preflight.jsonl
 /research_results/**/invalid_outputs.jsonl
 /research_results/**/transport_events.jsonl
+/research_results/**/resumption_events.jsonl
 /research_results/**/monitor_stop.json
 /research_results/**/suite_status.json
 /research_results/**/key_usage_snapshot.json
 # Локальные инструменты и результаты проверки перед коммитом.
 /.cache/precommit_review/
+/.cache/prompt_optimizer/
+/.cache/prompt_comparison/
+/.cache/prompt_comparison_state/
+/.cache/textgrad_logs/
+/.cache/prompt_comparison_test_output.txt
+# Optimizer-internal caches/traces stay local; manifests and reports remain tracked.
+/research_results/prompt_optimization_comparison_*/jobs/**/gepa/
+/research_results/prompt_optimization_comparison_*/jobs/**/mipro/
+/research_results/prompt_optimization_comparison_*/jobs/**/teacher_cache.json
+/research_results/prompt_optimization_comparison_*/jobs/**/invalid_candidates.jsonl
+/research_results/prompt_optimization_comparison_*/jobs/**/textgrad_steps.jsonl
+/research_results/prompt_optimization_comparison_*/recoveries/disk_recovery_*/original/
+# GEPA's local resume state and detailed optimizer logs.
+/research_results/prompt_optimization_*/gepa/
 
-# local/ скрипты — трекаем (убрана строка local/*)
+# PowerShell launchers stay local; shared launchers use Bash/Python.
+*.ps1
 
 # hints/ — автогенерируемые кэши FEAT_26, не нужны в git
 hints/

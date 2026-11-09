@@ -1,0 +1,85 @@
+{
+  "created_at_utc": "2026-11-05T07:40:46.368810+00:00",
+  "status": "bounded_sql_pilot_completed_keep_original",
+  "manifest_sha256": "7a4145ba27a23a46055cee9a1462e79e956f906339f29172a9b9bfffbb4ed8f8",
+  "selected_prompt": "original_seed",
+  "seed_inner_val_correct": 17,
+  "inner_val_questions": 24,
+  "proposals": [
+    {
+      "proposal": 1,
+      "candidate_id": "9a154bd020510a886927aba482aa56181999259ecede83c45540c552a285a47d",
+      "guard_passed": true,
+      "inner_val_saved": 0,
+      "inner_val_correct": null,
+      "rescued": [],
+      "harmed": []
+    },
+    {
+      "proposal": 2,
+      "candidate_id": "68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823",
+      "guard_passed": true,
+      "inner_val_saved": 24,
+      "inner_val_correct": 16.0,
+      "rescued": [],
+      "harmed": [
+        "744"
+      ]
+    },
+    {
+      "proposal": 3,
+      "candidate_id": "ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228",
+      "guard_passed": true,
+      "inner_val_saved": 24,
+      "inner_val_correct": 16.0,
+      "rescued": [],
+      "harmed": [
+        "744"
+      ]
+    },
+    {
+      "proposal": 4,
+      "candidate_id": "32fd0de5af290d07900c5fa144abcd4c179932bd9f284a38db97f01be86407d5",
+      "guard_passed": true,
+      "inner_val_saved": 0,
+      "inner_val_correct": null,
+      "rescued": [],
+      "harmed": []
+    }
+  ],
+  "confirmation": {
+    "status": "not_required",
+    "reason": "Selected instruction exactly equals original seed",
+    "external_dev_used": false
+  },
+  "usage": {
+    "task_calls": 192,
+    "teacher_calls": 4,
+    "tokens": 399905,
+    "examples": 96,
+    "active_seconds": 823.4849999999997,
+    "pending": {},
+    "prompt_tokens": 373923,
+    "completion_tokens": 25982,
+    "task_tokens": 370462,
+    "teacher_tokens": 29443
+  },
+  "combined_v1_v2_tokens": 594174,
+  "combined_v1_v2_calls": 284,
+  "limitations": [
+    "Four reflections with the same DeepSeek teacher; two inner-validation DBs; one pass",
+    "No claim of GEPA ineffectiveness in general; other teacher, few-shot and ambiguity prompts untested"
+  ],
+  "next_step": "Keep prompt and refresh configuration utility dataset before classifier improvement",
+  "source_files_sha256": {
+    "experiment.json": "441bec06cde2b265a9fc398e28ec392c80285e2bae626243cc13e31ed4e79761",
+    "selection.json": "caa21f6368a7a92f33d60315553f0170d36df89f47538232c09b7aa641efc1f3",
+    "gepa_result.json": "281f1e64739d98b336eaa72127357fc77f175a842c4c4b76d98a6e5fb3ca45fe",
+    "evaluations.json": "150104843296d47dcd5765b372fa467cd7b7c42eb40e4377596b95456336e6b9",
+    "candidates.json": "9edf5818907b6231a3d2992c452c4dce116e4e1019710f6229b6b8efb72a8704",
+    "search/metadata.json": "e9f87dd51cf558bc10ce9f9a7a6e011284b5dcb897f72dcc8194b3c0d6ff8b45",
+    "search/budget.json": "34969a5f6994b4a90d2c9ff230f0cc930f37fb896e944717b7debb1169e9c215",
+    "search/raw_responses.jsonl": "bbd2df9d1db1585ab7da7cc19fa6a36479ad1f6ab93cb428dfe9f92104c05cec"
+  },
+  "sha256": "76da29013f4e352c75f5ed9239b4ca7dfb5d44a51aa4b16bab72f181dac1e62e"
+}

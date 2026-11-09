@@ -1,0 +1,18 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "job": {
+    "name": "sql__textgrad_zero__r2",
+    "slot": "sql",
+    "method": "textgrad_zero",
+    "seed": 43
+  },
+  "candidate": {
+    "instruction": "2. Projection discipline and predicate construction. The SELECT list must contain exactly the answer-bearing outputs the question names or clearly implies, and nothing else. \"Exactly\" governs which columns and aggregates appear in the projection; it does not restrict how filters, joins, or supporting logic are expressed. Separate the two concerns: (a) answer-bearing outputs belong in SELECT; (b) supporting expressions belong in WHERE, JOIN, or CASE and must not be promoted into the projection unless the question asks for them. For each SELECT item, ask whether the question names or implies it; if not, remove it. Extra output columns are acceptable only when the question explicitly requests them (for example, asking to rank by a value implies showing both the rank and the ordering key). Use DISTINCT only when duplicates are semantically possible, never as a default hedge.\n\nResolve enumerated or categorical filters through their dimension tables by joining on the key and matching the text label, rather than hard-coding surrogate key literals; ID-to-label mappings are not guaranteed and are a common source of wrong answers. For arithmetic and ratio questions, compute the numerator and denominator each over the correct filtered subset, using conditional aggregation or filtered aggregates as needed, and guard the divisor against zero where appropriate. Expressing a filter through a joined dimension table is not a violation of \"exactly.\" For each WHERE or JOIN predicate, ask whether it correctly encodes a stated filter using the appropriate dimension table.",
+    "demos": []
+  },
+  "inner_accuracy": 0.5735294117647058,
+  "complete_candidates": 10,
+  "external_dev_used": false,
+  "selected_at_utc": "2026-11-06T18:53:20.723141+00:00",
+  "sha256": "83aac822b48637a0bca17c1f5cb4e1def8668f357671179751331d7f4b880406"
+}

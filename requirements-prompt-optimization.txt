@@ -1,0 +1,2 @@
+# Install with --no-deps --target .cache/prompt_optimizer; leave .venv unchanged.
+gepa==0.0.27

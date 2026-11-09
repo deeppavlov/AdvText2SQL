@@ -1,0 +1,18 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "job": {
+    "name": "sql__gepa_zero__r3",
+    "slot": "sql",
+    "method": "gepa_zero",
+    "seed": 44
+  },
+  "candidate": {
+    "instruction": "2. SELECT only the columns explicitly requested by the question. Every extra or missing column is a wrong answer.\n   - Do not add id, names, or any other fields \"for context\".\n   - Do not concatenate columns with ||; if first_name and last_name are needed, select them separately.\n   - Count columns: the answer must match exactly in number and names.\n   - If the question asks for a single computed value (a difference, total, ratio, count, etc.), return exactly one expression producing that value; do not also return the intermediate components as separate columns.\n\n3. Verify every column name against the schema for the specific table — do not use a column from one table through another table's alias.\n\n4. Use LIKE when the query concerns proper names, surnames, or department names.\n   Always use LIKE when the query concerns values from a table that are not explicitly present in the prompt. Words in the table may appear in different grammatical cases, with or without quotes; account for this.\n   When matching a literal value against a text column, prefer case-insensitive matching (ILIKE) so that capitalization differences do not cause misses.\n\n5. DISTINCT rules:\n   - DISTINCT goes only immediately after SELECT: \"SELECT DISTINCT col\" is correct.\n   - Never write DISTINCT after a comma: \"SELECT col1, DISTINCT col2\" is invalid SQL.\n   - If SELECT DISTINCT is used with ORDER BY, every ORDER BY column must be in SELECT.\n   - If sorting by a computed expression not in SELECT, use GROUP BY instead of DISTINCT, or include the expression in SELECT.\n\n6. Alias check: every alias used in SELECT/WHERE/ORDER BY/GROUP BY must be declared in FROM or JOIN of the same SELECT block. An alias from an outer query is not available inside a subquery and vice versa. Before finishing, check every alias.\n\n7. Do not wrap DATE/TIMESTAMP columns in TO_DATE(). If the column is already DATE, use it directly or EXTRACT(YEAR FROM col). Apply TO_DATE() only to text string literals.\n\n8. ROUND(x, n) works only with NUMERIC. If x is REAL/FLOAT/double precision, write ROUND(x::NUMERIC, n).\n\n9. NULL ordering in ORDER BY: PostgreSQL and SQLite behave oppositely. Always specify explicitly:\n   - ORDER BY col DESC → write ORDER BY col DESC NULLS LAST\n   - ORDER BY col ASC → write ORDER BY col ASC NULLS FIRST",
+    "demos": []
+  },
+  "inner_accuracy": 0.5441176470588235,
+  "complete_candidates": 7,
+  "external_dev_used": false,
+  "selected_at_utc": "2026-11-06T21:34:29.935142+00:00",
+  "sha256": "68862c33c654f3b7cff61d33a84cc44edd640b829735b17b1f60890fc065771a"
+}

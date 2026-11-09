@@ -1,0 +1,138 @@
+{
+  "status": "three_mipro_ambiguity_searches_completed_dev_pending",
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "created_at_utc": "2026-11-07T17:15:15.055285+00:00",
+  "external_dev_used": false,
+  "questions": 60,
+  "ambiguous": 19,
+  "rows": [
+    {
+      "repeat": 1,
+      "seed": 42,
+      "original": {
+        "correct": 50.0,
+        "accuracy": 0.8333333333333334,
+        "tp": 13,
+        "tn": 37,
+        "fp": 4,
+        "fn": 6,
+        "f1": 0.7222222222222222,
+        "recall": 0.6842105263157895,
+        "precision": 0.7647058823529411,
+        "errors": 0
+      },
+      "selected": {
+        "correct": 57.0,
+        "accuracy": 0.95,
+        "tp": 16,
+        "tn": 41,
+        "fp": 0,
+        "fn": 3,
+        "f1": 0.9142857142857143,
+        "recall": 0.8421052631578947,
+        "precision": 1.0,
+        "errors": 0
+      },
+      "delta_pp": 11.666666666666659,
+      "rescued": 7,
+      "harmed": 0,
+      "candidate_id": "c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945",
+      "selected_original": false,
+      "tokens": 926593,
+      "active_seconds": 2253.625
+    },
+    {
+      "repeat": 2,
+      "seed": 43,
+      "original": {
+        "correct": 50.0,
+        "accuracy": 0.8333333333333334,
+        "tp": 13,
+        "tn": 37,
+        "fp": 4,
+        "fn": 6,
+        "f1": 0.7222222222222222,
+        "recall": 0.6842105263157895,
+        "precision": 0.7647058823529411,
+        "errors": 0
+      },
+      "selected": {
+        "correct": 54.0,
+        "accuracy": 0.9,
+        "tp": 16,
+        "tn": 38,
+        "fp": 3,
+        "fn": 3,
+        "f1": 0.8421052631578947,
+        "recall": 0.8421052631578947,
+        "precision": 0.8421052631578947,
+        "errors": 0
+      },
+      "delta_pp": 6.666666666666665,
+      "rescued": 8,
+      "harmed": 4,
+      "candidate_id": "ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef",
+      "selected_original": false,
+      "tokens": 852763,
+      "active_seconds": 2031.875
+    },
+    {
+      "repeat": 3,
+      "seed": 44,
+      "original": {
+        "correct": 50.0,
+        "accuracy": 0.8333333333333334,
+        "tp": 12,
+        "tn": 38,
+        "fp": 3,
+        "fn": 7,
+        "f1": 0.7058823529411765,
+        "recall": 0.631578947368421,
+        "precision": 0.8,
+        "errors": 0
+      },
+      "selected": {
+        "correct": 50.0,
+        "accuracy": 0.8333333333333334,
+        "tp": 12,
+        "tn": 38,
+        "fp": 3,
+        "fn": 7,
+        "f1": 0.7058823529411765,
+        "recall": 0.631578947368421,
+        "precision": 0.8,
+        "errors": 0
+      },
+      "delta_pp": 0.0,
+      "rescued": 0,
+      "harmed": 0,
+      "candidate_id": "b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af",
+      "selected_original": true,
+      "tokens": 851647,
+      "active_seconds": 2062.8280000000086
+    }
+  ],
+  "mean_accuracy": 0.8944444444444445,
+  "sd_pp": 5.853140973807073,
+  "mean_paired_delta_pp": 6.111111111111108,
+  "measured_tokens": 2631003,
+  "source_files_sha256": {
+    "jobs\\ambiguity__mipro_zero__r1\\evaluations.json": "71a85ff0c06a122e72e0acc89ed4c2f411a8f75eed69afb38d363d37ac013aff",
+    "jobs\\ambiguity__mipro_zero__r1\\selection.json": "8895088d7913d3e7bcdbb0ee230cc14f257be0d5e5c6dbf8d3579ea9eb8b4831",
+    "jobs\\ambiguity__mipro_zero__r1\\search\\metadata.json": "3688b08a8654be9554bf083bc459b210f4bc453bcf7c3a7f4651cd63b481c55a",
+    "jobs\\ambiguity__mipro_zero__r1\\search\\budget.json": "7b6e941c2e1d8b8b16a0e48c9ef8e9f3f6c97e8ab7dd194ee42c2056ad47dacb",
+    "jobs\\ambiguity__mipro_zero__r2\\evaluations.json": "7118a33f3e0e03bb67aeac79a5354c766381e6db062feadc875a71d66e3e3cfd",
+    "jobs\\ambiguity__mipro_zero__r2\\selection.json": "e97d02c903eee92198ee9559bc93ae93d7ce6e441cff4204dc9bd607fd6f6bcf",
+    "jobs\\ambiguity__mipro_zero__r2\\search\\metadata.json": "f28ee25ab5182071354308a0738fb683e4ad97491b0c28de8af0bd00cdf77548",
+    "jobs\\ambiguity__mipro_zero__r2\\search\\budget.json": "52628a840a80edbc4f32ff9c6cb57df55ae34dc83b562a67cfa23fad9991b7c9",
+    "jobs\\ambiguity__mipro_zero__r3\\evaluations.json": "eaf1f029887ceb124d8d2749ae4cb535d3cb26edbe4ef16e3516e694bc37da2d",
+    "jobs\\ambiguity__mipro_zero__r3\\selection.json": "2e29d43a2069d52684c45bc75f058851370bbd2e3402d7bd68203af788e37289",
+    "jobs\\ambiguity__mipro_zero__r3\\search\\metadata.json": "8c97f1b350f336e2244815eeb31ff0b012479bb190b2c9c5c2b66ff70fdd5567",
+    "jobs\\ambiguity__mipro_zero__r3\\search\\budget.json": "460ee981f86b9a59ddf5162d20da4dd311dce83b6e2cfbf7a8db614b5e0b9908"
+  },
+  "limitations": [
+    "Adaptive inner-val selection; not external dev results",
+    "GEPA/TextGrad/MIPRO-few have only one Ambrosia search repeat",
+    "No guarantee of improvement for each optimizer seed"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "recovered_questions": 53,
+  "known_api_calls": 106,
+  "known_tokens": 189723,
+  "unknown_budget_tokens": 616722,
+  "unknown_budget_calls": 6,
+  "next_question": "1323",
+  "script_sha256": "87e68f2cdc68f5c04568f496dc01c2480d69e5b09be3003293b1a152fe2a9ba5",
+  "original_sha256": {
+    "budget.json": "62f84a4af164fe017ea164d6e11a9f4426fe61398a13f93ecd4ff4b461eeef80",
+    "jobs/sql__mipro_few__r1/candidates.json": "2c8b84f6b624896a8d24f48ab771057c92e566e8c9840632a0b6ecbe487a87bf",
+    "jobs/sql__mipro_few__r1/evaluations.json": "be63226d4afdd64abca022dd3c56b4ca707a34a4c185fca510a5e2b919f886b7",
+    "jobs/sql__mipro_few__r1/search/budget.json": "12916e9816083e2aeac5ff0beb4aa8b73be11e591328bf4484c6ef491534d8c7",
+    "jobs/sql__mipro_few__r1/search/metadata.json": "4889281f57afb7f1d957a8ddf558d547a0eb3b257a5577ff6d1017341d2e8af8",
+    "jobs/sql__mipro_few__r1/search/raw_responses.jsonl": "37e05ffedac4cd355ded21934a5b82891ec4db26e50ae57168fd4621e51a3b4f"
+  },
+  "policy": "Original frozen runtime and completed jobs unchanged; scores restored only from original score log"
+}

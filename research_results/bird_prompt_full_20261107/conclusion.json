@@ -1,0 +1,38 @@
+{
+  "manifest_sha256": "0b63afcd0a120697118486777c198d074aa51187c236713c759c37fd0ab06ad9",
+  "status": "completed_descriptive",
+  "fixed_candidate": "fb9b0607f7f656a62c4e58482c6f638268ca4fab9fbabe097dcfb9953b523ffb",
+  "rows": [
+    {
+      "arm": "original",
+      "candidate_id": "1fa70b93c3b3e1f90aa4b6a10d32d7af0b1ff7e36443e5a0fb1ffd7a128aab56",
+      "saved": 241,
+      "correct": 126.0,
+      "ex": 0.5228215767634855,
+      "delta": 0.0,
+      "rescued": 0,
+      "harmed": 0,
+      "generation_errors": 4,
+      "false_ambiguity": 0,
+      "sql_errors": 2,
+      "question_tokens": 1601919
+    },
+    {
+      "arm": "selected_sql",
+      "candidate_id": "fb9b0607f7f656a62c4e58482c6f638268ca4fab9fbabe097dcfb9953b523ffb",
+      "saved": 241,
+      "correct": 132.0,
+      "ex": 0.5477178423236515,
+      "delta": 0.024896265560165998,
+      "rescued": 17,
+      "harmed": 11,
+      "generation_errors": 0,
+      "false_ambiguity": 0,
+      "sql_errors": 0,
+      "question_tokens": 1619152
+    }
+  ],
+  "selection_on_full": false,
+  "deployed": false,
+  "independent_test": false
+}

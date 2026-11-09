@@ -1,0 +1,1154 @@
+{
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:724": {
+    "question_id": "724",
+    "db_id": "superhero",
+    "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"colour\" ec ON s.\"eye_colour_id\" = ec.\"id\"\nJOIN \"colour\" hc ON s.\"hair_colour_id\" = hc.\"id\"\nWHERE ec.\"colour\" = 'Blue'\n  AND hc.\"colour\" = 'Blond';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3584,
+      "completion_tokens": 201
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:798": {
+    "question_id": "798",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT p.\"publisher_name\"\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE s.\"superhero_name\" IN ('Hawkman', 'Karate Kid', 'Speedy');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3556,
+      "completion_tokens": 211
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:792": {
+    "question_id": "792",
+    "db_id": "superhero",
+    "prediction": "SELECT sp.\"power_name\"\nFROM \"superhero\" s\nJOIN \"hero_power\" hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp ON sp.\"id\" = hp.\"power_id\"\nWHERE s.\"superhero_name\" LIKE 'Abomination';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3494,
+      "completion_tokens": 180
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:772": {
+    "question_id": "772",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    ec.\"colour\" AS eye_colour,\n    hc.\"colour\" AS hair_colour,\n    sc.\"colour\" AS skin_colour\nFROM \"superhero\" s\nJOIN \"gender\" g ON g.\"id\" = s.\"gender_id\"\nJOIN \"publisher\" p ON p.\"id\" = s.\"publisher_id\"\nLEFT JOIN \"colour\" ec ON ec.\"id\" = s.\"eye_colour_id\"\nLEFT JOIN \"colour\" hc ON hc.\"id\" = s.\"hair_colour_id\"\nLEFT JOIN \"colour\" sc ON sc.\"id\" = s.\"skin_colour_id\"\nWHERE g.\"gender\" = 'Female'\n  AND p.\"publisher_name\" = 'Dark Horse Comics';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3580,
+      "completion_tokens": 338
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:827": {
+    "question_id": "827",
+    "db_id": "superhero",
+    "prediction": "SELECT AVG(s.\"height_cm\") AS average_height\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"race\" r ON s.\"race_id\" = r.\"id\"\nWHERE p.\"publisher_name\" = 'Dark Horse Comics'\n  AND r.\"race\" <> 'Human';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3534,
+      "completion_tokens": 219
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:828": {
+    "question_id": "828",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS \"count\"\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE a.\"attribute_name\" = 'Speed'\n  AND ha.\"attribute_value\" = 100;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3484,
+      "completion_tokens": 238
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:744": {
+    "question_id": "744",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END)\n    - SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS difference\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE p.\"publisher_name\" IN ('Marvel Comics', 'DC Comics')",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3588,
+      "completion_tokens": 230
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:723": {
+    "question_id": "723",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS count\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nJOIN \"hero_power\" hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp ON sp.\"id\" = hp.\"power_id\"\nWHERE c.\"colour\" = 'Blue'\n  AND sp.\"power_name\" = 'Agility';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3554,
+      "completion_tokens": 264
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:747": {
+    "question_id": "747",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(*) AS total_superheroes_without_full_name\nFROM \"superhero\" AS s\nWHERE s.\"full_name\" IS NULL;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3490,
+      "completion_tokens": 168
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:818": {
+    "question_id": "818",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    (SUM(CASE WHEN g.\"id\" = 2 THEN 1 ELSE 0 END)::numeric\n     / COUNT(a.\"id\")::numeric) * 100.0 AS percentage\nFROM \"superhero\" s\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nJOIN \"gender\" g ON s.\"gender_id\" = g.\"id\"\nWHERE a.\"id\" = 2;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3584,
+      "completion_tokens": 235
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:825": {
+    "question_id": "825",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT g.\"gender\"\nFROM \"superhero\" s\nJOIN \"hero_power\" hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp ON sp.\"id\" = hp.\"power_id\"\nJOIN \"gender\" g ON g.\"id\" = s.\"gender_id\"\nWHERE sp.\"power_name\" LIKE '%Phoenix Force%';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3498,
+      "completion_tokens": 234
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:781": {
+    "question_id": "781",
+    "db_id": "superhero",
+    "prediction": "SELECT s.\"height_cm\"\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nWHERE c.\"colour\" = 'Amber';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3532,
+      "completion_tokens": 183
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3362,
+      "completion_tokens": 155
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND b.\"bond_type\" = '-'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3152,
+      "completion_tokens": 281
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'na'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3108,
+      "completion_tokens": 204
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_type\" = '='\nORDER BY a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3080,
+      "completion_tokens": 213
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3172,
+      "completion_tokens": 212
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS \"carcinogenic_molecules_with_nitrogen\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'n';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3094,
+      "completion_tokens": 246
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT\n    m.\"molecule_id\",\n    a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b\n    ON b.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"atom\" a\n    ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3344,
+      "completion_tokens": 262
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3164,
+      "completion_tokens": 246
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    a.\"atom_id\",\n    (SELECT COUNT(DISTINCT b.\"bond_type\")\n     FROM \"bond\" b\n     WHERE b.\"molecule_id\" = m.\"molecule_id\") AS bond_type_count\nFROM \"atom\" a\nJOIN \"molecule\" m ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE m.\"label\" LIKE '%TR346%'\nORDER BY a.\"atom_id\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3090,
+      "completion_tokens": 320
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    m.\"label\",\n    SUM(CASE WHEN LOWER(a.\"element\") = 'h' THEN 1 ELSE 0 END)::NUMERIC\n        / COUNT(a.\"atom_id\") AS ratio\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\";",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3182,
+      "completion_tokens": 240
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    b.\"bond_type\",\n    b.\"bond_id\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (SUBSTR(c.\"atom_id\", 7, 2))::int = 45\n   OR (SUBSTR(c.\"atom_id2\", 7, 2))::int = 45",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3180,
+      "completion_tokens": 280
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") AS connection_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3100,
+      "completion_tokens": 205
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\",\n    mj.\"major_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE e.\"cost\" > 100\nORDER BY m.\"first_name\" ASC NULLS FIRST, m.\"last_name\" ASC NULLS FIRST, mj.\"major_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3762,
+      "completion_tokens": 317
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    SUM(CASE WHEN e.\"event_name\" = 'Yearly Kickoff' THEN b.\"amount\" ELSE 0 END)::NUMERIC\n    /\n    NULLIF(SUM(CASE WHEN e.\"event_name\" = 'October Meeting' THEN b.\"amount\" ELSE 0 END), 0)::NUMERIC\n    AS ratio\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"category\" = 'Advertisement'\n  AND e.\"event_name\" IN ('Yearly Kickoff', 'October Meeting');",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3782,
+      "completion_tokens": 307
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:639": {
+    "question_id": "639",
+    "db_id": "codebase_community",
+    "prediction": "SELECT\n    COUNT(CASE WHEN LOWER(p.\"tags\") LIKE '%<r>%' THEN p.\"id\" END)::NUMERIC\n    / NULLIF(COUNT(p.\"id\"), 0) * 100 AS percentage\nFROM \"posts\" p\nJOIN \"users\" u ON u.\"id\" = p.\"owneruserid\"\nWHERE u.\"displayname\" LIKE 'Community';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4236,
+      "completion_tokens": 243
+    }
+  },
+  "search:9a154bd020510a886927aba482aa56181999259ecede83c45540c552a285a47d:bird:1449": {
+    "question_id": "1449",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\", mj.\"major_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE e.\"cost\" > 100;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3976,
+      "completion_tokens": 251
+    }
+  },
+  "search:9a154bd020510a886927aba482aa56181999259ecede83c45540c552a285a47d:bird:1359": {
+    "question_id": "1359",
+    "db_id": "student_club",
+    "prediction": "SELECT\n    \n    SUM(CASE WHEN LOWER(e.\"event_name\") LIKE LOWER('%Yearly Kickoff%') THEN b.\"amount\" ELSE 0 END)::NUMERIC\n    /\n    \n    NULLIF(SUM(CASE WHEN LOWER(e.\"event_name\") LIKE LOWER('%October Meeting%') THEN b.\"amount\" ELSE 0 END), 0)::NUMERIC\n    AS ratio\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE LOWER(b.\"category\") = LOWER('Advertisement')\n  AND (LOWER(e.\"event_name\") LIKE LOWER('%Yearly Kickoff%')\n       OR LOWER(e.\"event_name\") LIKE LOWER('%October Meeting%'))",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3996,
+      "completion_tokens": 320
+    }
+  },
+  "search:9a154bd020510a886927aba482aa56181999259ecede83c45540c552a285a47d:bird:639": {
+    "question_id": "639",
+    "db_id": "codebase_community",
+    "prediction": "SELECT\n  \n  COUNT(CASE WHEN LOWER(p.\"tags\") LIKE '%<r>%' THEN 1 END)::NUMERIC\n  / NULLIF(COUNT(p.\"id\"), 0) * 100 AS percentage\nFROM \"posts\" p\nJOIN \"users\" u ON u.\"id\" = p.\"owneruserid\"\nWHERE LOWER(u.\"displayname\") = 'community';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4450,
+      "completion_tokens": 241
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" NOT LIKE '%fundrais%'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3740,
+      "completion_tokens": 247
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(e.\"cost\") AS average_cost\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE m.\"first_name\" LIKE '%Elijah%'\n  AND m.\"last_name\" LIKE '%Allen%'\n  AND EXTRACT(MONTH FROM e.\"expense_date\") IN (9, 10);",
+    "score": 0.0,
+    "error": "postgresql:42883:UndefinedFunction",
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3818,
+      "completion_tokens": 270
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:701": {
+    "question_id": "701",
+    "db_id": "codebase_community",
+    "prediction": "WITH top_user AS (\n    SELECT u.\"id\"\n    FROM \"users\" u\n    ORDER BY u.\"reputation\" DESC NULLS LAST\n    LIMIT 1\n),\n\nstats AS (\n    SELECT\n        COUNT(p.\"id\") AS total_posts,\n        COUNT(CASE WHEN p.\"score\" > 50 THEN 1 END) AS posts_above_50\n    FROM \"posts\" p\n    JOIN top_user tu ON p.\"owneruserid\" = tu.\"id\"\n)\nSELECT\n    (stats.posts_above_50::numeric / NULLIF(stats.total_posts, 0)) * 100 AS percentage\nFROM stats;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4250,
+      "completion_tokens": 326
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:1323": {
+    "question_id": "1323",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" NOT LIKE '%fundrais%'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4005,
+      "completion_tokens": 256
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:1339": {
+    "question_id": "1339",
+    "db_id": "student_club",
+    "prediction": "SELECT AVG(e.\"cost\") AS avg_cost\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE m.\"first_name\" LIKE '%Elijah%'\n  AND m.\"last_name\" LIKE '%Allen%'\n  AND (\n    SUBSTR(e.\"expense_date\", 6, 2) = '09'\n    OR SUBSTR(e.\"expense_date\", 6, 2) = '10'\n  );",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4083,
+      "completion_tokens": 239
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:701": {
+    "question_id": "701",
+    "db_id": "codebase_community",
+    "prediction": "WITH top_user AS (\n    SELECT u.\"id\"\n    FROM \"users\" u\n    ORDER BY u.\"reputation\" DESC NULLS LAST\n    LIMIT 1\n)\n\nSELECT\n    (COUNT(*) FILTER (WHERE p.\"score\" > 50))::NUMERIC\n    / NULLIF(COUNT(*), 0)::NUMERIC * 100 AS percentage\nFROM \"posts\" p\nJOIN top_user tu ON p.\"owneruserid\" = tu.\"id\";",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4515,
+      "completion_tokens": 236
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:724": {
+    "question_id": "724",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"colour\" ec ON s.\"eye_colour_id\" = ec.\"id\"\nJOIN \"colour\" hc ON s.\"hair_colour_id\" = hc.\"id\"\nWHERE ec.\"colour\" = 'Blue'\n  AND hc.\"colour\" = 'Blond';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3849,
+      "completion_tokens": 189
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:798": {
+    "question_id": "798",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT p.\"publisher_name\"\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE s.\"superhero_name\" LIKE 'Hawkman'\n   OR s.\"superhero_name\" LIKE 'Karate Kid'\n   OR s.\"superhero_name\" LIKE 'Speedy';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3821,
+      "completion_tokens": 197
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:792": {
+    "question_id": "792",
+    "db_id": "superhero",
+    "prediction": "SELECT sp.\"power_name\"\nFROM \"superhero\" s\nJOIN \"hero_power\" hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp ON sp.\"id\" = hp.\"power_id\"\nWHERE s.\"superhero_name\" LIKE 'Abomination';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3759,
+      "completion_tokens": 150
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:772": {
+    "question_id": "772",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    ec.\"colour\" AS eye_colour,\n    hc.\"colour\" AS hair_colour,\n    sc.\"colour\" AS skin_colour\nFROM \"superhero\" s\nJOIN \"gender\" g ON g.\"id\" = s.\"gender_id\"\nJOIN \"publisher\" p ON p.\"id\" = s.\"publisher_id\"\nJOIN \"colour\" ec ON ec.\"id\" = s.\"eye_colour_id\"\nJOIN \"colour\" hc ON hc.\"id\" = s.\"hair_colour_id\"\nJOIN \"colour\" sc ON sc.\"id\" = s.\"skin_colour_id\"\nWHERE g.\"gender\" = 'Female'\n  AND p.\"publisher_name\" LIKE 'Dark Horse Comics';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3845,
+      "completion_tokens": 315
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:827": {
+    "question_id": "827",
+    "db_id": "superhero",
+    "prediction": "SELECT AVG(s.\"height_cm\") AS average_height\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"race\" r ON s.\"race_id\" = r.\"id\"\nWHERE p.\"publisher_name\" = 'Dark Horse Comics'\n  AND r.\"race\" <> 'Human';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3799,
+      "completion_tokens": 226
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:828": {
+    "question_id": "828",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS superhero_count\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE a.\"attribute_name\" = 'Speed'\n  AND ha.\"attribute_value\" = 100;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3749,
+      "completion_tokens": 253
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:744": {
+    "question_id": "744",
+    "db_id": "superhero",
+    "prediction": "SELECT\n  SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END) AS marvel_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS dc_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END)\n    - SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS difference\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE p.\"publisher_name\" IN ('Marvel Comics', 'DC Comics')",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3853,
+      "completion_tokens": 281
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:723": {
+    "question_id": "723",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS count\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nJOIN \"hero_power\" hp ON s.\"id\" = hp.\"hero_id\"\nJOIN \"superpower\" sp ON hp.\"power_id\" = sp.\"id\"\nWHERE c.\"colour\" = 'Blue'\n  AND sp.\"power_name\" = 'Agility';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3819,
+      "completion_tokens": 231
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:747": {
+    "question_id": "747",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(*) AS total_superheroes_without_full_name\nFROM \"superhero\" AS s\nWHERE s.\"full_name\" IS NULL;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3755,
+      "completion_tokens": 145
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:818": {
+    "question_id": "818",
+    "db_id": "superhero",
+    "prediction": "SELECT\n  \n  (SUM(CASE WHEN g.\"id\" = 2 THEN 1 ELSE 0 END)::numeric\n   / NULLIF(COUNT(*), 0)::numeric) * 100.0 AS percentage\nFROM \"superhero\" s\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nJOIN \"gender\" g ON s.\"gender_id\" = g.\"id\"\nWHERE a.\"id\" = 2;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3849,
+      "completion_tokens": 261
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:825": {
+    "question_id": "825",
+    "db_id": "superhero",
+    "prediction": "SELECT g.\"gender\"\nFROM \"superhero\" s\nJOIN \"hero_power\" hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp ON sp.\"id\" = hp.\"power_id\"\nJOIN \"gender\" g ON g.\"id\" = s.\"gender_id\"\nWHERE sp.\"power_name\" LIKE '%Phoenix Force%';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3763,
+      "completion_tokens": 215
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:781": {
+    "question_id": "781",
+    "db_id": "superhero",
+    "prediction": "SELECT s.\"height_cm\"\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nWHERE c.\"colour\" = 'Amber';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3797,
+      "completion_tokens": 157
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3627,
+      "completion_tokens": 108
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '-'\n  AND m.\"label\" = '-'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3417,
+      "completion_tokens": 223
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") \nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'na'\n  AND m.\"label\" = '-'\n  AND EXISTS (\n    SELECT 1\n    FROM \"atom\" a2\n    WHERE a2.\"molecule_id\" = m.\"molecule_id\"\n      AND LOWER(a2.\"element\") = 'na'\n  );",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3373,
+      "completion_tokens": 275
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '=';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3345,
+      "completion_tokens": 170
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3437,
+      "completion_tokens": 242
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND LOWER(a.\"element\") = 'n';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3359,
+      "completion_tokens": 203
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\", a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3609,
+      "completion_tokens": 281
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3429,
+      "completion_tokens": 226
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"atom_id\", COUNT(DISTINCT b.\"bond_type\") AS bond_type_count\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nLEFT JOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" LIKE '%TR346%'\nGROUP BY a.\"atom_id\";",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3355,
+      "completion_tokens": 226
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n  m.\"label\",\n  SUM(CASE WHEN LOWER(a.\"element\") = 'h' THEN 1 ELSE 0 END)::NUMERIC\n    / NULLIF(COUNT(a.\"atom_id\"), 0) AS ratio\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\";",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3447,
+      "completion_tokens": 176
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    b.\"bond_type\",\n    b.\"bond_id\"\nFROM \"bond\" b\nJOIN \"connected\" c ON c.\"bond_id\" = b.\"bond_id\"\nWHERE (SUBSTR(c.\"atom_id\", 7, 2)::int = 45)\n   OR (SUBSTR(c.\"atom_id2\", 7, 2)::int = 45);",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3445,
+      "completion_tokens": 255
+    }
+  },
+  "search:68c332b6bd7f6ca4e1ea2036cbf18ac13990c19f23a8c638e722e87bc6fe5823:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") \nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\' ;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3365,
+      "completion_tokens": 143
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:592": {
+    "question_id": "592",
+    "db_id": "codebase_community",
+    "prediction": "SELECT COUNT(*) AS user_count\nFROM (\n    SELECT \"userid\"\n    FROM \"badges\"\n    GROUP BY \"userid\"\n    HAVING COUNT(\"name\") > 5\n) AS b;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4184,
+      "completion_tokens": 193
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:694": {
+    "question_id": "694",
+    "db_id": "codebase_community",
+    "prediction": "SELECT\n    c.\"text\",\n    c.\"userdisplayname\"\nFROM \"comments\" c\nJOIN \"posts\" p\n    ON p.\"id\" = c.\"postid\"\nWHERE p.\"title\" LIKE '%Analysing wind data with R%'\nORDER BY c.\"creationdate\" DESC NULLS LAST\nLIMIT 10;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4210,
+      "completion_tokens": 233
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"first_name\",\n    m.\"last_name\",\n    a.\"link_to_event\"\nFROM \"member\" m\nJOIN \"expense\" e\n    ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a\n    ON a.\"link_to_member\" = m.\"member_id\"\nWHERE LOWER(e.\"approved\") = 'true'\n  AND e.\"expense_date\"::date BETWEEN DATE '2019-01-10' AND DATE '2019-11-19';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3816,
+      "completion_tokens": 335
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:592": {
+    "question_id": "592",
+    "db_id": "codebase_community",
+    "prediction": "SELECT COUNT(*) AS user_count\nFROM (\n    SELECT \"userid\"\n    FROM \"badges\"\n    GROUP BY \"userid\"\n    HAVING COUNT(\"name\") > 5\n) AS b;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4294,
+      "completion_tokens": 186
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:694": {
+    "question_id": "694",
+    "db_id": "codebase_community",
+    "prediction": "SELECT\n    c.\"text\" AS comment_text,\n    c.\"userdisplayname\" AS user_display_name\nFROM \"comments\" c\nJOIN \"posts\" p\n    ON p.\"id\" = c.\"postid\"\nWHERE LOWER(p.\"title\") = LOWER('Analysing wind data with R')\nORDER BY c.\"creationdate\" DESC NULLS LAST\nLIMIT 10;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4320,
+      "completion_tokens": 258
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:1437": {
+    "question_id": "1437",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT\n    m.\"member_id\",\n    a.\"link_to_event\"\nFROM \"member\" m\nJOIN \"expense\" e\n    ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a\n    ON a.\"link_to_member\" = m.\"member_id\"\nWHERE LOWER(e.\"approved\") = LOWER('true')\n  AND e.\"expense_date\"::date BETWEEN '2019-01-10'::date AND '2019-11-19'::date\nORDER BY m.\"member_id\" ASC NULLS FIRST, a.\"link_to_event\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3926,
+      "completion_tokens": 329
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:724": {
+    "question_id": "724",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT\n    s.\"superhero_name\"\nFROM \"superhero\" AS s\nJOIN \"colour\" AS ec\n    ON s.\"eye_colour_id\" = ec.\"id\"\nJOIN \"colour\" AS hc\n    ON s.\"hair_colour_id\" = hc.\"id\"\nWHERE LOWER(ec.\"colour\") = LOWER('Blue')\n  AND LOWER(hc.\"colour\") = LOWER('Blond')\nORDER BY s.\"superhero_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3694,
+      "completion_tokens": 276
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:798": {
+    "question_id": "798",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT\n    p.\"publisher_name\"\nFROM \"superhero\" AS s\nJOIN \"publisher\" AS p\n    ON p.\"id\" = s.\"publisher_id\"\nWHERE LOWER(s.\"superhero_name\") IN (LOWER('Hawkman'), LOWER('Karate Kid'), LOWER('Speedy'))\nORDER BY p.\"publisher_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3666,
+      "completion_tokens": 239
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:792": {
+    "question_id": "792",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT sp.\"power_name\"\nFROM \"superhero\" AS sh\nJOIN \"hero_power\" AS hp ON hp.\"hero_id\" = sh.\"id\"\nJOIN \"superpower\" AS sp ON sp.\"id\" = hp.\"power_id\"\nWHERE LOWER(sh.\"superhero_name\") = LOWER('Abomination')\nORDER BY sp.\"power_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3604,
+      "completion_tokens": 246
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:772": {
+    "question_id": "772",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT\n    ec.\"colour\" AS eye_colour,\n    hc.\"colour\" AS hair_colour,\n    sc.\"colour\" AS skin_colour\nFROM \"superhero\" AS s\nJOIN \"gender\" AS g\n    ON g.\"id\" = s.\"gender_id\"\nJOIN \"publisher\" AS p\n    ON p.\"id\" = s.\"publisher_id\"\nLEFT JOIN \"colour\" AS ec\n    ON ec.\"id\" = s.\"eye_colour_id\"\nLEFT JOIN \"colour\" AS hc\n    ON hc.\"id\" = s.\"hair_colour_id\"\nLEFT JOIN \"colour\" AS sc\n    ON sc.\"id\" = s.\"skin_colour_id\"\nWHERE LOWER(g.\"gender\") = LOWER('Female')\n  AND LOWER(p.\"publisher_name\") = LOWER('Dark Horse Comics')\nORDER BY eye_colour ASC NULLS FIRST, hair_colour ASC NULLS FIRST, skin_colour ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3690,
+      "completion_tokens": 392
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:827": {
+    "question_id": "827",
+    "db_id": "superhero",
+    "prediction": "SELECT AVG(s.\"height_cm\") AS average_height\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"race\" r ON s.\"race_id\" = r.\"id\"\nWHERE LOWER(p.\"publisher_name\") = LOWER('Dark Horse Comics')\n  AND LOWER(r.\"race\") <> LOWER('Human');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3644,
+      "completion_tokens": 219
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:828": {
+    "question_id": "828",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT ha.\"hero_id\") AS fastest_superheroes_count\nFROM \"hero_attribute\" ha\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE LOWER(a.\"attribute_name\") = LOWER('Speed')\n  AND ha.\"attribute_value\" = 100;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3594,
+      "completion_tokens": 251
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:744": {
+    "question_id": "744",
+    "db_id": "superhero",
+    "prediction": "WITH counts AS (\n    SELECT\n        COUNT(*) FILTER (WHERE LOWER(p.\"publisher_name\") = LOWER('Marvel Comics')) AS marvel_count,\n        COUNT(*) FILTER (WHERE LOWER(p.\"publisher_name\") = LOWER('DC Comics')) AS dc_count\n    FROM \"superhero\" s\n    JOIN \"publisher\" p ON p.\"id\" = s.\"publisher_id\"\n    WHERE LOWER(p.\"publisher_name\") IN (LOWER('Marvel Comics'), LOWER('DC Comics'))\n)\nSELECT\n    marvel_count,\n    dc_count,\n    (marvel_count - dc_count) AS difference\nFROM counts;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3698,
+      "completion_tokens": 306
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:723": {
+    "question_id": "723",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS superhero_count\nFROM \"superhero\" s\nJOIN \"colour\" c\n  ON s.\"eye_colour_id\" = c.\"id\"\nJOIN \"hero_power\" hp\n  ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" sp\n  ON sp.\"id\" = hp.\"power_id\"\nWHERE LOWER(c.\"colour\") = LOWER('Blue')\n  AND LOWER(sp.\"power_name\") = LOWER('Agility');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3664,
+      "completion_tokens": 267
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:747": {
+    "question_id": "747",
+    "db_id": "superhero",
+    "prediction": "SELECT COUNT(*) AS superheroes_without_full_name\nFROM \"superhero\" AS s\nWHERE s.\"full_name\" IS NULL;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3600,
+      "completion_tokens": 147
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:818": {
+    "question_id": "818",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    (SUM(CASE WHEN g.\"id\" = 2 THEN 1 ELSE 0 END)::numeric\n     / COUNT(a.\"id\")::numeric) * 100.0 AS female_percentage\nFROM \"superhero\" s\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nJOIN \"gender\" g ON s.\"gender_id\" = g.\"id\"\nWHERE a.\"id\" = 2;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3694,
+      "completion_tokens": 281
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:825": {
+    "question_id": "825",
+    "db_id": "superhero",
+    "prediction": "SELECT DISTINCT g.\"gender\"\nFROM \"superhero\" AS s\nJOIN \"hero_power\" AS hp ON hp.\"hero_id\" = s.\"id\"\nJOIN \"superpower\" AS sp ON sp.\"id\" = hp.\"power_id\"\nJOIN \"gender\" AS g ON g.\"id\" = s.\"gender_id\"\nWHERE LOWER(sp.\"power_name\") = LOWER('Phoenix Force')\nORDER BY g.\"gender\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3608,
+      "completion_tokens": 252
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:781": {
+    "question_id": "781",
+    "db_id": "superhero",
+    "prediction": "SELECT\n    s.\"height_cm\" AS height_cm\nFROM \"superhero\" AS s\nJOIN \"colour\" AS c\n    ON s.\"eye_colour_id\" = c.\"id\"\nWHERE LOWER(c.\"colour\") = LOWER('Amber')\nORDER BY s.\"height_cm\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3642,
+      "completion_tokens": 262
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:334": {
+    "question_id": "334",
+    "db_id": "toxicology",
+    "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-'\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3472,
+      "completion_tokens": 130
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:232": {
+    "question_id": "232",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(b.\"bond_type\") = LOWER('-')\n  AND LOWER(m.\"label\") = LOWER('-')\nORDER BY m.\"molecule_id\" ASC NULLS FIRST\nLIMIT 3;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3262,
+      "completion_tokens": 269
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:199": {
+    "question_id": "199",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS non_carcinogenic_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(a.\"element\") = 'na'\n  AND m.\"label\" = '-'\n  AND EXISTS (\n    SELECT 1\n    FROM \"atom\" a2\n    WHERE a2.\"molecule_id\" = m.\"molecule_id\"\n      AND LOWER(a2.\"element\") = 'na'\n  );",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3218,
+      "completion_tokens": 216
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:207": {
+    "question_id": "207",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '='\nORDER BY a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3190,
+      "completion_tokens": 167
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:213": {
+    "question_id": "213",
+    "db_id": "toxicology",
+    "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR004_8' AND c.\"atom_id2\" = 'TR004_20')\n   OR (c.\"atom_id\" = 'TR004_20' AND c.\"atom_id2\" = 'TR004_8');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3282,
+      "completion_tokens": 184
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:325": {
+    "question_id": "325",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS carcinogenic_nitrogen_molecules_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(m.\"label\") = '+'\n  AND LOWER(a.\"element\") = 'n';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3204,
+      "completion_tokens": 163
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:306": {
+    "question_id": "306",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT\n    m.\"molecule_id\",\n    m.\"label\",\n    a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b\n    ON b.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"atom\" a\n    ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3454,
+      "completion_tokens": 295
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:320": {
+    "question_id": "320",
+    "db_id": "toxicology",
+    "prediction": "SELECT DISTINCT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2')\n   OR (c.\"atom_id\" = 'TR000_2' AND c.\"atom_id2\" = 'TR000_1');",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3274,
+      "completion_tokens": 271
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:309": {
+    "question_id": "309",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    a.\"atom_id\",\n    (SELECT COUNT(DISTINCT b.\"bond_type\")\n     FROM \"bond\" b\n     WHERE b.\"molecule_id\" = m.\"molecule_id\") AS bond_type_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE LOWER(m.\"label\") = LOWER('TR346')\nORDER BY a.\"atom_id\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3200,
+      "completion_tokens": 300
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:282": {
+    "question_id": "282",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    m.\"label\",\n    \n    SUM(CASE WHEN LOWER(a.\"element\") = 'h' THEN 1 ELSE 0 END)::numeric\n        / COUNT(a.\"atom_id\") AS ratio\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\";",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3292,
+      "completion_tokens": 207
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:246": {
+    "question_id": "246",
+    "db_id": "toxicology",
+    "prediction": "SELECT\n    b.\"bond_type\",\n    b.\"bond_id\"\nFROM \"atom\" a\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE (SUBSTR(a.\"atom_id\", 7, 2)::int) = 45\nORDER BY b.\"bond_id\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3290,
+      "completion_tokens": 272
+    }
+  },
+  "search:ec419df439032e1dad26c6fd5749e66a88160e8fb89f85eeddb1943139afe228:bird:239": {
+    "question_id": "239",
+    "db_id": "toxicology",
+    "prediction": "SELECT COUNT(DISTINCT c.\"bond_id\") AS connection_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3210,
+      "completion_tokens": 209
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT DISTINCT e.\"event_name\"\nFROM member m\nJOIN attendance a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN event e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"position\" LIKE '%Vice President%'\n  AND m.\"link_to_major\" LIKE '%Student_Club%'\n  AND m.\"zip\" IN (\n    SELECT z.\"zip_code\"\n    FROM zip_code z\n    WHERE z.\"city\" LIKE '%900 E. Washington St.%'\n       OR z.\"county\" LIKE '%900 E. Washington St.%'\n       OR z.\"state\" LIKE '%900 E. Washington St.%'\n  )\n  AND e.\"type\" = 'Social';",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3768,
+      "completion_tokens": 353
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:588": {
+    "question_id": "588",
+    "db_id": "codebase_community",
+    "prediction": "SELECT COUNT(*) AS total_comments\nFROM comments c\nWHERE c.\"userid\" = 13;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4146,
+      "completion_tokens": 124
+    }
+  },
+  "search:71c5694e31c921f3ccefdd0b62cba39475ea240f7c33bef2761a93864e2ac727:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") AS member_count\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Physics Teaching%';",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3702,
+      "completion_tokens": 156
+    }
+  },
+  "search:32fd0de5af290d07900c5fa144abcd4c179932bd9f284a38db97f01be86407d5:bird:1429": {
+    "question_id": "1429",
+    "db_id": "student_club",
+    "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nJOIN \"member\" m ON m.\"member_id\" = a.\"link_to_member\"\nWHERE e.\"type\" = 'Social'\n  AND m.\"position\" LIKE '%Vice President%'\n  AND m.\"link_to_major\" IS NOT NULL\n  AND m.\"zip\" IN (\n      SELECT z.\"zip_code\"\n      FROM \"zip_code\" z\n      WHERE z.\"city\" LIKE '%900 E. Washington St%'\n  );",
+    "score": 0.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4038,
+      "completion_tokens": 273
+    }
+  },
+  "search:32fd0de5af290d07900c5fa144abcd4c179932bd9f284a38db97f01be86407d5:bird:588": {
+    "question_id": "588",
+    "db_id": "codebase_community",
+    "prediction": "SELECT COUNT(*) AS total_comments\nFROM comments c\nWHERE c.userid = 13;",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 4416,
+      "completion_tokens": 111
+    }
+  },
+  "search:32fd0de5af290d07900c5fa144abcd4c179932bd9f284a38db97f01be86407d5:bird:1394": {
+    "question_id": "1394",
+    "db_id": "student_club",
+    "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") \nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" LIKE '%Physics Teaching%'",
+    "score": 1.0,
+    "error": null,
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3972,
+      "completion_tokens": 201
+    }
+  }
+}

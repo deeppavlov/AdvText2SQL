@@ -1,0 +1,24 @@
+{
+  "status": "completed",
+  "phase": "confirm",
+  "manifest_sha256": "ea701ddf30fa9e3e5919e245ef6065d3639a641ab8cef5e69313458c14e0016f",
+  "feature_mask": [
+    14,
+    32
+  ],
+  "dev_confirmation_version": "ambrosia-prompt-dev-v1",
+  "current_database": "vague_2tabs_chef",
+  "databases_ready": 15,
+  "databases_total": 15,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "event": "schema_verified",
+  "build_attempt": 1,
+  "question_id": "337",
+  "candidate": "1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-07T17:55:45.185945+00:00",
+  "saved_evaluations": 184,
+  "finished_at_utc": "2026-11-07T17:55:48.223692+00:00"
+}

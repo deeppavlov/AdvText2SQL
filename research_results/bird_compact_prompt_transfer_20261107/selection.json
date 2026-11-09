@@ -1,0 +1,8 @@
+{
+  "manifest_sha256": "b874cea6462b40a0b3f6c6d5c6b499a6ea09616bf62923d090a163d3c915b637",
+  "selected_arm": "mipro_few",
+  "mean_dev_accuracy": 0.45454545454545453,
+  "policy": "After all three repeats: mean dev EX, ties prefer original then fixed arm order; no automatic deployment",
+  "deployed": false,
+  "independent_test": false
+}

@@ -1,0 +1,2394 @@
+{
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:1": {
+    "question_id": "1",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    \"es\".\"name\",\n    \"es\".\"event_space\"\nFROM \"eventspaces\" AS \"es\"\nWHERE \"es\".\"capacity\" = 200\n  AND (\n      LOWER(\"es\".\"event_space\") LIKE '%banquet%'\n      OR LOWER(\"es\".\"event_space\") LIKE '%conference%'\n  );",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1464,
+      "completion_tokens": 100
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:2": {
+    "question_id": "2",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1471,
+      "completion_tokens": 73
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:3": {
+    "question_id": "3",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT DISTINCT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%' = FALSE\n  AND r.\"cuisine\" ILIKE '%italian%'\n\nUNION\n\n\nSELECT DISTINCT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%'\n  AND r.\"cuisine\" ILIKE '%italian%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1471,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:4": {
+    "question_id": "4",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT \"name\", \"address\", \"food_service\", \"cuisine\"\nFROM \"restaurants\"\nWHERE LOWER(\"food_service\") LIKE '%restaurant%'\n   OR (LOWER(\"food_service\") LIKE '%cafe%' AND LOWER(\"cuisine\") LIKE '%italian%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1470,
+      "completion_tokens": 86
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:5": {
+    "question_id": "5",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1476,
+      "completion_tokens": 68
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:9": {
+    "question_id": "9",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT r.\"name\"\nFROM \"room\" r\nWHERE (LOWER(r.\"name\") LIKE '%lobby%' OR LOWER(r.\"name\") LIKE '%terrace%')\n  AND r.\"size\" = 500;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2926,
+      "completion_tokens": 157
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:10": {
+    "question_id": "10",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT \"r\".\"name\"\nFROM \"room\" AS \"r\"\nWHERE LOWER(\"r\".\"name\") LIKE '%lobby%'\n   OR LOWER(\"r\".\"name\") LIKE '%лобби%'\n   OR (LOWER(\"r\".\"name\") LIKE '%terrace%' AND \"r\".\"size\" = 500)\n   OR (LOWER(\"r\".\"name\") LIKE '%террас%' AND \"r\".\"size\" = 500);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1460,
+      "completion_tokens": 125
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:11": {
+    "question_id": "11",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1469,
+      "completion_tokens": 71
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:12": {
+    "question_id": "12",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%day spa%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%wellness retreat%'\n  AND \"price\" = 150.0;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1442,
+      "completion_tokens": 101
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:13": {
+    "question_id": "13",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" ILIKE '%day spa%' OR \"type\" ILIKE '%wellness retreat%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1437,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:14": {
+    "question_id": "14",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT DISTINCT\n    rs.\"name\",\n    rs.\"type\"\nFROM \"relaxation_spot\" rs\nWHERE rs.\"price\" = 150.0\n  AND (rs.\"type\" ILIKE '%day spa%' OR rs.\"type\" ILIKE '%wellness retreat%')\nORDER BY rs.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2874,
+      "completion_tokens": 186
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:15": {
+    "question_id": "15",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1474,
+      "completion_tokens": 74
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:24": {
+    "question_id": "24",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT DISTINCT\n    c.\"name\",\n    c.\"vacation_option\"\nFROM \"customers\" c\nWHERE c.\"activities\" LIKE '%dance%'\n  AND (\n      c.\"vacation_option\" LIKE '%cruise%'\n      OR c.\"vacation_option\" LIKE '%resort%'\n  )\nORDER BY c.\"vacation_option\" ASC NULLS FIRST, c.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1440,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:25": {
+    "question_id": "25",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%cruise%'\n\nUNION\n\n\nSELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%resort%'\n  AND c.\"activities\" LIKE '%dance%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1439,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:26": {
+    "question_id": "26",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1444,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:41": {
+    "question_id": "41",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%swimming%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1484,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:42": {
+    "question_id": "42",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT DISTINCT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%swimming%'\n\nUNION\n\n\nSELECT DISTINCT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1480,
+      "completion_tokens": 279
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:43": {
+    "question_id": "43",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT DISTINCT h.\"name\"\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND (lf.\"feature\" ILIKE '%swimming pool%' OR lf.\"feature\" ILIKE '%hot tub%')\nORDER BY h.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2958,
+      "completion_tokens": 238
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:44": {
+    "question_id": "44",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%guest%'\n\nUNION\n\n\nSELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nJOIN services s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%suite%'\n  AND LOWER(s.\"amenity\") LIKE '%air%condition%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1449,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:45": {
+    "question_id": "45",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\" AS guest_name, 'guest room' AS room_category\nFROM bookings b\nJOIN guests g ON g.\"id\" = b.\"guestid\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nJOIN services s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%guest room%'\n\nUNION\n\n\nSELECT DISTINCT g.\"fullname\" AS guest_name, 'suite' AS room_category\nFROM bookings b\nJOIN guests g ON g.\"id\" = b.\"guestid\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nJOIN services s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%suite%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1438,
+      "completion_tokens": 260
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:46": {
+    "question_id": "46",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1442,
+      "completion_tokens": 72
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:68": {
+    "question_id": "68",
+    "db_id": "attachment_2tab_ref_cleaning_professional",
+    "prediction": "SELECT\n    hk.\"fullname\" AS \"fullname\",\n    hk.\"email\" AS \"email\"\nFROM \"housekeepers\" hk\nJOIN \"hotels\" h ON hk.\"hotelid\" = h.\"id\"\nWHERE h.\"address\" LIKE '%789 River Road%'\n\nUNION\n\nSELECT\n    la.\"fullname\" AS \"fullname\",\n    la.\"email\" AS \"email\"\nFROM \"laundryattendants\" la\nJOIN \"hotels\" h ON la.\"hotelid\" = h.\"id\"\nWHERE h.\"address\" LIKE '%789 River Road%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1469,
+      "completion_tokens": 160
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:69": {
+    "question_id": "69",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1497,
+      "completion_tokens": 67
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:70": {
+    "question_id": "70",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1498,
+      "completion_tokens": 67
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:71": {
+    "question_id": "71",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT c.\"name\" AS chef_name\nFROM \"chefs\" c\n\nUNION ALL\n\n\nSELECT s.\"name\" AS chef_name\nFROM \"servers\" s\nWHERE LOWER(s.\"language\") LIKE '%spanish%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1492,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:78": {
+    "question_id": "78",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1565,
+      "completion_tokens": 79
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:79": {
+    "question_id": "79",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\"\nFROM \"steakhouses\" s\nWHERE s.\"year_of_establishment\" = 1980\n\nUNION ALL\n\n\nSELECT sr.\"name\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1565,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:80": {
+    "question_id": "80",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT\n    s.\"name\",\n    s.\"location\",\n    s.\"year_of_establishment\",\n    s.\"number_of_employees\",\n    s.\"average_meal_price\"\nFROM \"steakhouses\" AS s\n\nUNION ALL\n\n\nSELECT\n    sr.\"name\",\n    sr.\"location\",\n    sr.\"year_of_establishment\",\n    sr.\"number_of_employees\",\n    sr.\"specialty_dish\"\nFROM \"seafoodrestaurants\" AS sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1566,
+      "completion_tokens": 146
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:163": {
+    "question_id": "163",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT c.\"channel_value\"\nFROM \"channels\" c\nJOIN \"customer_service_representatives_channels\" crc ON crc.\"channel_id\" = c.\"channel_id\"\nGROUP BY c.\"channel_id\", c.\"channel_value\"\nHAVING COUNT(DISTINCT crc.\"representative_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"customer_service_representatives\"\n);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 108
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:164": {
+    "question_id": "164",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\" AS representative_name,\n    ch.\"channel_value\" AS channel_value\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrch\n    ON csrch.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrch.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2714,
+      "completion_tokens": 205
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:168": {
+    "question_id": "168",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT\n    cc.\"company_name\",\n    br.\"role_value\"\nFROM \"construction_companies\" cc\nJOIN \"construction_companies_building_roles\" ccbr\n    ON ccbr.\"construction_company_id\" = cc.\"id\"\nJOIN \"building_roles\" br\n    ON br.\"role_id\" = ccbr.\"building_role_id\"\nORDER BY cc.\"company_name\" ASC NULLS FIRST, br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2722,
+      "completion_tokens": 198
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:170": {
+    "question_id": "170",
+    "db_id": "scope_banks_financial_roles",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1362,
+      "completion_tokens": 67
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:171": {
+    "question_id": "171",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT br.\"role_value\"\nFROM \"building_roles\" br\nJOIN \"construction_companies_building_roles\" ccbr\n  ON ccbr.\"building_role_id\" = br.\"role_id\"\nGROUP BY br.\"role_id\", br.\"role_value\"\nHAVING COUNT(DISTINCT ccbr.\"construction_company_id\") = (\n  SELECT COUNT(DISTINCT \"id\") FROM \"construction_companies\"\n)\nORDER BY br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1357,
+      "completion_tokens": 121
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:172": {
+    "question_id": "172",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1364,
+      "completion_tokens": 65
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:173": {
+    "question_id": "173",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\",\n    ch.\"channel_value\"\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrc\n    ON csrc.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrc.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 121
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:272": {
+    "question_id": "272",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"job_post\",\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nORDER BY d.\"job_post\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2978,
+      "completion_tokens": 183
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:286": {
+    "question_id": "286",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"degree_level\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2972,
+      "completion_tokens": 109
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:288": {
+    "question_id": "288",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2970,
+      "completion_tokens": 121
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:289": {
+    "question_id": "289",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%'\nORDER BY d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2976,
+      "completion_tokens": 173
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:290": {
+    "question_id": "290",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS required_degree\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2972,
+      "completion_tokens": 158
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:312": {
+    "question_id": "312",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nJOIN \"restaurant\" r ON r.\"sous_chef_id\" = sc.\"sous_id\"\nJOIN \"orders\" o ON o.\"restaurant_id\" = r.\"restaurant_id\"\nJOIN \"order_details\" od ON od.\"order_id\" = o.\"order_id\"\nJOIN \"menu_items\" mi ON mi.\"menu_item_id\" = od.\"menu_item_id\"\nWHERE LOWER(mi.\"item_name\") LIKE '%pizza%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3032,
+      "completion_tokens": 211
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:313": {
+    "question_id": "313",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1522,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:322": {
+    "question_id": "322",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"full_name\"\nFROM \"executive_chef\"\nORDER BY \"full_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3038,
+      "completion_tokens": 119
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:331": {
+    "question_id": "331",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"job_post\",\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nORDER BY d.\"job_post\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2966,
+      "completion_tokens": 156
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:336": {
+    "question_id": "336",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"full_name\"\nFROM \"executive_chef\"\nORDER BY \"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3038,
+      "completion_tokens": 113
+    }
+  },
+  "confirm:c085800810545e597281927d4eb0a45c9be2a82537ff3116b40b66fad49fd945:hybrid:False:ambrosia:337": {
+    "question_id": "337",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nORDER BY sc.\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3038,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:1": {
+    "question_id": "1",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    e.\"name\",\n    e.\"event_space\",\n    e.\"capacity\"\nFROM \"eventspaces\" e\nWHERE e.\"capacity\" = 200\n  AND (\n      LOWER(e.\"event_space\") LIKE '%banquet%'\n      OR LOWER(e.\"event_space\") LIKE '%conference%'\n  )\nORDER BY e.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1464,
+      "completion_tokens": 109
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:2": {
+    "question_id": "2",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1344,
+      "completion_tokens": 89
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:3": {
+    "question_id": "3",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%' = FALSE\n  AND r.\"cuisine\" ILIKE '%italian%'\n\nUNION\n\n\nSELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%'\n  AND r.\"cuisine\" ILIKE '%italian%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1471,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:4": {
+    "question_id": "4",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT \"name\", \"address\", \"food_service\", \"cuisine\"\nFROM \"restaurants\"\nWHERE LOWER(\"food_service\") LIKE '%restaurant%'\n   OR (LOWER(\"food_service\") LIKE '%cafe%' AND LOWER(\"cuisine\") LIKE '%italian%')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1470,
+      "completion_tokens": 86
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:5": {
+    "question_id": "5",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1349,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:9": {
+    "question_id": "9",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1340,
+      "completion_tokens": 92
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:10": {
+    "question_id": "10",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT \"r\".\"name\"\nFROM \"room\" AS \"r\"\nWHERE LOWER(\"r\".\"name\") LIKE '%lobby%'\n   OR LOWER(\"r\".\"name\") LIKE '%лобби%'\n   OR (LOWER(\"r\".\"name\") LIKE '%terrace%' AND \"r\".\"size\" = 500)\n   OR (LOWER(\"r\".\"name\") LIKE '%террас%' AND \"r\".\"size\" = 500);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1460,
+      "completion_tokens": 125
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:11": {
+    "question_id": "11",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1342,
+      "completion_tokens": 85
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:12": {
+    "question_id": "12",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%day spa%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%wellness retreat%'\n  AND \"price\" = 150.0;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1442,
+      "completion_tokens": 101
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:13": {
+    "question_id": "13",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" ILIKE '%day spa%' OR \"type\" ILIKE '%wellness retreat%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1437,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:14": {
+    "question_id": "14",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT DISTINCT\n    rs.\"name\",\n    rs.\"type\"\nFROM \"relaxation_spot\" rs\nWHERE rs.\"price\" = 150.0\n  AND (rs.\"type\" ILIKE '%day spa%' OR rs.\"type\" ILIKE '%wellness retreat%');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2747,
+      "completion_tokens": 172
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:15": {
+    "question_id": "15",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1347,
+      "completion_tokens": 88
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:24": {
+    "question_id": "24",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT DISTINCT\n    c.\"name\",\n    c.\"vacation_option\"\nFROM \"customers\" c\nWHERE LOWER(c.\"activities\") LIKE '%dance%'\n  AND (\n      LOWER(c.\"vacation_option\") LIKE '%cruise%'\n      OR LOWER(c.\"vacation_option\") LIKE '%resort%'\n  )\nORDER BY c.\"vacation_option\" ASC NULLS FIRST, c.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1440,
+      "completion_tokens": 124
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:25": {
+    "question_id": "25",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%cruise%'\n\nUNION\n\n\nSELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%resort%'\n  AND c.\"activities\" LIKE '%dance%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1439,
+      "completion_tokens": 116
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:26": {
+    "question_id": "26",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1317,
+      "completion_tokens": 84
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:41": {
+    "question_id": "41",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%swimming%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1484,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:42": {
+    "question_id": "42",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%pool%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1480,
+      "completion_tokens": 272
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:43": {
+    "question_id": "43",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT DISTINCT h.\"name\"\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND (lf.\"feature\" ILIKE '%swimming pool%' OR lf.\"feature\" ILIKE '%hot tub%')\nORDER BY h.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2831,
+      "completion_tokens": 262
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:44": {
+    "question_id": "44",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%guest%'\n\nUNION\n\n\nSELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nJOIN services s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%suite%'\n  AND LOWER(s.\"amenity\") LIKE '%air%condition%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1449,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:45": {
+    "question_id": "45",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT\n    g.\"fullname\" AS guest_name,\n    'guest room' AS room_category\nFROM \"bookings\" b\nJOIN \"guests\" g ON g.\"id\" = b.\"guestid\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%guest room%'\n\nUNION\n\n\nSELECT DISTINCT\n    g.\"fullname\" AS guest_name,\n    'suite' AS room_category\nFROM \"bookings\" b\nJOIN \"guests\" g ON g.\"id\" = b.\"guestid\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%suite%'\nORDER BY guest_name ASC NULLS FIRST, room_category ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1438,
+      "completion_tokens": 302
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:46": {
+    "question_id": "46",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1315,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:68": {
+    "question_id": "68",
+    "db_id": "attachment_2tab_ref_cleaning_professional",
+    "prediction": "SELECT h.\"fullname\" AS \"fullname\", 'housekeeper' AS \"role\"\nFROM \"housekeepers\" h\nJOIN \"hotels\" ho ON h.\"hotelid\" = ho.\"id\"\nWHERE ho.\"address\" LIKE '%789 River Road%'\nUNION ALL\nSELECT la.\"fullname\" AS \"fullname\", 'laundryattendant' AS \"role\"\nFROM \"laundryattendants\" la\nJOIN \"hotels\" ho ON la.\"hotelid\" = ho.\"id\"\nWHERE ho.\"address\" LIKE '%789 River Road%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1469,
+      "completion_tokens": 156
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:69": {
+    "question_id": "69",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1370,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:70": {
+    "question_id": "70",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1371,
+      "completion_tokens": 78
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:71": {
+    "question_id": "71",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT c.\"name\" AS chef_name\nFROM \"chefs\" c\n\nUNION ALL\n\n\nSELECT s.\"name\" AS chef_name\nFROM \"servers\" s\nWHERE LOWER(s.\"language\") LIKE '%spanish%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1492,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:78": {
+    "question_id": "78",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1438,
+      "completion_tokens": 89
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:79": {
+    "question_id": "79",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\"\nFROM \"steakhouses\" s\nWHERE s.\"year_of_establishment\" = 1980\n\nUNION ALL\n\n\nSELECT sr.\"name\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1565,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:80": {
+    "question_id": "80",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT\n    s.\"name\",\n    s.\"location\",\n    s.\"year_of_establishment\",\n    s.\"number_of_employees\",\n    s.\"average_meal_price\"\nFROM \"steakhouses\" AS s\n\nUNION ALL\n\n\nSELECT\n    sr.\"name\",\n    sr.\"location\",\n    sr.\"year_of_establishment\",\n    sr.\"number_of_employees\",\n    sr.\"specialty_dish\"\nFROM \"seafoodrestaurants\" AS sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1566,
+      "completion_tokens": 146
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:163": {
+    "question_id": "163",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT c.\"channel_value\"\nFROM \"channels\" c\nJOIN \"customer_service_representatives_channels\" crc ON crc.\"channel_id\" = c.\"channel_id\"\nGROUP BY c.\"channel_id\", c.\"channel_value\"\nHAVING COUNT(DISTINCT crc.\"representative_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"customer_service_representatives\"\n);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 108
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:164": {
+    "question_id": "164",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\" AS representative_name,\n    ch.\"channel_value\" AS channel_value\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrch\n    ON csrch.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrch.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2587,
+      "completion_tokens": 220
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:168": {
+    "question_id": "168",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT\n    cc.\"company_name\",\n    br.\"role_value\"\nFROM \"construction_companies\" cc\nJOIN \"construction_companies_building_roles\" ccbr\n    ON ccbr.\"construction_company_id\" = cc.\"id\"\nJOIN \"building_roles\" br\n    ON br.\"role_id\" = ccbr.\"building_role_id\"\nORDER BY cc.\"company_name\" ASC NULLS FIRST, br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2595,
+      "completion_tokens": 204
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:170": {
+    "question_id": "170",
+    "db_id": "scope_banks_financial_roles",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1235,
+      "completion_tokens": 67
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:171": {
+    "question_id": "171",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT br.\"role_value\"\nFROM \"building_roles\" br\nJOIN \"construction_companies_building_roles\" ccbr\n  ON ccbr.\"building_role_id\" = br.\"role_id\"\nGROUP BY br.\"role_id\", br.\"role_value\"\nHAVING COUNT(DISTINCT ccbr.\"construction_company_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"construction_companies\"\n)\nORDER BY br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1357,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:172": {
+    "question_id": "172",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1237,
+      "completion_tokens": 61
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:173": {
+    "question_id": "173",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\",\n    ch.\"channel_value\"\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrch\n    ON csrch.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrch.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:272": {
+    "question_id": "272",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"job_post\" AS vacancy,\n    d.\"degree_level\" AS degree_level,\n    d.\"certification\" AS certification\nFROM \"degrees\" d\nORDER BY d.\"job_post\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2851,
+      "completion_tokens": 177
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:286": {
+    "question_id": "286",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"degree_level\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2845,
+      "completion_tokens": 115
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:288": {
+    "question_id": "288",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2843,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:289": {
+    "question_id": "289",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2849,
+      "completion_tokens": 136
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:290": {
+    "question_id": "290",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS required_degree\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2845,
+      "completion_tokens": 177
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:312": {
+    "question_id": "312",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nJOIN \"restaurant\" r ON r.\"sous_chef_id\" = sc.\"sous_id\"\nJOIN \"orders\" o ON o.\"restaurant_id\" = r.\"restaurant_id\"\nJOIN \"order_details\" od ON od.\"order_id\" = o.\"order_id\"\nJOIN \"menu_items\" mi ON mi.\"menu_item_id\" = od.\"menu_item_id\"\nWHERE LOWER(mi.\"item_name\") LIKE '%pizza%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2905,
+      "completion_tokens": 208
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:313": {
+    "question_id": "313",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1395,
+      "completion_tokens": 65
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:322": {
+    "question_id": "322",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"full_name\"\nFROM \"executive_chef\"\nORDER BY \"full_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2911,
+      "completion_tokens": 113
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:331": {
+    "question_id": "331",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS qualification\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2839,
+      "completion_tokens": 177
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:336": {
+    "question_id": "336",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"ec\".\"full_name\"\nFROM \"executive_chef\" AS \"ec\"\nORDER BY \"ec\".\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2911,
+      "completion_tokens": 125
+    }
+  },
+  "confirm:ffd6b9ac9c5b1201110c72c87aca6c8a1427dd92b7ba4b26515a36e5a904ecef:hybrid:False:ambrosia:337": {
+    "question_id": "337",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nORDER BY sc.\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2911,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:1": {
+    "question_id": "1",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    \"es\".\"name\",\n    \"es\".\"event_space\"\nFROM \"eventspaces\" AS \"es\"\nWHERE \"es\".\"capacity\" = 200\n  AND (\n      LOWER(\"es\".\"event_space\") LIKE '%banquet%'\n      OR LOWER(\"es\".\"event_space\") LIKE '%conference%'\n  );",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1464,
+      "completion_tokens": 100
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:2": {
+    "question_id": "2",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    es.\"name\",\n    es.\"event_space\"\nFROM \"eventspaces\" es\nWHERE es.\"capacity\" = 200\n  AND (\n        LOWER(es.\"event_space\") LIKE '%banquet%'\n     OR LOWER(es.\"event_space\") LIKE '%conference%'\n  )\nORDER BY es.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2779,
+      "completion_tokens": 219
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:3": {
+    "question_id": "3",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%' = FALSE\n  AND r.\"cuisine\" ILIKE '%italian%'\n\nUNION\n\n\nSELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%'\n  AND r.\"cuisine\" ILIKE '%italian%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1471,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:4": {
+    "question_id": "4",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT \"name\", \"address\", \"food_service\", \"cuisine\"\nFROM \"restaurants\"\nWHERE LOWER(\"food_service\") LIKE '%restaurant%'\n   OR (LOWER(\"food_service\") LIKE '%cafe%' AND LOWER(\"cuisine\") LIKE '%italian%')",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1470,
+      "completion_tokens": 86
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:5": {
+    "question_id": "5",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT DISTINCT r.\"name\", r.\"food_service\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"cuisine\") LIKE '%italian%'\n  AND LOWER(r.\"food_service\") IN ('restaurant', 'cafe');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2789,
+      "completion_tokens": 179
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:9": {
+    "question_id": "9",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT r.\"name\"\nFROM \"room\" r\nWHERE (LOWER(r.\"name\") LIKE '%lobby%' OR LOWER(r.\"name\") LIKE '%terrace%')\n  AND r.\"size\" >= 500;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2771,
+      "completion_tokens": 206
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:10": {
+    "question_id": "10",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT \"r\".\"name\"\nFROM \"room\" AS \"r\"\nWHERE LOWER(\"r\".\"name\") LIKE '%lobby%'\n   OR LOWER(\"r\".\"name\") LIKE '%лобби%'\n   OR (LOWER(\"r\".\"name\") LIKE '%terrace%' AND \"r\".\"size\" = 500)\n   OR (LOWER(\"r\".\"name\") LIKE '%террас%' AND \"r\".\"size\" = 500);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1460,
+      "completion_tokens": 125
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:11": {
+    "question_id": "11",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT \"r\".\"name\"\nFROM \"room\" AS \"r\"\nWHERE \"r\".\"size\" = 500\n  AND (\"r\".\"indoor_outdoor_space\" ILIKE '%lobby%' OR \"r\".\"indoor_outdoor_space\" ILIKE '%terrace%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2775,
+      "completion_tokens": 183
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:12": {
+    "question_id": "12",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%day spa%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%wellness retreat%'\n  AND \"price\" = 150.0;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1442,
+      "completion_tokens": 101
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:13": {
+    "question_id": "13",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" LIKE '%spa%' OR \"type\" LIKE '%retreat%')\nORDER BY \"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1437,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:14": {
+    "question_id": "14",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\", \"type\", \"price\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" ILIKE '%day spa%' OR \"type\" ILIKE '%wellness retreat%');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2719,
+      "completion_tokens": 172
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:15": {
+    "question_id": "15",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    es.\"name\",\n    es.\"event_space\",\n    es.\"capacity\"\nFROM \"eventspaces\" es\nWHERE LOWER(es.\"event_space\") LIKE '%banquet%'\n   OR (LOWER(es.\"event_space\") LIKE '%conference%' AND es.\"capacity\" = 200)\nORDER BY es.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2785,
+      "completion_tokens": 195
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:24": {
+    "question_id": "24",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT DISTINCT\n    c.\"name\",\n    c.\"vacation_option\"\nFROM \"customers\" c\nWHERE LOWER(c.\"activities\") LIKE '%dance%'\n  AND (\n      LOWER(c.\"vacation_option\") LIKE '%cruise%'\n      OR LOWER(c.\"vacation_option\") LIKE '%resort%'\n  )\nORDER BY c.\"vacation_option\" ASC NULLS FIRST, c.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1440,
+      "completion_tokens": 139
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:25": {
+    "question_id": "25",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%cruise%'\n\nUNION\n\n\nSELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%resort%'\n  AND c.\"activities\" LIKE '%dance%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1439,
+      "completion_tokens": 116
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:26": {
+    "question_id": "26",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT DISTINCT\n    c.\"name\",\n    c.\"email\",\n    c.\"phonenumber\",\n    c.\"vacation_option\",\n    c.\"activities\"\nFROM \"customers\" c\nJOIN \"customer_bookings\" cb ON cb.\"customerid\" = c.\"id\"\nJOIN \"bookings\" b ON b.\"id\" = cb.\"bookingid\"\nJOIN \"rooms\" r ON r.\"id\" = b.\"roomid\"\nWHERE c.\"activities\" LIKE '%dance%'\n  AND (c.\"vacation_option\" LIKE '%cruise%' OR c.\"vacation_option\" LIKE '%resort%')\nORDER BY c.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2725,
+      "completion_tokens": 300
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:41": {
+    "question_id": "41",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%swimming%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1484,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:42": {
+    "question_id": "42",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" ILIKE '%pool%'\n  AND lf.\"feature\" NOT ILIKE '%hot tub%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" ILIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1480,
+      "completion_tokens": 292
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:43": {
+    "question_id": "43",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT DISTINCT h.\"name\"\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND (lf.\"feature\" ILIKE '%swimming pool%' OR lf.\"feature\" ILIKE '%hot tub%')",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2803,
+      "completion_tokens": 273
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:44": {
+    "question_id": "44",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\"\nFROM \"guests\" g\nJOIN \"bookings\" b ON b.\"guestid\" = g.\"id\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%guest%'\n\nUNION\n\n\nSELECT DISTINCT g.\"fullname\"\nFROM \"guests\" g\nJOIN \"bookings\" b ON b.\"guestid\" = g.\"id\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%suite%'\n  AND LOWER(s.\"amenity\") LIKE '%air%condition%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1449,
+      "completion_tokens": 217
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:45": {
+    "question_id": "45",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT\n    g.\"fullname\" AS guest_name,\n    'guest room' AS room_category\nFROM \"bookings\" b\nJOIN \"guests\" g ON g.\"id\" = b.\"guestid\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%guest room%'\n\nUNION\n\n\nSELECT DISTINCT\n    g.\"fullname\" AS guest_name,\n    'suite' AS room_category\nFROM \"bookings\" b\nJOIN \"guests\" g ON g.\"id\" = b.\"guestid\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air-condition%'\n  AND LOWER(r.\"typeofroom\") LIKE '%suite%'\nORDER BY guest_name ASC NULLS FIRST, room_category ASC NULLS FIRST",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1438,
+      "completion_tokens": 302
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:46": {
+    "question_id": "46",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\"\nFROM \"guests\" g\nJOIN \"bookings\" b ON b.\"guestid\" = g.\"id\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE (LOWER(r.\"typeofroom\") LIKE '%guest room%' OR LOWER(r.\"typeofroom\") LIKE '%suite%')\n  AND LOWER(s.\"amenity\") LIKE '%air condition%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2721,
+      "completion_tokens": 250
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:68": {
+    "question_id": "68",
+    "db_id": "attachment_2tab_ref_cleaning_professional",
+    "prediction": "SELECT\n    hk.\"fullname\" AS \"fullname\",\n    hk.\"email\" AS \"email\",\n    hk.\"hiredate\" AS \"hiredate\",\n    hk.\"salary\" AS \"salary\"\nFROM \"housekeepers\" hk\nJOIN \"hotels\" h ON h.\"id\" = hk.\"hotelid\"\nWHERE h.\"address\" LIKE '%789 River Road%'\n\nUNION ALL\n\nSELECT\n    la.\"fullname\" AS \"fullname\",\n    la.\"email\" AS \"email\",\n    la.\"hiredate\" AS \"hiredate\",\n    la.\"salary\" AS \"salary\"\nFROM \"laundryattendants\" la\nJOIN \"hotels\" h ON h.\"id\" = la.\"hotelid\"\nWHERE h.\"address\" LIKE '%789 River Road%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1469,
+      "completion_tokens": 207
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:69": {
+    "question_id": "69",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT \"name\", \"language\"\nFROM \"chefs\"\nWHERE LOWER(\"language\") LIKE '%spanish%'\nUNION\nSELECT \"name\", \"language\"\nFROM \"servers\"\nWHERE LOWER(\"language\") LIKE '%spanish%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2831,
+      "completion_tokens": 187
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:70": {
+    "question_id": "70",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT \"name\"\nFROM (\n    SELECT c.\"name\" AS \"name\"\n    FROM \"chefs\" c\n    WHERE LOWER(c.\"language\") LIKE '%spanish%'\n    UNION\n    SELECT s.\"name\" AS \"name\"\n    FROM \"servers\" s\n    WHERE LOWER(s.\"language\") LIKE '%spanish%'\n) AS \"fluent_speakers\"\nORDER BY \"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2833,
+      "completion_tokens": 244
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:71": {
+    "question_id": "71",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT c.\"name\" AS chef_name\nFROM \"chefs\" c\n\nUNION ALL\n\n\nSELECT s.\"name\" AS chef_name\nFROM \"servers\" s\nWHERE LOWER(s.\"language\") LIKE '%spanish%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1492,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:78": {
+    "question_id": "78",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\", s.\"location\"\nFROM \"steakhouses\" s\nWHERE s.\"year_of_establishment\" = 1980\n\nUNION ALL\n\n\nSELECT sr.\"name\", sr.\"location\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2967,
+      "completion_tokens": 208
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:79": {
+    "question_id": "79",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\"\nFROM \"steakhouses\" s\nWHERE s.\"year_of_establishment\" = 1980\n\nUNION ALL\n\n\nSELECT sr.\"name\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1565,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:80": {
+    "question_id": "80",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT\n    s.\"name\",\n    s.\"location\",\n    s.\"year_of_establishment\",\n    s.\"number_of_employees\",\n    s.\"average_meal_price\"\nFROM \"steakhouses\" AS s\n\nUNION ALL\n\n\nSELECT\n    sr.\"name\",\n    sr.\"location\",\n    sr.\"year_of_establishment\",\n    sr.\"number_of_employees\",\n    sr.\"specialty_dish\"\nFROM \"seafoodrestaurants\" AS sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1566,
+      "completion_tokens": 146
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:163": {
+    "question_id": "163",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT c.\"channel_value\"\nFROM \"channels\" c\nJOIN \"customer_service_representatives_channels\" crc ON crc.\"channel_id\" = c.\"channel_id\"\nGROUP BY c.\"channel_id\", c.\"channel_value\"\nHAVING COUNT(DISTINCT crc.\"representative_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"customer_service_representatives\"\n);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 108
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:164": {
+    "question_id": "164",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1206,
+      "completion_tokens": 166
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:168": {
+    "question_id": "168",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT\n    cc.\"company_name\",\n    br.\"role_value\"\nFROM \"construction_companies\" cc\nJOIN \"construction_companies_building_roles\" ccbr\n    ON ccbr.\"construction_company_id\" = cc.\"id\"\nJOIN \"building_roles\" br\n    ON br.\"role_id\" = ccbr.\"building_role_id\"\nORDER BY cc.\"company_name\" ASC NULLS FIRST, br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2567,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:170": {
+    "question_id": "170",
+    "db_id": "scope_banks_financial_roles",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1207,
+      "completion_tokens": 126
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:171": {
+    "question_id": "171",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT br.\"role_value\"\nFROM \"building_roles\" br\nJOIN \"construction_companies_building_roles\" ccbr\n  ON ccbr.\"building_role_id\" = br.\"role_id\"\nGROUP BY br.\"role_id\", br.\"role_value\"\nHAVING COUNT(DISTINCT ccbr.\"construction_company_id\") = (\n  SELECT COUNT(DISTINCT \"id\") FROM \"construction_companies\"\n)\nORDER BY br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1357,
+      "completion_tokens": 121
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:172": {
+    "question_id": "172",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1209,
+      "completion_tokens": 145
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:173": {
+    "question_id": "173",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\",\n    ch.\"channel_value\"\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrch\n    ON csrch.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrch.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:272": {
+    "question_id": "272",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"job_post\",\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nORDER BY d.\"job_post\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2823,
+      "completion_tokens": 160
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:286": {
+    "question_id": "286",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"degree_level\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2817,
+      "completion_tokens": 145
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:288": {
+    "question_id": "288",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2815,
+      "completion_tokens": 146
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:289": {
+    "question_id": "289",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%'\nORDER BY d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2821,
+      "completion_tokens": 168
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:290": {
+    "question_id": "290",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS required_degree\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2817,
+      "completion_tokens": 183
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:312": {
+    "question_id": "312",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nJOIN \"restaurant\" r ON r.\"sous_chef_id\" = sc.\"sous_id\"\nJOIN \"orders\" o ON o.\"restaurant_id\" = r.\"restaurant_id\"\nJOIN \"order_details\" od ON od.\"order_id\" = o.\"order_id\"\nJOIN \"menu_items\" mi ON mi.\"menu_item_id\" = od.\"menu_item_id\"\nWHERE LOWER(mi.\"item_name\") LIKE '%pizza%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2877,
+      "completion_tokens": 245
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:313": {
+    "question_id": "313",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT\n    ec.\"full_name\" AS executive_chef_name,\n    sc.\"full_name\" AS sous_chef_name\nFROM \"restaurant\" r\nJOIN \"executive_chef\" ec ON ec.\"chef_id\" = r.\"executive_chef_id\"\nJOIN \"sous_chef\" sc ON sc.\"sous_id\" = r.\"sous_chef_id\"\nJOIN \"orders\" o ON o.\"restaurant_id\" = r.\"restaurant_id\"\nJOIN \"order_details\" od ON od.\"order_id\" = o.\"order_id\"\nJOIN \"menu_items\" mi ON mi.\"menu_item_id\" = od.\"menu_item_id\"\nWHERE LOWER(mi.\"item_name\") LIKE '%pizza%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2881,
+      "completion_tokens": 304
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:322": {
+    "question_id": "322",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"full_name\"\nFROM \"executive_chef\"\nORDER BY \"full_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2883,
+      "completion_tokens": 144
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:331": {
+    "question_id": "331",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS qualification\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2811,
+      "completion_tokens": 159
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:336": {
+    "question_id": "336",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"ec\".\"full_name\"\nFROM \"executive_chef\" AS \"ec\"\nORDER BY \"ec\".\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2883,
+      "completion_tokens": 172
+    }
+  },
+  "confirm:1a6e606c312cac81daf631cd7d94a00690ad40bf554ae2e048aaecd64f1f1de4:hybrid:False:ambrosia:337": {
+    "question_id": "337",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nORDER BY sc.\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 2883,
+      "completion_tokens": 159
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:1": {
+    "question_id": "1",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT DISTINCT\n    \"es\".\"name\",\n    \"es\".\"event_space\",\n    \"es\".\"capacity\"\nFROM \"eventspaces\" AS \"es\"\nWHERE \"es\".\"capacity\" = 200\n  AND (\n      LOWER(\"es\".\"event_space\") LIKE '%banquet%'\n      OR LOWER(\"es\".\"event_space\") LIKE '%conference%'\n  );",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1464,
+      "completion_tokens": 105
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:2": {
+    "question_id": "2",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1757,
+      "completion_tokens": 81
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:3": {
+    "question_id": "3",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%' = FALSE\n  AND r.\"cuisine\" ILIKE '%italian%'\n\nUNION\n\n\nSELECT r.\"name\"\nFROM \"restaurants\" r\nWHERE r.\"food_service\" ILIKE '%cafe%'\n  AND r.\"cuisine\" ILIKE '%italian%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1471,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:4": {
+    "question_id": "4",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "SELECT \"name\", \"address\", \"food_service\", \"cuisine\"\nFROM \"restaurants\"\nWHERE LOWER(\"food_service\") LIKE '%restaurant%'\n   OR (LOWER(\"food_service\") LIKE '%cafe%' AND LOWER(\"cuisine\") LIKE '%italian%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1470,
+      "completion_tokens": 86
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:5": {
+    "question_id": "5",
+    "db_id": "attachment_1tab_val_food_service",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1762,
+      "completion_tokens": 74
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:9": {
+    "question_id": "9",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1753,
+      "completion_tokens": 84
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:10": {
+    "question_id": "10",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT \"r\".\"name\"\nFROM \"room\" AS \"r\"\nWHERE LOWER(\"r\".\"name\") LIKE '%lobby%'\n   OR LOWER(\"r\".\"name\") LIKE '%лобби%'\n   OR (LOWER(\"r\".\"name\") LIKE '%terrace%' AND \"r\".\"size\" = 500)\n   OR (LOWER(\"r\".\"name\") LIKE '%террас%' AND \"r\".\"size\" = 500);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1460,
+      "completion_tokens": 125
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:11": {
+    "question_id": "11",
+    "db_id": "attachment_1tab_val_indoor-outdoor_space",
+    "prediction": "SELECT r.\"name\"\nFROM \"room\" r\nWHERE r.\"size\" = 500\n  AND (LOWER(r.\"name\") LIKE '%lobby%' OR LOWER(r.\"name\") LIKE '%terrace%')\nORDER BY r.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3216,
+      "completion_tokens": 244
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:12": {
+    "question_id": "12",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%day spa%'\n\nUNION ALL\n\n\nSELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"type\" LIKE '%wellness retreat%'\n  AND \"price\" = 150.0;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1442,
+      "completion_tokens": 101
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:13": {
+    "question_id": "13",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" ILIKE '%day spa%' OR \"type\" ILIKE '%wellness retreat%');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1437,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:14": {
+    "question_id": "14",
+    "db_id": "attachment_1tab_val_relaxation_getaway",
+    "prediction": "SELECT \"name\", \"type\", \"price\"\nFROM \"relaxation_spot\"\nWHERE \"price\" = 150.0\n  AND (\"type\" ILIKE '%day spa%' OR \"type\" ILIKE '%wellness retreat%');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3160,
+      "completion_tokens": 229
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:15": {
+    "question_id": "15",
+    "db_id": "attachment_1tab_val_event_space",
+    "prediction": "SELECT \"name\", \"event_space\", \"capacity\"\nFROM \"eventspaces\"\nWHERE LOWER(\"event_space\") LIKE '%banquet%'\n   OR (\"capacity\" = 200 AND LOWER(\"event_space\") LIKE '%conference%')\nORDER BY \"event_space\" ASC NULLS FIRST, \"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3226,
+      "completion_tokens": 237
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:24": {
+    "question_id": "24",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT DISTINCT\n    c.\"name\",\n    c.\"vacation_option\"\nFROM \"customers\" c\nWHERE LOWER(c.\"activities\") LIKE '%dance%'\n  AND (\n      LOWER(c.\"vacation_option\") LIKE '%cruise%'\n      OR LOWER(c.\"vacation_option\") LIKE '%resort%'\n  )\nORDER BY c.\"vacation_option\" ASC NULLS FIRST, c.\"name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1440,
+      "completion_tokens": 124
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:25": {
+    "question_id": "25",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "SELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%cruise%'\n\nUNION\n\n\nSELECT c.\"name\", c.\"email\", c.\"phonenumber\"\nFROM \"customers\" c\nWHERE c.\"vacation_option\" LIKE '%resort%'\n  AND c.\"activities\" LIKE '%dance%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1439,
+      "completion_tokens": 116
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:26": {
+    "question_id": "26",
+    "db_id": "attachment_1tab_val_vacation_option",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1730,
+      "completion_tokens": 81
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:41": {
+    "question_id": "41",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%swimming%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1484,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:42": {
+    "question_id": "42",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%pool%'\n\nUNION\n\n\nSELECT h.\"name\" AS hotel_name\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND lf.\"feature\" LIKE '%hot tub%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1480,
+      "completion_tokens": 273
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:43": {
+    "question_id": "43",
+    "db_id": "attachment_1tab_ref_leisure_features",
+    "prediction": "SELECT DISTINCT h.\"name\"\nFROM \"hotel\" h\nJOIN \"city\" c ON c.\"id\" = h.\"city_id\"\nJOIN \"roomtype\" rt ON rt.\"hotel_id\" = h.\"id\"\nJOIN \"featureinroom\" fr ON fr.\"roomtype_id\" = rt.\"id\"\nJOIN \"leisurefeature\" lf ON lf.\"id\" = fr.\"leisurefeature_id\"\nWHERE c.\"name\" LIKE '%New York%'\n  AND (lf.\"feature\" ILIKE '%swimming pool%' OR lf.\"feature\" ILIKE '%hot tub%')\nORDER BY h.\"name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3244,
+      "completion_tokens": 325
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:44": {
+    "question_id": "44",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%guest%'\n\nUNION\n\n\nSELECT DISTINCT g.\"fullname\"\nFROM guests g\nJOIN bookings b ON b.\"guestid\" = g.\"id\"\nJOIN rooms r ON r.\"roomid\" = b.\"roomid\"\nJOIN services s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(r.\"typeofroom\") LIKE '%suite%'\n  AND LOWER(s.\"amenity\") LIKE '%air%condition%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1449,
+      "completion_tokens": 192
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:45": {
+    "question_id": "45",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "SELECT DISTINCT\n    g.\"fullname\",\n    CASE\n        WHEN LOWER(r.\"typeofroom\") LIKE '%suite%' THEN 'air-conditioned suite'\n        ELSE 'air-conditioned guest room'\n    END AS \"room_category\"\nFROM \"bookings\" b\nJOIN \"guests\" g ON g.\"id\" = b.\"guestid\"\nJOIN \"rooms\" r ON r.\"roomid\" = b.\"roomid\"\nJOIN \"services\" s ON s.\"serviceid\" = r.\"serviceid\"\nWHERE LOWER(s.\"amenity\") LIKE '%air%condition%'\n   OR LOWER(s.\"description\") LIKE '%air%condition%'\nORDER BY g.\"fullname\" ASC NULLS FIRST, \"room_category\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1438,
+      "completion_tokens": 214
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:46": {
+    "question_id": "46",
+    "db_id": "attachment_1tab_ref_overnight_stay",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1728,
+      "completion_tokens": 66
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:68": {
+    "question_id": "68",
+    "db_id": "attachment_2tab_ref_cleaning_professional",
+    "prediction": "SELECT hk.\"fullname\" AS \"fullname\"\nFROM \"housekeepers\" hk\nJOIN \"hotels\" h ON hk.\"hotelid\" = h.\"id\"\nWHERE h.\"address\" LIKE '%789 River Road%'\n\nUNION\n\nSELECT la.\"fullname\" AS \"fullname\"\nFROM \"laundryattendants\" la\nJOIN \"hotels\" h ON la.\"hotelid\" = h.\"id\"\nWHERE h.\"address\" LIKE '%789 River Road%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1469,
+      "completion_tokens": 140
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:69": {
+    "question_id": "69",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1783,
+      "completion_tokens": 72
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:70": {
+    "question_id": "70",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1784,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:71": {
+    "question_id": "71",
+    "db_id": "attachment_2tab_val_hospitality_staff",
+    "prediction": "SELECT c.\"name\" AS chef_name\nFROM \"chefs\" c\n\nUNION ALL\n\n\nSELECT s.\"name\" AS chef_name\nFROM \"servers\" s\nWHERE LOWER(s.\"language\") LIKE '%spanish%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1492,
+      "completion_tokens": 77
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:78": {
+    "question_id": "78",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1851,
+      "completion_tokens": 73
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:79": {
+    "question_id": "79",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\"\nFROM \"steakhouses\" s\nWHERE s.\"year_of_establishment\" = 1980\n\nUNION ALL\n\n\nSELECT sr.\"name\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1565,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:80": {
+    "question_id": "80",
+    "db_id": "attachment_2tab_val_restaurant",
+    "prediction": "SELECT s.\"name\", s.\"location\", s.\"year_of_establishment\", s.\"number_of_employees\", s.\"average_meal_price\"\nFROM \"steakhouses\" s\n\nUNION ALL\n\n\nSELECT sr.\"name\", sr.\"location\", sr.\"year_of_establishment\", sr.\"number_of_employees\", sr.\"specialty_dish\"\nFROM \"seafoodrestaurants\" sr\nWHERE sr.\"year_of_establishment\" = 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1566,
+      "completion_tokens": 137
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:163": {
+    "question_id": "163",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT c.\"channel_value\"\nFROM \"channels\" c\nJOIN \"customer_service_representatives_channels\" crc ON crc.\"channel_id\" = c.\"channel_id\"\nGROUP BY c.\"channel_id\", c.\"channel_value\"\nHAVING COUNT(DISTINCT crc.\"representative_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"customer_service_representatives\"\n);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 108
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:164": {
+    "question_id": "164",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\" AS representative_name,\n    ch.\"channel_value\" AS channel_value\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrch\n    ON csrch.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrch.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3000,
+      "completion_tokens": 264
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:168": {
+    "question_id": "168",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT\n    cc.\"company_name\",\n    br.\"role_value\"\nFROM \"construction_companies\" cc\nJOIN \"construction_companies_building_roles\" ccbr\n    ON ccbr.\"construction_company_id\" = cc.\"id\"\nJOIN \"building_roles\" br\n    ON br.\"role_id\" = ccbr.\"building_role_id\"\nORDER BY cc.\"company_name\" ASC NULLS FIRST, br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3008,
+      "completion_tokens": 263
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:170": {
+    "question_id": "170",
+    "db_id": "scope_banks_financial_roles",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1648,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:171": {
+    "question_id": "171",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT br.\"role_value\"\nFROM \"building_roles\" br\nJOIN \"construction_companies_building_roles\" ccbr\n  ON ccbr.\"building_role_id\" = br.\"role_id\"\nGROUP BY br.\"role_id\", br.\"role_value\"\nHAVING COUNT(DISTINCT ccbr.\"construction_company_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"construction_companies\"\n)\nORDER BY br.\"role_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1357,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:172": {
+    "question_id": "172",
+    "db_id": "scope_construction_companies_building_roles",
+    "prediction": "SELECT\n    cc.\"company_name\",\n    br.\"role_value\"\nFROM \"construction_companies\" cc\nJOIN \"construction_companies_building_roles\" ccbr\n    ON ccbr.\"construction_company_id\" = cc.\"id\"\nJOIN \"building_roles\" br\n    ON br.\"role_id\" = ccbr.\"building_role_id\"\nORDER BY cc.\"company_name\" ASC NULLS FIRST, br.\"role_value\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3006,
+      "completion_tokens": 262
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:173": {
+    "question_id": "173",
+    "db_id": "scope_customer_service_representatives_channels",
+    "prediction": "SELECT\n    csr.\"full_name\",\n    ch.\"channel_value\"\nFROM \"customer_service_representatives\" csr\nJOIN \"customer_service_representatives_channels\" csrc\n    ON csrc.\"representative_id\" = csr.\"id\"\nJOIN \"channels\" ch\n    ON ch.\"channel_id\" = csrc.\"channel_id\"\nORDER BY csr.\"full_name\" ASC NULLS FIRST, ch.\"channel_value\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1355,
+      "completion_tokens": 119
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:272": {
+    "question_id": "272",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"job_post\",\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nORDER BY d.\"job_post\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST, d.\"certification\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3264,
+      "completion_tokens": 210
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:286": {
+    "question_id": "286",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"degree_level\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3258,
+      "completion_tokens": 160
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:288": {
+    "question_id": "288",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3256,
+      "completion_tokens": 196
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:289": {
+    "question_id": "289",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    d.\"degree_level\",\n    d.\"certification\"\nFROM \"degrees\" d\nWHERE d.\"job_post\" LIKE '%AI Researcher%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3262,
+      "completion_tokens": 179
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:290": {
+    "question_id": "290",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT DISTINCT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS required_degree\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3258,
+      "completion_tokens": 190
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:312": {
+    "question_id": "312",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nJOIN \"restaurant\" r ON r.\"sous_chef_id\" = sc.\"sous_id\"\nJOIN \"orders\" o ON o.\"restaurant_id\" = r.\"restaurant_id\"\nJOIN \"order_details\" od ON od.\"order_id\" = o.\"order_id\"\nJOIN \"menu_items\" mi ON mi.\"menu_item_id\" = od.\"menu_item_id\"\nWHERE LOWER(mi.\"item_name\") LIKE '%pizza%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3318,
+      "completion_tokens": 274
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:313": {
+    "question_id": "313",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "ambiguous",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 1808,
+      "completion_tokens": 76
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:322": {
+    "question_id": "322",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"full_name\"\nFROM \"executive_chef\"\nORDER BY \"full_name\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3324,
+      "completion_tokens": 157
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:331": {
+    "question_id": "331",
+    "db_id": "vague_2cols_qualifications",
+    "prediction": "SELECT\n    j.\"title\" AS vacancy,\n    d.\"degree_level\" AS qualification\nFROM \"jobs\" j\nJOIN \"degrees\" d ON d.\"job_post\" = j.\"title\"\nORDER BY j.\"title\" ASC NULLS FIRST, d.\"degree_level\" ASC NULLS FIRST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3252,
+      "completion_tokens": 205
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:336": {
+    "question_id": "336",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT \"ec\".\"full_name\"\nFROM \"executive_chef\" AS \"ec\"\nORDER BY \"ec\".\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3324,
+      "completion_tokens": 146
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:337": {
+    "question_id": "337",
+    "db_id": "vague_2tabs_chef",
+    "prediction": "SELECT DISTINCT sc.\"full_name\"\nFROM \"sous_chef\" sc\nORDER BY sc.\"full_name\" ASC NULLS FIRST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 3324,
+      "completion_tokens": 172
+    }
+  }
+}

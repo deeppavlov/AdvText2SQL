@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "phase": "search",
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "current_database": "vague_2cols_rating1",
+  "databases_ready": 22,
+  "databases_total": 22,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "io_overlay": "synced-io-overlay-v1",
+  "event": "schema_verified",
+  "build_attempt": 1,
+  "question_id": "124",
+  "candidate": "b3acc4b752f94f7a9cf3e53c3f103182d704dd48fd0c1ad7d898a83d699f2b1e",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-07T12:13:43.964634+00:00",
+  "saved_evaluations": 704,
+  "finished_at_utc": "2026-11-07T12:14:05.581321+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "version": "ambrosia-full-integrity-review-v1",
+  "created_at_utc": "2026-11-07T20:51:43.938887+00:00",
+  "manifest_sha256": "f02c4711a52ccc1285a8617392ab6b1b512f5905feab4b56f761eeb9850a1db2",
+  "status": "completed_original_control",
+  "metrics": {
+    "evaluation_policy": "ambrosia-strict-v1",
+    "accuracy": 81.04265402843602,
+    "legacy_accuracy": 81.04265402843602,
+    "total": 211,
+    "gold_ambiguous": 63,
+    "pred_ambiguous": 39,
+    "true_positive": 31,
+    "generation_errors": 0,
+    "ambiguity_metrics": {
+      "tp": 31,
+      "fp": 8,
+      "fn": 32,
+      "tn": 140,
+      "errors_ambiguous": 0,
+      "errors_unambiguous": 0,
+      "precision": 0.7948717948717948,
+      "recall": 0.49206349206349204,
+      "f1": 0.6078431372549019,
+      "balanced_accuracy": 0.719004719004719
+    }
+  },
+  "rescued_vs_historical": [
+    "127",
+    "131",
+    "270"
+  ],
+  "harmed_vs_historical": [
+    "177"
+  ],
+  "interpretation": "Same original prompts, different pass; changes describe run variability, not prompt optimization.",
+  "deployed": false,
+  "independent_test": false,
+  "source_files_sha256": {
+    "experiment.json": "13ec2de5841d9d19a7b666e351b3d4d1b8e4b66cae87d58033959f7b8a1d48de",
+    "jobs\\ambrosia_full__control\\evaluations.json": "40da14656710a51d60cbcb8f21b1d8cb2d9f0329f29ccdaba62437a09706a888",
+    "jobs\\ambrosia_full__control\\confirm\\metadata.json": "2bc90f44058ad98a52f6919accd2f6afe757e9b99c2615c1251586caf296bdc3",
+    "jobs\\ambrosia_full__control\\confirm\\budget.json": "56ce3dbbc22a44e025ef897779a6fb45c525de28df865b6154844f7036497561",
+    "budget.json": "6afd04d097646ad1fa063b958115ea38460f1387ff59afa3c18649e4fd633f67",
+    "report.json": "46d843cf14bbafca051203537c01b6965af065e9ef55ab39e9386c0d97cfc8aa",
+    "conclusion.json": "f641df20e6a5298701fbc26b0b1f14b64b6fcc935aecceb6597539dec04f1f19"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "manifest_sha256": "5bc46d7d639b1eeb508c92f4201c3cee4ab6db04bbffea03378d0d6b7bf618cc",
+  "job": {
+    "name": "sql__mipro_zero__r2",
+    "slot": "sql",
+    "method": "mipro_zero",
+    "seed": 43
+  },
+  "candidate": {
+    "instruction": "Write a single bare PostgreSQL SELECT statement that answers the natural-language question using the provided schema and evidence. Output only the SQL query, with no trailing semicolon, no schema qualification, and no explanation.\n\nGeneral rules:\n- Use INNER JOINs with short aliases (T1, T2, T3, …) and reference every column through its table alias.\n- Use schema identifiers verbatim as given; never invent, rename, or guess column or table names.\n- Select exactly the columns the question asks for — no extra columns, no missing columns, no concatenation of separate fields into one; if two fields are requested, return them as separate columns.\n- Resolve entities with equality or LIKE predicates as appropriate; prefer LIKE for proper names, titles, or free-text values that may vary in case, quoting, or inflection.\n- For superlatives, use MAX/MIN scalar subqueries or ORDER BY with LIMIT, matching the question's intent (single extreme value vs. top-N).\n- For ratios or differences, use CAST(... AS REAL) division or conditional SUM subtraction as the evidence indicates.\n- For relationship counts, use GROUP BY with HAVING when the question implies a threshold or per-group count.\n- Apply DISTINCT only immediately after SELECT; never place DISTINCT after a comma. If DISTINCT is used with ORDER BY, every ORDER BY expression must appear in the SELECT list; otherwise use GROUP BY.\n- Verify every alias used in SELECT, WHERE, GROUP BY, ORDER BY, or HAVING is declared in the FROM/JOIN of the same SELECT block; aliases do not cross subquery boundaries.\n- Do not wrap DATE/TIMESTAMP columns in TO_DATE(); use them directly or with EXTRACT. Apply TO_DATE only to text literals.\n- ROUND requires NUMERIC; cast REAL/FLOAT/double precision inputs to NUMERIC before rounding.\n- Always specify NULL ordering explicitly in ORDER BY: DESC NULLS LAST for descending, ASC NULLS FIRST for ascending.\n- Keep the query deterministic and self-contained; do not reference tables or columns not present in the schema.",
+    "demos": []
+  },
+  "inner_accuracy": 0.5588235294117647,
+  "complete_candidates": 4,
+  "external_dev_used": false,
+  "selected_at_utc": "2026-11-06T16:10:45.886519+00:00",
+  "sha256": "8ffb93d108f4b24edf26bd7590989ea66f988bad087bfe4eb2c847ec4f549b78"
+}

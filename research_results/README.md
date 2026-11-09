@@ -13,6 +13,14 @@ JSONL-датасеты и решения селектора не относят�
 
 | Папка | Содержимое |
 | --- | --- |
+| `ambrosia_prompt_full_20261107/` | Завершён свежий full: 171/211 (81,04%), F1 60,78%, recall 49,21%; 14+32, исходные промпты, 498 448 токенов, pending пусты; [итоги](../docs/24_ambrosia_prompt_full.md) |
+| `prompt_stage_summary_20261107.json` | Итоговая совместимая опора следующего этапа: BIRD compact + SQL seed 43 (132/241), Ambrosia 14+32 с исходным промптом (171/211); candidate identity/source SHA, лимиты интерпретации, deployed=false |
+| `bird_prompt_full_20261107/` | Завершены 482 оценки: новый SQL seed 43 — 132/241 (54,77%) против исходных 126/241 (52,28%), +2,49 п.п.; 17 исправлено / 11 ухудшено, 3,22 млн токенов; conclusion и integrity review; [результаты](../docs/23_bird_prompt_full.md) |
+| `ambrosia_prompt_dev_20261107/` | Завершены 552 оценки: исходный 14+32 — 80,43%, MIPRO — 76,81% / 78,26%, TextGrad — 73,91%; сохраняем исходный, conclusion и SHA закреплены; 1,20 млн токенов; [итоги](../docs/22_ambrosia_prompt_dev.md) |
+| `bird_compact_prompt_transfer_20261107/` | Завершены три compact-dev повтора / 880 оценок: MIPRO few-shot 45,45% против исходных 38,79%, +6,67 п.п.; 9,73 млн токенов; [итоги](../docs/21_bird_compact_prompt_transfer.md) |
+| `prompt_optimization_comparison_20261105/` | Выполнены 18/24 исходных поисков; MIPRO zero-shot Ambrosia: 95% / 90% / 83,33%, среднее 89,44% против 83,33% на 60 inner-вопросах. Остальные методы Ambrosia имеют один повтор; shortlist dev подготовлен отдельно; [результаты](../docs/20_prompt_optimizer_comparison.md) |
+| `prompt_optimization_20261105/` | Завершённый первый GEPA-пилот: seed 17/24, 194 269 токенов, два ложных отклонения guard; dev не запускался; [разбор](../docs/19_prompt_optimization_pilot.md) |
+| `prompt_optimization_20261105_guardfix/` | Исправленный поиск завершён: seed 17/24, два новых промпта 16/24, 399 905 токенов; pilot_conclusion.json фиксирует сохранение исходного промпта и отсутствие необходимости dev-подтверждения; [итоги](../docs/19_prompt_optimization_pilot.md#итог-исправленного-поиска) |
 | `ablation_results_large/` | Исторический Mistral baseline и одиночные большие абляции |
 | `ablation_results_small/` | Малые абляции и исторические эксперименты; `feat_best_hybrid_large/` внутри содержит **large** best hybrid |
 | `runs/` | Запуски GPT/DeepSeek, пробы промптов, отчёты, checkpoints, полные ответы и аудит фичей |

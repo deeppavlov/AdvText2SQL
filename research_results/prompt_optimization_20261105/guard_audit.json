@@ -1,0 +1,48 @@
+{
+  "at_utc": "2026-11-05T07:19:09.144406+00:00",
+  "manifest_sha256": "637e096b04e2fd9ac9b990b896ce41c7ebecb1812b1b962026c7669cff03e5ef",
+  "source_files_sha256": {
+    "experiment.json": "d3833f1cd80ade09b811fc2d82dc6f16806821c883d597e5d2bfbb9e92772e8f",
+    "selection.json": "7c4a19bbb9706cccef1ab9743863c8974095cdd2d583dc3672c1ecad7a971d17",
+    "gepa_result.json": "974ed46a9a93237d485d61c0cf758ba2762668491329e7ecaa1e045204050e49",
+    "evaluations.json": "aeb60fa002ac9f57d071c4f9b348e91c44c105963403f2e4c3bc13749a56691f",
+    "search/metadata.json": "99a5395bea6d345ebced394c78e914d2604672dc48bdd7e49a0b82ae47b6c128",
+    "search/budget.json": "12c75e0ebce6ed14dfdc67c301d506baa609acbce3164e9b8af9712f22187758",
+    "search/raw_responses.jsonl": "d1879023947d4ac53da970fd0f1bff64a7c68797eff2b9244453537893b072e7"
+  },
+  "proposals": [
+    {
+      "proposal": 1,
+      "instruction_sha256": "ebbe5de9c0e122930e65cc1c297887df8a33e5caf0b5fd9866efaba8e434542c",
+      "chars": 4693,
+      "v1_allowed": false,
+      "v1_rejection": "Zero-shot instruction must not contain SQL examples",
+      "v2_allowed": true
+    },
+    {
+      "proposal": 2,
+      "instruction_sha256": "abde5901f236da4b7141f82fad0c152d77d555b4ee46f799cd09b4c45a762f48",
+      "chars": 3694,
+      "v1_allowed": true,
+      "v1_rejection": null,
+      "v2_allowed": true
+    },
+    {
+      "proposal": 3,
+      "instruction_sha256": "a106f8a9c77a4637fa33914ec61b7fd3b35fc5227ced24cfa13047d9f966e654",
+      "chars": 4072,
+      "v1_allowed": false,
+      "v1_rejection": "Zero-shot instruction must not contain SQL examples",
+      "v2_allowed": true
+    },
+    {
+      "proposal": 4,
+      "instruction_sha256": "612beb522d9560894054140e256da4b7fde1ac39c044008cfd51e1cb0a5b8d23",
+      "chars": 2581,
+      "v1_allowed": true,
+      "v1_rejection": null,
+      "v2_allowed": true
+    }
+  ],
+  "conclusion": "Two valid prose instructions falsely blocked by v1; do not infer GEPA ineffectiveness; original source/results untouched"
+}

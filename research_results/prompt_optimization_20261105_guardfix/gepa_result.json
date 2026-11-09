@@ -1,0 +1,244 @@
+{
+  "candidates": [
+    {
+      "sql_rules": "2. SELECT СТРОГО те колонки, которые явно запрошены в вопросе. Каждая лишняя или недостающая колонка = неверный ответ.\n   - НЕ добавляй id, названия или любые другие поля \"для контекста\"\n   - НЕ конкатенируй колонки через ||; если нужны first_name и last_name — выбирай их ОТДЕЛЬНО\n   - Считай колонки: ответ вопроса должен ровно совпадать по количеству и названию\n3. Каждое имя колонки сверяй со схемой для конкретной таблицы — НЕ используй колонку одной таблицы через alias другой\n4. Используй LIKE, если запрос касается имён собственных, фамилий, названий подразделений.\nВсегда используй LIKE, если запрос касается значений из таблицы, которых нет явно\nв промпте. В таблице слова могут быть в разных падежах, с кавычками или без,\nты должен УЧИТЫВАТЬ ЭТО!\n5. Правила использования DISTINCT:\n   - DISTINCT пишется ТОЛЬКО сразу после SELECT: \"SELECT DISTINCT col\" — правильно.\n   - НИКОГДА не пиши DISTINCT после запятой: \"SELECT col1, DISTINCT col2\" — НЕВАЛИДНЫЙ SQL!\n   - Если нужно SELECT DISTINCT с ORDER BY — все колонки ORDER BY ОБЯЗАНЫ быть в SELECT.\n   - Если сортируешь по вычисляемому выражению, которого нет в SELECT — используй GROUP BY\n     вместо DISTINCT, или включи выражение в SELECT.\n6. Проверка алиасов: каждый alias, используемый в SELECT/WHERE/ORDER BY/GROUP BY,\n   ОБЯЗАН быть объявлен в FROM или JOIN этого же SELECT-блока. Alias из внешнего запроса\n   недоступен внутри подзапроса и наоборот. Перед завершением пройдись по каждому alias.\n7. Колонки типа DATE/TIMESTAMP НЕ оборачивай в TO_DATE(). Если колонка уже DATE — используй\n   её напрямую или EXTRACT(YEAR FROM col). TO_DATE() применяй ТОЛЬКО к текстовым строкам-литералам.\n8. ROUND(x, n) работает ТОЛЬКО с NUMERIC. Если x — REAL/FLOAT/double precision, пиши ROUND(x::NUMERIC, n).\n9. NULL-порядок в ORDER BY: PostgreSQL и SQLite ведут себя ПРОТИВОПОЛОЖНО. ВСЕГДА указывай явно:\n   - ORDER BY col DESC → пиши ORDER BY col DESC NULLS LAST\n   - ORDER BY col ASC  → пиши ORDER BY col ASC NULLS FIRST"
+    },
+    {
+      "sql_rules": "2. SELECT only the columns explicitly requested by the question. Every extra or missing column is a wrong answer.\n   - Do NOT add id, names, or any other fields \"for context\".\n   - Do NOT concatenate columns with ||; if first_name and last_name are needed, select them SEPARATELY.\n   - Count the columns: the answer must match exactly in number and naming.\n3. Verify every column name against the schema for the specific table — do NOT use a column from one table through another table's alias.\n4. Use LIKE when the query concerns proper names, surnames, or department names.\n   Always use LIKE when the query concerns values from a table that are not explicitly present in the prompt. Words in the table may appear in different cases, with or without quotes; you must ACCOUNT for this.\n5. DISTINCT rules:\n   - DISTINCT is written ONLY immediately after SELECT: \"SELECT DISTINCT col\" — correct.\n   - NEVER write DISTINCT after a comma: \"SELECT col1, DISTINCT col2\" — INVALID SQL.\n   - If SELECT DISTINCT is used with ORDER BY — all ORDER BY columns MUST be in SELECT.\n   - If sorting by a computed expression not in SELECT — use GROUP BY instead of DISTINCT, or include the expression in SELECT.\n6. Alias check: every alias used in SELECT/WHERE/ORDER BY/GROUP BY MUST be declared in FROM or JOIN of the same SELECT block. An alias from an outer query is unavailable inside a subquery and vice versa. Before finishing, go through every alias.\n7. Do NOT wrap DATE/TIMESTAMP columns in TO_DATE(). If the column is already DATE — use it directly or EXTRACT(YEAR FROM col). Apply TO_DATE() ONLY to text string literals.\n8. ROUND(x, n) works ONLY with NUMERIC. If x is REAL/FLOAT/double precision, write ROUND(x::NUMERIC, n).\n9. NULL ordering in ORDER BY: PostgreSQL and SQLite behave OPPOSITELY. ALWAYS specify explicitly:\n   - ORDER BY col DESC → write ORDER BY col DESC NULLS LAST\n   - ORDER BY col ASC  → write ORDER BY col ASC NULLS FIRST\n10. Match the function to the actual column type from the schema. Do NOT apply date/time extraction functions (EXTRACT, DATE_PART, etc.) to columns whose type is TEXT or another non-date type. For TEXT columns storing dates, use string functions (SUBSTR, LEFT, RIGHT, LIKE) or cast explicitly to a date type before extraction. Verify the declared type of every column before choosing a function.\n11. When the question asks for a ratio, percentage, or average, compute it with explicit casts to a numeric type to avoid integer division and type errors. Guard against division by zero with NULLIF or an equivalent. Do not assume the result type; cast the numerator or denominator as needed.\n12. When the question involves a superlative (\"most\", \"highest\", \"largest\", \"least\", \"lowest\"), do NOT rely on ORDER BY ... LIMIT to pick the extreme row unless the question explicitly asks for a single top row. Prefer a subquery or join that selects rows matching the maximum/minimum value, so ties and multi-row results are handled correctly.\n13. When the question asks for a subset defined by a condition on an aggregate (e.g., count above a threshold), apply the condition to the aggregate via HAVING or a subquery, not to individual rows in WHERE. Distinguish row-level filters (WHERE) from group-level filters (HAVING).\n14. When the question asks to exclude a category or negate a condition, express the exclusion explicitly (NOT LIKE, NOT IN, EXCEPT, or an anti-join) rather than relying on an approximate pattern that may also exclude valid rows. Ensure the negation applies to the intended set, not to the whole result.\n15. For \"average\" questions, confirm whether the average is over individual rows or over grouped totals. If the question says \"total average\" or \"average of totals\", aggregate at the appropriate level first, then average the aggregates.\n16. Before finalizing, re-read the question and evidence and confirm: the selected columns match exactly, every filter in the question is represented, every join is on the correct key columns from the schema, and the aggregation level matches what is asked."
+    },
+    {
+      "sql_rules": "1. Сначала определи по вопросу и evidence, какие именно сущности и атрибуты должны попасть в результат. Возвращай ровно тот набор колонок, который запрошен: не заменяй запрошенный идентификатор/название другим похожим полем и не добавляй поля «для контекста».\n2. Если вопрос просит показать сущность (member, user, post и т.п.), выбирай колонку, которая в схеме является идентификатором этой сущности или прямо названа в вопросе/evidence. Не подменяй её составными текстовыми полями, если явно не запрошены отдельные части.\n3. Если вопрос просит несколько разных объектов (например, участника и ссылку на событие), каждая запрошенная часть должна быть отдельной выходной колонкой из соответствующей таблицы. Не теряй ни одну запрошенную часть и не добавляй незапрошенные.\n4. Соединяй таблицы только по колонкам, которые по смыслу и типам являются внешними ключами/идентификаторами соответствующей сущности. Не соединяй таблицы по произвольным текстовым или временным полям, если в схеме есть явная связь через id/link-колонки.\n5. Если результат должен быть уникальным по смыслу вопроса, используй DISTINCT, но только когда это не искажает запрошенные агрегаты. DISTINCT пишется сразу после SELECT; при DISTINCT + ORDER BY все сортируемые колонки должны быть в SELECT.\n6. Для текстовых условий по именам, названиям, статусам и другим значениям, которые могут отличаться регистром, используй нечувствительное к регистру сравнение (LOWER(...) = LOWER(...) или ILIKE). LIKE/ILIKE применяй для частичного совпадения; для точного названия/статуса используй равенство с нормализацией регистра.\n7. Не добавляй приведение типов к DATE/TIMESTAMP для колонок, которые уже имеют такой тип. Приводи только текстовые колонки, если по evidence дата хранится строкой; учитывай возможные форматы и обрезай/нормализуй строку до сравнения.\n8. Для диапазонов дат используй BETWEEN с корректно приведёнными границами. Если колонка текстовая, сначала приведи её к дате; если тип уже дата/таймстамп — сравнивай напрямую.\n9. ROUND с числом знаков применяй только к NUMERIC; для REAL/FLOAT/double precision сначала приводи к NUMERIC.\n10. В ORDER BY всегда явно задавай NULLS FIRST/LAST: для DESC — NULLS LAST, для ASC — NULLS FIRST.\n11. Проверяй каждый alias: он должен быть объявлен в FROM/JOIN того же SELECT-блока. Не используй alias из внешнего запроса внутри подзапроса и наоборот.\n12. Перед финалом сверь: количество и смысл выходных колонок соответствуют вопросу; все соединения идут по правильным ключам; условия по тексту учитывают регистр; даты приведены корректно; сортировка и NULL-порядок заданы явно."
+    }
+  ],
+  "parents": [
+    [
+      null
+    ],
+    [
+      0
+    ],
+    [
+      0
+    ]
+  ],
+  "val_aggregate_scores": [
+    0.7083333333333334,
+    0.6666666666666666,
+    0.6666666666666666
+  ],
+  "val_subscores": [
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 0.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 0.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 0.0,
+      "16": 1.0,
+      "17": 1.0,
+      "18": 0.0,
+      "19": 1.0,
+      "20": 0.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 0.0
+    },
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 0.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 0.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 0.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 0.0,
+      "16": 1.0,
+      "17": 1.0,
+      "18": 0.0,
+      "19": 1.0,
+      "20": 0.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 0.0
+    },
+    {
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0,
+      "3": 0.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 0.0,
+      "7": 1.0,
+      "8": 1.0,
+      "9": 0.0,
+      "10": 1.0,
+      "11": 1.0,
+      "12": 1.0,
+      "13": 1.0,
+      "14": 1.0,
+      "15": 0.0,
+      "16": 1.0,
+      "17": 1.0,
+      "18": 0.0,
+      "19": 1.0,
+      "20": 0.0,
+      "21": 0.0,
+      "22": 1.0,
+      "23": 0.0
+    }
+  ],
+  "best_outputs_valset": null,
+  "per_val_instance_best_candidates": {
+    "0": [
+      0,
+      1,
+      2
+    ],
+    "1": [
+      0,
+      1,
+      2
+    ],
+    "2": [
+      0,
+      1,
+      2
+    ],
+    "3": [
+      0,
+      1,
+      2
+    ],
+    "4": [
+      0,
+      1,
+      2
+    ],
+    "5": [
+      0,
+      1,
+      2
+    ],
+    "6": [
+      0
+    ],
+    "7": [
+      0,
+      1,
+      2
+    ],
+    "8": [
+      0,
+      1,
+      2
+    ],
+    "9": [
+      0,
+      1,
+      2
+    ],
+    "10": [
+      0,
+      1,
+      2
+    ],
+    "11": [
+      0,
+      1,
+      2
+    ],
+    "12": [
+      0,
+      1,
+      2
+    ],
+    "13": [
+      0,
+      1,
+      2
+    ],
+    "14": [
+      0,
+      1,
+      2
+    ],
+    "15": [
+      0,
+      1,
+      2
+    ],
+    "16": [
+      0,
+      1,
+      2
+    ],
+    "17": [
+      0,
+      1,
+      2
+    ],
+    "18": [
+      0,
+      1,
+      2
+    ],
+    "19": [
+      0,
+      1,
+      2
+    ],
+    "20": [
+      0,
+      1,
+      2
+    ],
+    "21": [
+      0,
+      1,
+      2
+    ],
+    "22": [
+      0,
+      1,
+      2
+    ],
+    "23": [
+      0,
+      1,
+      2
+    ]
+  },
+  "val_aggregate_subscores": null,
+  "per_objective_best_candidates": null,
+  "objective_pareto_front": null,
+  "discovery_eval_counts": [
+    0,
+    36,
+    66
+  ],
+  "total_metric_calls": 96,
+  "num_full_val_evals": 3,
+  "run_dir": "D:\\Linux\\onik110\\DeepPavlov\\AdvText2SQL\\research_results\\prompt_optimization_20261105_guardfix\\gepa",
+  "seed": 42,
+  "best_idx": 0,
+  "validation_schema_version": 2
+}

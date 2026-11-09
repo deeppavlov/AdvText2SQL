@@ -1,8 +1,15 @@
 # Структура проекта
 
-Организация файлов выполнена 23.10.2026, дерево обновлено 04.11.2026. Подробности исследований —
-[01_gpt_research.md](01_gpt_research.md), следующий этап —
-[02_feature_selector.md](02_feature_selector.md).
+Организация файлов выполнена 23.10.2026, дерево обновлено 09.11.2026. Текущие итоги —
+[23_bird_prompt_full.md](23_bird_prompt_full.md) и
+[24_ambrosia_prompt_full.md](24_ambrosia_prompt_full.md); следующий этап —
+обновление train utility и классификатора, см. [02_feature_selector.md](02_feature_selector.md).
+
+Файлы `.ps1` в дереве ниже доступны только локально и исключены из Git.
+Публикуемые варианты запусков — `.sh` и Python. Некоторые исторические протоколы
+проверяют также хеши `.ps1`: для их полной проверки после клонирования потребуется
+получить исходные PowerShell-скрипты из локального архива автора. Закреплённые
+манифесты и хеши при исключении файлов не изменяются.
 
 ```text
 AdvText2SQL/
@@ -30,8 +37,22 @@ AdvText2SQL/
 │   ├── 16_transport_recovery.md        # Защита от сбоев API, происхождение и ручное восстановление 9 ID
 │   ├── 17_static_hybrid_dev.md         # Подтверждение пяти статических профилей на dev, три повтора
 │   ├── 18_full_static_hybrid.md        # Четыре профиля × два полных согласованных набора, ручной запуск
+│   ├── 19_prompt_optimization_pilot.md # GEPA SQL-пилот: 48 train-вопросов, бюджеты, search/confirm
+│   ├── 20_prompt_optimizer_comparison.md # GEPA/MIPRO/TextGrad на SQL и неоднозначности, раздельные slots
+│   ├── 21_bird_compact_prompt_transfer.md # BIRD compact-dev: исходный и найденные SQL-промпты, 3 повтора
+│   ├── 22_ambrosia_prompt_dev.md        # Ambrosia 14+32: замороженный shortlist на 46 dev-вопросах
+│   ├── 23_bird_prompt_full.md           # BIRD full: выбранный SQL-промпт против исходного compact
+│   ├── 24_ambrosia_prompt_full.md       # Ambrosia full: свежий контроль 211 с исходными промптами при 14+32
 │   └── project_structure.md            # Этот файл: дерево и назначение папок
 ├── research_results/                   # Все архивные и новые результаты исследований
+│   ├── prompt_stage_summary_20261107.json # Итоговые опоры BIRD/Ambrosia, candidate/source SHA и метрики
+│   ├── ambrosia_prompt_full_20261107/  # Отдельный full manifest, оригинальные шаблоны, свежие ответы 211
+│   ├── bird_prompt_full_20261107/      # Отдельный full manifest, frozen candidate, парный отчёт на 241
+│   ├── ambrosia_prompt_dev_20261107/   # Отдельный manifest/report, 46 вопросов × 4 промпта × 3
+│   ├── bird_compact_prompt_transfer_20261107/ # Отдельный compact manifest/report; 55 dev × кандидаты × 3
+│   ├── prompt_optimization_comparison_20261105/ # Общий поиск промптов на 14+32, его результаты не переименовываются
+│   ├── prompt_optimization_20261105/   # Манифест, кандидаты/оценки, выбор, бюджеты и dev-таблица
+│   ├── prompt_optimization_20261105_guardfix/ # Отдельный повтор после ложного отклонения инструкций, provenance v1
 │   ├── deepseek_direct_ablation_large_20261024/ # Прямой DeepSeek: baseline и одиночные фичи
 │   ├── deepseek_full_static_20261103/  # Отдельная full-серия: experiment.json, full_report, full/<профиль>/<бенчмарк>
 │   ├── rule_selector_deepseek_20261028/ # Замороженная политика, offline replay, сравнение и решения
@@ -103,6 +124,10 @@ AdvText2SQL/
 │       └── prompts.py                  # Шаблоны промптов
 ├── benchmarks/                         # BIRD/Ambrosia pipeline, оценщики и учёт токенов
 ├── scripts/                            # Поддерживаемые инструменты текущих исследований
+│   ├── ambrosia_prompt_full.py         # Оригинальные промпты/14+32, full-контроль, строгие метрики и budgets
+│   ├── bird_prompt_full.py             # Конкретный текст по dev, full EX, budgets и парные вызовы
+│   ├── ambrosia_prompt_dev.py          # Кандидаты Ambrosia, строгие метрики, dev-протокол и ручной CLI
+│   ├── bird_compact_transfer.py          # Frozen compact-dev, provenance, paired report, budgets и recovery
 │   ├── run_feature_ablation.py          # Последовательные абляции, контроль ошибок, сводные таблицы
 │   ├── run_feature_combinations.py      # Шесть запусков: 2+35, затем правила и детектор
 │   ├── run_hybrid_relationships.py      # Два запуска: PK/FK-подсказки к выбранному гибриду
@@ -133,6 +158,10 @@ AdvText2SQL/
 │   ├── transport_safe_runtime.py      # Первая ошибка API прерывает вопрос до checkpoint, deadline 180 с
 │   ├── full_static_hybrid.py          # Четыре замороженных профиля, full-очередь и описательный отчёт
 │   ├── full_static_hybrid_runtime.py  # Full-обёртка с прежними SQL/transport-правилами и schema preflight
+│   ├── prompt_pilot.py                # Офлайн-подготовка, frozen cohorts, SQL-slot, отчёты и CLI
+│   ├── prompt_pilot_runtime.py        # GEPAAdapter, task/teacher, read-only preflight и оценка SQL
+│   ├── prompt_pilot_budget.py         # Сохраняемые лимиты вызовов/токенов и резервы до запроса
+│   ├── prompt_pilot_guardfix.py       # Версия проверки SQL-примеров без блокировки обычных SQL-правил
 │   ├── build_feature_dataset.py        # Старый builder labels; требуется доработка перед обучением
 │   ├── build_configuration_dataset.py  # Новый офлайн-builder utility и валидация bundle
 │   ├── configuration_splits.py         # Компоненты БД/семейств, train/dev/test и train-only CV
@@ -148,6 +177,12 @@ AdvText2SQL/
 │   ├── check_openrouter.py             # Короткая платная проверка API, только при явном запуске
 │   └── watch_baseline.ps1              # Наблюдение за конкретным процессом и остановка при сбое
 ├── local/                              # Shell-запуски с SSH
+│   ├── run_ambrosia_prompt_full.ps1 / .sh # Свежий Ambrosia full; offline-флаги без SSH/БД/API
+│   ├── run_bird_prompt_full.ps1 / .sh   # Ручной BIRD full с продолжением прерванного запуска
+│   ├── run_ambrosia_prompt_dev.ps1 / .sh # Ручной Ambrosia dev; offline-флаги без SSH/БД/API
+│   ├── run_bird_compact_transfer.ps1 / .sh # Ручной BIRD compact-dev с туннелем; offline-флаги без сети
+│   ├── run_prompt_pilot.ps1 / .sh      # Ручные GEPA search/confirm и офлайн-режимы
+│   ├── run_prompt_pilot_guardfix.ps1 / .sh # Исправленный пилот в отдельной папке, v1 не меняется
 │   ├── run_full_static_hybrid.ps1 / .sh # Ручной запуск восьми full-прогонов; offline prepare/status/dry-run
 │   ├── run_feature_ablation.ps1         # PowerShell-вход: выбирает Git Bash вместо WSL
 │   ├── run_deepseek_ablation.ps1        # Та же серия с локальным .env.deepseek
@@ -164,7 +199,7 @@ AdvText2SQL/
 │   └── run_baseline_large.sh           # Исторический baseline через .env
 ├── tests/                              # Офлайн-проверки наборов, путей, таймаутов, повторов
 ├── hints/                              # Старый cache FEAT_26; не смешивать train/test и модели
-├── nl_descriptions/                    # Cache описаний FEAT_23; учитывать версию схемы/модели
+├── nl_descriptions/                    # Локальный cache FEAT_23, исключён из Git; учитывать версию схемы/модели
 ├── Roadmap.md                          # Исходный архитектурный план динамического выбора фичей
 ├── practices_doc.md                    # Полный каталог практик; актуальные итоги — в docs
 ├── README.md                           # Исходная инструкция проекта из main, сохранена
@@ -176,6 +211,8 @@ AdvText2SQL/
 ├── .env.example                        # Исходный пример настроек из main
 ├── pyproject.toml / uv.lock            # Окружение и зависимости из main
 ├── requirements-classifier.txt         # Дополнительные PyTorch/Transformers зависимости
+├── requirements-prompt-optimization.txt # GEPA 0.0.27 для отдельной локальной установки
+├── .cache/prompt_optimizer/             # Игнорируемый GEPA; основное окружение не изменяет
 ├── .cache/classifier/                  # Игнорируемые веса энкодера и download/pip-cache
 ├── .gitattributes                      # LF для bash-скриптов
 ├── .gitignore                          # Существующие исключения Git
@@ -231,3 +268,11 @@ bash local/run_openrouter_baseline.sh --configuration hybrid_no32_33 --benchmark
 Файлы, существующие в `main`, при уборке не редактировались и не удалялись.
 Поэтому исходные README и точки запуска могут описывать старое расположение
 выходных файлов. Современный путь запуска и каталог результатов описаны здесь.
+
+05.11.2026: сравнительный стенд оптимизации промптов описан в
+[20_prompt_optimizer_comparison.md](20_prompt_optimizer_comparison.md).
+`scripts/prompt_comparison*.py` — общий протокол, runtime и три настоящих optimizer-интеграции;
+`local/run_prompt_comparison.ps1/.sh` — ручной запуск с туннелем;
+`research_results/prompt_optimization_comparison_20261105/` — отдельные протокол и результаты.
+Пакеты и журналы фреймворков находятся в игнорируемых `.cache/prompt_comparison*`
+и `.cache/textgrad_logs/`; старые пилоты не изменяются.
