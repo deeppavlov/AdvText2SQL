@@ -1,0 +1,14 @@
+{
+  "format_version": "configuration-v2-conclusion-v1",
+  "model_sha256": "84767e68cd93ae1990ec2cb2332702e22f943cd2c4cfaf59979ce47566b8bafe",
+  "report_sha256": "586dab1bc15fa4f690ba34a077977ae523d24d1fc54f9e55b8f56932f7d87247",
+  "train_cv_sha256": "991b13096eaa5b428c2a7111df68fd961561315fde5f013c57d035f6c4ed8551",
+  "diagnostics_sha256": "029891cd0e163593f8030787bdc69ffb6625006220f257b3ddfd4a6cb7dc03a7",
+  "adopt_as_default": false,
+  "reason": "No dev quality gain: BIRD loses two answers versus compact, Ambrosia ties rules_taxonomy.",
+  "evaluation_scope": "saved single-pass response replay; no fresh LLM/DB evaluation; no independent holdout claim",
+  "live_calls": 0,
+  "encoder_trained": false,
+  "test_used": false,
+  "next_step": "Review transfer and informative train-group coverage before any new paid downstream run."
+}

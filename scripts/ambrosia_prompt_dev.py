@@ -36,7 +36,6 @@ SOURCES = (
 )
 FILES = (
     "scripts/ambrosia_prompt_dev.py",
-    "local/run_ambrosia_prompt_dev.ps1",
     "local/run_ambrosia_prompt_dev.sh",
     *shared.FILES,
 )

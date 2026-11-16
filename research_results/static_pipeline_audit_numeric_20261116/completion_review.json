@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-11-16T19:56:38.501803+00:00",
+  "manifest_sha256": "10216f4e5a7562305247e2d262d8218c05e7ddab7f93f257a96bbd42c27ed58c",
+  "benchmark": "bird",
+  "coverage": 241,
+  "total": 241,
+  "correct": 133.0,
+  "accuracy_percent": 55.18672199170125,
+  "prediction_or_reference_errors": 0,
+  "llm_calls": 0,
+  "new_generation": false,
+  "policies": {
+    "ex": "bird-exact-set-v1",
+    "postgresql_execution": "bird-postgres-serial-repeatable-read-v1",
+    "numeric_diagnostic": "postgres-numeric-warning-v1",
+    "diagnostic_affects_score": false
+  },
+  "precision_warning_ids": [
+    "116",
+    "282",
+    "416",
+    "598",
+    "701",
+    "818",
+    "835",
+    "760",
+    "775",
+    "834",
+    "1359",
+    "1471"
+  ],
+  "paired": {
+    "historical": {
+      "correct": 132.0,
+      "rescued_ids": [
+        "1476"
+      ],
+      "harmed_ids": []
+    },
+    "previous_rescore": {
+      "correct": 131.0,
+      "rescued_ids": [
+        "1473",
+        "1476"
+      ],
+      "harmed_ids": []
+    }
+  },
+  "source_files_sha256": {
+    "research_results/static_pipeline_audit_numeric_20261116/experiment.json": "70c7c9402b4ff420a69333c95e0a6b4536943e6641a298b13441c15ca1fb256a",
+    "research_results/static_pipeline_audit_numeric_20261116/bird/reevaluation.json": "953402662f83c5bd88344d61b56afe911adc080c0b6ebf3e53444b11e31b3cc8",
+    "research_results/static_pipeline_audit_numeric_20261116/bird/reevaluation_progress.json": "f92f8bff9e5486d98cf371a375b1222af2a0ee203fb604c1a1a9e74ed2d6b0e7",
+    "research_results/static_pipeline_audit_numeric_20261116/comparison.json": "a29a923a59de312bbfd7a19fadec8278941763978cbd28e91dc94fa4b81452e7",
+    "research_results/static_pipeline_audit_numeric_20261116/connection_resume.json": "9ad2404c920b5eaf79768873a922f78db397dc0715e2b6830e9be23580ea3f63"
+  }
+}

@@ -1,2 +1,5 @@
 # Bash scripts require Unix line endings, including Windows checkouts.
 *.sh text eol=lf
+# These versioned bundles contain byte-level hashes: checkout must preserve LF.
+data/configuration_utility/** text eol=lf
+data/multilabel_utility/** text eol=lf

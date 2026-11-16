@@ -40,7 +40,6 @@ FILES = (
     "scripts/prompt_comparison.py",
     "scripts/prompt_comparison_runtime.py",
     "scripts/prompt_comparison_methods.py",
-    "local/run_prompt_comparison.ps1",
     "local/run_prompt_comparison.sh",
     "requirements-prompt-comparison.txt",
 )
@@ -48,8 +47,9 @@ FILES = (
 
 def load_packages():
     # New directory, never the old, hash-pinned .cache/prompt_optimizer.
-    if str(PACKAGES) not in sys.path:
-        sys.path.append(str(PACKAGES))
+    if str(PACKAGES) in sys.path:
+        sys.path.remove(str(PACKAGES))
+    sys.path.insert(0, str(PACKAGES))
     os.environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
     os.environ.setdefault("DSPY_CACHEDIR", str(ROOT / ".cache/prompt_comparison_state"))
     os.environ.setdefault("TEXTGRAD_LOG_DIR", str(ROOT / ".cache/textgrad_logs"))

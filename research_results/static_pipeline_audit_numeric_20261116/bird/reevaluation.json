@@ -1,0 +1,3862 @@
+{
+  "manifest_sha256": "10216f4e5a7562305247e2d262d8218c05e7ddab7f93f257a96bbd42c27ed58c",
+  "records": {
+    "9": {
+      "question_id": "9",
+      "db_id": "california_schools",
+      "prediction": "SELECT COUNT(DISTINCT s.\"cds\") \nFROM \"satscores\" s\nJOIN \"schools\" sch ON s.\"cds\" = sch.\"cdscode\"\nWHERE s.\"avgscrmath\"::NUMERIC > 560\n  AND sch.\"fundingtype\" = 'Directly funded';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "13": {
+      "question_id": "13",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"phone\"\nFROM schools s\nJOIN satscores sat ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"numtsttakr\"::numeric > 0\nORDER BY (sat.\"numge1500\"::numeric / sat.\"numtsttakr\"::numeric) DESC NULLS LAST\nLIMIT 3;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "17": {
+      "question_id": "17",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"school\", s.\"charternum\", sc.\"avgscrwrite\"\nFROM schools s\nJOIN satscores sc ON s.\"cdscode\" = sc.\"cds\"\nWHERE sc.\"avgscrwrite\" > 499\n  AND s.\"charternum\" IS NOT NULL\nORDER BY sc.\"avgscrwrite\" DESC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "10": {
+      "question_id": "10",
+      "db_id": "california_schools",
+      "prediction": "SELECT f.\"FRPM Count (Ages 5-17)\"\nFROM frpm f\nJOIN satscores s ON f.cdscode = s.cds\nORDER BY s.avgscrread::NUMERIC DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "84": {
+      "question_id": "84",
+      "db_id": "california_schools",
+      "prediction": "SELECT adm.\"admfname1\", s.\"district\", COUNT(*) AS cnt\nFROM schools s\nCROSS JOIN LATERAL (VALUES (s.\"admfname1\"), (s.\"admfname2\"), (s.\"admfname3\")) AS adm(\"admfname1\")\nWHERE adm.\"admfname1\" IS NOT NULL AND adm.\"admfname1\" <> ''\nGROUP BY adm.\"admfname1\", s.\"district\"\nORDER BY cnt DESC NULLS LAST\nLIMIT 2;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "73": {
+      "question_id": "73",
+      "db_id": "california_schools",
+      "prediction": "SELECT f.\"FRPM Count (Ages 5-17)\"\nFROM frpm f\nJOIN schools s ON f.cdscode = s.cdscode\nWHERE s.mailstreet = 'PO Box 1040'\n  AND s.school ILIKE '%Youth Authority%';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "14": {
+      "question_id": "14",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"school\", s.\"ncesschool\"\nFROM schools s\nJOIN frpm f ON s.\"cdscode\" = f.\"cdscode\"\nORDER BY f.\"Enrollment (Ages 5-17)\"::NUMERIC DESC NULLS LAST\nLIMIT 5;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "39": {
+      "question_id": "39",
+      "db_id": "california_schools",
+      "prediction": "SELECT AVG(ss.\"numtsttakr\"::NUMERIC) AS avg_test_takers\nFROM satscores ss\nJOIN schools s ON s.\"cdscode\" = ss.\"cds\"\nWHERE s.\"city\" = 'Fresno'\n  AND EXTRACT(YEAR FROM s.\"opendate\"::DATE) = 1980;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "82": {
+      "question_id": "82",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"gsoffered\"\nFROM \"schools\" s\nWHERE s.\"longitude\" IS NOT NULL\nORDER BY ABS(s.\"longitude\"::NUMERIC) DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "50": {
+      "question_id": "50",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"school\", s.\"street\" FROM schools s JOIN satscores sat ON s.\"cdscode\" = sat.\"cds\" ORDER BY sat.\"avgscrmath\"::NUMERIC DESC NULLS LAST LIMIT 1 OFFSET 6;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "57": {
+      "question_id": "57",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"phone\", s.\"ext\"\nFROM \"schools\" s\nJOIN \"satscores\" sat ON s.\"cdscode\" = sat.\"cds\"\nORDER BY sat.\"avgscrwrite\"::numeric DESC NULLS LAST\nOFFSET 332\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "43": {
+      "question_id": "43",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"avgscrmath\", s.\"cname\"\nFROM \"satscores\" s\nORDER BY (s.\"avgscrmath\" + s.\"avgscrread\" + s.\"avgscrwrite\") ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "37": {
+      "question_id": "37",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"street\", s.\"city\", s.\"zip\", s.\"state\"\nFROM \"satscores\" sc\nJOIN \"schools\" s ON s.\"cdscode\" = sc.\"cds\"\nWHERE sc.\"numtsttakr\" > 0\nORDER BY (sc.\"numge1500\"::NUMERIC / sc.\"numtsttakr\"::NUMERIC) ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "27": {
+      "question_id": "27",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"school\", AVG(sat.\"avgscrwrite\") AS average_writing_score, s.\"phone\"\nFROM schools s\nJOIN satscores sat ON s.\"cdscode\" = sat.\"cds\"\nWHERE (s.\"opendate\" > TO_DATE('1991-12-31', 'YYYY-MM-DD'))\n   OR (s.\"closeddate\" < TO_DATE('2000-01-01', 'YYYY-MM-DD'))\nGROUP BY s.\"school\", s.\"phone\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "34": {
+      "question_id": "34",
+      "db_id": "california_schools",
+      "prediction": "SELECT\n  f.\"Free Meal Count (Ages 5-17)\" / NULLIF(f.\"Enrollment (Ages 5-17)\", 0) AS \"free_rate\"\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nWHERE s.admfname1 ILIKE '%Kacey%'\n  AND s.admlname1 ILIKE '%Gibson%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "49": {
+      "question_id": "49",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"county\", s.\"school\", s.\"closeddate\"\nFROM \"schools\" s\nWHERE s.\"statustype\" = 'Closed'\n  AND s.\"county\" = (\n    SELECT s2.\"county\"\n    FROM \"schools\" s2\n    WHERE s2.\"statustype\" = 'Closed'\n    GROUP BY s2.\"county\"\n    ORDER BY COUNT(*) DESC NULLS LAST\n    LIMIT 1\n  )\nORDER BY s.\"closeddate\" DESC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "4": {
+      "question_id": "4",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"phone\"\nFROM schools s\nJOIN frpm f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\n  AND f.\"Charter Funding Type\" = 'Directly funded'\n  AND s.\"opendate\"::date > DATE '2000-01-01';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "85": {
+      "question_id": "85",
+      "db_id": "california_schools",
+      "prediction": "SELECT f.\"District Code\", f.\"Percent (%) Eligible Free (K-12)\"\nFROM frpm f\nJOIN schools s ON f.cdscode = s.cdscode\nWHERE s.admfname1 ILIKE '%Alusine%'\n   OR s.admfname2 ILIKE '%Alusine%'\n   OR s.admfname3 ILIKE '%Alusine%';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "81": {
+      "question_id": "81",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.city, f.\"Low Grade\", s.school\nFROM schools s\nJOIN frpm f ON s.cdscode = f.cdscode\nWHERE s.state = 'CA'\nORDER BY s.latitude ASC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "35": {
+      "question_id": "35",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"admemail1\"\nFROM schools s\nJOIN frpm f ON s.\"cdscode\" = f.\"cdscode\"\nWHERE f.\"Charter School (Y/N)\" = 1\nORDER BY f.\"Enrollment (K-12)\"::NUMERIC ASC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "28": {
+      "question_id": "28",
+      "db_id": "california_schools",
+      "prediction": "WITH avg_diff AS (\n    SELECT AVG(f.\"Enrollment (K-12)\" - f.\"Enrollment (Ages 5-17)\") AS avg_difference\n    FROM frpm f\n    JOIN schools s ON f.cdscode = s.cdscode\n    WHERE s.fundingtype = 'Locally funded'\n)\nSELECT s.school, s.doctype\nFROM frpm f\nJOIN schools s ON f.cdscode = s.cdscode\nCROSS JOIN avg_diff a\nWHERE s.fundingtype = 'Locally funded'\n  AND (f.\"Enrollment (K-12)\" - f.\"Enrollment (Ages 5-17)\") > a.avg_difference;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "36": {
+      "question_id": "36",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.\"admfname1\", s.\"admlname1\"\nFROM schools s\nJOIN satscores sat ON s.\"cdscode\" = sat.\"cds\"\nWHERE sat.\"numge1500\" = (\n    SELECT MAX(\"numge1500\") FROM satscores\n)\nORDER BY s.\"admfname1\" ASC NULLS FIRST, s.\"admlname1\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "62": {
+      "question_id": "62",
+      "db_id": "california_schools",
+      "prediction": "SELECT COUNT(*) AS total_non_chartered_schools\nFROM schools s\nJOIN frpm f ON s.cdscode = f.cdscode\nWHERE s.county = 'Los Angeles'\n  AND s.charter = 0\n  AND (f.\"Free Meal Count (K-12)\" * 100.0 / NULLIF(f.\"Enrollment (K-12)\", 0)) < 0.18;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "83": {
+      "question_id": "83",
+      "db_id": "california_schools",
+      "prediction": "SELECT s.city, COUNT(DISTINCT s.cdscode) AS school_count\nFROM schools s\nJOIN frpm f ON s.cdscode = f.cdscode\nWHERE s.magnet = 1\n  AND s.gsoffered = 'K-8'\n  AND f.\"NSLP Provision Status\" = 'Multiple Provision Types'\nGROUP BY s.city\nORDER BY s.city ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "119": {
+      "question_id": "119",
+      "db_id": "financial",
+      "prediction": "SELECT a.\"account_id\", d.\"a2\", d.\"a3\"\nFROM \"account\" a\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nWHERE a.\"frequency\" = 'POPLATEK PO OBRATU'\n  AND EXTRACT(YEAR FROM a.\"date\"::DATE) = 1993;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "135": {
+      "question_id": "135",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT t.\"account_id\") AS negative_balance_accounts\nFROM \"trans\" t\nJOIN \"account\" a ON a.\"account_id\" = t.\"account_id\"\nWHERE t.\"operation\" = 'VYBER KARTOU'\n  AND a.\"frequency\" = 'POPLATEK MESICNE'\n  AND t.\"balance\"::NUMERIC < 0;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "95": {
+      "question_id": "95",
+      "db_id": "financial",
+      "prediction": "SELECT a.\"account_id\"\nFROM \"account\" a\nJOIN \"disp\" d ON d.\"account_id\" = a.\"account_id\"\nJOIN \"client\" c ON c.\"client_id\" = d.\"client_id\"\nJOIN \"district\" dist ON dist.\"district_id\" = c.\"district_id\"\nWHERE c.\"birth_date\" = (\n    SELECT MAX(c2.\"birth_date\")\n    FROM \"client\" c2\n)\nAND dist.\"a11\" = (\n    SELECT MAX(dist2.\"a11\")\n    FROM \"district\" dist2\n);",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "89": {
+      "question_id": "89",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT a.\"account_id\") AS account_count\nFROM \"account\" a\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nWHERE a.\"frequency\" = 'POPLATEK PO OBRATU'\n  AND d.\"a3\" = 'east Bohemia';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "163": {
+      "question_id": "163",
+      "db_id": "financial",
+      "prediction": "SELECT d.\"a2\", COUNT(DISTINCT l.\"account_id\") AS loan_count\nFROM loan l\nJOIN account a ON l.\"account_id\" = a.\"account_id\"\nJOIN district d ON a.\"district_id\" = d.\"district_id\"\nWHERE l.\"status\" = 'A'\nGROUP BY d.\"a2\"\nORDER BY loan_count DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "136": {
+      "question_id": "136",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(*) AS loan_count\nFROM loan l\nJOIN account a ON l.account_id = a.account_id\nWHERE a.frequency = 'POPLATEK MESICNE'\n  AND l.amount >= 250000\n  AND l.date::DATE BETWEEN TO_DATE('1995-01-01', 'YYYY-MM-DD') AND TO_DATE('1997-12-31', 'YYYY-MM-DD');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "150": {
+      "question_id": "150",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT a.\"account_id\") AS account_count\nFROM \"account\" a\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nJOIN \"trans\" t ON a.\"account_id\" = t.\"account_id\"\nWHERE d.\"a3\" = 'north Bohemia'\n  AND t.\"bank\" = 'AB';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "145": {
+      "question_id": "145",
+      "db_id": "financial",
+      "prediction": "SELECT DISTINCT d.\"client_id\"\nFROM \"trans\" t\nJOIN \"account\" a ON t.\"account_id\" = a.\"account_id\"\nJOIN \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nJOIN \"card\" c ON d.\"disp_id\" = c.\"disp_id\"\nWHERE t.\"operation\" = 'VYBER KARTOU'\n  AND EXTRACT(YEAR FROM t.\"date\"::DATE) = 1998\n  AND t.\"amount\"::NUMERIC < (\n    SELECT AVG(t2.\"amount\"::NUMERIC)\n    FROM \"trans\" t2\n    WHERE t2.\"operation\" = 'VYBER KARTOU'\n      AND EXTRACT(YEAR FROM t2.\"date\"::DATE) = 1998\n  )\nORDER BY d.\"client_id\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "137": {
+      "question_id": "137",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT l.\"account_id\") AS running_contract_accounts\nFROM \"loan\" l\nJOIN \"account\" a ON a.\"account_id\" = l.\"account_id\"\nWHERE l.\"status\" = 'C'\n  AND a.\"district_id\" = 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "175": {
+      "question_id": "175",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT a.\"account_id\") AS account_count\nFROM \"account\" a\nJOIN \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nWHERE d.\"type\" = 'OWNER'\n  AND a.\"frequency\" = 'POPLATEK PO OBRATU';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "180": {
+      "question_id": "180",
+      "db_id": "financial",
+      "prediction": "SELECT DISTINCT c.\"client_id\"\nFROM \"client\" c\nJOIN \"district\" d ON c.\"district_id\" = d.\"district_id\"\nWHERE EXTRACT(YEAR FROM c.\"birth_date\"::DATE) BETWEEN 1983 AND 1987\n  AND d.\"a3\" = 'east Bohemia'\nORDER BY c.\"client_id\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "113": {
+      "question_id": "113",
+      "db_id": "financial",
+      "prediction": "SELECT c.\"birth_date\"\nFROM loan l\nJOIN account a ON l.\"account_id\" = a.\"account_id\"\nJOIN disp d ON a.\"account_id\" = d.\"account_id\"\nJOIN client c ON d.\"client_id\" = c.\"client_id\"\nWHERE l.\"amount\" = 98832\n  AND l.\"date\"::date = DATE '1996-01-03'\n  AND d.\"type\" = 'OWNER';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "176": {
+      "question_id": "176",
+      "db_id": "financial",
+      "prediction": "SELECT l.\"amount\", l.\"status\"\nFROM \"loan\" l\nJOIN \"account\" a ON l.\"account_id\" = a.\"account_id\"\nJOIN \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nWHERE d.\"client_id\" = 992;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "122": {
+      "question_id": "122",
+      "db_id": "financial",
+      "prediction": "SELECT d.\"a2\", d.\"a3\"\nFROM \"loan\" l\nJOIN \"account\" a ON l.\"account_id\" = a.\"account_id\"\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nWHERE l.\"loan_id\" = '4990';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "103": {
+      "question_id": "103",
+      "db_id": "financial",
+      "prediction": "SELECT DISTINCT c.\"client_id\"\nFROM \"client\" c\nJOIN \"disp\" d ON c.\"client_id\" = d.\"client_id\"\nJOIN \"card\" cd ON d.\"disp_id\" = cd.\"disp_id\"\nWHERE cd.\"issued\" = '1994-03-03';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "102": {
+      "question_id": "102",
+      "db_id": "financial",
+      "prediction": "SELECT DISTINCT a.\"account_id\"\nFROM \"account\" a\nJOIN \"trans\" t ON t.\"account_id\" = a.\"account_id\"\nWHERE a.\"date\" < TO_DATE('1997-01-01', 'YYYY-MM-DD')\n  AND t.\"amount\"::NUMERIC > 3000;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "153": {
+      "question_id": "153",
+      "db_id": "financial",
+      "prediction": "SELECT COUNT(DISTINCT c.\"card_id\") AS classic_cards_eligible_for_loan\nFROM \"card\" c\nJOIN \"disp\" d ON c.\"disp_id\" = d.\"disp_id\"\nWHERE c.\"type\" = 'classic'\n  AND d.\"type\" = 'OWNER';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "158": {
+      "question_id": "158",
+      "db_id": "financial",
+      "prediction": "SELECT a.\"district_id\"\nFROM \"order\" o\nJOIN \"account\" a ON o.\"account_id\" = a.\"account_id\"\nWHERE o.\"order_id\" = 33333;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "179": {
+      "question_id": "179",
+      "db_id": "financial",
+      "prediction": "SELECT SUM(t.amount) AS total_paid\nFROM trans t\nJOIN disp d ON t.account_id = d.account_id\nWHERE d.client_id = 617\n  AND d.type = 'OWNER'\n  AND EXTRACT(YEAR FROM t.date::date) = 1998;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "181": {
+      "question_id": "181",
+      "db_id": "financial",
+      "prediction": "SELECT c.\"client_id\"\nFROM \"client\" c\nJOIN \"disp\" d ON c.\"client_id\" = d.\"client_id\"\nJOIN \"loan\" l ON d.\"account_id\" = l.\"account_id\"\nWHERE c.\"gender\" = 'F'\nGROUP BY c.\"client_id\"\nORDER BY MAX(l.\"amount\") DESC NULLS LAST\nLIMIT 3;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "91": {
+      "question_id": "91",
+      "db_id": "financial",
+      "prediction": "SELECT \n    AVG(a12::NUMERIC) AS avg_unemployment_1995,\n    AVG(a13::NUMERIC) AS avg_unemployment_1996,\n    CASE \n        WHEN AVG(a12::NUMERIC) > AVG(a13::NUMERIC) THEN '1995'\n        ELSE '1996'\n    END AS higher_year\nFROM district;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "157": {
+      "question_id": "157",
+      "db_id": "financial",
+      "prediction": "SELECT d.\"a15\" FROM \"account\" a JOIN \"district\" d ON a.\"district_id\" = d.\"district_id\" WHERE a.\"account_id\" = 532;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "178": {
+      "question_id": "178",
+      "db_id": "financial",
+      "prediction": "SELECT c.\"type\"\nFROM \"card\" c\nJOIN \"disp\" d ON c.\"disp_id\" = d.\"disp_id\"\nWHERE d.\"client_id\" = 9;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "94": {
+      "question_id": "94",
+      "db_id": "financial",
+      "prediction": "SELECT a.\"account_id\",\n       MAX(d.\"a11\") - MIN(d.\"a11\") AS gap\nFROM \"client\" c\nJOIN \"disp\" dp ON dp.\"client_id\" = c.\"client_id\"\nJOIN \"account\" a ON a.\"account_id\" = dp.\"account_id\"\nJOIN \"district\" d ON d.\"district_id\" = c.\"district_id\"\nWHERE c.\"gender\" = 'F'\n  AND c.\"birth_date\" = (SELECT MIN(c2.\"birth_date\") FROM \"client\" c2 WHERE c2.\"gender\" = 'F')\nGROUP BY a.\"account_id\"\nORDER BY gap DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "116": {
+      "question_id": "116",
+      "db_id": "financial",
+      "prediction": "SELECT\n  ((bal_a.balance - bal_b.balance)::NUMERIC / NULLIF(bal_b.balance, 0)) * 100 AS increase_rate\nFROM loan l\nJOIN disp d ON d.account_id = l.account_id AND d.type = 'OWNER'\nJOIN trans bal_a ON bal_a.account_id = l.account_id AND bal_a.date = '1998-12-27'\nJOIN trans bal_b ON bal_b.account_id = l.account_id AND bal_b.date = '1993-03-22'\nWHERE l.date = '1993-07-05'\nORDER BY l.loan_id ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "125": {
+      "question_id": "125",
+      "db_id": "financial",
+      "prediction": "SELECT d.\"a2\", ((d.\"a13\"::NUMERIC - d.\"a12\"::NUMERIC) / d.\"a12\"::NUMERIC) * 100 AS unemployment_increment_percentage\nFROM loan l\nJOIN account a ON l.\"account_id\" = a.\"account_id\"\nJOIN disp dp ON a.\"account_id\" = dp.\"account_id\"\nJOIN client c ON dp.\"client_id\" = c.\"client_id\"\nJOIN district d ON c.\"district_id\" = d.\"district_id\"\nWHERE l.\"status\" = 'D'\nGROUP BY d.\"a2\", d.\"a12\", d.\"a13\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "149": {
+      "question_id": "149",
+      "db_id": "financial",
+      "prediction": "SELECT DISTINCT a.\"frequency\"\nFROM \"account\" a\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nJOIN \"disp\" dp ON a.\"account_id\" = dp.\"account_id\"\nWHERE dp.\"type\" <> 'OWNER'\n  AND d.\"a11\"::NUMERIC > 8000\n  AND d.\"a11\"::NUMERIC <= 9000;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "169": {
+      "question_id": "169",
+      "db_id": "financial",
+      "prediction": "SELECT\n    (SUM(CASE WHEN EXTRACT(YEAR FROM l.\"date\"::date) = 1997 THEN l.\"amount\" ELSE 0 END)\n     - SUM(CASE WHEN EXTRACT(YEAR FROM l.\"date\"::date) = 1996 THEN l.\"amount\" ELSE 0 END))\n    * 100.0\n    / NULLIF(SUM(CASE WHEN EXTRACT(YEAR FROM l.\"date\"::date) = 1996 THEN l.\"amount\" ELSE 0 END), 0) AS growth_rate\nFROM \"loan\" l\nJOIN \"account\" a ON l.\"account_id\" = a.\"account_id\"\nJOIN \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nJOIN \"client\" c ON d.\"client_id\" = c.\"client_id\"\nWHERE c.\"gender\" = 'M'\n  AND EXTRACT(YEAR FROM l.\"date\"::date) IN (1996, 1997);",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "173": {
+      "question_id": "173",
+      "db_id": "financial",
+      "prediction": "SELECT t.\"k_symbol\", COUNT(*) AS \"frequency\" FROM \"trans\" t WHERE t.\"account_id\" = 3 AND t.\"k_symbol\" IS NOT NULL AND TRIM(t.\"k_symbol\") <> '' GROUP BY t.\"k_symbol\" ORDER BY \"frequency\" DESC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "309": {
+      "question_id": "309",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"atom_id\", COUNT(DISTINCT b.\"bond_type\") AS bond_type_count\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nLEFT JOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR346'\nGROUP BY a.\"atom_id\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "223": {
+      "question_id": "223",
+      "db_id": "toxicology",
+      "prediction": "SELECT c.\"atom_id\", c.\"atom_id2\" FROM \"connected\" c WHERE c.\"bond_id\" = 'TR000_2_5';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "326": {
+      "question_id": "326",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON c.\"atom_id\" = a.\"atom_id\"\nJOIN \"bond\" b ON b.\"bond_id\" = c.\"bond_id\"\nWHERE a.\"element\" = 's'\n  AND b.\"bond_type\" = '=';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "292": {
+      "question_id": "292",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nWHERE a.\"element\" = 'c'\n  AND CAST(SUBSTRING(a.\"molecule_id\", 3, 3) AS INTEGER) BETWEEN 10 AND 50;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "199": {
+      "question_id": "199",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS non_carcinogenic_count\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\n  AND a.\"element\" = 'na'\n  AND m.\"molecule_id\" IN (\n    SELECT m2.\"molecule_id\"\n    FROM \"molecule\" m2\n    JOIN \"atom\" a2 ON a2.\"molecule_id\" = m2.\"molecule_id\"\n    WHERE a2.\"element\" = 'na'\n  );",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "295": {
+      "question_id": "295",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(a.\"atom_id\") AS atom_count\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"element\" = 'h'\n  AND m.\"label\" = '+';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "336": {
+      "question_id": "336",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS non_carcinogenic_triple_bond_molecules\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nWHERE b.\"bond_type\" = '#' AND m.\"label\" = '-';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "323": {
+      "question_id": "323",
+      "db_id": "toxicology",
+      "prediction": "SELECT \"m\".\"label\" FROM \"molecule\" AS \"m\" WHERE \"m\".\"molecule_id\" = 'TR000';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "325": {
+      "question_id": "325",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(DISTINCT m.\"molecule_id\") AS carcinogenic_nitrogen_molecules\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+'\n  AND a.\"element\" = 'n';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "279": {
+      "question_id": "279",
+      "db_id": "toxicology",
+      "prediction": "SELECT m.\"label\"\nFROM \"bond\" b\nJOIN \"molecule\" m ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_id\" = 'TR001_10_11';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "276": {
+      "question_id": "276",
+      "db_id": "toxicology",
+      "prediction": "SELECT c.\"atom_id\", c.\"atom_id2\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '#';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "239": {
+      "question_id": "239",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(c.\"bond_id\") AS connection_count\nFROM \"connected\" c\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE a.\"atom_id\" LIKE 'TR%\\_19' ESCAPE '\\';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "260": {
+      "question_id": "260",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(DISTINCT a.\"atom_id\") \nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"bond\" b ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\n  AND a.\"element\" IN ('p', 'br');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "246": {
+      "question_id": "246",
+      "db_id": "toxicology",
+      "prediction": "SELECT b.bond_type, b.bond_id\nFROM bond b\nJOIN connected c ON b.bond_id = c.bond_id\nWHERE SUBSTR(c.atom_id, 7, 2)::int = 45;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "232": {
+      "question_id": "232",
+      "db_id": "toxicology",
+      "prediction": "SELECT m.molecule_id\nFROM molecule m\nJOIN bond b ON m.molecule_id = b.molecule_id\nWHERE m.label = '-'\n  AND b.bond_type = '-'\nGROUP BY m.molecule_id\nORDER BY m.molecule_id ASC NULLS FIRST\nLIMIT 3;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "283": {
+      "question_id": "283",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT m.\"label\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE a.\"element\" = 'ca';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "317": {
+      "question_id": "317",
+      "db_id": "toxicology",
+      "prediction": "SELECT\n  (SUM(CASE WHEN m.\"label\" = '+' AND a.\"element\" = 'cl' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(DISTINCT m.\"molecule_id\")) * 100 AS percentage\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "213": {
+      "question_id": "213",
+      "db_id": "toxicology",
+      "prediction": "SELECT b.bond_type\nFROM connected c\nJOIN bond b ON c.bond_id = b.bond_id\nWHERE (c.atom_id = 'TR004_8' AND c.atom_id2 = 'TR004_20')\n   OR (c.atom_id = 'TR004_20' AND c.atom_id2 = 'TR004_8');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "320": {
+      "question_id": "320",
+      "db_id": "toxicology",
+      "prediction": "SELECT b.\"bond_type\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE c.\"atom_id\" = 'TR000_1' AND c.\"atom_id2\" = 'TR000_2';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "338": {
+      "question_id": "338",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"atom_id\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE m.\"molecule_id\" = 'TR012'\n  AND a.\"element\" = 'c'\n  AND b.\"bond_type\" = '=';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "327": {
+      "question_id": "327",
+      "db_id": "toxicology",
+      "prediction": "SELECT m.\"molecule_id\"\nFROM \"molecule\" m\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY m.\"molecule_id\"\nHAVING COUNT(a.\"atom_id\") > 5;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "267": {
+      "question_id": "267",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT b.\"bond_type\"\nFROM \"bond\" b\nWHERE b.\"molecule_id\" >= 'TR000' AND b.\"molecule_id\" <= 'TR050'\nORDER BY b.\"bond_type\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "298": {
+      "question_id": "298",
+      "db_id": "toxicology",
+      "prediction": "SELECT\n  (SUM(CASE WHEN m.\"label\" = '+' AND a.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(DISTINCT m.\"molecule_id\")) * 100.0 AS percentage\nFROM \"molecule\" m\nJOIN \"atom\" a ON a.\"molecule_id\" = m.\"molecule_id\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "282": {
+      "question_id": "282",
+      "db_id": "toxicology",
+      "prediction": "SELECT\n  SUM(CASE WHEN a.\"element\" = 'h' THEN 1 ELSE 0 END)::NUMERIC / COUNT(a.\"atom_id\") AS ratio,\n  m.\"label\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"molecule_id\" = 'TR006'\nGROUP BY m.\"label\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "249": {
+      "question_id": "249",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"element\"\nFROM \"connected\" c\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE b.\"bond_id\" = 'TR144_8_19';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "319": {
+      "question_id": "319",
+      "db_id": "toxicology",
+      "prediction": "SELECT COUNT(DISTINCT a.\"element\") AS element_count\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR001_3_4';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "212": {
+      "question_id": "212",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '-'\nGROUP BY a.\"element\"\nORDER BY COUNT(a.\"atom_id\") ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "219": {
+      "question_id": "219",
+      "db_id": "toxicology",
+      "prediction": "SELECT\n  SUM(CASE WHEN b.\"bond_type\" = '#' THEN 1 ELSE 0 END) * 100.0 / COUNT(b.\"bond_id\") AS percent\nFROM \"bond\" b\nJOIN \"molecule\" m ON b.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"label\" = '+';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "328": {
+      "question_id": "328",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"connected\" c ON a.\"atom_id\" = c.\"atom_id\"\nJOIN \"bond\" b ON c.\"bond_id\" = b.\"bond_id\"\nWHERE b.\"bond_type\" = '='\n  AND b.\"molecule_id\" = 'TR024';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "290": {
+      "question_id": "290",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR151'\n  AND a.\"element\" IN ('cl', 'br', 'f', 'i', 'sn', 'pb', 'te', 'ca')\nORDER BY a.\"element\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "302": {
+      "question_id": "302",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id\"\nWHERE c.\"bond_id\" = 'TR001_2_4'\nUNION\nSELECT DISTINCT a.\"element\"\nFROM \"connected\" c\nJOIN \"atom\" a ON a.\"atom_id\" = c.\"atom_id2\"\nWHERE c.\"bond_id\" = 'TR001_2_4';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "306": {
+      "question_id": "306",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT m.\"molecule_id\", a.\"element\"\nFROM \"molecule\" m\nJOIN \"bond\" b ON m.\"molecule_id\" = b.\"molecule_id\"\nJOIN \"atom\" a ON m.\"molecule_id\" = a.\"molecule_id\"\nWHERE b.\"bond_type\" = '#'\nORDER BY m.\"molecule_id\" ASC NULLS FIRST, a.\"element\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "334": {
+      "question_id": "334",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"element\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE a.\"atom_id\" = 'TR004_7'\n  AND m.\"label\" = '-';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "230": {
+      "question_id": "230",
+      "db_id": "toxicology",
+      "prediction": "SELECT a.\"element\", m.\"label\"\nFROM \"atom\" a\nJOIN \"molecule\" m ON a.\"molecule_id\" = m.\"molecule_id\"\nWHERE m.\"molecule_id\" = 'TR060';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "207": {
+      "question_id": "207",
+      "db_id": "toxicology",
+      "prediction": "SELECT DISTINCT a.\"element\"\nFROM \"bond\" b\nJOIN \"connected\" c ON b.\"bond_id\" = c.\"bond_id\"\nJOIN \"atom\" a ON c.\"atom_id\" = a.\"atom_id\"\nWHERE b.\"bond_type\" = '=';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "510": {
+      "question_id": "510",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"artist\"\nFROM \"cards\" c\nWHERE c.\"side\" IS NULL\nORDER BY c.\"convertedmanacost\"::NUMERIC DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "393": {
+      "question_id": "393",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(DISTINCT c.\"id\") AS card_count\nFROM \"cards\" c\nWHERE c.\"artist\" ILIKE '%John Avon%'\n  AND c.\"cardkingdomid\" IS NOT NULL\n  AND c.\"cardkingdomfoilid\" IS NOT NULL;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "351": {
+      "question_id": "351",
+      "db_id": "card_games",
+      "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE fd.\"language\" = 'Japanese';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "377": {
+      "question_id": "377",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(*) AS card_count\nFROM \"cards\" c\nWHERE c.\"originaltype\" = 'Summon - Angel'\n  AND c.\"subtypes\" IS NOT NULL\n  AND c.\"subtypes\" <> 'Angel';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "435": {
+      "question_id": "435",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(*) AS card_count, \"c\".\"id\" AS card_id\nFROM \"cards\" AS \"c\"\nWHERE \"c\".\"bordercolor\" = 'black'\nGROUP BY \"c\".\"id\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": null,
+        "numeric_precision_warning": false
+      }
+    },
+    "421": {
+      "question_id": "421",
+      "db_id": "card_games",
+      "prediction": "SELECT DISTINCT c.\"name\"\nFROM \"cards\" c\nWHERE (c.\"power\" IS NULL OR c.\"power\" = '*')\n  AND c.\"promotypes\" LIKE '%arenaleague%'\nORDER BY c.\"name\" ASC NULLS FIRST\nLIMIT 3;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "445": {
+      "question_id": "445",
+      "db_id": "card_games",
+      "prediction": "SELECT fd.\"language\", fd.\"flavortext\", c.\"type\"\nFROM cards c\nJOIN foreign_data fd ON c.\"uuid\" = fd.\"uuid\"\nWHERE c.\"watermark\" = 'colorpie';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "355": {
+      "question_id": "355",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"keywords\" FROM \"cards\" c WHERE c.\"name\" = 'Angel of Mercy';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "453": {
+      "question_id": "453",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"convertedmanacost\" FROM \"cards\" c WHERE c.\"name\" = 'Ancestor''s Chosen';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "509": {
+      "question_id": "509",
+      "db_id": "card_games",
+      "prediction": "SELECT s.\"id\"\nFROM \"sets\" s\nORDER BY s.\"basesetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "450": {
+      "question_id": "450",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(*) AS \"count\"\nFROM \"cards\" AS c\nWHERE c.\"artist\" = 'Aaron Miller'\n  AND c.\"cardkingdomfoilid\" IS NOT NULL\n  AND c.\"cardkingdomid\" IS NOT NULL;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "515": {
+      "question_id": "515",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"originalreleasedate\", l.\"format\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE c.\"rarity\" = 'mythic'\n  AND l.\"status\" = 'Legal'\n  AND c.\"originalreleasedate\" = (\n    SELECT MIN(c2.\"originalreleasedate\")\n    FROM \"cards\" c2\n    WHERE c2.\"rarity\" = 'mythic'\n  )\nORDER BY l.\"format\" ASC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "498": {
+      "question_id": "498",
+      "db_id": "card_games",
+      "prediction": "SELECT st.\"translation\"\nFROM \"cards\" c\nJOIN \"set_translations\" st ON st.\"setcode\" = c.\"setcode\"\nWHERE c.\"name\" = 'Tendo Ice Bridge'\n  AND st.\"language\" = 'French';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "417": {
+      "question_id": "417",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  COUNT(*) FILTER (WHERE s.\"type\" = 'expansion')::NUMERIC\n  / NULLIF(COUNT(*), 0) * 100 AS percentage\nFROM set_translations st\nJOIN sets s ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "345": {
+      "question_id": "345",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"name\", l.\"status\"\nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE c.\"types\" = 'Artifact'\n  AND c.\"side\" IS NULL\n  AND l.\"format\" = 'vintage';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "409": {
+      "question_id": "409",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS card_count\nFROM \"cards\" c\nJOIN \"legalities\" l ON l.\"uuid\" = c.\"uuid\"\nJOIN \"rulings\" r ON r.\"uuid\" = c.\"uuid\"\nWHERE l.\"format\" = 'premodern'\n  AND r.\"text\" = 'This is a triggered mana ability.'\n  AND c.\"side\" IS NULL;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "402": {
+      "question_id": "402",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  ROUND(\n    100.0 * SUM(CASE WHEN c.\"isstoryspotlight\" = '1' AND c.\"istextless\" = '0' THEN 1 ELSE 0 END)\n    / NULLIF(COUNT(*), 0)::NUMERIC,\n    2\n  ) AS percentage\nFROM \"cards\" c;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "434": {
+      "question_id": "434",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(DISTINCT s.\"code\") AS set_count\nFROM \"sets\" s\nJOIN \"set_translations\" st ON st.\"setcode\" = s.\"code\"\nWHERE st.\"language\" = 'Japanese'\n  AND (s.\"mtgocode\" IS NULL OR s.\"mtgocode\" = '');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "517": {
+      "question_id": "517",
+      "db_id": "card_games",
+      "prediction": "SELECT COUNT(DISTINCT c.\"uuid\") AS rare_legal_abundance_enchantment_count\nFROM \"cards\" c\nJOIN \"legalities\" l ON l.\"uuid\" = c.\"uuid\"\nWHERE c.\"rarity\" = 'rare'\n  AND c.\"types\" = 'Enchantment'\n  AND c.\"name\" = 'Abundance'\n  AND l.\"status\" = 'Legal';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "347": {
+      "question_id": "347",
+      "db_id": "card_games",
+      "prediction": "SELECT c.id, r.text\nFROM cards c\nJOIN rulings r ON r.uuid = c.uuid\nWHERE c.artist LIKE '%Stephen Daniel%'\n  AND c.hascontentwarning = 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "469": {
+      "question_id": "469",
+      "db_id": "card_games",
+      "prediction": "SELECT DISTINCT s.\"name\", s.\"mtgocode\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE c.\"name\" = 'Angel of Mercy'\n  AND s.\"mtgocode\" IS NOT NULL;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "513": {
+      "question_id": "513",
+      "db_id": "card_games",
+      "prediction": "SELECT s.\"id\"\nFROM \"sets\" s\nWHERE s.\"type\" = 'commander'\nORDER BY s.\"totalsetsize\"::BIGINT DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "494": {
+      "question_id": "494",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"name\", c.\"text\", r.\"text\", c.\"hascontentwarning\"\nFROM \"cards\" c\nJOIN \"rulings\" r ON r.\"uuid\" = c.\"uuid\"\nWHERE c.\"artist\" = 'Jim Pavelec';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "528": {
+      "question_id": "528",
+      "db_id": "card_games",
+      "prediction": "SELECT c.\"name\", l.\"format\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE s.\"name\" = 'Hour of Devastation'\n  AND l.\"status\" = 'Legal';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "415": {
+      "question_id": "415",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  COUNT(CASE WHEN c.\"hascontentwarning\" = '0' THEN 1 END) * 100.0 / COUNT(c.\"id\") AS percentage\nFROM \"cards\" c\nJOIN \"legalities\" l ON c.\"uuid\" = l.\"uuid\"\nWHERE l.\"format\" = 'commander'\n  AND l.\"status\" = 'Legal';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "506": {
+      "question_id": "506",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  SUM(CASE WHEN s.\"isnonfoilonly\" = 1 THEN 1 ELSE 0 END) * 100.0\n  / NULLIF(SUM(CASE WHEN st.\"language\" = 'Japanese' THEN 1 ELSE 0 END), 0) AS percentage\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nJOIN \"set_translations\" st ON s.\"code\" = st.\"setcode\"\nWHERE st.\"language\" = 'Japanese';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "416": {
+      "question_id": "416",
+      "db_id": "card_games",
+      "prediction": "SELECT\n    COUNT(*) FILTER (WHERE fd.\"language\" = 'French')::NUMERIC\n    / NULLIF(COUNT(*), 0) * 100 AS percentage\nFROM \"cards\" c\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"power\" IS NULL OR c.\"power\" = '*';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "431": {
+      "question_id": "431",
+      "db_id": "card_games",
+      "prediction": "SELECT DISTINCT s.\"id\"\nFROM \"sets\" s\nJOIN \"cards\" c ON c.\"setcode\" = s.\"code\"\nJOIN \"foreign_data\" fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE s.\"isforeignonly\" = 1\n  AND s.\"isfoilonly\" = 1\n  AND fd.\"language\" = 'Japanese';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "371": {
+      "question_id": "371",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  (COUNT(*) FILTER (WHERE fd.\"language\" = 'French')::NUMERIC\n   / NULLIF(COUNT(*), 0)::NUMERIC) * 100 AS percentage\nFROM cards c\nJOIN foreign_data fd ON fd.\"uuid\" = c.\"uuid\"\nWHERE c.\"isstoryspotlight\" = 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "487": {
+      "question_id": "487",
+      "db_id": "card_games",
+      "prediction": "SELECT\n  (SUM(CASE WHEN c.\"cardkingdomfoilid\" IS NOT NULL AND c.\"cardkingdomid\" IS NOT NULL THEN 1 ELSE 0 END)::NUMERIC\n   / NULLIF(COUNT(*), 0)) * 100 AS percentage\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" = 'Coldsnap';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "477": {
+      "question_id": "477",
+      "db_id": "card_games",
+      "prediction": "SELECT DISTINCT c.\"artist\"\nFROM \"cards\" c\nJOIN \"sets\" s ON c.\"setcode\" = s.\"code\"\nWHERE s.\"name\" = 'Coldsnap'\n  AND c.\"artist\" IN ('Jeremy Jarvis', 'Aaron Miller', 'Chippy');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "699": {
+      "question_id": "699",
+      "db_id": "codebase_community",
+      "prediction": "SELECT \"u\".\"creationdate\" FROM \"users\" AS \"u\" WHERE \"u\".\"displayname\" = 'IrishStat';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "714": {
+      "question_id": "714",
+      "db_id": "codebase_community",
+      "prediction": "SELECT c.\"text\"\nFROM \"comments\" c\nWHERE c.\"userdisplayname\" = 'Harvey Motulsky';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "549": {
+      "question_id": "549",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"body\"\nFROM \"tags\" t\nJOIN \"posts\" p ON p.\"id\" = t.\"excerptpostid\"\nWHERE t.\"tagname\" = 'bayesian';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "661": {
+      "question_id": "661",
+      "db_id": "codebase_community",
+      "prediction": "SELECT u.\"age\"\nFROM \"users\" u\nORDER BY u.\"reputation\" DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "558": {
+      "question_id": "558",
+      "db_id": "codebase_community",
+      "prediction": "SELECT COUNT(*) AS vote_count\nFROM \"votes\" v\nWHERE v.\"userid\" = 58\n  AND v.\"creationdate\" = DATE '2010-07-19';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "611": {
+      "question_id": "611",
+      "db_id": "codebase_community",
+      "prediction": "SELECT u.\"reputation\"\nFROM \"badges\" b\nJOIN \"users\" u ON u.\"id\" = b.\"userid\"\nWHERE b.\"date\" = '2010-07-19 19:39:08';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "621": {
+      "question_id": "621",
+      "db_id": "codebase_community",
+      "prediction": "SELECT DISTINCT b.\"name\"\nFROM \"badges\" b\nJOIN \"users\" u ON b.\"userid\" = u.\"id\"\nWHERE u.\"reputation\" = (\n    SELECT MIN(u2.\"reputation\")\n    FROM \"users\" u2\n    JOIN \"badges\" b2 ON b2.\"userid\" = u2.\"id\"\n);",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "588": {
+      "question_id": "588",
+      "db_id": "codebase_community",
+      "prediction": "SELECT COUNT(*) AS total_comments\nFROM \"comments\" c\nWHERE c.\"userid\" = 13;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "592": {
+      "question_id": "592",
+      "db_id": "codebase_community",
+      "prediction": "SELECT COUNT(*) AS user_count\nFROM (\n    SELECT \"userid\"\n    FROM \"badges\"\n    GROUP BY \"userid\"\n    HAVING COUNT(\"name\") > 5\n) AS b;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "631": {
+      "question_id": "631",
+      "db_id": "codebase_community",
+      "prediction": "SELECT COUNT(*) AS post_count\nFROM \"posts\" p\nJOIN \"users\" u ON p.\"owneruserid\" = u.\"id\"\nWHERE u.\"displayname\" = 'Daniel Vassallo';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "589": {
+      "question_id": "589",
+      "db_id": "codebase_community",
+      "prediction": "SELECT \"id\" FROM \"users\" ORDER BY \"reputation\" DESC NULLS LAST LIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "685": {
+      "question_id": "685",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"viewcount\", u.\"displayname\"\nFROM \"posts\" p\nJOIN \"users\" u ON p.\"lasteditoruserid\" = u.\"id\"\nWHERE p.\"body\" LIKE '%Computer Game Datasets%'\nORDER BY p.\"lasactivitydate\" DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "571": {
+      "question_id": "571",
+      "db_id": "codebase_community",
+      "prediction": "SELECT\n  (SELECT COUNT(*) FROM \"posts\" p WHERE p.\"owneruserid\" = 24)::NUMERIC\n  / NULLIF((SELECT COUNT(*) FROM \"votes\" v WHERE v.\"userid\" = 24), 0) AS posts_to_votes_ratio;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "708": {
+      "question_id": "708",
+      "db_id": "codebase_community",
+      "prediction": "SELECT u.\"creationdate\", u.\"age\" FROM \"comments\" c JOIN \"users\" u ON c.\"userid\" = u.\"id\" WHERE c.\"text\" LIKE '%http://%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "633": {
+      "question_id": "633",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"id\"\nFROM \"posts\" p\nJOIN \"users\" u ON p.\"owneruserid\" = u.\"id\"\nWHERE u.\"displayname\" = 'slashnick'\nORDER BY p.\"answercount\" DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "694": {
+      "question_id": "694",
+      "db_id": "codebase_community",
+      "prediction": "SELECT c.\"text\", c.\"userdisplayname\"\nFROM \"comments\" c\nJOIN \"posts\" p ON c.\"postid\" = p.\"id\"\nWHERE p.\"title\" = 'Analysing wind data with R'\nORDER BY c.\"creationdate\" DESC NULLS LAST\nLIMIT 10;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "652": {
+      "question_id": "652",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"id\" AS \"post_id\", b.\"name\" AS \"badge_name\"\nFROM posts p\nJOIN users u ON p.\"owneruserid\" = u.\"id\"\nJOIN badges b ON u.\"id\" = b.\"userid\"\nWHERE u.\"displayname\" ILIKE '%Samuel%'\n  AND EXTRACT(YEAR FROM p.\"creaiondate\"::TIMESTAMP) = 2013\n  AND EXTRACT(YEAR FROM b.\"date\"::TIMESTAMP) = 2013;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "716": {
+      "question_id": "716",
+      "db_id": "codebase_community",
+      "prediction": "SELECT\n  COUNT(DISTINCT CASE WHEN u.\"upvotes\" = 0 THEN c.\"userid\" END) * 100.0\n  / NULLIF(COUNT(DISTINCT c.\"userid\"), 0) AS percentage\nFROM \"comments\" c\nJOIN \"users\" u ON u.\"id\" = c.\"userid\"\nWHERE c.\"score\" BETWEEN 5 AND 10;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "563": {
+      "question_id": "563",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"favoritecount\"\nFROM comments c\nJOIN posts p ON c.\"postid\" = p.\"id\"\nWHERE c.\"userid\" = '3025'\n  AND c.\"creationdate\"::timestamp = '2014-04-23 20:29:39'::timestamp;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "635": {
+      "question_id": "635",
+      "db_id": "codebase_community",
+      "prediction": "SELECT COUNT(*) AS post_count\nFROM posts p\nJOIN users u ON p.\"owneruserid\" = u.\"id\"\nWHERE u.\"displayname\" = 'Matt Parker'\n  AND p.\"score\" > 4;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "572": {
+      "question_id": "572",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"viewcount\"\nFROM \"posts\" p\nWHERE p.\"title\" = 'Integration of Weka and/or RapidMiner into Informatica PowerCenter/Developer';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "637": {
+      "question_id": "637",
+      "db_id": "codebase_community",
+      "prediction": "SELECT DISTINCT p.\"tags\"\nFROM \"posts\" p\nJOIN \"users\" u ON p.\"owneruserid\" = u.\"id\"\nWHERE u.\"displayname\" = 'Mark Meckes'\n  AND p.\"commentcount\" = 0;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "586": {
+      "question_id": "586",
+      "db_id": "codebase_community",
+      "prediction": "SELECT DISTINCT u.\"displayname\"\nFROM votes v\nJOIN posts p ON v.\"postid\" = p.\"id\"\nJOIN users u ON v.\"userid\" = u.\"id\"\nWHERE v.\"bountyamount\" = 50\n  AND p.\"title\" ILIKE '%variance%';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "598": {
+      "question_id": "598",
+      "db_id": "codebase_community",
+      "prediction": "SELECT\n  (COUNT(CASE WHEN EXTRACT(YEAR FROM b.\"date\"::timestamp) = 2010 THEN 1 END)::NUMERIC\n   / NULLIF(COUNT(*), 0) * 100)\n  -\n  (COUNT(CASE WHEN EXTRACT(YEAR FROM b.\"date\"::timestamp) = 2011 THEN 1 END)::NUMERIC\n   / NULLIF(COUNT(*), 0) * 100) AS percentage_difference\nFROM \"badges\" b\nWHERE b.\"name\" = 'Student';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "634": {
+      "question_id": "634",
+      "db_id": "codebase_community",
+      "prediction": "SELECT p.\"ownerdisplayname\", SUM(p.\"viewcount\") AS total_views\nFROM \"posts\" p\nWHERE p.\"ownerdisplayname\" ILIKE '%Harvey Motulsky%' OR p.\"ownerdisplayname\" ILIKE '%Noah Snyder%'\nGROUP BY p.\"ownerdisplayname\"\nORDER BY total_views DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "639": {
+      "question_id": "639",
+      "db_id": "codebase_community",
+      "prediction": "SELECT\n  COUNT(CASE WHEN p.\"tags\" LIKE '%<r>%' THEN p.\"id\" END)::NUMERIC\n  / NULLIF(COUNT(CASE WHEN p.\"ownerdisplayname\" = 'Community' THEN p.\"id\" END), 0) AS percentage\nFROM \"posts\" p;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "701": {
+      "question_id": "701",
+      "db_id": "codebase_community",
+      "prediction": "SELECT\n  COUNT(*) FILTER (WHERE p.\"score\" > 50)::NUMERIC * 100.0 / NULLIF(COUNT(*), 0) AS percentage\nFROM \"posts\" p\nWHERE p.\"owneruserid\" = (\n  SELECT u.\"id\"\n  FROM \"users\" u\n  ORDER BY u.\"reputation\" DESC NULLS LAST\n  LIMIT 1\n);",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "816": {
+      "question_id": "816",
+      "db_id": "superhero",
+      "prediction": "SELECT DISTINCT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON s.\"id\" = ha.\"hero_id\"\nWHERE ha.\"attribute_value\" BETWEEN 75 AND 80;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "745": {
+      "question_id": "745",
+      "db_id": "superhero",
+      "prediction": "SELECT p.\"id\" FROM \"publisher\" p WHERE p.\"publisher_name\" = 'Star Trek';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "720": {
+      "question_id": "720",
+      "db_id": "superhero",
+      "prediction": "SELECT s.full_name\nFROM superhero s\nJOIN hero_power hp ON hp.hero_id = s.id\nGROUP BY s.id, s.full_name\nHAVING COUNT(hp.power_id) > 15\nORDER BY s.full_name ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "785": {
+      "question_id": "785",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nWHERE a.\"alignment\" = 'Neutral';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "803": {
+      "question_id": "803",
+      "db_id": "superhero",
+      "prediction": "SELECT sp.id\nFROM superpower sp\nWHERE sp.power_name = 'Cryokinesis';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "722": {
+      "question_id": "722",
+      "db_id": "superhero",
+      "prediction": "SELECT c.\"colour\"\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"skin_colour_id\" = c.\"id\"\nWHERE s.\"superhero_name\" = 'Apocalypse';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "780": {
+      "question_id": "780",
+      "db_id": "superhero",
+      "prediction": "SELECT sp.power_name\nFROM superhero s\nJOIN hero_power hp ON hp.hero_id = s.id\nJOIN superpower sp ON sp.id = hp.power_id\nWHERE s.full_name ILIKE '%Hunter%Zolomon%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "792": {
+      "question_id": "792",
+      "db_id": "superhero",
+      "prediction": "SELECT sp.power_name\nFROM superhero sh\nJOIN hero_power hp ON hp.hero_id = sh.id\nJOIN superpower sp ON sp.id = hp.power_id\nWHERE sh.superhero_name = 'Abomination';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "828": {
+      "question_id": "828",
+      "db_id": "superhero",
+      "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS fastest_superheroes_count\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE a.\"attribute_name\" = 'Speed'\n  AND ha.\"attribute_value\" = 100;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "737": {
+      "question_id": "737",
+      "db_id": "superhero",
+      "prediction": "SELECT r.\"race\"\nFROM \"superhero\" s\nJOIN \"race\" r ON s.\"race_id\" = r.\"id\"\nWHERE s.\"superhero_name\" ILIKE '%Copycat%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "781": {
+      "question_id": "781",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"height_cm\"\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nWHERE c.\"colour\" = 'Amber';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "747": {
+      "question_id": "747",
+      "db_id": "superhero",
+      "prediction": "SELECT COUNT(*) AS total_superheroes_without_full_name\nFROM \"superhero\" s\nWHERE s.\"full_name\" IS NULL;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "794": {
+      "question_id": "794",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE a.\"attribute_name\" = 'Speed'\nORDER BY ha.\"attribute_value\" DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "814": {
+      "question_id": "814",
+      "db_id": "superhero",
+      "prediction": "SELECT DISTINCT c.\"colour\"\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"colour\" c ON c.\"id\" = s.\"skin_colour_id\"\nWHERE ha.\"attribute_value\" = 100;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "723": {
+      "question_id": "723",
+      "db_id": "superhero",
+      "prediction": "SELECT COUNT(DISTINCT s.\"id\") AS count\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.\"eye_colour_id\" = c.\"id\"\nJOIN \"hero_power\" hp ON s.\"id\" = hp.\"hero_id\"\nJOIN \"superpower\" sp ON hp.\"power_id\" = sp.\"id\"\nWHERE c.\"colour\" = 'Blue'\n  AND sp.\"power_name\" = 'Agility';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "801": {
+      "question_id": "801",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN g.gender = 'Female' THEN 1 ELSE 0 END)::NUMERIC\n  / NULLIF(SUM(CASE WHEN g.gender = 'Male' THEN 1 ELSE 0 END), 0) AS ratio\nFROM superhero s\nJOIN gender g ON s.gender_id = g.id;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "797": {
+      "question_id": "797",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"colour\" ec ON ec.\"id\" = s.\"eye_colour_id\"\nJOIN \"colour\" hc ON hc.\"id\" = s.\"hair_colour_id\"\nWHERE ec.\"colour\" = 'Blue'\n  AND hc.\"colour\" = 'Brown';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "726": {
+      "question_id": "726",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\", s.\"height_cm\"\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE p.\"publisher_name\" = 'Marvel Comics'\nORDER BY s.\"height_cm\" DESC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": null,
+        "numeric_precision_warning": false
+      }
+    },
+    "736": {
+      "question_id": "736",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"hero_attribute\" ha ON ha.\"hero_id\" = s.\"id\"\nJOIN \"attribute\" a ON a.\"id\" = ha.\"attribute_id\"\nWHERE a.\"attribute_name\" = 'Intelligence'\nORDER BY ha.\"attribute_value\" ASC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "825": {
+      "question_id": "825",
+      "db_id": "superhero",
+      "prediction": "SELECT g.gender\nFROM superhero s\nJOIN hero_power hp ON hp.hero_id = s.id\nJOIN superpower sp ON sp.id = hp.power_id\nJOIN gender g ON g.id = s.gender_id\nWHERE sp.power_name = 'Phoenix Force';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "845": {
+      "question_id": "845",
+      "db_id": "superhero",
+      "prediction": "SELECT sp.power_name\nFROM superhero s\nJOIN hero_power hp ON hp.hero_id = s.id\nJOIN superpower sp ON sp.id = hp.power_id\nWHERE s.height_cm::NUMERIC > (SELECT AVG(height_cm::NUMERIC) * 0.8 FROM superhero);",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "790": {
+      "question_id": "790",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN s.full_name = 'Emil Blonsky' THEN s.weight_kg ELSE 0 END)\n  - SUM(CASE WHEN s.full_name = 'Charles Chandler' THEN s.weight_kg ELSE 0 END) AS difference\nFROM superhero s\nWHERE s.full_name IN ('Emil Blonsky', 'Charles Chandler');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "798": {
+      "question_id": "798",
+      "db_id": "superhero",
+      "prediction": "SELECT p.\"publisher_name\"\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE s.\"superhero_name\" IN ('Hawkman', 'Karate Kid', 'Speedy');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "827": {
+      "question_id": "827",
+      "db_id": "superhero",
+      "prediction": "SELECT AVG(s.height_cm) AS average_height\nFROM superhero s\nJOIN race r ON s.race_id = r.id\nJOIN publisher p ON s.publisher_id = p.id\nWHERE r.race <> 'Human'\n  AND p.publisher_name = 'Dark Horse Comics';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "818": {
+      "question_id": "818",
+      "db_id": "superhero",
+      "prediction": "SELECT\n    (SUM(CASE WHEN g.id = 2 THEN 1 ELSE 0 END)::NUMERIC\n     / COUNT(a.id)::NUMERIC) * 100.0 AS percentage_female_bad_superheroes\nFROM superhero s\nJOIN alignment a ON s.alignment_id = a.id\nJOIN gender g ON s.gender_id = g.id\nWHERE a.id = 2;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "835": {
+      "question_id": "835",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  (SUM(CASE WHEN a.\"alignment\" = 'Good' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(*)::NUMERIC) * 100.0 AS good_percentage\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nWHERE p.\"publisher_name\" = 'Marvel Comics';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "760": {
+      "question_id": "760",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN p.publisher_name = 'Marvel Comics' THEN 1 ELSE 0 END)::NUMERIC\n  / COUNT(*)::NUMERIC * 100 AS percentage\nFROM superhero s\nJOIN publisher p ON s.publisher_id = p.id\nWHERE s.height_cm BETWEEN 150 AND 180;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "775": {
+      "question_id": "775",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  (SUM(CASE WHEN c.\"colour\" = 'Blue' THEN 1 ELSE 0 END)::NUMERIC\n   / NULLIF(COUNT(*), 0)) * 100 AS percentage\nFROM \"superhero\" s\nJOIN \"gender\" g ON g.\"id\" = s.\"gender_id\"\nJOIN \"colour\" c ON c.\"id\" = s.\"skin_colour_id\"\nWHERE g.\"gender\" = 'Female';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "743": {
+      "question_id": "743",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  (SUM(CASE WHEN a.\"alignment\" = 'Bad' THEN 1 ELSE 0 END)::NUMERIC / COUNT(s.\"id\")) * 100 AS bad_percentage,\n  SUM(CASE WHEN a.\"alignment\" = 'Bad' AND p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END) AS marvel_bad_count\nFROM \"superhero\" s\nJOIN \"alignment\" a ON s.\"alignment_id\" = a.\"id\"\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "724": {
+      "question_id": "724",
+      "db_id": "superhero",
+      "prediction": "SELECT s.\"superhero_name\"\nFROM \"superhero\" s\nJOIN \"colour\" ec ON s.\"eye_colour_id\" = ec.\"id\"\nJOIN \"colour\" hc ON s.\"hair_colour_id\" = hc.\"id\"\nWHERE ec.\"colour\" = 'Blue'\n  AND hc.\"colour\" = 'Blond';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "829": {
+      "question_id": "829",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS dc_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END) AS marvel_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END)\n    - SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END) AS difference\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE p.\"publisher_name\" IN ('DC Comics', 'Marvel Comics');",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "744": {
+      "question_id": "744",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END) AS marvel_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS dc_count,\n  SUM(CASE WHEN p.\"publisher_name\" = 'Marvel Comics' THEN 1 ELSE 0 END)\n    - SUM(CASE WHEN p.\"publisher_name\" = 'DC Comics' THEN 1 ELSE 0 END) AS difference\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nWHERE p.\"publisher_name\" IN ('Marvel Comics', 'DC Comics');",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "772": {
+      "question_id": "772",
+      "db_id": "superhero",
+      "prediction": "SELECT ec.\"colour\" AS eye_colour, hc.\"colour\" AS hair_colour, sc.\"colour\" AS skin_colour\nFROM \"superhero\" s\nJOIN \"gender\" g ON s.\"gender_id\" = g.\"id\"\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"colour\" ec ON s.\"eye_colour_id\" = ec.\"id\"\nJOIN \"colour\" hc ON s.\"hair_colour_id\" = hc.\"id\"\nJOIN \"colour\" sc ON s.\"skin_colour_id\" = sc.\"id\"\nWHERE g.\"gender\" = 'Female'\n  AND p.\"publisher_name\" = 'Dark Horse Comics';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "834": {
+      "question_id": "834",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  (SUM(CASE WHEN g.\"gender\" = 'Female' THEN 1 ELSE 0 END)::NUMERIC\n   / COUNT(*)::NUMERIC) * 100.0 AS female_percentage\nFROM \"superhero\" s\nJOIN \"publisher\" p ON s.\"publisher_id\" = p.\"id\"\nJOIN \"gender\" g ON s.\"gender_id\" = g.\"id\"\nWHERE p.\"publisher_name\" = 'George Lucas';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "819": {
+      "question_id": "819",
+      "db_id": "superhero",
+      "prediction": "SELECT\n  SUM(CASE WHEN c.id = 7 THEN 1 ELSE 0 END) - SUM(CASE WHEN c.id = 1 THEN 1 ELSE 0 END) AS eye_colour_difference\nFROM \"superhero\" s\nJOIN \"colour\" c ON s.eye_colour_id = c.id\nWHERE s.weight_kg = 0 OR s.weight_kg IS NULL;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "773": {
+      "question_id": "773",
+      "db_id": "superhero",
+      "prediction": "SELECT s.superhero_name, p.publisher_name\nFROM superhero s\nJOIN publisher p ON s.publisher_id = p.id\nWHERE s.hair_colour_id = s.skin_colour_id\n  AND s.hair_colour_id = s.eye_colour_id;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1377": {
+      "question_id": "1377",
+      "db_id": "student_club",
+      "prediction": "SELECT COUNT(*) AS president_count\nFROM \"member\" m\nWHERE LOWER(m.\"position\") = 'president';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1342": {
+      "question_id": "1342",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"cost\"\nFROM \"expense\" e\nWHERE e.\"expense_description\" = 'Posters'\n  AND e.\"expense_date\" = '2019-09-04';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1349": {
+      "question_id": "1349",
+      "db_id": "student_club",
+      "prediction": "SELECT SUM(b.\"amount\") AS total_budget_amount\nFROM \"budget\" b\nJOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"event_name\" = 'September Speaker';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1447": {
+      "question_id": "1447",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"event_name\", e.\"location\"\nFROM \"event\" e\nJOIN \"budget\" b ON e.\"event_id\" = b.\"link_to_event\"\nWHERE b.\"remaining\"::NUMERIC > 0;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1462": {
+      "question_id": "1462",
+      "db_id": "student_club",
+      "prediction": "SELECT b.\"category\", b.\"amount\" FROM \"budget\" b JOIN \"event\" e ON b.\"link_to_event\" = e.\"event_id\" WHERE e.\"event_name\" = 'January Speaker';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1394": {
+      "question_id": "1394",
+      "db_id": "student_club",
+      "prediction": "SELECT COUNT(DISTINCT m.\"member_id\") AS member_count\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" = 'Physics Teaching';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1385": {
+      "question_id": "1385",
+      "db_id": "student_club",
+      "prediction": "SELECT m.first_name, m.last_name\nFROM member m\nJOIN income i ON i.link_to_member = m.member_id\nWHERE i.amount > 40\nGROUP BY m.first_name, m.last_name;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1436": {
+      "question_id": "1436",
+      "db_id": "student_club",
+      "prediction": "SELECT DISTINCT e.\"event_id\"\nFROM \"member\" m\nJOIN \"expense\" ex ON ex.\"link_to_member\" = m.\"member_id\"\nJOIN \"budget\" b ON b.\"budget_id\" = ex.\"link_to_budget\"\nJOIN \"event\" e ON e.\"event_id\" = b.\"link_to_event\"\nWHERE ex.\"cost\"::NUMERIC > 50;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1420": {
+      "question_id": "1420",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"major_name\"\nFROM \"member\" mem\nJOIN \"major\" m ON mem.\"link_to_major\" = m.\"major_id\"\nWHERE mem.\"position\" = 'Vice President';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1468": {
+      "question_id": "1468",
+      "db_id": "student_club",
+      "prediction": "SELECT z.\"city\"\nFROM \"member\" m\nJOIN \"zip_code\" z ON m.\"zip\" = z.\"zip_code\"\nWHERE m.\"first_name\" ILIKE '%Garrett%'\n  AND m.\"last_name\" ILIKE '%Gerke%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1328": {
+      "question_id": "1328",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"last_name\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" = 'Law and Constitutional Studies';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1365": {
+      "question_id": "1365",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"expense_description\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE b.\"remaining\" = (\n    SELECT MIN(b2.\"remaining\"::NUMERIC)\n    FROM \"budget\" b2\n);",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1388": {
+      "question_id": "1388",
+      "db_id": "student_club",
+      "prediction": "SELECT m.first_name, m.last_name, i.source\nFROM income i\nJOIN member m ON i.link_to_member = m.member_id\nORDER BY i.amount DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1426": {
+      "question_id": "1426",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"last_name\", mj.\"department\", mj.\"college\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" = 'Environmental Engineering';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1456": {
+      "question_id": "1456",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"first_name\", m.\"last_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nGROUP BY m.\"member_id\", m.\"first_name\", m.\"last_name\"\nORDER BY MAX(e.\"cost\") DESC NULLS LAST\nLIMIT 5;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1453": {
+      "question_id": "1453",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"budget\" b ON b.\"link_to_event\" = e.\"event_id\"\nWHERE b.\"category\" = 'Parking'\n  AND b.\"spent\" < (\n    SELECT SUM(b2.\"spent\") / COUNT(DISTINCT b2.\"link_to_event\")\n    FROM \"budget\" b2\n    WHERE b2.\"category\" = 'Parking'\n  )\nGROUP BY e.\"event_name\"\nORDER BY e.\"event_name\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1439": {
+      "question_id": "1439",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"phone\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nWHERE mj.\"major_name\" = 'Business'\n  AND mj.\"college\" = 'College of Agriculture and Applied Sciences';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1428": {
+      "question_id": "1428",
+      "db_id": "student_club",
+      "prediction": "SELECT DISTINCT z.\"city\", z.\"state\"\nFROM \"member\" m\nJOIN \"major\" mj ON m.\"link_to_major\" = mj.\"major_id\"\nJOIN \"zip_code\" z ON m.\"zip\" = z.\"zip_code\"\nWHERE mj.\"department\" ILIKE '%Electrical and Computer Engineering%'\n  AND m.\"position\" = 'Member';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1323": {
+      "question_id": "1323",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nWHERE e.\"type\" <> 'Fundraiser'\nGROUP BY e.\"event_id\", e.\"event_name\"\nHAVING COUNT(a.\"link_to_member\") > 20;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1449": {
+      "question_id": "1449",
+      "db_id": "student_club",
+      "prediction": "SELECT DISTINCT m.\"first_name\", m.\"last_name\", mj.\"major_name\"\nFROM \"member\" m\nJOIN \"expense\" e ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"major\" mj ON mj.\"major_id\" = m.\"link_to_major\"\nWHERE e.\"cost\"::NUMERIC > 100\nORDER BY m.\"first_name\" ASC NULLS FIRST, m.\"last_name\" ASC NULLS FIRST, mj.\"major_name\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1340": {
+      "question_id": "1340",
+      "db_id": "student_club",
+      "prediction": "SELECT\n  SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\"::timestamp) = 2019 THEN b.\"spent\" ELSE 0 END)\n  - SUM(CASE WHEN EXTRACT(YEAR FROM e.\"event_date\"::timestamp) = 2020 THEN b.\"spent\" ELSE 0 END) AS spent_difference\nFROM budget b\nJOIN event e ON b.\"link_to_event\" = e.\"event_id\"\nWHERE EXTRACT(YEAR FROM e.\"event_date\"::timestamp) IN (2019, 2020);",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1399": {
+      "question_id": "1399",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"event_name\"\nFROM \"member\" m\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"event\" e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"first_name\" ILIKE 'Maya'\n  AND m.\"last_name\" ILIKE 'Mclean'\n  AND e.\"event_name\" ILIKE 'Women''s Soccer';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1401": {
+      "question_id": "1401",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"cost\"\nFROM \"expense\" e\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nJOIN \"event\" ev ON b.\"link_to_event\" = ev.\"event_id\"\nWHERE e.\"expense_description\" ILIKE '%Posters%'\n  AND ev.\"event_name\" ILIKE '%September Speaker%';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1431": {
+      "question_id": "1431",
+      "db_id": "student_club",
+      "prediction": "SELECT DISTINCT m.\"last_name\"\nFROM \"member\" m\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nJOIN \"event\" e ON e.\"event_id\" = a.\"link_to_event\"\nWHERE m.\"position\" = 'Member'\n  AND e.\"event_name\" ILIKE '%Women%s Soccer%'\nORDER BY m.\"last_name\" ASC NULLS FIRST;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1339": {
+      "question_id": "1339",
+      "db_id": "student_club",
+      "prediction": "SELECT AVG(e.\"cost\") AS average_cost\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nWHERE m.\"first_name\" = 'Elijah'\n  AND m.\"last_name\" = 'Allen'\n  AND EXTRACT(MONTH FROM e.\"expense_date\"::timestamp) IN (9, 10);",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1359": {
+      "question_id": "1359",
+      "db_id": "student_club",
+      "prediction": "SELECT\n  SUM(CASE WHEN e.event_name = 'Yearly Kickoff' THEN b.amount ELSE 0 END)::NUMERIC\n  / NULLIF(SUM(CASE WHEN e.event_name = 'October Meeting' THEN b.amount ELSE 0 END), 0)::NUMERIC AS ratio\nFROM budget b\nJOIN event e ON b.link_to_event = e.event_id\nWHERE b.category = 'Advertisement';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "1429": {
+      "question_id": "1429",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"event_name\"\nFROM \"event\" e\nJOIN \"attendance\" a ON a.\"link_to_event\" = e.\"event_id\"\nJOIN \"member\" m ON m.\"member_id\" = a.\"link_to_member\"\nWHERE e.\"type\" = 'Social'\n  AND m.\"position\" = 'Vice President'\n  AND e.\"location\" = '900 E. Washington St.';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1437": {
+      "question_id": "1437",
+      "db_id": "student_club",
+      "prediction": "SELECT DISTINCT m.\"member_id\", m.\"first_name\", m.\"last_name\", a.\"link_to_event\"\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"attendance\" a ON a.\"link_to_member\" = m.\"member_id\"\nWHERE e.\"approved\" = 'true'\n  AND e.\"expense_date\"::date BETWEEN '2019-01-10'::date AND '2019-11-19'::date;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1448": {
+      "question_id": "1448",
+      "db_id": "student_club",
+      "prediction": "SELECT e.\"event_name\", e.\"event_date\"\nFROM \"event\" e\nJOIN \"budget\" b ON b.\"link_to_event\" = e.\"event_id\"\nJOIN \"expense\" ex ON ex.\"link_to_budget\" = b.\"budget_id\"\nWHERE ex.\"expense_description\" = 'Pizza'\n  AND ex.\"cost\"::NUMERIC > 50\n  AND ex.\"cost\"::NUMERIC < 100;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1451": {
+      "question_id": "1451",
+      "db_id": "student_club",
+      "prediction": "SELECT m.\"first_name\", m.\"last_name\", e.\"cost\"\nFROM \"expense\" e\nJOIN \"member\" m ON e.\"link_to_member\" = m.\"member_id\"\nJOIN \"budget\" b ON e.\"link_to_budget\" = b.\"budget_id\"\nWHERE e.\"link_to_member\" IN (\n    SELECT e2.\"link_to_member\"\n    FROM \"expense\" e2\n    JOIN \"budget\" b2 ON e2.\"link_to_budget\" = b2.\"budget_id\"\n    GROUP BY e2.\"link_to_member\"\n    HAVING COUNT(DISTINCT b2.\"link_to_event\") > 1\n)\nORDER BY e.\"cost\"::NUMERIC DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1457": {
+      "question_id": "1457",
+      "db_id": "student_club",
+      "prediction": "SELECT m.first_name, m.last_name, m.phone\nFROM member m\nJOIN expense e ON e.link_to_member = m.member_id\nWHERE e.cost > (SELECT AVG(cost) FROM expense);",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1460": {
+      "question_id": "1460",
+      "db_id": "student_club",
+      "prediction": "SELECT m.first_name, m.last_name, e.cost\nFROM expense e\nJOIN member m ON e.link_to_member = m.member_id\nWHERE e.expense_description = 'Water, Veggie tray, supplies';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1464": {
+      "question_id": "1464",
+      "db_id": "student_club",
+      "prediction": "SELECT m.first_name, m.last_name, i.amount\nFROM income i\nJOIN member m ON i.link_to_member = m.member_id\nWHERE i.date_received = '2019-09-09';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1471": {
+      "question_id": "1471",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  COUNT(*) FILTER (WHERE \"c\".\"currency\" = 'EUR')::NUMERIC\n  / NULLIF(COUNT(*) FILTER (WHERE \"c\".\"currency\" = 'CZK'), 0) AS \"eur_to_czk_ratio\"\nFROM \"customers\" AS \"c\";",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": true
+      }
+    },
+    "1484": {
+      "question_id": "1484",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  SUM(CASE WHEN g.\"country\" = 'CZE' THEN 1 ELSE 0 END) -\n  SUM(CASE WHEN g.\"country\" = 'SVK' THEN 1 ELSE 0 END) AS \"discount_difference\"\nFROM \"gasstations\" g\nWHERE g.\"segment\" = 'Discount';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1530": {
+      "question_id": "1530",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT p.\"description\", COUNT(*) AS sales_count\nFROM \"transactions_1k\" t\nJOIN \"products\" p ON t.\"productid\" = p.\"productid\"\nGROUP BY p.\"description\"\nORDER BY sales_count DESC NULLS LAST\nLIMIT 5;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1524": {
+      "question_id": "1524",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT c.\"segment\"\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON t.\"customerid\" = c.\"customerid\"\nWHERE t.\"price\" = 548.4\n  AND t.\"date\" = '2012-08-24';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1515": {
+      "question_id": "1515",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT c.\"segment\"\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON t.\"customerid\" = c.\"customerid\"\nWHERE t.\"date\" = TO_DATE('2012-08-23', 'YYYY-MM-DD')\n  AND t.\"time\" = '21:20:00';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1527": {
+      "question_id": "1527",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT g.\"gasstationid\", SUM(t.\"price\") AS total_revenue\nFROM \"transactions_1k\" t\nJOIN \"gasstations\" g ON t.\"gasstationid\" = g.\"gasstationid\"\nGROUP BY g.\"gasstationid\"\nORDER BY total_revenue DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1523": {
+      "question_id": "1523",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT g.\"country\"\nFROM \"transactions_1k\" t\nJOIN \"gasstations\" g ON t.\"gasstationid\" = g.\"gasstationid\"\nWHERE t.\"cardid\" = 667467\nLIMIT 1;",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1496": {
+      "question_id": "1496",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT c.\"segment\", SUM(ym.\"consumption\") AS total_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE ym.\"date\" = '201309'\nGROUP BY c.\"segment\"\nORDER BY total_consumption ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1511": {
+      "question_id": "1511",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT AVG(t.\"price\") AS avg_total_price\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON t.\"customerid\" = c.\"customerid\"\nWHERE c.\"currency\" = 'EUR';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1525": {
+      "question_id": "1525",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  100.0 * COUNT(DISTINCT CASE WHEN c.\"currency\" = 'EUR' THEN t.\"customerid\" END)\n  / NULLIF(COUNT(DISTINCT t.\"customerid\"), 0) AS eur_customer_percentage\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON c.\"customerid\" = t.\"customerid\"\nWHERE t.\"date\"::date = DATE '2012-08-25';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1512": {
+      "question_id": "1512",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT t.\"customerid\", SUM(t.\"price\") AS total_paid\nFROM \"transactions_1k\" t\nWHERE t.\"date\" = '2012-08-25'\nGROUP BY t.\"customerid\"\nORDER BY total_paid DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1509": {
+      "question_id": "1509",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT COUNT(*) AS transaction_count\nFROM transactions_1k t\nJOIN gasstations g ON t.gasstationid = g.gasstationid\nWHERE g.country = 'CZE'\n  AND t.date > TO_DATE('2012-01-01', 'YYYY-MM-DD');",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1501": {
+      "question_id": "1501",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT DISTINCT gs.\"country\"\nFROM \"transactions_1k\" t\nJOIN \"gasstations\" gs ON t.\"gasstationid\" = gs.\"gasstationid\"\nJOIN \"yearmonth\" ym ON t.\"customerid\" = ym.\"customerid\"\nWHERE SUBSTRING(ym.\"date\", 1, 4) = '2013'\n  AND SUBSTRING(ym.\"date\", 5, 2) = '06';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1531": {
+      "question_id": "1531",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT c.\"customerid\", SUM(t.\"price\") / NULLIF(SUM(t.\"amount\"), 0) AS avg_price_per_item, c.\"currency\"\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON t.\"customerid\" = c.\"customerid\"\nGROUP BY c.\"customerid\", c.\"currency\"\nORDER BY SUM(t.\"price\") DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1533": {
+      "question_id": "1533",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT DISTINCT ym.\"customerid\", ym.\"consumption\"\nFROM \"transactions_1k\" t\nJOIN \"yearmonth\" ym ON t.\"customerid\" = ym.\"customerid\"\nWHERE t.\"productid\" = 5\n  AND t.\"amount\" > 0\n  AND (t.\"price\" / t.\"amount\") > 29.00\n  AND ym.\"date\" = '201208';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1480": {
+      "question_id": "1480",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT ym.\"date\" AS month, SUM(ym.\"consumption\") AS total_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'SME'\n  AND ym.\"date\" BETWEEN '201301' AND '201312'\nGROUP BY ym.\"date\"\nORDER BY total_consumption DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1529": {
+      "question_id": "1529",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT SUM(t.\"price\") AS total_spent\nFROM \"transactions_1k\" t\nJOIN \"customers\" c ON t.\"customerid\" = c.\"customerid\"\nWHERE c.\"customerid\" = 38508\n  AND t.\"gasstationid\" IS NOT NULL\n  AND TO_CHAR(t.\"date\"::DATE, 'YYYYMM') = '201201';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1472": {
+      "question_id": "1472",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT c.\"customerid\"\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'LAM'\n  AND SUBSTRING(ym.\"date\", 1, 4) = '2012'\nORDER BY ym.\"consumption\" ASC NULLS FIRST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1521": {
+      "question_id": "1521",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT COUNT(*) AS transaction_count\nFROM \"transactions_1k\" t\nJOIN \"gasstations\" g ON t.\"gasstationid\" = g.\"gasstationid\"\nWHERE t.\"date\" = '2012-08-26'\n  AND t.\"time\" BETWEEN '08:00:00' AND '09:00:00'\n  AND g.\"country\" = 'CZE';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1479": {
+      "question_id": "1479",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT SUBSTRING(ym.\"date\", 1, 4) AS year, SUM(ym.\"consumption\") AS total_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"currency\" = 'CZK'\nGROUP BY SUBSTRING(ym.\"date\", 1, 4)\nORDER BY total_consumption DESC NULLS LAST\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1475": {
+      "question_id": "1475",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT COUNT(DISTINCT c.\"customerid\") AS customer_count\nFROM \"customers\" c\nJOIN \"yearmonth\" y ON c.\"customerid\" = y.\"customerid\"\nWHERE c.\"segment\" = 'KAM'\n  AND y.\"date\" BETWEEN '201201' AND '201212'\n  AND y.\"consumption\" < 30000;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1473": {
+      "question_id": "1473",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT AVG(ym.\"consumption\") / 12 AS average_monthly_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'SME'\n  AND SUBSTRING(ym.\"date\", 1, 4) = '2013';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1490": {
+      "question_id": "1490",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  (COUNT(DISTINCT CASE WHEN ym.consumption > 46.73 THEN c.\"customerid\" END)::NUMERIC\n   / NULLIF(COUNT(DISTINCT c.\"customerid\"), 0)) * 100 AS \"percentage_lam_consumed_above_46_73\"\nFROM \"customers\" c\nJOIN \"yearmonth\" ym\n  ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'LAM';",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1476": {
+      "question_id": "1476",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  SUM(CASE WHEN c.\"currency\" = 'CZK' THEN ym.\"consumption\" ELSE 0 END) -\n  SUM(CASE WHEN c.\"currency\" = 'EUR' THEN ym.\"consumption\" ELSE 0 END) AS consumption_difference\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE ym.\"date\" BETWEEN '201201' AND '201212';",
+      "status": "scored",
+      "score": 1.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": true,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": true,
+        "numeric_precision_warning": false
+      }
+    },
+    "1482": {
+      "question_id": "1482",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  c.\"segment\",\n  (SUM(CASE WHEN LEFT(ym.\"date\", 4) = '2013' THEN ym.\"consumption\" ELSE 0 END)\n   - SUM(CASE WHEN LEFT(ym.\"date\", 4) = '2012' THEN ym.\"consumption\" ELSE 0 END)) AS \"increase_decrease\",\n  ((SUM(CASE WHEN LEFT(ym.\"date\", 4) = '2013' THEN ym.\"consumption\" ELSE 0 END)\n    - SUM(CASE WHEN LEFT(ym.\"date\", 4) = '2012' THEN ym.\"consumption\" ELSE 0 END))\n   / NULLIF(SUM(CASE WHEN LEFT(ym.\"date\", 4) = '2013' THEN ym.\"consumption\" ELSE 0 END), 0)) * 100 AS \"percentage_increase\"\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" IN ('SME', 'LAM', 'KAM')\n  AND c.\"currency\" = 'EUR'\n  AND LEFT(ym.\"date\", 4) IN ('2012', '2013')\nGROUP BY c.\"segment\"\nORDER BY \"percentage_increase\" DESC NULLS LAST;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    },
+    "1526": {
+      "question_id": "1526",
+      "db_id": "debit_card_specializing",
+      "prediction": "SELECT\n  (ym12.\"consumption\" - ym13.\"consumption\") / ym12.\"consumption\" AS \"consumption_decrease_rate\"\nFROM \"transactions_1k\" t\nJOIN \"yearmonth\" ym12\n  ON ym12.\"customerid\" = t.\"customerid\"\n AND ym12.\"date\" = '201208'\nJOIN \"yearmonth\" ym13\n  ON ym13.\"customerid\" = t.\"customerid\"\n AND ym13.\"date\" = '201308'\nWHERE t.\"date\" = '2012-08-25'\n  AND t.\"price\" = 634.8\nLIMIT 1;",
+      "status": "scored",
+      "score": 0.0,
+      "error": null,
+      "bird_comparison": {
+        "evaluation_policy": "bird-exact-set-v1",
+        "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+        "exact_equal": false,
+        "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+        "numeric_diagnostic_equal": false,
+        "numeric_precision_warning": false
+      }
+    }
+  },
+  "records_sha256": "9199ac98c54d182ee0d78f4a6f89a02062ebd773d7ff780a0e87ebd91c66b129"
+}

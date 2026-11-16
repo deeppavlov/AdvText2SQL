@@ -31,7 +31,6 @@ GLOBAL_LIMITS = dict(
 )
 FILES = (
     "scripts/bird_prompt_full.py",
-    "local/run_bird_prompt_full.ps1",
     "local/run_bird_prompt_full.sh",
     *shared.FILES,
 )

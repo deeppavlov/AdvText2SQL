@@ -104,6 +104,11 @@ def parse_scores_from_log(log_path: Path) -> dict[str, int]:
 
     scores = {}
     for r in results:
+        if r.get("error"):
+            from build_configuration_dataset import execution_failure_kind
+
+            if execution_failure_kind(r) != "prediction":
+                raise ValueError("Untrusted BIRD evaluation error; use the masked configuration dataset builder")
         qid = str(r.get("question_id", ""))
         score = r.get("score", 0)
         scores[qid] = int(bool(score))
@@ -124,21 +129,22 @@ def parse_scores_from_query_results(
 
     Ambrosia's evaluate_ambrosia.py only returns an aggregate report (no
     per-question dump like BIRD's printed results list), so correctness is
-    recomputed here the same way: gold_is_ambiguous == predicted_is_ambiguous.
+    recomputed with the shared strict evaluator; errors are never true negatives.
     """
     if not query_results_path.exists():
         return {}
     with open(query_results_path, encoding="utf-8") as f:
         predictions = json.load(f)
 
+    from adv_text2sql.evaluation import ambrosia_report, ambrosia_decision_correct
+
+    ambrosia_report(list(gold_questions.values()), predictions)
     scores = {}
     for qid, pred in predictions.items():
         gold = gold_questions.get(qid)
         if gold is None:
             continue
-        gold_is_amb = gold["SQL"] == "ambiguous"
-        pred_is_amb = pred == "ambiguous"
-        scores[qid] = int(gold_is_amb == pred_is_amb)
+        scores[qid] = int(ambrosia_decision_correct(gold, pred))
     return scores
 
 

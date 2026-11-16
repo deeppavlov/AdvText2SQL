@@ -1,0 +1,127 @@
+{
+  "manifest_sha256": "39e1e2a14a78740f204d0dbfcaa0041907d0d4e461f2aaaa20ed5a1c2bff98f0",
+  "benchmarks": {
+    "bird": {
+      "features": [
+        2,
+        7,
+        14,
+        32,
+        35
+      ],
+      "rows": {
+        "A historical": {
+          "saved": 241,
+          "total": 241,
+          "complete": true,
+          "reference_errors": [],
+          "correct": 132.0,
+          "accuracy": 0.5477178423236515
+        },
+        "B rescored": {
+          "saved": 188,
+          "total": 241,
+          "complete": false,
+          "reference_errors": [
+            "9",
+            "10",
+            "73",
+            "14",
+            "34",
+            "4",
+            "85",
+            "81",
+            "35",
+            "28",
+            "62",
+            "83",
+            "158",
+            "157",
+            "173"
+          ],
+          "correct": null,
+          "accuracy": null
+        },
+        "C fresh": {
+          "saved": 0,
+          "total": 241,
+          "complete": false,
+          "reference_errors": [],
+          "correct": null,
+          "accuracy": null
+        }
+      },
+      "paired": {
+        "evaluator_B_vs_A": {
+          "compared": 173,
+          "rescued_ids": [],
+          "harmed_ids": []
+        },
+        "generation_C_vs_B": {
+          "compared": 0,
+          "rescued_ids": [],
+          "harmed_ids": []
+        }
+      },
+      "budget": null
+    },
+    "ambrosia": {
+      "features": [
+        14,
+        32
+      ],
+      "rows": {
+        "A historical": {
+          "saved": 211,
+          "total": 211,
+          "complete": true,
+          "reference_errors": [],
+          "correct": 171.0,
+          "accuracy": 0.8104265402843602,
+          "ambiguity_metrics": {
+            "tp": 31,
+            "fp": 8,
+            "fn": 32,
+            "tn": 140,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7948717948717948,
+            "recall": 0.49206349206349204,
+            "f1": 0.6078431372549019,
+            "balanced_accuracy": 0.719004719004719
+          }
+        },
+        "B rescored": {
+          "saved": 0,
+          "total": 211,
+          "complete": false,
+          "reference_errors": [],
+          "correct": null,
+          "accuracy": null
+        },
+        "C fresh": {
+          "saved": 0,
+          "total": 211,
+          "complete": false,
+          "reference_errors": [],
+          "correct": null,
+          "accuracy": null
+        }
+      },
+      "paired": {
+        "evaluator_B_vs_A": {
+          "compared": 0,
+          "rescued_ids": [],
+          "harmed_ids": []
+        },
+        "generation_C_vs_B": {
+          "compared": 0,
+          "rescued_ids": [],
+          "harmed_ids": []
+        }
+      },
+      "budget": null
+    }
+  },
+  "deployed": false
+}

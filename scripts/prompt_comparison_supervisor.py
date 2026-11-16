@@ -1,6 +1,7 @@
 """Manually launched, bounded external resumes; frozen campaign stays unchanged."""
 
 import argparse
+import os
 import hashlib
 from pathlib import Path
 import subprocess
@@ -124,16 +125,8 @@ def main():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--transient-resumes", type=int, choices=range(4), default=0)
     args, forwarded = parser.parse_known_args()
-    launcher = campaign.ROOT / "local/run_prompt_comparison_durable.ps1"
-    command = [
-        "powershell",
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        str(launcher),
-        *forwarded,
-    ]
+    launcher = campaign.ROOT / "local/run_prompt_comparison_durable.sh"
+    command = [os.environ.get("BASH_EXECUTABLE", "bash"), str(launcher), *forwarded]
     offline_flags = {"--status", "--report", "--dry-run", "--prepare", "--help", "-h"}
     if offline_flags.intersection(forwarded):
         return subprocess.run(command, cwd=campaign.ROOT).returncode

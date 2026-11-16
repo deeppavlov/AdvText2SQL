@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 import re
 
+from adv_text2sql.evaluation import recorded_database_failure
+
 from ablation_maintenance import approved_protocols
 from atomic_artifacts import write_json
 from configuration_splits import (
@@ -67,6 +69,14 @@ def load_questions(path):
 def execution_failure_kind(entry):
     if not entry.get("error"):
         return None
+    failure = recorded_database_failure(entry)
+    if (entry.get("error_type") == "UnsafeSQL" and entry.get("execution_stage") == "prediction"
+            and entry.get("failure_kind") == "query"):
+        return "prediction"
+    if failure != "query":
+        return failure
+    if entry.get("execution_stage") in ("reference", "prediction"):
+        return entry["execution_stage"]
     statement = re.search(r"\[SQL: (.*?)\]\s*(?:\[parameters:|\(Background|$)", entry["error"], re.S)
     if not statement:
         return "unknown"
@@ -126,7 +136,7 @@ def observations(items, predictions, report, benchmark):
                 raise ValueError("BIRD prediction differs from the scored SQL")
             if benchmark == "bird" and scores[key].get("error") and correct:
                 raise ValueError("Execution error cannot have a successful score")
-            if failure_kind in ("reference", "unknown"):
+            if failure_kind in ("reference", "unknown", "infrastructure"):
                 observed, correct = False, None
         result[key] = {
             "observed": observed, "correct": correct, "generation_error": error,
@@ -437,7 +447,7 @@ def audit_folds(records, groups, splits, folds, stress):
             raise ValueError("Question-family leakage in construction-family holdout")
 
 
-def verify_bundle(output, root=ROOT):
+def verify_bundle(output, root=ROOT, *, verify_sources=True):
     manifest = read(output / "manifest.json")
     if manifest.get("format_version") != FORMAT:
         raise ValueError("Unknown dataset format")
@@ -446,9 +456,10 @@ def verify_bundle(output, root=ROOT):
             raise ValueError(f"Derived artifact hash changed: {relative}")
     if set(manifest["output_files_sha256"]) != set(OUTPUT_FILES):
         raise ValueError("Incomplete dataset bundle")
-    for relative, expected in manifest["source_files_sha256"].items():
-        if sha(root / relative) != expected:
-            raise ValueError(f"Source artifact hash changed: {relative}")
+    if verify_sources:
+        for relative, expected in manifest["source_files_sha256"].items():
+            if sha(root / relative) != expected:
+                raise ValueError(f"Source artifact hash changed: {relative}")
     records = [json.loads(line) for line in (output / "records.jsonl").read_text(encoding="utf-8").splitlines()]
     split = read(output / "splits.json")
     audit_partitions(records, split["groups"], split["partitions"])

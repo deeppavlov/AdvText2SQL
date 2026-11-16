@@ -1,0 +1,170 @@
+{
+  "manifest_sha256": "9735ad7ce10dbcba7d977cc987b7ccad4f7e79cc310e64a912cf09bccdc6a6f9",
+  "evaluation_scope": "full_retrospective_regression",
+  "independent_test": false,
+  "deployed": false,
+  "benchmarks": {
+    "bird": {
+      "questions": 241,
+      "completed": true,
+      "reference_errors": 0,
+      "pending_reservations": 0,
+      "task_calls": 479,
+      "tokens": 1620656,
+      "input_tokens": 1570533,
+      "output_tokens": 50123,
+      "active_minutes": 37.234633333332994,
+      "errors": [
+        {
+          "question_id": "169",
+          "error": "postgresql:42883:UndefinedFunction"
+        },
+        {
+          "question_id": "173",
+          "error": "multiple_statements"
+        },
+        {
+          "question_id": "506",
+          "error": "postgresql:42703:UndefinedColumn"
+        },
+        {
+          "question_id": "1529",
+          "error": "postgresql:42883:UndefinedFunction"
+        }
+      ],
+      "paired": {
+        "evaluator_B_vs_A": {
+          "compared": 241,
+          "rescued_ids": [],
+          "harmed_ids": [
+            "1473"
+          ]
+        },
+        "generation_C_vs_B": {
+          "compared": 241,
+          "rescued_ids": [
+            "517",
+            "829",
+            "1512"
+          ],
+          "harmed_ids": [
+            "57",
+            "34",
+            "179",
+            "199",
+            "421",
+            "803"
+          ]
+        }
+      },
+      "harmed_saved_sql_equals_raw_model_sql": {
+        "57": true,
+        "34": true,
+        "179": true,
+        "199": true,
+        "421": true,
+        "803": true
+      },
+      "gold_translation_comparison": {
+        "historical_source_sha256": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+        "compared": 241,
+        "changed_ids": [],
+        "database_calls": 0
+      }
+    },
+    "ambrosia": {
+      "questions": 211,
+      "completed": true,
+      "reference_errors": 0,
+      "pending_reservations": 0,
+      "task_calls": 297,
+      "tokens": 502295,
+      "input_tokens": 468214,
+      "output_tokens": 34081,
+      "active_minutes": 28.473699999999372,
+      "errors": [],
+      "paired": {
+        "evaluator_B_vs_A": {
+          "compared": 211,
+          "rescued_ids": [],
+          "harmed_ids": []
+        },
+        "generation_C_vs_B": {
+          "compared": 211,
+          "rescued_ids": [],
+          "harmed_ids": [
+            "32",
+            "127",
+            "131",
+            "270"
+          ]
+        }
+      },
+      "taxonomy": {
+        "old_valid": 123,
+        "new_valid": 123,
+        "old_invalid_ids": [],
+        "new_invalid_ids": [],
+        "changed_decisions": [
+          {
+            "question_id": "32",
+            "messages_identical": true,
+            "old_is_ambiguous": true,
+            "new_is_ambiguous": false,
+            "messages_sha256": "61fdee6a9d1b3debf988a58991854f961a7f823264675f6f4eaf630bffa050c2"
+          },
+          {
+            "question_id": "127",
+            "messages_identical": true,
+            "old_is_ambiguous": true,
+            "new_is_ambiguous": false,
+            "messages_sha256": "440cbd1c12909d527a203fcaf9364f23e8a3f6570b2eb28a969899b0ace991e3"
+          },
+          {
+            "question_id": "131",
+            "messages_identical": true,
+            "old_is_ambiguous": true,
+            "new_is_ambiguous": false,
+            "messages_sha256": "020a9dde137c76e05e28934285f1fc6e7adc6203c726e5690845777061fb4d78"
+          },
+          {
+            "question_id": "270",
+            "messages_identical": true,
+            "old_is_ambiguous": false,
+            "new_is_ambiguous": true,
+            "messages_sha256": "648998d4737c54bb3df97a68682f999ef50b841ed868b16202bde999a2e1b0af"
+          }
+        ]
+      }
+    }
+  },
+  "unresolved": [
+    {
+      "question_id": "1473",
+      "benchmark": "bird",
+      "issue": "Same saved SQL changed score; gold translation unchanged. Numeric result values/types and database state require targeted inspection; cause not established."
+    },
+    {
+      "question_id": "34",
+      "benchmark": "bird",
+      "issue": "Fresh prediction introduces NUMERIC division; numerical representation versus reference needs checking before attributing a semantic error."
+    }
+  ],
+  "source_files_sha256": {
+    "research_results/static_pipeline_audit_20261116_r2/experiment.json": "8e10aacd2490cd20f272f87d7f3b3e56256bb1e053ac89bd3b832e09dc924ddd",
+    "research_results/static_pipeline_audit_20261116_r2/comparison.json": "27f2a2fb574373363a84ba7f3979a3d15f9375b441e1da4f809f6fbcb2982606",
+    "research_results/static_pipeline_audit_20261116_r2/bird/reevaluation.json": "bcdd94b04038b00764e67fc585a34899aa2cba3c0ecf5e629762dbeb36a48bb1",
+    "research_results/static_pipeline_audit_20261116_r2/bird/budget.json": "deb084a42c9c9197ccbfe6b7c8159e618a1806da8e02e970d39e2cc17a40371b",
+    "research_results/static_pipeline_audit_20261116_r2/bird/jobs/static_control/evaluations.json": "99d46da121286e5b385f9d324132956c1e1436e976d1c1e259be06a0a3c4f301",
+    "research_results/static_pipeline_audit_20261116_r2/bird/jobs/static_control/confirm/metadata.json": "9580c53cb54ae6149a065f69f0872f66feaafc547e116138cb771f8eddb7d353",
+    "research_results/static_pipeline_audit_20261116_r2/bird/jobs/static_control/confirm/budget.json": "a358df3bdb53da940f83342ce41170f612168ac56c1e30208cd7f4c05372b0d7",
+    "research_results/static_pipeline_audit_20261116_r2/bird/jobs/static_control/confirm/raw_responses.jsonl": "d38776926db200d0c650d38786e67fd7a4a3a2675c07871f6d12aedbf477f6ed",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/reevaluation.json": "8761ca45c60c6f99e0bddfce0888e07e72c9b1ddb7557875ef25992205334b9d",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/budget.json": "5ae5763093a80de2ef13f3d0ec0f4f88b28c37aa47b31dd655e4e42f05ce7814",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/jobs/static_control/evaluations.json": "fa66357a3aafa75675cf9a58ae529e621a3d4600bbfc37f03c13e7dcd6faae47",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/jobs/static_control/confirm/metadata.json": "93c3d022bd768c75db7407bf28d9f5af647cfbb289d5f550e635d0d0f41f3e7e",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/jobs/static_control/confirm/budget.json": "474472ee2db3a5fc912305f6e74dbab8749de8d245365323ae1b30029f354116",
+    "research_results/static_pipeline_audit_20261116_r2/ambrosia/jobs/static_control/confirm/raw_responses.jsonl": "f09895cf080fbe1ccf68de7567b173a0feddf45f97dc5b861b54b509e737715c",
+    "research_results/ambrosia_prompt_full_20261107/jobs/ambrosia_full__control/confirm/raw_responses.jsonl": "a8e77cbebf806c72f0fefb42c8fcd0786a0f3311ae757ab82f8ee9d57629ca65"
+  }
+}

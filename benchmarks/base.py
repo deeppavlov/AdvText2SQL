@@ -4,11 +4,12 @@ import os
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 
-FEAT_9 = os.getenv("FEAT_9", "true").lower() == "true"  # dump db_schemas.json after build
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Any, Dict, Optional
 
 from .token_tracking import TokenTrackingClient
+
+FEAT_9 = os.getenv("FEAT_9", "true").lower() == "true"  # dump db_schemas.json after build
 
 logger = logging.getLogger("text2sql_tool")
 
@@ -21,6 +22,7 @@ class BenchmarkBase(BaseModel):
     answer_file: str
     """Path to the file with correct answers to the user queries."""
     llm_client: Optional[Any] = None
+    checkpoint_context: dict = Field(default_factory=dict)
     """OpenAI LLM client used to create the Text2SQL tools."""
 
     async def build(self, tool_cls: Any) -> Dict[str, Any]:

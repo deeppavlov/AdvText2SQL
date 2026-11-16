@@ -5,6 +5,7 @@ import os
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
+from .checkpoint import BenchmarkCheckpoint
 from .evaluate_ambrosia import run_evaluation
 from .response import ToolResponse
 
@@ -25,14 +26,13 @@ class BenchmarkAmbrosia(BenchmarkBase):
         """Returns predictions in the expected format."""
         queries = self._load_queries()
 
-        # Checkpoint: resume from query_results.json if it exists
-        checkpoint_path = "./query_results.json"
-        predictions: Dict[str, str] = {}
-        if os.path.exists(checkpoint_path):
-            with open(checkpoint_path) as f:
-                predictions = json.load(f)
-            if predictions:
-                print(f"Resuming from checkpoint: {len(predictions)}/{len(queries)} done")
+        checkpoint = BenchmarkCheckpoint(self)
+        predictions = checkpoint.load()
+        missing_databases = {item["db_id"] for item in queries
+                             if str(item["question_id"]) not in predictions
+                             and item["db_id"] not in tool_dict}
+        if missing_databases:
+            raise RuntimeError("Ambrosia database tools unavailable; no questions generated or silently skipped")
 
         for i, item in enumerate(queries):
             qid = item["question_id"]
@@ -41,10 +41,6 @@ class BenchmarkAmbrosia(BenchmarkBase):
 
             if str(qid) in predictions:
                 logger.info(f"[{i+1}/{len(queries)}] q_id={qid} — skipped (checkpoint)")
-                continue
-
-            if db_id not in tool_dict:
-                logger.warning(f"Skipping q_id={qid}: db_id={db_id} failed to build")
                 continue
 
             tool = tool_dict[db_id]
@@ -65,9 +61,7 @@ class BenchmarkAmbrosia(BenchmarkBase):
             logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
 
-            # Save checkpoint after every question
-            with open(checkpoint_path, "w") as f:
-                json.dump(predictions, f, indent=2)
+            checkpoint.save(predictions)
 
             await asyncio.sleep(_BASE_INTERVAL + (_LLM_MIN_INTERVAL if _FEAT_19 else 0))
 

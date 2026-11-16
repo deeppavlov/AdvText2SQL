@@ -64,7 +64,7 @@ class ActualFeatureSemanticsTests(unittest.IsolatedAsyncioTestCase):
         with patch.object(self.tool, "_get_db_schema_tsv", return_value="TSV") as tsv, \
                 patch.object(self.tool, "_get_db_schema_heavy", return_value="HEAVY") as heavy, \
                 patch.object(self.tool, "_get_db_schema_light", return_value="LIGHT") as light:
-            self.tool.db_uri = "unused/database"
+            self.tool.db_uri = "postgresql+psycopg://reader:dummy@localhost/database"
             core.FEAT_35 = core.FEAT_6 = True
             await self.tool.build()
             self.assertEqual(self.tool.db_schema, "TSV")
@@ -141,7 +141,7 @@ class ActualFeatureSemanticsTests(unittest.IsolatedAsyncioTestCase):
 
         async def llm(messages):
             prompts.append([m.content for m in messages])
-            return SimpleNamespace(content='{"is_ambiguous": false}')
+            return SimpleNamespace(content='{"is_ambiguous": false, "ambiguity_type": null, "reason": ""}')
 
         self.tool._llm_call_with_retry = llm
         await self.tool._detect_ambiguity_by_taxonomy("List names")

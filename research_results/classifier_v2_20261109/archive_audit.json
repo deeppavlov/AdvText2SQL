@@ -1,0 +1,55 @@
+[
+  {
+    "source": "bird_prompt_full_20261107",
+    "accepted_observations": 186,
+    "repeated_observations_not_selected": 0,
+    "reason": "matched_native_prompt_runtime"
+  },
+  {
+    "source": "ambrosia_prompt_full_20261107",
+    "accepted_observations": 166,
+    "repeated_observations_not_selected": 0,
+    "reason": "matched_native_prompt_runtime"
+  },
+  {
+    "source": "prompt_optimization_comparison_20261105",
+    "accepted_observations": 68,
+    "repeated_observations_not_selected": 428,
+    "reason": "matched_native_prompt_runtime"
+  },
+  {
+    "source": "bird_compact_prompt_transfer_20261107",
+    "accepted_observations": 0,
+    "repeated_observations_not_selected": 55,
+    "reason": "matched_native_prompt_runtime"
+  },
+  {
+    "source": "ambrosia_prompt_dev_20261107",
+    "accepted_observations": 0,
+    "repeated_observations_not_selected": 138,
+    "reason": "matched_native_prompt_runtime"
+  },
+  {
+    "source": "deepseek_full_static_20261103",
+    "accepted_observations": 0,
+    "reason": "BIRD_prompt_mismatch; native_client_transport_policy_differs",
+    "legacy_client": {
+      "temperature": 0,
+      "max_tokens": 4096,
+      "max_retries": 2,
+      "timeout": 90
+    },
+    "current_client": {
+      "temperature": 0,
+      "max_tokens": 4096,
+      "max_retries": 0,
+      "timeout": 90
+    },
+    "ambrosia_requires_explicit_transport_compatibility_review": true
+  },
+  {
+    "source": "original_single_flag_dataset",
+    "accepted_observations": 0,
+    "reason": "not_automatically_reused; different_pipeline_and_BIRD_prompt; requires_separate_audit"
+  }
+]

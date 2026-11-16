@@ -93,7 +93,6 @@ def make_manifest(config, audit_path, policy):
         )
     ]
     extra += [
-        ROOT / "local/run_guarded_hybrid_search.ps1",
         ROOT / "local/run_guarded_hybrid_search.sh",
         audit_path,
     ]

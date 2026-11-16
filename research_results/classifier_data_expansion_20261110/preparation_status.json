@@ -1,0 +1,23 @@
+{
+  "as_of": "2026-11-10",
+  "status": "schema_screened_not_collected",
+  "source_audit_sha256": "b9a97233e6b7adb93c5c1269a56698aabcae62a4671dc50f410c960c4fbef2d4",
+  "repeat_manifest_sha256": "0dfeb40ae836c90be18cad7d3c974e0388b71cc12c4a3503f9a0c3791e4aebf2",
+  "pilot_questions": 120,
+  "pilot_databases": 40,
+  "repeat_jobs": 18,
+  "repeat_question_evaluations": 644,
+  "estimated_repeat_tokens": 2024818,
+  "schema_inventory_performed": true,
+  "new_paid_evaluations": 0,
+  "live_llm_calls": 0,
+  "ssh_or_db_connections_by_preparation": 0,
+  "old_splits_reassigned": false,
+  "old_labels_rewritten": false,
+  "schema_inventory_by_user": true,
+  "schema_inventory_sha256": "443133440306cd897785cd3671900d3521e60c780e9148001a41699c67323043",
+  "structurally_screened_questions": 111,
+  "structurally_screened_databases": 37,
+  "blocked_pilot_questions": 9,
+  "pilot_schema_review_sha256": "a6903c75e17d9c7a0f531685c5160ea3ff3d5fc3d9cd2b4c73af95399f31b9a5"
+}

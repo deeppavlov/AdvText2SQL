@@ -1,0 +1,211 @@
+{
+  "version": "ambrosia-pilot-structural-review-v1",
+  "status": "structurally_screened_not_labeled",
+  "source_sha256": {
+    "source_audit.json": "b9a97233e6b7adb93c5c1269a56698aabcae62a4671dc50f410c960c4fbef2d4",
+    "ambrosia_pilot.json": "4a4d298a1d12cfe89314c7f8c362e797387d7b6116a07256371952cec8f0f302",
+    "schema_inventory.json": "443133440306cd897785cd3671900d3521e60c780e9148001a41699c67323043"
+  },
+  "approved_subset_sha256": "412a22ce12cc1e33773851edc444cf8d2b41cc976462d810bc418eccb7cc1c9f",
+  "questions_initial": 120,
+  "databases_initial": 40,
+  "schema_availability": {
+    "schema_present": 39,
+    "empty_schema": 1
+  },
+  "approved_questions": 111,
+  "approved_databases": 37,
+  "approved_gold_ambiguous": 34,
+  "excluded_questions": [
+    {
+      "id": "candidate:ambrosia:b9a05d1ffbe139a90cad",
+      "db_id": "vague_2cols_duration",
+      "source_question_id": "2860",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2860",
+        "db_id": "vague_2cols_duration",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:directors,movies"
+            ],
+            "notes": []
+          },
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:directors,movies"
+            ],
+            "notes": []
+          },
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:directors,movies"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "candidate:ambrosia:97eb001f47a31e9f56bb",
+      "db_id": "vague_2cols_duration",
+      "source_question_id": "2757",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2757",
+        "db_id": "vague_2cols_duration",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:operations"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "candidate:ambrosia:61f81e90dae27cc17406",
+      "db_id": "vague_2cols_duration",
+      "source_question_id": "2755",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2755",
+        "db_id": "vague_2cols_duration",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:operations"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "candidate:ambrosia:1ca047ff1bdf436f4fc5",
+      "db_id": "vague_2tabs_side_effect_profile",
+      "source_question_id": "2907",
+      "reason": "empty_schema",
+      "reference_check": null
+    },
+    {
+      "id": "candidate:ambrosia:01782d7b5495eb3de5c4",
+      "db_id": "vague_2tabs_side_effect_profile",
+      "source_question_id": "2902",
+      "reason": "empty_schema",
+      "reference_check": null
+    },
+    {
+      "id": "candidate:ambrosia:491b77bbc17206992340",
+      "db_id": "vague_2tabs_side_effect_profile",
+      "source_question_id": "2906",
+      "reason": "empty_schema",
+      "reference_check": null
+    },
+    {
+      "id": "candidate:ambrosia:173b8ac832fe6913a0df",
+      "db_id": "vague_2cols_rating",
+      "source_question_id": "2882",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2882",
+        "db_id": "vague_2cols_rating",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:film,filmreviews"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "candidate:ambrosia:e7ceffbb726c8f724321",
+      "db_id": "vague_2cols_rating",
+      "source_question_id": "2884",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2884",
+        "db_id": "vague_2cols_rating",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:filmreviews,role",
+              "missing_columns:actor.name"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "candidate:ambrosia:475ba37907b0bdab9d2f",
+      "db_id": "vague_2cols_rating",
+      "source_question_id": "2877",
+      "reason": "mismatch",
+      "reference_check": {
+        "question_id": "2877",
+        "db_id": "vague_2cols_rating",
+        "status": "mismatch",
+        "reference_issue": null,
+        "reference_checks": [
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:filmreviews,role",
+              "missing_columns:actor.name"
+            ],
+            "notes": []
+          },
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:filmreviews,role",
+              "missing_columns:actor.name"
+            ],
+            "notes": []
+          },
+          {
+            "status": "mismatch",
+            "issues": [
+              "missing_tables:filmreviews,role",
+              "missing_columns:actor.name"
+            ],
+            "notes": []
+          }
+        ]
+      }
+    }
+  ],
+  "llm_calls": 0,
+  "reference_sql_executed": false,
+  "training_ready": false,
+  "next_collection_configurations": [
+    "baseline",
+    "rules",
+    "rules_taxonomy",
+    "hybrid"
+  ],
+  "next_collection_question_evaluations": 444,
+  "limits": "Structural name consistency only. No new model outputs or utility labels; excluded inputs are not model failures."
+}

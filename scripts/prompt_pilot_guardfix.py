@@ -19,7 +19,6 @@ ORIGINAL_MAKE = base.make_manifest
 ORIGINAL_VALIDATE = base.validate
 FILES = (
     "scripts/prompt_pilot_guardfix.py",
-    "local/run_prompt_pilot_guardfix.ps1",
     "local/run_prompt_pilot_guardfix.sh",
 )
 SOURCE_FILES = (

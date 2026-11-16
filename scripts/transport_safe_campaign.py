@@ -21,7 +21,6 @@ SOURCE = previous.DEFAULT_OUTPUT
 NEW_FILES = (
     "scripts/transport_safe_runtime.py",
     "scripts/transport_safe_campaign.py",
-    "local/run_transport_safe_campaign.ps1",
     "local/run_transport_safe_campaign.sh",
 )
 FAILURE = re.compile(

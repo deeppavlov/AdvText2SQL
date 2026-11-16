@@ -345,7 +345,8 @@ async def run(args):
                 cls = BenchmarkBIRD if name == "bird" else BenchmarkAmbrosia
                 kwargs = {"use_evidence": True} if name == "bird" else {}
                 benchmark = cls(db_url="127.0.0.1:5444", query_file=str(dataset),
-                                answer_file=str(dataset), llm_client=client, **kwargs)
+                                answer_file=str(dataset), llm_client=client,
+                                checkpoint_context={"configuration": identity}, **kwargs)
                 benchmark.llm_client = TokenTrackingClient(RecordingClient())
 
                 def progress(update):
@@ -379,21 +380,8 @@ async def run(args):
                 report = await benchmark.evaluate(predictions)
                 report["generation_errors"] = sum(value == "error" for value in predictions.values())
                 if name == "ambrosia":
-                    gold = {str(item["question_id"]): item["SQL"] == "ambiguous" for item in items}
-                    tp = sum(gold[q] and v == "ambiguous" for q, v in predictions.items())
-                    fp = sum(not gold[q] and v == "ambiguous" for q, v in predictions.items())
-                    fn = sum(gold[q] and v != "ambiguous" for q, v in predictions.items())
-                    tn = sum(not gold[q] and v != "ambiguous" for q, v in predictions.items())
-                    report["ambiguity_metrics"] = {
-                        "tp": tp, "fp": fp, "fn": fn, "tn": tn,
-                        "precision": tp / (tp + fp) if tp + fp else None,
-                        "recall": tp / (tp + fn) if tp + fn else None,
-                        "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else 0,
-                        "balanced_accuracy": (tp / (tp + fn) + tn / (tn + fp)) / 2,
-                    }
-                    if args.evaluation_policy == "strict":
-                        from research_metrics import ambrosia_report
-                        report.update(ambrosia_report(items, predictions))
+                    from research_metrics import ambrosia_report
+                    report.update(ambrosia_report(items, predictions))
                 if subset is not None:
                     report["dataset_coverage"] = {
                         "source_questions": subset["source_questions"],
@@ -457,7 +445,7 @@ if __name__ == "__main__":
     parser.add_argument("--classifier-model", help="Frozen classifier directory containing model.json and head.npz")
     parser.add_argument("--classifier-encoder", default=".cache/classifier/minilm")
     parser.add_argument("--classifier-split", choices=["test", "dev", "all"], default="test")
-    parser.add_argument("--evaluation-policy", choices=["legacy", "strict"], default="legacy",
+    parser.add_argument("--evaluation-policy", choices=["strict"], default="strict",
                         help="Strict Ambrosia scoring counts generation errors as incorrect")
     parser.add_argument("--enabled-features", nargs="+", type=int)
     parser.add_argument("--env-file", default=".env.openrouter")

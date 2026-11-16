@@ -1,0 +1,52 @@
+{
+  "version": "configuration-v2-diagnosis-v1",
+  "source_sha256": {
+    "experiment": "7ecd3770a3744817ffbfd52f1652f710c60ebc3225038f8abbe378f111f722df",
+    "report": "543833435a7f44979890363d81867b350b44165bddecbc8e85539752bf2b1055",
+    "archive_repeat_audit": "d4a954f7bbbaf1155e2aaeec6e4c8024264aff3f3cbdadca26436eed00102029"
+  },
+  "paid_calls": 0,
+  "test_used": false,
+  "frozen_model_unchanged": true,
+  "adopt_new_model": false,
+  "findings": {
+    "dev_harmed_ids": [
+      "bird:4",
+      "bird:9"
+    ],
+    "harm_database": "california_schools",
+    "schema_only_fix_supported": false,
+    "train_only_intercept_correct": {
+      "bird": 82,
+      "ambrosia": 96
+    },
+    "train_oof_full_correct": {
+      "bird": 81,
+      "ambrosia": 97
+    },
+    "repeated_points_by_split": {
+      "bird": {
+        "train": {
+          "repeated_points": 0,
+          "points_with_score_disagreement": 0
+        },
+        "dev": {
+          "repeated_points": 55,
+          "points_with_score_disagreement": 0
+        }
+      },
+      "ambrosia": {
+        "train": {
+          "repeated_points": 120,
+          "points_with_score_disagreement": 6
+        },
+        "dev": {
+          "repeated_points": 46,
+          "points_with_score_disagreement": 0
+        }
+      }
+    }
+  },
+  "interpretation": "No demonstrated transferable gain over task-constant choices. Schema distribution shifted, but text terms dominate the two harmful frozen-model logit gaps. Six archived Ambrosia train points have variable outcomes; BIRD train repeats are unavailable.",
+  "next_experiment": "Predeclare a bounded train-only grouped-CV comparison of direct anchor-relative utility and schema-grounded question features. Include the constant task policy; no automatic outer-dev tuning or paid requests."
+}

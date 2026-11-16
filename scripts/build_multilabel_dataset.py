@@ -245,7 +245,7 @@ def validate_rows(rows, conditional, parent_rows):
             raise ValueError("Conditional utility disagrees with source observations")
 
 
-def verify(output, root=ROOT, dataset=None):
+def verify(output, root=ROOT, dataset=None, *, verify_sources=True):
     manifest = parent.read(output / "manifest.json")
     if manifest.get("format_version") != FORMAT:
         raise ValueError("Unknown multilabel format")
@@ -254,11 +254,12 @@ def verify(output, root=ROOT, dataset=None):
     for path, expected in manifest["output_files_sha256"].items():
         if parent.sha(output / path) != expected:
             raise ValueError(f"Output artifact hash changed: {path}")
-    for path, expected in manifest["source_files_sha256"].items():
-        if parent.sha(root / path) != expected:
-            raise ValueError(f"Source artifact hash changed: {path}")
+    if verify_sources:
+        for path, expected in manifest["source_files_sha256"].items():
+            if parent.sha(root / path) != expected:
+                raise ValueError(f"Source artifact hash changed: {path}")
     dataset = dataset or root / manifest["parent_dataset"]
-    parent.verify_bundle(dataset, root)
+    parent.verify_bundle(dataset, root, verify_sources=verify_sources)
     if manifest["target_features"] != [f"FEAT_{n}" for n in TARGET_FEATURES] or manifest["feature_catalog"] != feature_catalog():
         raise ValueError("Feature policy differs from the frozen registry")
     rows, conditional = lines(output / "records.jsonl"), lines(output / "conditional_labels.jsonl")

@@ -1,0 +1,42 @@
+{
+  "train": {
+    "bird": {
+      "questions": 131,
+      "groups": 4,
+      "discordant_rows": 26,
+      "all_configurations_correct": 62,
+      "all_configurations_wrong": 43,
+      "rescued_vs_anchor": 5,
+      "harmed_vs_anchor": 0
+    },
+    "ambrosia": {
+      "questions": 120,
+      "groups": 22,
+      "discordant_rows": 29,
+      "all_configurations_correct": 74,
+      "all_configurations_wrong": 17,
+      "rescued_vs_anchor": 7,
+      "harmed_vs_anchor": 0
+    }
+  },
+  "dev": {
+    "bird": {
+      "questions": 55,
+      "groups": 2,
+      "discordant_rows": 13,
+      "all_configurations_correct": 19,
+      "all_configurations_wrong": 23,
+      "rescued_vs_anchor": 0,
+      "harmed_vs_anchor": 2
+    },
+    "ambrosia": {
+      "questions": 46,
+      "groups": 15,
+      "discordant_rows": 12,
+      "all_configurations_correct": 29,
+      "all_configurations_wrong": 5,
+      "rescued_vs_anchor": 0,
+      "harmed_vs_anchor": 0
+    }
+  }
+}

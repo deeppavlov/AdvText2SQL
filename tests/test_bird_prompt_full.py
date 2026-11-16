@@ -132,6 +132,13 @@ class FullPromptTests(unittest.TestCase):
             read_only = []
             queries = []
 
+            def execution_options(self, **options):
+                self.options = options
+                return self
+
+            def begin(self):
+                return SimpleNamespace(rollback=lambda: None)
+
             def exec_driver_sql(self, sql):
                 self.read_only.append(sql)
 
@@ -141,7 +148,8 @@ class FullPromptTests(unittest.TestCase):
 
         conn = Connection()
         engine = SimpleNamespace(
-            connect=lambda: nullcontext(conn), dispose=lambda: None
+            connect=lambda: nullcontext(conn), dispose=lambda: None,
+            dialect=SimpleNamespace(name="postgresql"),
         )
         with tempfile.TemporaryDirectory() as tmp, full.shared.durable_runtime():
             session = full.FullSession(Path(tmp), m, m["jobs"][0])
@@ -162,7 +170,11 @@ class FullPromptTests(unittest.TestCase):
                 )
                 self.assertEqual(set(session.golds), {"901", "902"})
                 self.assertEqual(len(conn.queries), 2)
-                self.assertEqual(conn.read_only, ["SET TRANSACTION READ ONLY"] * 2)
+                self.assertEqual(conn.read_only, ["SET TRANSACTION READ ONLY",
+                                                 "SET LOCAL statement_timeout = '30s'",
+                                                 "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+                                                 "SET LOCAL max_parallel_workers_per_gather = 0"] * 2)
+                self.assertEqual(conn.options, {"isolation_level": "READ COMMITTED"})
                 self.assertEqual(session.ledger.data["task_calls"], 0)
             session.close()
         self.assertEqual(before, m["dev"])

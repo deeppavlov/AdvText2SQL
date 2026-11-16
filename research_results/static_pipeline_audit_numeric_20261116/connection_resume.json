@@ -1,0 +1,15 @@
+{
+  "manifest_sha256": "10216f4e5a7562305247e2d262d8218c05e7ddab7f93f257a96bbd42c27ed58c",
+  "llm_calls": 0,
+  "saved_before": 164,
+  "supervisor_sha256": "d7d04386df8396c397f5ee0bb96a2b1afa2c3daf41a960786c148448da9cc0ef",
+  "max_restarts": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "at_utc": "2026-11-16T18:00:08.716865+00:00",
+      "worker_exit_code": 0
+    }
+  ],
+  "status": "completed"
+}

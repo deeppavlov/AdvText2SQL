@@ -2,6 +2,7 @@
 __pycache__/
 .venv/
 .ruff_cache/
+.pytest_cache/
 /.cache/classifier/
 # Machine-local assistant permissions and preferences.
 /.claude/settings.local.json
@@ -49,6 +50,7 @@ all_predicted_results.json
 /research_results/**/schema_preflight.jsonl
 /research_results/**/invalid_outputs.jsonl
 /research_results/**/transport_events.jsonl
+/research_results/**/reevaluation_events.jsonl
 /research_results/**/resumption_events.jsonl
 /research_results/**/monitor_stop.json
 /research_results/**/suite_status.json
@@ -87,4 +89,8 @@ presentations/
 
 plan.md
 docs/security_review.md
-docs/13_ilya_repository_review.md
+# Personal audit notes stay local; numbered research reports remain public.
+/docs/local/
+.agents/
+audit-reports/
+.cache

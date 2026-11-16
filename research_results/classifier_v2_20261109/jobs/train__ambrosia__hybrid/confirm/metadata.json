@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "phase": "predicting",
+  "manifest_sha256": "6efad2bbb5bc7967fb0dd7db4aa2009fefdc792c965a4f8851280c3596e3936d",
+  "collection_job": "train__ambrosia__hybrid",
+  "collection_version": "classifier-v2-collection-v1",
+  "feature_mask": [
+    14,
+    32,
+    35
+  ],
+  "collection_split": "train",
+  "current_database": "vague_2cols_rating1",
+  "databases_ready": 22,
+  "databases_total": 22,
+  "preflight_attempt": 1,
+  "preflight_attempts": 5,
+  "event": "schema_verified",
+  "build_attempt": 1,
+  "question_id": "334",
+  "candidate": "b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af",
+  "profile": "hybrid",
+  "consecutive_api_errors": 0,
+  "last_llm_activity_utc": "2026-11-09T13:08:57.256169+00:00",
+  "saved_evaluations": 120,
+  "finished_at_utc": "2026-11-09T13:09:00.289830+00:00"
+}

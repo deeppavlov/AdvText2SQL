@@ -107,7 +107,6 @@ def make_manifest(config, audit_path, policy):
     manifest["protocol"]["environment"] = environment()
     for name in (
         "scripts/static_hybrid_campaign.py",
-        "local/run_static_hybrid_campaign.ps1",
         "local/run_static_hybrid_campaign.sh",
     ):
         manifest["protocol"]["files_sha256"][name] = hashlib.sha256(

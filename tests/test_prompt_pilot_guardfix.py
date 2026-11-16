@@ -1,4 +1,3 @@
-import copy
 import json
 from pathlib import Path
 import sys
@@ -85,13 +84,11 @@ class GuardRevisionTests(unittest.TestCase):
         self.assertIs(base.check_candidate, original)
 
     def test_original_manifest_rejected_by_revised_entrypoint(self):
-        p = base.ROOT / fix.ORIGINAL_OUTPUT / "experiment.json"
-        if not p.exists():
-            self.skipTest("Original pilot artifact absent")
-        m = base.search.read(p)
-        base.validate(m)
+        # Version rejection must work without local historical artifacts, whose
+        # frozen source hashes deliberately no longer match a revised pipeline.
+        m = {**manifest(), "version": "gepa-sql-pilot-v1"}
         with self.assertRaisesRegex(ValueError, "separate guardfix"):
-            fix.validate(copy.deepcopy(m))
+            fix.validate(m)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,19 @@
+{
+  "model_sha256": "84767e68cd93ae1990ec2cb2332702e22f943cd2c4cfaf59979ce47566b8bafe",
+  "data_sha256": "0f2d09598af022b7334a9c8f0d8afa7a7ca07b58393f9ead796ec65eb53e6227",
+  "source_sha256": "bcbdb696225b74116c3acfde7086f69f7262649a03e960e29c5be2bb535a574b",
+  "modes": [
+    "text_schema",
+    "text_only",
+    "schema_only",
+    "intercept_only"
+  ],
+  "fit_selection": {
+    "weight_decay": 0.01,
+    "pair_weight": 0.0,
+    "margin": 0.15
+  },
+  "scope": "post-hoc diagnosis; fixed input ablations within train; no deployment selection or new dev tuning",
+  "paid_calls": 0,
+  "test_used": false
+}

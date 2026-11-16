@@ -42,7 +42,6 @@ def make_manifest(config, audit_path, policy):
     for name in (
         "scripts/resilient_hybrid_campaign.py",
         "scripts/resilient_hybrid_runtime.py",
-        "local/run_resilient_hybrid_campaign.ps1",
         "local/run_resilient_hybrid_campaign.sh",
     ):
         manifest["protocol"]["files_sha256"][name] = hashlib.sha256(

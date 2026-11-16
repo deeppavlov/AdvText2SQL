@@ -1,0 +1,1392 @@
+{
+  "manifest_sha256": "9735ad7ce10dbcba7d977cc987b7ccad4f7e79cc310e64a912cf09bccdc6a6f9",
+  "checked_at_utc": "2026-11-16T13:32:07.220402+00:00",
+  "script_sha256": "b5f812359219b586aba2177c7ed33cdbc32529d8365348a610994cd5b1a759e8",
+  "llm_calls": 0,
+  "checkpoint_updates": 0,
+  "questions": {
+    "1473": {
+      "db_id": "debit_card_specializing",
+      "sql": {
+        "gold": "SELECT AVG(T2.Consumption) / NULLIF(12, 0) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTRING(T2.Date FROM 1 FOR 4) = '2013' AND T1.Segment = 'SME'",
+        "historical": "SELECT AVG(ym.\"consumption\") / 12 AS average_monthly_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'SME'\n  AND SUBSTRING(ym.\"date\", 1, 4) = '2013';",
+        "fresh": "SELECT AVG(ym.\"consumption\") / 12 AS average_monthly_consumption\nFROM \"yearmonth\" ym\nJOIN \"customers\" c ON ym.\"customerid\" = c.\"customerid\"\nWHERE c.\"segment\" = 'SME'\n  AND LEFT(ym.\"date\", 4) = '2013';"
+      },
+      "results": {
+        "gold": {
+          "rows": [
+            [
+              {
+                "python_type": "float",
+                "repr": "459.95626421124325",
+                "hex": "0x1.cbf4cdbb39a00p+8",
+                "exact_decimal": "459.95626421124325133860111236572265625"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            701
+          ],
+          "postgres_values_and_types": [
+            [
+              "459.9562642112432",
+              "double precision"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Finalize",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 7745.82,
+                "Total Cost": 7745.84,
+                "Plan Rows": 1,
+                "Plan Width": 8,
+                "Plans": [
+                  {
+                    "Node Type": "Gather",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 7745.71,
+                    "Total Cost": 7745.82,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Workers Planned": 1,
+                    "Single Copy": false,
+                    "Plans": [
+                      {
+                        "Node Type": "Aggregate",
+                        "Strategy": "Plain",
+                        "Partial Mode": "Partial",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Startup Cost": 6745.71,
+                        "Total Cost": 6745.72,
+                        "Plan Rows": 1,
+                        "Plan Width": 32,
+                        "Plans": [
+                          {
+                            "Node Type": "Hash Join",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Join Type": "Inner",
+                            "Startup Cost": 916.53,
+                            "Total Cost": 6743.38,
+                            "Plan Rows": 930,
+                            "Plan Width": 4,
+                            "Inner Unique": true,
+                            "Hash Cond": "(t2.customerid = t1.customerid)",
+                            "Plans": [
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": true,
+                                "Async Capable": false,
+                                "Relation Name": "yearmonth",
+                                "Alias": "t2",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 5823.9,
+                                "Plan Rows": 1127,
+                                "Plan Width": 12,
+                                "Filter": "(SUBSTRING(date FROM 1 FOR 4) = '2013'::text)"
+                              },
+                              {
+                                "Node Type": "Hash",
+                                "Parent Relationship": "Inner",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Startup Cost": 581.76,
+                                "Total Cost": 581.76,
+                                "Plan Rows": 26781,
+                                "Plan Width": 8,
+                                "Plans": [
+                                  {
+                                    "Node Type": "Seq Scan",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Relation Name": "customers",
+                                    "Alias": "t1",
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 581.76,
+                                    "Plan Rows": 26781,
+                                    "Plan Width": 8,
+                                    "Filter": "(segment = 'SME'::text)"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "historical": {
+          "rows": [
+            [
+              {
+                "python_type": "float",
+                "repr": "459.9562642112432",
+                "hex": "0x1.cbf4cdbb399ffp+8",
+                "exact_decimal": "459.95626421124319449518225155770778656005859375"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            701
+          ],
+          "postgres_values_and_types": [
+            [
+              "459.95626421124325",
+              "double precision"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Finalize",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 7745.82,
+                "Total Cost": 7745.84,
+                "Plan Rows": 1,
+                "Plan Width": 8,
+                "Plans": [
+                  {
+                    "Node Type": "Gather",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 7745.71,
+                    "Total Cost": 7745.82,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Workers Planned": 1,
+                    "Single Copy": false,
+                    "Plans": [
+                      {
+                        "Node Type": "Aggregate",
+                        "Strategy": "Plain",
+                        "Partial Mode": "Partial",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Startup Cost": 6745.71,
+                        "Total Cost": 6745.72,
+                        "Plan Rows": 1,
+                        "Plan Width": 32,
+                        "Plans": [
+                          {
+                            "Node Type": "Hash Join",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Join Type": "Inner",
+                            "Startup Cost": 916.53,
+                            "Total Cost": 6743.38,
+                            "Plan Rows": 930,
+                            "Plan Width": 4,
+                            "Inner Unique": true,
+                            "Hash Cond": "(ym.customerid = c.customerid)",
+                            "Plans": [
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": true,
+                                "Async Capable": false,
+                                "Relation Name": "yearmonth",
+                                "Alias": "ym",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 5823.9,
+                                "Plan Rows": 1127,
+                                "Plan Width": 12,
+                                "Filter": "(\"substring\"(date, 1, 4) = '2013'::text)"
+                              },
+                              {
+                                "Node Type": "Hash",
+                                "Parent Relationship": "Inner",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Startup Cost": 581.76,
+                                "Total Cost": 581.76,
+                                "Plan Rows": 26781,
+                                "Plan Width": 8,
+                                "Plans": [
+                                  {
+                                    "Node Type": "Seq Scan",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Relation Name": "customers",
+                                    "Alias": "c",
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 581.76,
+                                    "Plan Rows": 26781,
+                                    "Plan Width": 8,
+                                    "Filter": "(segment = 'SME'::text)"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fresh": {
+          "rows": [
+            [
+              {
+                "python_type": "float",
+                "repr": "459.9562642112432",
+                "hex": "0x1.cbf4cdbb399ffp+8",
+                "exact_decimal": "459.95626421124319449518225155770778656005859375"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            701
+          ],
+          "postgres_values_and_types": [
+            [
+              "459.95626421124325",
+              "double precision"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Finalize",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 7745.82,
+                "Total Cost": 7745.84,
+                "Plan Rows": 1,
+                "Plan Width": 8,
+                "Plans": [
+                  {
+                    "Node Type": "Gather",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 7745.71,
+                    "Total Cost": 7745.82,
+                    "Plan Rows": 1,
+                    "Plan Width": 32,
+                    "Workers Planned": 1,
+                    "Single Copy": false,
+                    "Plans": [
+                      {
+                        "Node Type": "Aggregate",
+                        "Strategy": "Plain",
+                        "Partial Mode": "Partial",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Startup Cost": 6745.71,
+                        "Total Cost": 6745.72,
+                        "Plan Rows": 1,
+                        "Plan Width": 32,
+                        "Plans": [
+                          {
+                            "Node Type": "Hash Join",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Join Type": "Inner",
+                            "Startup Cost": 916.53,
+                            "Total Cost": 6743.38,
+                            "Plan Rows": 930,
+                            "Plan Width": 4,
+                            "Inner Unique": true,
+                            "Hash Cond": "(ym.customerid = c.customerid)",
+                            "Plans": [
+                              {
+                                "Node Type": "Seq Scan",
+                                "Parent Relationship": "Outer",
+                                "Parallel Aware": true,
+                                "Async Capable": false,
+                                "Relation Name": "yearmonth",
+                                "Alias": "ym",
+                                "Startup Cost": 0.0,
+                                "Total Cost": 5823.9,
+                                "Plan Rows": 1127,
+                                "Plan Width": 12,
+                                "Filter": "(\"left\"(date, 4) = '2013'::text)"
+                              },
+                              {
+                                "Node Type": "Hash",
+                                "Parent Relationship": "Inner",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Startup Cost": 581.76,
+                                "Total Cost": 581.76,
+                                "Plan Rows": 26781,
+                                "Plan Width": 8,
+                                "Plans": [
+                                  {
+                                    "Node Type": "Seq Scan",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Async Capable": false,
+                                    "Relation Name": "customers",
+                                    "Alias": "c",
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 581.76,
+                                    "Plan Rows": 26781,
+                                    "Plan Width": 8,
+                                    "Filter": "(segment = 'SME'::text)"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "comparisons": {
+        "historical": {
+          "exact_evaluator_equal": false,
+          "absolute_difference_decimal": "5.684341886080801486968994141E-14",
+          "relative_difference_decimal": "1.235843998304622381113466783E-16"
+        },
+        "fresh": {
+          "exact_evaluator_equal": false,
+          "absolute_difference_decimal": "5.684341886080801486968994141E-14",
+          "relative_difference_decimal": "1.235843998304622381113466783E-16"
+        }
+      },
+      "historical_score": 1.0,
+      "fresh_saved_score": 0.0,
+      "server": {
+        "version": "PostgreSQL 15.15 (Debian 15.15-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_parallel_workers_per_gather": "2",
+        "extra_float_digits": "1"
+      },
+      "repeats": [
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112431",
+                  "hex": "0x1.cbf4cdbb399fdp+8",
+                  "exact_decimal": "459.95626421124308080834452994167804718017578125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112433",
+                  "hex": "0x1.cbf4cdbb39a01p+8",
+                  "exact_decimal": "459.95626421124330818201997317373752593994140625"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112432",
+                  "hex": "0x1.cbf4cdbb399ffp+8",
+                  "exact_decimal": "459.95626421124319449518225155770778656005859375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          }
+        },
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112432",
+                  "hex": "0x1.cbf4cdbb399ffp+8",
+                  "exact_decimal": "459.95626421124319449518225155770778656005859375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112432",
+                  "hex": "0x1.cbf4cdbb399ffp+8",
+                  "exact_decimal": "459.95626421124319449518225155770778656005859375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112432",
+                  "hex": "0x1.cbf4cdbb399ffp+8",
+                  "exact_decimal": "459.95626421124319449518225155770778656005859375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          }
+        },
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.95626421124285",
+                  "hex": "0x1.cbf4cdbb399f9p+8",
+                  "exact_decimal": "459.95626421124285343466908670961856842041015625"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.95626421124274",
+                  "hex": "0x1.cbf4cdbb399f7p+8",
+                  "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "459.9562642112432",
+                  "hex": "0x1.cbf4cdbb399ffp+8",
+                  "exact_decimal": "459.95626421124319449518225155770778656005859375"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              701
+            ]
+          }
+        }
+      ],
+      "source_rows": {
+        "counts": {
+          "gold": 178337,
+          "historical": 178337,
+          "fresh": 178337
+        },
+        "multisets_equal": true,
+        "ordered_equal": {
+          "gold": true,
+          "historical": false,
+          "fresh": false
+        },
+        "ordered_sha256": {
+          "gold": "edbc7ef28169faefb906ac38febdb876e087d56c1bc964a21709defa44a67f52",
+          "historical": "d70a69a3c7fe336c11f19ee83da2d6d058b03a97d684e8f93bc720423f7ad455",
+          "fresh": "aa96259409a4361d077e166590f5147f1a5fec4872f708460545ba1ef1e7f401"
+        }
+      },
+      "numeric_aggregate_control": {
+        "rows": [
+          [
+            {
+              "python_type": "Decimal",
+              "repr": "Decimal('459.9562604600653071')",
+              "exact_decimal": "459.9562604600653071"
+            }
+          ]
+        ],
+        "postgres_type_oids": [
+          1700
+        ]
+      },
+      "real_session_scores": {
+        "historical": [
+          1.0,
+          null
+        ],
+        "fresh": [
+          0.0,
+          null
+        ]
+      }
+    },
+    "34": {
+      "db_id": "california_schools",
+      "sql": {
+        "gold": "SELECT CAST(T2.\"Free Meal Count (Ages 5-17)\" AS REAL) / NULLIF(T2.\"Enrollment (Ages 5-17)\", 0) FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.AdmFName1 = 'Kacey' AND T1.AdmLName1 = 'Gibson'",
+        "historical": "SELECT\n  f.\"Free Meal Count (Ages 5-17)\" / NULLIF(f.\"Enrollment (Ages 5-17)\", 0) AS \"free_rate\"\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nWHERE s.admfname1 ILIKE '%Kacey%'\n  AND s.admlname1 ILIKE '%Gibson%';",
+        "fresh": "SELECT\n  f.\"Free Meal Count (Ages 5-17)\"::NUMERIC / NULLIF(f.\"Enrollment (Ages 5-17)\"::NUMERIC, 0) AS \"free_rate\"\nFROM frpm f\nJOIN schools s ON s.cdscode = f.cdscode\nWHERE s.admfname1 ILIKE '%Kacey%'\n  AND s.admlname1 ILIKE '%Gibson%';"
+      },
+      "results": {
+        "gold": {
+          "rows": [
+            [
+              {
+                "python_type": "float",
+                "repr": "0.20174165",
+                "hex": "0x1.9d2ab9e7edba8p-3",
+                "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            700
+          ],
+          "postgres_values_and_types": [
+            [
+              "0.20174165",
+              "real"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Nested Loop",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Inner",
+                "Startup Cost": 0.29,
+                "Total Cost": 1199.6,
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "schools",
+                    "Alias": "t1",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 1191.29,
+                    "Plan Rows": 1,
+                    "Plan Width": 15,
+                    "Filter": "((admfname1 = 'Kacey'::text) AND (admlname1 = 'Gibson'::text))"
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "idx_155977_sqlite_autoindex_frpm_1",
+                    "Relation Name": "frpm",
+                    "Alias": "t2",
+                    "Startup Cost": 0.29,
+                    "Total Cost": 8.3,
+                    "Plan Rows": 1,
+                    "Plan Width": 23,
+                    "Index Cond": "(cdscode = t1.cdscode)"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "historical": {
+          "rows": [
+            [
+              {
+                "python_type": "float",
+                "repr": "0.20174165",
+                "hex": "0x1.9d2ab9e7edba8p-3",
+                "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            700
+          ],
+          "postgres_values_and_types": [
+            [
+              "0.20174165",
+              "real"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Nested Loop",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Inner",
+                "Startup Cost": 0.29,
+                "Total Cost": 1199.6,
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "schools",
+                    "Alias": "s",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 1191.29,
+                    "Plan Rows": 1,
+                    "Plan Width": 15,
+                    "Filter": "((admfname1 ~~* '%Kacey%'::text) AND (admlname1 ~~* '%Gibson%'::text))"
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "idx_155977_sqlite_autoindex_frpm_1",
+                    "Relation Name": "frpm",
+                    "Alias": "f",
+                    "Startup Cost": 0.29,
+                    "Total Cost": 8.3,
+                    "Plan Rows": 1,
+                    "Plan Width": 23,
+                    "Index Cond": "(cdscode = s.cdscode)"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "fresh": {
+          "rows": [
+            [
+              {
+                "python_type": "Decimal",
+                "repr": "Decimal('0.20174165457184325109')",
+                "exact_decimal": "0.20174165457184325109"
+              }
+            ]
+          ],
+          "postgres_type_oids": [
+            1700
+          ],
+          "postgres_values_and_types": [
+            [
+              "0.20174165457184325109",
+              "numeric"
+            ]
+          ],
+          "plan": [
+            {
+              "Plan": {
+                "Node Type": "Nested Loop",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Inner",
+                "Startup Cost": 0.29,
+                "Total Cost": 1199.6,
+                "Plan Rows": 1,
+                "Plan Width": 32,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "schools",
+                    "Alias": "s",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 1191.29,
+                    "Plan Rows": 1,
+                    "Plan Width": 15,
+                    "Filter": "((admfname1 ~~* '%Kacey%'::text) AND (admlname1 ~~* '%Gibson%'::text))"
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "idx_155977_sqlite_autoindex_frpm_1",
+                    "Relation Name": "frpm",
+                    "Alias": "f",
+                    "Startup Cost": 0.29,
+                    "Total Cost": 8.3,
+                    "Plan Rows": 1,
+                    "Plan Width": 23,
+                    "Index Cond": "(cdscode = s.cdscode)"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "comparisons": {
+        "historical": {
+          "exact_evaluator_equal": true,
+          "absolute_difference_decimal": "0E-52",
+          "relative_difference_decimal": "0E-24"
+        },
+        "fresh": {
+          "exact_evaluator_equal": false,
+          "absolute_difference_decimal": "4.571843256498651304605882615E-9",
+          "relative_difference_decimal": "2.266187053041417804928463764E-8"
+        }
+      },
+      "historical_score": 1.0,
+      "fresh_saved_score": 0.0,
+      "server": {
+        "version": "PostgreSQL 15.15 (Debian 15.15-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "max_parallel_workers_per_gather": "2",
+        "extra_float_digits": "1"
+      },
+      "repeats": [
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')",
+                  "exact_decimal": "0.20174165457184325109"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              1700
+            ]
+          }
+        },
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')",
+                  "exact_decimal": "0.20174165457184325109"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              1700
+            ]
+          }
+        },
+        {
+          "gold": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "historical": {
+            "rows": [
+              [
+                {
+                  "python_type": "float",
+                  "repr": "0.20174165",
+                  "hex": "0x1.9d2ab9e7edba8p-3",
+                  "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              700
+            ]
+          },
+          "fresh": {
+            "rows": [
+              [
+                {
+                  "python_type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')",
+                  "exact_decimal": "0.20174165457184325109"
+                }
+              ]
+            ],
+            "postgres_type_oids": [
+              1700
+            ]
+          }
+        }
+      ],
+      "matched_school_data": {
+        "rows": [
+          [
+            {
+              "python_type": "str",
+              "repr": "'10621170111153'"
+            },
+            {
+              "python_type": "str",
+              "repr": "'Kacey'"
+            },
+            {
+              "python_type": "str",
+              "repr": "'Gibson'"
+            },
+            {
+              "python_type": "float",
+              "repr": "139.0",
+              "hex": "0x1.1600000000000p+7",
+              "exact_decimal": "139"
+            },
+            {
+              "python_type": "float",
+              "repr": "689.0",
+              "hex": "0x1.5880000000000p+9",
+              "exact_decimal": "689"
+            }
+          ]
+        ],
+        "postgres_type_oids": [
+          25,
+          25,
+          25,
+          700,
+          700
+        ]
+      },
+      "all_matches_satisfy_gold_exact_name_filter": true,
+      "real_session_scores": {
+        "historical": [
+          1.0,
+          null
+        ],
+        "fresh": [
+          0.0,
+          null
+        ]
+      }
+    }
+  },
+  "additional_controls": {
+    "script_sha256": "f4b5a4b6c4b7cc5bd5865cf002776b4bb0b0b91ad7f2da186806df30ce488f7b",
+    "at_utc": "2026-11-16T13:33:37.528227+00:00",
+    "parallel_disabled": {
+      "1473": [
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            },
+            "fresh": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            }
+          }
+        },
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            },
+            "fresh": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            }
+          }
+        },
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "459.95626421124274",
+                    "hex": "0x1.cbf4cdbb399f7p+8",
+                    "exact_decimal": "459.95626421124273974783136509358882904052734375"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                701
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            },
+            "fresh": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-44",
+              "relative_difference_decimal": "0E-19"
+            }
+          }
+        }
+      ],
+      "34": [
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "Decimal",
+                    "repr": "Decimal('0.20174165457184325109')",
+                    "exact_decimal": "0.20174165457184325109"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                1700
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-52",
+              "relative_difference_decimal": "0E-24"
+            },
+            "fresh": {
+              "exact_evaluator_equal": false,
+              "absolute_difference_decimal": "4.571843256498651304605882615E-9",
+              "relative_difference_decimal": "2.266187053041417804928463764E-8"
+            }
+          }
+        },
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "Decimal",
+                    "repr": "Decimal('0.20174165457184325109')",
+                    "exact_decimal": "0.20174165457184325109"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                1700
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-52",
+              "relative_difference_decimal": "0E-24"
+            },
+            "fresh": {
+              "exact_evaluator_equal": false,
+              "absolute_difference_decimal": "4.571843256498651304605882615E-9",
+              "relative_difference_decimal": "2.266187053041417804928463764E-8"
+            }
+          }
+        },
+        {
+          "results": {
+            "gold": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "historical": {
+              "rows": [
+                [
+                  {
+                    "python_type": "float",
+                    "repr": "0.20174165",
+                    "hex": "0x1.9d2ab9e7edba8p-3",
+                    "exact_decimal": "0.2017416499999999945913486953941173851490020751953125"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                700
+              ]
+            },
+            "fresh": {
+              "rows": [
+                [
+                  {
+                    "python_type": "Decimal",
+                    "repr": "Decimal('0.20174165457184325109')",
+                    "exact_decimal": "0.20174165457184325109"
+                  }
+                ]
+              ],
+              "postgres_type_oids": [
+                1700
+              ]
+            }
+          },
+          "comparisons": {
+            "historical": {
+              "exact_evaluator_equal": true,
+              "absolute_difference_decimal": "0E-52",
+              "relative_difference_decimal": "0E-24"
+            },
+            "fresh": {
+              "exact_evaluator_equal": false,
+              "absolute_difference_decimal": "4.571843256498651304605882615E-9",
+              "relative_difference_decimal": "2.266187053041417804928463764E-8"
+            }
+          }
+        }
+      ]
+    },
+    "division_arithmetic": {
+      "scope": "Scalar SQLite replay of the observed 139/689 values; not the original SQLite database or full benchmark validation",
+      "sqlite_version": "3.50.4",
+      "numerator": "139",
+      "denominator": "689",
+      "sqlite_real_division": {
+        "python_type": "float",
+        "repr": "0.20174165457184326",
+        "hex": "0x1.9d2aba8504165p-3",
+        "exact_decimal": "0.2017416545718432596689950742074870504438877105712890625"
+      },
+      "decimal_division": "0.2017416545718432510885341074"
+    }
+  },
+  "conclusions": {
+    "1473": "Parallel float aggregation yields nondeterministic exact-equality scores; all three queries select the same input multiset and become exactly equal in three sequential controls.",
+    "34": "Same 139/689 calculation and matched school; REAL versus NUMERIC precision causes exact comparison failure. SQLite scalar replay supports the precision diagnosis, not full dataset equivalence."
+  },
+  "numeric_aggregate_control_caution": "The optional AVG(consumption::numeric) control changes input casting precision and is not an authoritative reference; it was not used to assign correctness.",
+  "source_files_sha256": {
+    "research_results/static_pipeline_audit_20261116_r2/experiment.json": "8e10aacd2490cd20f272f87d7f3b3e56256bb1e053ac89bd3b832e09dc924ddd",
+    "research_results/static_pipeline_audit_20261116_r2/bird/reevaluation.json": "bcdd94b04038b00764e67fc585a34899aa2cba3c0ecf5e629762dbeb36a48bb1",
+    "research_results/static_pipeline_audit_20261116_r2/bird/jobs/static_control/evaluations.json": "99d46da121286e5b385f9d324132956c1e1436e976d1c1e259be06a0a3c4f301",
+    "scripts/prompt_pilot_runtime.py": "c64f5bc3be9e0ef07f686b411c623e035481282bd5c3cae377530b1df8112d4b",
+    "benchmarks/evaluate_bird.py": "8bf46394c20ee62ee3831fa1550a4011ca6ec220e67e86031ee4c01c92ccfd23"
+  }
+}

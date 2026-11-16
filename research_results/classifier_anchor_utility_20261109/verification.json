@@ -1,0 +1,11 @@
+{
+  "fold_heads_checked": 16,
+  "oof_decisions_reproduced": 1004,
+  "unique_train_questions": 251,
+  "all_choices_match_saved_heads": true,
+  "train_group_overlap": false,
+  "original_model_and_collection_unchanged": true,
+  "live_llm_calls": 0,
+  "dev_evaluated": false,
+  "test_used": false
+}

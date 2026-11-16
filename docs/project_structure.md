@@ -1,9 +1,9 @@
 # Структура проекта
 
-Организация файлов выполнена 23.10.2026, дерево обновлено 09.11.2026. Текущие итоги —
+Организация файлов выполнена 23.10.2026, дерево обновлено 10.11.2026. Текущие итоги —
 [23_bird_prompt_full.md](23_bird_prompt_full.md) и
 [24_ambrosia_prompt_full.md](24_ambrosia_prompt_full.md); следующий этап —
-обновление train utility и классификатора, см. [02_feature_selector.md](02_feature_selector.md).
+расширение train и контрольные повторы, см. [26_classifier_data_expansion.md](26_classifier_data_expansion.md).
 
 Файлы `.ps1` в дереве ниже доступны только локально и исключены из Git.
 Публикуемые варианты запусков — `.sh` и Python. Некоторые исторические протоколы
@@ -43,8 +43,21 @@ AdvText2SQL/
 │   ├── 22_ambrosia_prompt_dev.md        # Ambrosia 14+32: замороженный shortlist на 46 dev-вопросах
 │   ├── 23_bird_prompt_full.md           # BIRD full: выбранный SQL-промпт против исходного compact
 │   ├── 24_ambrosia_prompt_full.md       # Ambrosia full: свежий контроль 211 с исходными промптами при 14+32
+│   ├── 25_classifier_refresh.md         # Датасет v2, обученная голова и отсутствие выигрыша на dev replay
+│   ├── 26_classifier_data_expansion.md   # Источники train, защита holdout, новый schema-пилот и контрольные повторы
+│   ├── 27_evaluation_and_label_audit.md # AUD-007/008, строгие оценщики и офлайн-проверка меток
+│   ├── 28_audit_pipeline_fixes.md       # Исправления SQL-обработки, checkpoint и JSON детектора
+│   ├── 29_static_pipeline_regression.md # Контроль качества после исправлений аудита
+│   ├── 30_bird_numeric_contract.md     # Точная EX BIRD, числовая диагностика и полный пересчёт опоры
+│   ├── local/                         # Личные заметки по аудиту; игнорируются Git
 │   └── project_structure.md            # Этот файл: дерево и назначение папок
 ├── research_results/                   # Все архивные и новые результаты исследований
+│   ├── classifier_refresh_20261109/    # Офлайн readiness: прежние splits, источники SHA, ограничения v1; не train-метки
+│   ├── classifier_v2_20261109/         # Frozen очередь train/dev, аудит источников и новые jobs; без test
+│   ├── classifier_v2_training_20261109/ # Голова 9 конфигураций, grouped CV, dev replay, diagnostics/conclusion
+│   ├── classifier_v2_diagnosis_20261109/ # Потери по вопросам/БД, входные train-абляции, аудит повторных исходов
+│   ├── classifier_anchor_utility_20261109/ # Quality vs utility, 24 grounding-признака; train CV, без нового победителя
+│   ├── classifier_data_expansion_20261110/ # Аудит 837 кандидатов, пилот Ambrosia 120/40, отдельная repeats-серия
 │   ├── prompt_stage_summary_20261107.json # Итоговые опоры BIRD/Ambrosia, candidate/source SHA и метрики
 │   ├── ambrosia_prompt_full_20261107/  # Отдельный full manifest, оригинальные шаблоны, свежие ответы 211
 │   ├── bird_prompt_full_20261107/      # Отдельный full manifest, frozen candidate, парный отчёт на 241
@@ -110,7 +123,8 @@ AdvText2SQL/
 │   │   └── deepseek_20261028/           # 468 строк, inputs, manifest, splits, CV и summary
 │   ├── multilabel_utility/             # Слабые метки полезности отдельных фичей DeepSeek
 │   │   ├── README.md                   # Формат, маски и воспроизведение
-│   │   └── deepseek_20261029/           # 468 строк, 16 выходов, отдельные условные пары и прежние splits
+│   │   ├── deepseek_20261029/           # 468 строк, 16 выходов, отдельные условные пары и прежние splits
+│   │   └── deepseek_20261109_v2/        # 352 train/dev-строки, полный сбор 1594 исходов конфигураций
 │   ├── ambrosia_train.json             # Исходные train-данные Ambrosia
 │   ├── train_queries.json              # Исходные примеры проекта
 │   └── launch_db/                      # Инструкции и утилиты размещения БД
@@ -120,10 +134,21 @@ AdvText2SQL/
 │       ├── feature_selector.py          # Выбор 35 / 14+32+35 по правилам без API
 │       ├── selective_generator.py       # Генератор с изоляцией флагов между конфигурациями
 │       ├── multilabel_classifier.py      # Замороженный encoder, 6 признаков, masked loss и 16 выходов
+│       ├── feature_catalog_v2.py         # Отдельный каталог: FEAT_7 → 2, до пяти фичей, ограниченные маски по задаче
+│       ├── configuration_classifier_v2.py # Совместное качество конфигураций, masked loss, inference по задаче
+│       ├── configuration_utility.py       # Цели пользы переключения и 24 признака question/evidence ↔ схема
 │       ├── multilabel_generator.py       # Применение масок, ленивый build и изоляция состояния вопроса
 │       └── prompts.py                  # Шаблоны промптов
 ├── benchmarks/                         # BIRD/Ambrosia pipeline, оценщики и учёт токенов
 ├── scripts/                            # Поддерживаемые инструменты текущих исследований
+│   ├── audit_classifier_refresh.py     # Офлайн-аудит когорт и выбранных источников перед обновлением классификатора
+│   ├── prepare_classifier_v2.py        # Аудит архивов, frozen-план и экспорт частичных configuration labels
+│   ├── collect_classifier_v2.py        # Только ручной сбор недостающих train/dev-ответов с бюджетом и checkpoints
+│   ├── train_configuration_classifier_v2.py # Офлайн CPU-обучение 9 выходов, grouped CV внутри train, dev replay
+│   ├── diagnose_configuration_classifier_v2.py # Офлайн-диагностика frozen v2: вклады, OOD-счётчики, train-абляции
+│   ├── experiment_anchor_utility.py      # Фиксированный train-CV опыт: цель выбора × признаки, контроль опор
+│   ├── prepare_classifier_data_stage.py  # DB/family-аудит новых источников, пилот и frozen train-repeat план
+│   ├── classifier_data_stage.py          # Ручная read-only инвентаризация новых схем или paid повторы train
 │   ├── ambrosia_prompt_full.py         # Оригинальные промпты/14+32, full-контроль, строгие метрики и budgets
 │   ├── bird_prompt_full.py             # Конкретный текст по dev, full EX, budgets и парные вызовы
 │   ├── ambrosia_prompt_dev.py          # Кандидаты Ambrosia, строгие метрики, dev-протокол и ручной CLI
@@ -177,6 +202,7 @@ AdvText2SQL/
 │   ├── check_openrouter.py             # Короткая платная проверка API, только при явном запуске
 │   └── watch_baseline.ps1              # Наблюдение за конкретным процессом и остановка при сбое
 ├── local/                              # Shell-запуски с SSH
+│   ├── run_classifier_v2.sh            # Сбор данных классификатора; --prepare/--dry-run/--export офлайн
 │   ├── run_ambrosia_prompt_full.ps1 / .sh # Свежий Ambrosia full; offline-флаги без SSH/БД/API
 │   ├── run_bird_prompt_full.ps1 / .sh   # Ручной BIRD full с продолжением прерванного запуска
 │   ├── run_ambrosia_prompt_dev.ps1 / .sh # Ручной Ambrosia dev; offline-флаги без SSH/БД/API

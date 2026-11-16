@@ -1,0 +1,16 @@
+{
+  "checked_at_utc": "2026-11-16T15:18:42.991575+00:00",
+  "manifest_sha256": "10216f4e5a7562305247e2d262d8218c05e7ddab7f93f257a96bbd42c27ed58c",
+  "runtime_and_model_validated": true,
+  "checkpoint_sha256": "54ed2d3b9a60e2cbf6f156a852124905cef9702bf8668570f3b7227c4e38d06f",
+  "saved_scored": 164,
+  "remaining": 77,
+  "next_question_id": "736",
+  "next_database": "superhero",
+  "next_reference_and_prediction_pass_safety_validation": true,
+  "failure_stage": "prediction_execution",
+  "failure_details_available": false,
+  "paid_llm_calls_needed": 0,
+  "existing_checkpoint_modified": false,
+  "resume": "bash local/run_static_pipeline_regression.sh --action reevaluate --benchmark bird --output research_results/static_pipeline_audit_numeric_20261116"
+}

@@ -1,0 +1,42 @@
+{
+  "format": "configuration-quality-classifier-v2",
+  "candidate_grid": [
+    {
+      "weight_decay": 0.01,
+      "pair_weight": 0.0
+    },
+    {
+      "weight_decay": 0.01,
+      "pair_weight": 0.5
+    },
+    {
+      "weight_decay": 0.1,
+      "pair_weight": 0.0
+    },
+    {
+      "weight_decay": 0.1,
+      "pair_weight": 0.5
+    }
+  ],
+  "margins": [
+    0.0,
+    0.05,
+    0.15
+  ],
+  "epochs": 120,
+  "seed": 42,
+  "anchors": {
+    "bird": "compact",
+    "ambrosia": "rules_taxonomy"
+  },
+  "dataset_manifest_sha256": "0f2d09598af022b7334a9c8f0d8afa7a7ca07b58393f9ead796ec65eb53e6227",
+  "source_files_sha256": {
+    "scripts/train_configuration_classifier_v2.py": "8263b8afefc97ffb17d6946a7b0ef76b490e0d9c94b1a0ea63c9f32286617429",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/configuration_classifier_v2.py": "182eebf78769895223b83b3608c723fa65038222787df542cb0075da5f513018",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_catalog_v2.py": "8c067f103dc02c831385702ec996ec62c950e5808394260651380c4d7b8094cf",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/multilabel_classifier.py": "583ae16d474c1ada5d15e0f7d7f9e0704169f759e86432486474729a4ee1bb98",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_selector.py": "8222fce833d20f0085a1bd7f33bbd186ba8e90fd14bf3977e50b616a554cdb57",
+    "scripts/research_metrics.py": "09f18d46f9d12663c958799608f807120356403e7257d354f3583768c0dd5a7c"
+  },
+  "selection_uses": "four grouped folds inside train; no outer dev/test outcomes"
+}

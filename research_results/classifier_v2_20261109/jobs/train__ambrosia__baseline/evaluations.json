@@ -1,0 +1,1562 @@
+{
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:16": {
+    "question_id": "16",
+    "db_id": "attachment_1tab_val_restaurant",
+    "prediction": "SELECT r.\"id\", r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") = 'steakhouse'\n\nUNION ALL\n\n\nSELECT r.\"id\", r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") = 'seafood'\n  AND r.\"year_of_establishment\" >= 1980;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1226,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:17": {
+    "question_id": "17",
+    "db_id": "attachment_1tab_val_restaurant",
+    "prediction": "SELECT r.\"id\", r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" r\nWHERE LOWER(r.\"type\") IN ('steakhouse', 'seafood')\n  AND r.\"year_of_establishment\" = 1980;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1216,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:18": {
+    "question_id": "18",
+    "db_id": "attachment_1tab_val_seating_area",
+    "prediction": "SELECT sa.\"areaid\", sa.\"name\", sa.\"number_of_seats\", sa.\"type_of_food\"\nFROM \"seating_areas\" sa\nWHERE LOWER(sa.\"name\") IN ('patio', 'veranda')\n  AND sa.\"number_of_seats\" = 50;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1302,
+      "completion_tokens": 85
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:19": {
+    "question_id": "19",
+    "db_id": "attachment_1tab_val_seating_area",
+    "prediction": "SELECT\n    sa.\"areaid\",\n    sa.\"name\",\n    sa.\"number_of_seats\",\n    sa.\"type_of_food\"\nFROM \"seating_areas\" sa\nWHERE LOWER(sa.\"name\") LIKE '%patio%'\n   OR (LOWER(sa.\"name\") LIKE '%veranda%' AND sa.\"number_of_seats\" = 50)\nORDER BY sa.\"name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1304,
+      "completion_tokens": 115
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:20": {
+    "question_id": "20",
+    "db_id": "attachment_1tab_val_seating_area",
+    "prediction": "SELECT sa.\"name\", sa.\"number_of_seats\", sa.\"type_of_food\"\nFROM \"seating_areas\" sa\nWHERE LOWER(sa.\"name\") IN ('patio', 'veranda')\n  AND sa.\"number_of_seats\" = 50;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1294,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:30": {
+    "question_id": "30",
+    "db_id": "attachment_2tab_ref_beverage_professional",
+    "prediction": "SELECT\n    s.\"fullname\" AS \"name\",\n    'sommelier' AS \"role\",\n    r.\"name\" AS \"restaurant\"\nFROM \"sommeliers\" s\nJOIN \"restaurants\" r ON r.\"id\" = s.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge'\n\nUNION ALL\n\nSELECT\n    b.\"fullname\" AS \"name\",\n    'bartender' AS \"role\",\n    r.\"name\" AS \"restaurant\"\nFROM \"bartenders\" b\nJOIN \"restaurants\" r ON r.\"id\" = b.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1110,
+      "completion_tokens": 176
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:31": {
+    "question_id": "31",
+    "db_id": "attachment_1tab_val_restaurant",
+    "prediction": "SELECT r.\"id\", r.\"name\", r.\"type\", r.\"year_of_establishment\"\nFROM \"restaurants\" AS r\nWHERE r.\"year_of_establishment\" = 1980\n  AND LOWER(r.\"type\") IN ('steakhouse', 'seafood');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1228,
+      "completion_tokens": 88
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:32": {
+    "question_id": "32",
+    "db_id": "attachment_2tab_ref_beverage_professional",
+    "prediction": "SELECT s.\"fullname\" AS \"name\", 'sommelier' AS \"role\"\nFROM \"sommeliers\" s\nJOIN \"restaurants\" r ON r.\"id\" = s.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge'\n\nUNION ALL\n\nSELECT b.\"fullname\" AS \"name\", 'bartender' AS \"role\"\nFROM \"bartenders\" b\nJOIN \"restaurants\" r ON r.\"id\" = b.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1102,
+      "completion_tokens": 150
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:35": {
+    "question_id": "35",
+    "db_id": "attachment_1tab_ref_dining",
+    "prediction": "SELECT\n    p.\"productid\",\n    p.\"name\",\n    p.\"dining\",\n    p.\"best_before\"\nFROM \"products\" p\nWHERE p.\"best_before\" = '10.11.2018'\n  AND p.\"dining\" IN (0, 1)\nORDER BY p.\"dining\" DESC NULLS LAST, p.\"name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1144,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:36": {
+    "question_id": "36",
+    "db_id": "attachment_1tab_ref_dining",
+    "prediction": "SELECT\n    p.\"productid\",\n    p.\"name\",\n    p.\"dining\",\n    p.\"best_before\"\nFROM \"products\" p\nWHERE\n    \n    p.\"dining\" = 1\n    \n    OR (\n        p.\"dining\" = 0\n        AND p.\"best_before\" = TO_DATE('10.11.2018', 'DD.MM.YYYY')\n    )\nORDER BY p.\"dining\" DESC NULLS LAST, p.\"name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1136,
+      "completion_tokens": 183
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:37": {
+    "question_id": "37",
+    "db_id": "attachment_1tab_ref_dining",
+    "prediction": "SELECT\n    p.\"productid\",\n    p.\"name\",\n    p.\"dining\",\n    p.\"best_before\",\n    ft.\"typename\"\nFROM \"products\" p\nJOIN \"foodtypes\" ft ON ft.\"foodtypeid\" = p.\"dining\"\nWHERE LOWER(ft.\"typename\") IN ('prepared meals', 'takeaway')\n  AND p.\"best_before\" = TO_DATE('10.11.2018', 'DD.MM.YYYY');",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1132,
+      "completion_tokens": 140
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:51": {
+    "question_id": "51",
+    "db_id": "attachment_1tab_val_accommodation1",
+    "prediction": "SELECT \"a\".\"id\", \"a\".\"name\", \"a\".\"type_of_accommodation\", \"a\".\"price\"\nFROM \"accommodations\" AS \"a\"\nWHERE LOWER(\"a\".\"type_of_accommodation\") IN ('hotel', 'youth hostel')\n  AND \"a\".\"price\" = 50;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1142,
+      "completion_tokens": 88
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:52": {
+    "question_id": "52",
+    "db_id": "attachment_1tab_val_accommodation1",
+    "prediction": "SELECT \"a\".\"name\", \"a\".\"type_of_accommodation\", \"a\".\"price\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'hotel'\n  AND \"a\".\"price\" = 50\n\nUNION ALL\n\n\nSELECT \"a\".\"name\", \"a\".\"type_of_accommodation\", \"a\".\"price\"\nFROM \"accommodations\" AS \"a\"\nWHERE \"a\".\"type_of_accommodation\" = 'youth hostel'\n  AND \"a\".\"price\" = 50;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1152,
+      "completion_tokens": 142
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:53": {
+    "question_id": "53",
+    "db_id": "attachment_1tab_val_accommodation2",
+    "prediction": "SELECT\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\"\nFROM \"accommodations\" a\nWHERE a.\"pricepernight\" = 150\n  AND LOWER(a.\"typeofaccomodation\") IN ('family suite', 'single room');",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1224,
+      "completion_tokens": 98
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:54": {
+    "question_id": "54",
+    "db_id": "attachment_1tab_val_accommodation2",
+    "prediction": "SELECT\n    a.\"accommodationid\",\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\",\n    a.\"numberguests\",\n    a.\"hotelid\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") LIKE '%family%'\n   OR (LOWER(a.\"typeofaccomodation\") LIKE '%single%' AND a.\"pricepernight\" = 150);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1222,
+      "completion_tokens": 126
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:55": {
+    "question_id": "55",
+    "db_id": "attachment_1tab_val_accommodation2",
+    "prediction": "SELECT\n    a.\"accommodationid\",\n    a.\"roomnumber\",\n    a.\"typeofaccomodation\",\n    a.\"pricepernight\",\n    a.\"numberguests\",\n    a.\"hotelid\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"typeofaccomodation\") IN ('family suite', 'single room')\n  AND a.\"pricepernight\" = 150;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1216,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:59": {
+    "question_id": "59",
+    "db_id": "attachment_1tab_val_beverage_professional",
+    "prediction": "SELECT\n    p.\"fullname\",\n    p.\"position\"\nFROM \"professionals\" p\nWHERE (\n        LOWER(p.\"position\") LIKE '%sommelier%'\n        OR LOWER(p.\"position\") LIKE '%bartender%'\n      )\n  AND LOWER(SPLIT_PART(TRIM(p.\"fullname\"), ' ', 1)) = 'alex';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1340,
+      "completion_tokens": 103
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:60": {
+    "question_id": "60",
+    "db_id": "attachment_1tab_val_beverage_professional",
+    "prediction": "SELECT p.\"id\", p.\"position\", p.\"fullname\"\nFROM \"professionals\" p\nWHERE LOWER(p.\"position\") IN ('sommelier', 'bartender')\n  AND LOWER(p.\"fullname\") LIKE '%alex%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1322,
+      "completion_tokens": 76
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:61": {
+    "question_id": "61",
+    "db_id": "attachment_1tab_val_beverage_professional",
+    "prediction": "SELECT\n    p.\"id\",\n    p.\"position\",\n    p.\"fullname\"\nFROM \"professionals\" p\nWHERE LOWER(p.\"position\") = 'sommelier'\n   OR (\n        LOWER(p.\"position\") = 'bartender'\n        AND LOWER(SPLIT_PART(TRIM(p.\"fullname\"), ' ', 1)) = 'alex'\n      );",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1332,
+      "completion_tokens": 107
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:62": {
+    "question_id": "62",
+    "db_id": "attachment_1tab_val_cleaning_professional",
+    "prediction": "SELECT\n    cp.\"name\" AS employee_name,\n    cp.\"position\" AS position\nFROM \"cleaning_professionals\" cp\nJOIN \"hotels\" h ON h.\"id\" = cp.\"hotel_id\"\nWHERE h.\"name\" = 'The Grand Hotel'\n  AND (\n      LOWER(cp.\"position\") LIKE '%housekeep%'\n      OR LOWER(cp.\"position\") LIKE '%laundry%'\n  )\nORDER BY cp.\"position\", cp.\"name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1140,
+      "completion_tokens": 130
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:63": {
+    "question_id": "63",
+    "db_id": "attachment_1tab_val_cleaning_professional",
+    "prediction": "SELECT\n    cp.\"name\",\n    cp.\"position\",\n    h.\"name\" AS hotel_name\nFROM \"cleaning_professionals\" cp\nJOIN \"hotels\" h ON h.\"id\" = cp.\"hotel_id\"\nWHERE h.\"name\" = 'The Grand Hotel'\n  AND (\n      LOWER(cp.\"position\") LIKE '%housekeep%'\n      OR LOWER(cp.\"position\") LIKE '%laundry%'\n  )\nORDER BY cp.\"position\", cp.\"name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1148,
+      "completion_tokens": 137
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:64": {
+    "question_id": "64",
+    "db_id": "attachment_1tab_val_cleaning_professional",
+    "prediction": "SELECT\n    cp.\"name\",\n    cp.\"position\"\nFROM \"cleaning_professionals\" AS cp\nJOIN \"hotels\" AS h\n    ON cp.\"hotel_id\" = h.\"id\"\nWHERE h.\"name\" = 'The Grand Hotel'\n  AND (\n      LOWER(cp.\"position\") LIKE '%housekeep%'\n      OR LOWER(cp.\"position\") LIKE '%laundry%'\n  );",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1132,
+      "completion_tokens": 117
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:65": {
+    "question_id": "65",
+    "db_id": "attachment_1tab_val_accommodation1",
+    "prediction": "SELECT a.\"id\", a.\"name\", a.\"type_of_accommodation\", a.\"price\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"type_of_accommodation\") = 'hotel'\n\nUNION ALL\n\n\nSELECT a.\"id\", a.\"name\", a.\"type_of_accommodation\", a.\"price\"\nFROM \"accommodations\" a\nWHERE LOWER(a.\"type_of_accommodation\") = 'youth hostel'\n  AND a.\"price\" = 50;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1160,
+      "completion_tokens": 131
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:67": {
+    "question_id": "67",
+    "db_id": "attachment_2tab_ref_beverage_professional",
+    "prediction": "SELECT s.\"fullname\" AS \"name\", 'sommelier' AS \"role\"\nFROM \"sommeliers\" s\nJOIN \"restaurants\" r ON r.\"id\" = s.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge'\n\nUNION ALL\n\nSELECT b.\"fullname\" AS \"name\", 'bartender' AS \"role\"\nFROM \"bartenders\" b\nJOIN \"restaurants\" r ON r.\"id\" = b.\"restaurantid\"\nWHERE r.\"name\" = 'The Rooftop Lounge';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1122,
+      "completion_tokens": 158
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:72": {
+    "question_id": "72",
+    "db_id": "attachment_2tab_val_overnight_stay",
+    "prediction": "SELECT\n    'guestroom' AS \"type\",\n    gr.\"room\" AS \"name\",\n    gr.\"floor_no\" AS \"floor_no\",\n    gr.\"capacity\" AS \"capacity\",\n    gr.\"amenities\" AS \"amenities\"\nFROM \"guestrooms\" gr\nWHERE LOWER(gr.\"amenities\") LIKE '%air condition%'\n\nUNION ALL\n\nSELECT\n    'suite' AS \"type\",\n    s.\"suite_name\" AS \"name\",\n    NULL::BIGINT AS \"floor_no\",\n    s.\"occupancy\" AS \"capacity\",\n    s.\"amenities\" AS \"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air condition%'",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1350,
+      "completion_tokens": 180
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:73": {
+    "question_id": "73",
+    "db_id": "attachment_2tab_val_overnight_stay",
+    "prediction": "SELECT\n    g.\"room\" AS \"name\",\n    'guestroom' AS \"type\",\n    g.\"amenities\"\nFROM \"guestrooms\" g\nWHERE LOWER(g.\"amenities\") LIKE '%air conditioning%'\n\nUNION ALL\n\nSELECT\n    s.\"suite_name\" AS \"name\",\n    'suite' AS \"type\",\n    s.\"amenities\"\nFROM \"suites\" s\nWHERE LOWER(s.\"amenities\") LIKE '%air conditioning%';",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1332,
+      "completion_tokens": 117
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:74": {
+    "question_id": "74",
+    "db_id": "attachment_2tab_val_overnight_stay",
+    "prediction": "SELECT\n    g.\"room\" AS guest_room,\n    g.\"amenities\" AS guest_room_amenities,\n    s.\"suite_name\" AS suite_name,\n    s.\"amenities\" AS suite_amenities\nFROM \"guestrooms\" g\nCROSS JOIN \"suites\" s\nWHERE LOWER(g.\"amenities\") LIKE '%air conditioning%'\n  AND LOWER(s.\"amenities\") LIKE '%air conditioning%'\nORDER BY g.\"room\", s.\"suite_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1342,
+      "completion_tokens": 123
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:108": {
+    "question_id": "108",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT mr.\"salary\"\nFROM \"medicalroles\" mr\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"roleid\" = mr.\"roleid\"\nGROUP BY mr.\"roleid\", mr.\"salary\"\nHAVING COUNT(DISTINCT hmr.\"hospitalid\") = (SELECT COUNT(*) FROM \"hospitals\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1000,
+      "completion_tokens": 91
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:109": {
+    "question_id": "109",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"name\" AS specialist_name,\n    sy.\"system_name\"\nFROM \"it_support_specialists\" s\nJOIN \"it_support_specialists_systems\" ss\n    ON ss.\"it_specialist_id\" = s.\"id\"\nJOIN \"systems\" sy\n    ON sy.\"system_id\" = ss.\"system_id\"\nORDER BY s.\"name\", sy.\"system_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1068,
+      "completion_tokens": 109
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:110": {
+    "question_id": "110",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    its.\"name\" AS specialist_name,\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"it_support_specialists\" its\nJOIN \"it_support_specialists_systems\" itss\n    ON itss.\"it_specialist_id\" = its.\"id\"\nJOIN \"systems\" s\n    ON s.\"system_id\" = itss.\"system_id\"\nORDER BY its.\"name\", s.\"system_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1078,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:111": {
+    "question_id": "111",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"name\" AS specialist_name,\n    sys.\"system_name\" AS system_name,\n    sys.\"is_active\" AS is_active\nFROM \"it_support_specialists\" s\nJOIN \"it_support_specialists_systems\" ss\n    ON ss.\"it_specialist_id\" = s.\"id\"\nJOIN \"systems\" sys\n    ON sys.\"system_id\" = ss.\"system_id\"\nORDER BY s.\"name\", sys.\"system_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1082,
+      "completion_tokens": 127
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:114": {
+    "question_id": "114",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"name\" AS specialist_name,\n    sy.\"system_name\" AS system_name\nFROM \"it_support_specialists\" s\nJOIN \"it_support_specialists_systems\" ss\n    ON ss.\"it_specialist_id\" = s.\"id\"\nJOIN \"systems\" sy\n    ON sy.\"system_id\" = ss.\"system_id\"\nORDER BY s.\"name\", sy.\"system_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1072,
+      "completion_tokens": 111
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:116": {
+    "question_id": "116",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT mr.\"rolename\"\nFROM \"medicalroles\" mr\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"roleid\" = mr.\"roleid\"\nGROUP BY mr.\"roleid\", mr.\"rolename\"\nHAVING COUNT(DISTINCT hmr.\"hospitalid\") = (SELECT COUNT(*) FROM \"hospitals\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 990,
+      "completion_tokens": 96
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:117": {
+    "question_id": "117",
+    "db_id": "scope_hr_professionals_functions",
+    "prediction": "SELECT f.\"functionid\", f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(DISTINCT \"id\") FROM \"hr_professionals\");",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1200,
+      "completion_tokens": 110
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:118": {
+    "question_id": "118",
+    "db_id": "scope_hr_professionals_functions",
+    "prediction": "SELECT\n    hp.\"name\" AS hr_professional_name,\n    f.\"description\" AS function_description\nFROM \"hr_professionals\" hp\nJOIN \"hr_professionals_functions\" hpf\n    ON hpf.\"hrprofessionalid\" = hp.\"id\"\nJOIN \"functions\" f\n    ON f.\"functionid\" = hpf.\"functionid\"\nORDER BY hp.\"name\", f.\"description\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1200,
+      "completion_tokens": 113
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:119": {
+    "question_id": "119",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    h.\"name\" AS hospital_name,\n    mr.\"rolename\" AS role_name\nFROM \"hospitals\" h\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"hospitalid\" = h.\"hospitalid\"\nJOIN \"medicalroles\" mr ON mr.\"roleid\" = hmr.\"roleid\"\nORDER BY h.\"name\", mr.\"rolename\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 988,
+      "completion_tokens": 107
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:120": {
+    "question_id": "120",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    h.\"name\" AS hospital_name,\n    mr.\"rolename\" AS role_name,\n    mr.\"salary\" AS salary\nFROM \"hospitals\" h\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"hospitalid\" = h.\"hospitalid\"\nJOIN \"medicalroles\" mr ON mr.\"roleid\" = hmr.\"roleid\"\nORDER BY h.\"name\", mr.\"rolename\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 998,
+      "completion_tokens": 122
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:121": {
+    "question_id": "121",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    h.\"name\" AS hospital_name,\n    mr.\"rolename\" AS role_name\nFROM \"hospitals\" h\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"hospitalid\" = h.\"hospitalid\"\nJOIN \"medicalroles\" mr ON mr.\"roleid\" = hmr.\"roleid\"\nORDER BY h.\"name\", mr.\"rolename\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 992,
+      "completion_tokens": 103
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:122": {
+    "question_id": "122",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"name\"            AS specialist_name,\n    sys.\"system_name\"   AS system_name,\n    sys.\"is_active\"     AS system_state\nFROM \"it_support_specialists\" s\nJOIN \"it_support_specialists_systems\" ss\n    ON ss.\"it_specialist_id\" = s.\"id\"\nJOIN \"systems\" sys\n    ON sys.\"system_id\" = ss.\"system_id\"\nORDER BY s.\"name\", sys.\"system_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1078,
+      "completion_tokens": 132
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:123": {
+    "question_id": "123",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT AVG(mr.\"salary\") AS avg_salary\nFROM \"medicalroles\" mr\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"roleid\" = mr.\"roleid\"\nGROUP BY mr.\"roleid\"\nHAVING COUNT(DISTINCT hmr.\"hospitalid\") = (SELECT COUNT(*) FROM \"hospitals\");",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 996,
+      "completion_tokens": 103
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:124": {
+    "question_id": "124",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    mr.\"rolename\",\n    mr.\"salary\"\nFROM \"medicalroles\" mr\nJOIN \"hospitals_medical_roles\" hmr\n    ON hmr.\"roleid\" = mr.\"roleid\"\nGROUP BY mr.\"roleid\", mr.\"rolename\", mr.\"salary\"\nHAVING COUNT(DISTINCT hmr.\"hospitalid\") = (SELECT COUNT(*) FROM \"hospitals\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1008,
+      "completion_tokens": 109
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:125": {
+    "question_id": "125",
+    "db_id": "scope_hr_professionals_functions",
+    "prediction": "SELECT f.\"functionid\", f.\"description\"\nFROM \"functions\" f\nJOIN \"hr_professionals_functions\" hpf ON hpf.\"functionid\" = f.\"functionid\"\nGROUP BY f.\"functionid\", f.\"description\"\nHAVING COUNT(DISTINCT hpf.\"hrprofessionalid\") = (SELECT COUNT(DISTINCT \"id\") FROM \"hr_professionals\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1196,
+      "completion_tokens": 106
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:126": {
+    "question_id": "126",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT s.\"system_name\" AS \"system_name\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM \"it_support_specialists\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1076,
+      "completion_tokens": 112
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:127": {
+    "question_id": "127",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\", i.\"instrumentname\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 990,
+      "completion_tokens": 111
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:128": {
+    "question_id": "128",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"name\" AS specialist_name,\n    sys.\"system_name\" AS system_name,\n    sys.\"is_active\" AS system_state\nFROM \"it_support_specialists\" s\nJOIN \"it_support_specialists_systems\" ss\n    ON ss.\"it_specialist_id\" = s.\"id\"\nJOIN \"systems\" sys\n    ON sys.\"system_id\" = ss.\"system_id\"\nORDER BY s.\"name\", sys.\"system_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1078,
+      "completion_tokens": 123
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:129": {
+    "question_id": "129",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 994,
+      "completion_tokens": 89
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:130": {
+    "question_id": "130",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    lt.\"email\" AS technician_email,\n    i.\"instrumentname\" AS instrument_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\", i.\"instrumentname\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1008,
+      "completion_tokens": 131
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:131": {
+    "question_id": "131",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\");",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1002,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:133": {
+    "question_id": "133",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    h.\"name\" AS hospital_name,\n    mr.\"rolename\" AS role_name,\n    mr.\"salary\" AS salary\nFROM \"hospitals\" h\nJOIN \"hospitals_medical_roles\" hmr\n    ON hmr.\"hospitalid\" = h.\"hospitalid\"\nJOIN \"medicalroles\" mr\n    ON mr.\"roleid\" = hmr.\"roleid\"\nORDER BY h.\"name\", mr.\"rolename\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1008,
+      "completion_tokens": 127
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:134": {
+    "question_id": "134",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\", i.\"description\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 996,
+      "completion_tokens": 104
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:135": {
+    "question_id": "135",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    i.\"instrumentname\",\n    i.\"description\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\", i.\"description\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1014,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:136": {
+    "question_id": "136",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT i.\"instrumentname\"\nFROM \"instruments\" i\nJOIN \"lab_technicians_instruments\" lti ON lti.\"instrumentid\" = i.\"id\"\nGROUP BY i.\"id\", i.\"instrumentname\"\nHAVING COUNT(DISTINCT lti.\"technicianid\") = (SELECT COUNT(*) FROM \"lab_technicians\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 990,
+      "completion_tokens": 95
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:137": {
+    "question_id": "137",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"description\" AS instrument_description\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\", i.\"description\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 996,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:138": {
+    "question_id": "138",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT\n    s.\"system_name\",\n    s.\"is_active\"\nFROM \"systems\" s\nJOIN \"it_support_specialists_systems\" iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\", s.\"is_active\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"it_support_specialists\"\n);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1078,
+      "completion_tokens": 124
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:139": {
+    "question_id": "139",
+    "db_id": "scope_lab_technicians_instruments",
+    "prediction": "SELECT\n    lt.\"name\" AS technician_name,\n    i.\"instrumentname\" AS instrument_name\nFROM \"lab_technicians\" lt\nJOIN \"lab_technicians_instruments\" lti\n    ON lti.\"technicianid\" = lt.\"id\"\nJOIN \"instruments\" i\n    ON i.\"id\" = lti.\"instrumentid\"\nORDER BY lt.\"name\", i.\"instrumentname\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 994,
+      "completion_tokens": 111
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:140": {
+    "question_id": "140",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT r.\"requirement_type\"\nFROM \"requirements\" r\nJOIN \"job_postings_requirements\" jpr ON jpr.\"requirement_id\" = r.\"id\"\nGROUP BY r.\"requirement_type\"\nHAVING COUNT(DISTINCT jpr.\"job_posting_id\") = (SELECT COUNT(*) FROM \"job_postings\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1010,
+      "completion_tokens": 87
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:141": {
+    "question_id": "141",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"value\" AS requirement_value,\n    r.\"requirement_type\" AS requirement_type\nFROM \"job_postings\" jp\nJOIN \"job_postings_requirements\" jpr\n    ON jpr.\"job_posting_id\" = jp.\"id\"\nJOIN \"requirements\" r\n    ON r.\"id\" = jpr.\"requirement_id\"\n\nWHERE r.\"value\" = (\n    SELECT MIN(r2.\"value\")\n    FROM \"job_postings_requirements\" jpr2\n    JOIN \"requirements\" r2\n        ON r2.\"id\" = jpr2.\"requirement_id\"\n    WHERE jpr2.\"job_posting_id\" = jp.\"id\"\n)\nORDER BY jp.\"id\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1012,
+      "completion_tokens": 209
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:142": {
+    "question_id": "142",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"requirement_type\",\n    r.\"value\" AS requirement_value\nFROM \"job_postings\" jp\nJOIN \"job_postings_requirements\" jpr\n    ON jpr.\"job_posting_id\" = jp.\"id\"\nJOIN \"requirements\" r\n    ON r.\"id\" = jpr.\"requirement_id\"\nORDER BY jp.\"id\", r.\"requirement_type\", r.\"value\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1012,
+      "completion_tokens": 138
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:143": {
+    "question_id": "143",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"requirement_type\",\n    r.\"value\" AS requirement_value\nFROM \"job_postings\" jp\nJOIN \"job_postings_requirements\" jpr\n    ON jpr.\"job_posting_id\" = jp.\"id\"\nJOIN \"requirements\" r\n    ON r.\"id\" = jpr.\"requirement_id\"\nORDER BY jp.\"id\", r.\"requirement_type\", r.\"value\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1004,
+      "completion_tokens": 132
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:144": {
+    "question_id": "144",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"requirement_type\",\n    r.\"value\" AS requirement_value\nFROM \"job_postings\" jp\nLEFT JOIN \"job_postings_requirements\" jpr\n    ON jpr.\"job_posting_id\" = jp.\"id\"\nLEFT JOIN \"requirements\" r\n    ON r.\"id\" = jpr.\"requirement_id\"\nORDER BY jp.\"id\", r.\"requirement_type\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1006,
+      "completion_tokens": 128
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:145": {
+    "question_id": "145",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"requirement_type\"\nFROM \"job_postings\" jp\nJOIN \"job_postings_requirements\" jpr\n    ON jpr.\"job_posting_id\" = jp.\"id\"\nJOIN \"requirements\" r\n    ON r.\"id\" = jpr.\"requirement_id\"\nORDER BY jp.\"id\", r.\"requirement_type\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1010,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:146": {
+    "question_id": "146",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    jp.\"id\" AS job_posting_id,\n    jp.\"title\" AS job_title,\n    r.\"requirement_type\"\nFROM \"job_postings\" jp\nJOIN \"job_postings_requirements\" jpr ON jpr.\"job_posting_id\" = jp.\"id\"\nJOIN \"requirements\" r ON r.\"id\" = jpr.\"requirement_id\"\nGROUP BY jp.\"id\", jp.\"title\", r.\"requirement_type\"\nORDER BY jp.\"id\", r.\"requirement_type\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1010,
+      "completion_tokens": 135
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:147": {
+    "question_id": "147",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT r.\"id\", r.\"requirement_type\", r.\"value\"\nFROM \"requirements\" r\nJOIN \"job_postings_requirements\" jpr ON jpr.\"requirement_id\" = r.\"id\"\nGROUP BY r.\"id\", r.\"requirement_type\", r.\"value\"\nHAVING COUNT(DISTINCT jpr.\"job_posting_id\") = (SELECT COUNT(*) FROM \"job_postings\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1008,
+      "completion_tokens": 102
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:148": {
+    "question_id": "148",
+    "db_id": "scope_it_support_specialists_systems",
+    "prediction": "SELECT s.\"system_name\"\nFROM systems s\nJOIN it_support_specialists_systems iss ON iss.\"system_id\" = s.\"system_id\"\nGROUP BY s.\"system_id\", s.\"system_name\"\nHAVING COUNT(DISTINCT iss.\"it_specialist_id\") = (SELECT COUNT(*) FROM it_support_specialists)",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1068,
+      "completion_tokens": 90
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:149": {
+    "question_id": "149",
+    "db_id": "scope_job_postings_requirements",
+    "prediction": "SELECT\n    r.\"requirement_type\",\n    r.\"value\"\nFROM \"requirements\" r\nJOIN \"job_postings_requirements\" jpr\n    ON jpr.\"requirement_id\" = r.\"id\"\nGROUP BY r.\"id\", r.\"requirement_type\", r.\"value\"\nHAVING COUNT(DISTINCT jpr.\"job_posting_id\") = (\n    SELECT COUNT(DISTINCT \"id\") FROM \"job_postings\"\n)\nORDER BY r.\"requirement_type\", r.\"value\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1020,
+      "completion_tokens": 127
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:150": {
+    "question_id": "150",
+    "db_id": "scope_hospitals_medicalroles",
+    "prediction": "SELECT\n    h.\"name\" AS hospital_name,\n    mr.\"rolename\" AS role_name,\n    mr.\"salary\" AS salary\nFROM \"hospitals\" h\nJOIN \"hospitals_medical_roles\" hmr ON hmr.\"hospitalid\" = h.\"hospitalid\"\nJOIN \"medicalroles\" mr ON mr.\"roleid\" = hmr.\"roleid\"\nORDER BY h.\"name\", mr.\"rolename\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1000,
+      "completion_tokens": 121
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:151": {
+    "question_id": "151",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"name\" AS designer_name,\n    dt.\"tool_name\" AS tool_name\nFROM \"designers\" d\nJOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nORDER BY d.\"name\", dt.\"tool_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1220,
+      "completion_tokens": 83
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:153": {
+    "question_id": "153",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT dt.\"tool_name\"\nFROM \"designer_tools\" dt\nGROUP BY dt.\"tool_name\"\nHAVING COUNT(DISTINCT dt.\"designer_id\") = (SELECT COUNT(*) FROM \"designers\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1220,
+      "completion_tokens": 66
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:154": {
+    "question_id": "154",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT dt.\"tool_name\"\nFROM \"designer_tools\" dt\nGROUP BY dt.\"tool_name\"\nHAVING COUNT(DISTINCT dt.\"designer_id\") = (SELECT COUNT(DISTINCT d.\"id\") FROM \"designers\" d);",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1220,
+      "completion_tokens": 81
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:155": {
+    "question_id": "155",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"id\"          AS designer_id,\n    d.\"name\"        AS designer_name,\n    t.\"tool_name\"   AS tool_name,\n    t.\"description\" AS tool_description\nFROM \"designers\" d\nJOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nJOIN \"tools\" t          ON t.\"tool_name\"   = dt.\"tool_name\"\nORDER BY d.\"id\", t.\"tool_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1236,
+      "completion_tokens": 126
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:156": {
+    "question_id": "156",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"id\" AS designer_id,\n    d.\"name\" AS designer_name,\n    dt.\"tool_name\" AS tool_name\nFROM \"designers\" d\nLEFT JOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nORDER BY d.\"id\", dt.\"tool_name\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1222,
+      "completion_tokens": 91
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:157": {
+    "question_id": "157",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"id\" AS designer_id,\n    d.\"name\" AS designer_name,\n    t.\"tool_name\",\n    t.\"description\"\nFROM \"designers\" d\nLEFT JOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nLEFT JOIN \"tools\" t ON t.\"tool_name\" = dt.\"tool_name\"\nORDER BY d.\"id\", t.\"tool_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1228,
+      "completion_tokens": 111
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:158": {
+    "question_id": "158",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT t.\"description\"\nFROM \"tools\" t\nJOIN \"designer_tools\" dt ON dt.\"tool_name\" = t.\"tool_name\"\nGROUP BY t.\"tool_name\", t.\"description\"\nHAVING COUNT(DISTINCT dt.\"designer_id\") = (SELECT COUNT(*) FROM \"designers\");",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1236,
+      "completion_tokens": 96
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:162": {
+    "question_id": "162",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"name\" AS designer_name,\n    t.\"description\" AS tool_description\nFROM \"designers\" d\nJOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nJOIN \"tools\" t ON t.\"tool_name\" = dt.\"tool_name\"\nORDER BY d.\"name\", t.\"description\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1224,
+      "completion_tokens": 100
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:175": {
+    "question_id": "175",
+    "db_id": "scope_designers_tools",
+    "prediction": "SELECT\n    d.\"name\" AS designer_name,\n    t.\"tool_name\",\n    t.\"description\"\nFROM \"designers\" d\nJOIN \"designer_tools\" dt ON dt.\"designer_id\" = d.\"id\"\nJOIN \"tools\" t ON t.\"tool_name\" = dt.\"tool_name\"\nORDER BY d.\"name\", t.\"tool_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1226,
+      "completion_tokens": 102
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:176": {
+    "question_id": "176",
+    "db_id": "scope_employers_benefits",
+    "prediction": "SELECT\n    e.\"id\"            AS employer_id,\n    e.\"name\"          AS employer_name,\n    b.\"benefit_name\"  AS benefit_name,\n    b.\"description\"   AS benefit_description\nFROM \"employers\" e\nLEFT JOIN \"employers_benefits\" eb ON eb.\"employer_id\" = e.\"id\"\nLEFT JOIN \"benefits\" b           ON b.\"id\" = eb.\"benefit_id\"\nORDER BY e.\"id\", b.\"benefit_name\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1258,
+      "completion_tokens": 123
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:178": {
+    "question_id": "178",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    g.\"id\" AS geologist_id,\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nORDER BY g.\"id\", gs.\"specimentype\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 996,
+      "completion_tokens": 106
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:179": {
+    "question_id": "179",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    gs.\"specimentype\" AS specimen_type\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON g.\"id\" = gs.\"geologistid\"\nORDER BY g.\"name\", gs.\"specimentype\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 986,
+      "completion_tokens": 89
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:180": {
+    "question_id": "180",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"type\" AS specimen_type,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\", s.\"type\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 992,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:181": {
+    "question_id": "181",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nWHERE NOT EXISTS (\n    \n    SELECT 1\n    FROM \"geologists\" g\n    WHERE NOT EXISTS (\n        SELECT 1\n        FROM \"geologists_specimens\" gs\n        WHERE gs.\"geologistid\" = g.\"id\"\n          AND gs.\"specimentype\" = s.\"type\"\n    )\n)",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 992,
+      "completion_tokens": 134
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:182": {
+    "question_id": "182",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    s.\"description\",\n    COUNT(DISTINCT gs.\"geologistid\") AS geologist_count\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs\n    ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"description\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") > 1\nORDER BY geologist_count DESC NULLS LAST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 986,
+      "completion_tokens": 120
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:183": {
+    "question_id": "183",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT s.\"type\", s.\"description\"\nFROM \"specimens\" s\nJOIN \"geologists_specimens\" gs ON gs.\"specimentype\" = s.\"type\"\nGROUP BY s.\"type\", s.\"description\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(*) FROM \"geologists\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 992,
+      "completion_tokens": 99
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:184": {
+    "question_id": "184",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT gs.\"specimentype\"\nFROM \"geologists_specimens\" gs\nGROUP BY gs.\"specimentype\"\nHAVING COUNT(DISTINCT gs.\"geologistid\") = (SELECT COUNT(*) FROM \"geologists\")",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 994,
+      "completion_tokens": 69
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:185": {
+    "question_id": "185",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON gs.\"geologistid\" = g.\"id\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\", s.\"description\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 992,
+      "completion_tokens": 117
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:186": {
+    "question_id": "186",
+    "db_id": "scope_employers_benefits",
+    "prediction": "SELECT\n    e.\"name\" AS employer_name,\n    b.\"description\" AS benefit_description\nFROM \"employers\" e\nJOIN \"employers_benefits\" eb ON eb.\"employer_id\" = e.\"id\"\nJOIN \"benefits\" b ON b.\"id\" = eb.\"benefit_id\"\nORDER BY e.\"name\", b.\"description\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1268,
+      "completion_tokens": 102
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:187": {
+    "question_id": "187",
+    "db_id": "scope_geologists_specimens",
+    "prediction": "SELECT\n    g.\"name\" AS geologist_name,\n    s.\"description\" AS specimen_description\nFROM \"geologists\" g\nJOIN \"geologists_specimens\" gs\n    ON g.\"id\" = gs.\"geologistid\"\nJOIN \"specimens\" s\n    ON s.\"type\" = gs.\"specimentype\"\nORDER BY g.\"name\", s.\"description\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 990,
+      "completion_tokens": 105
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:261": {
+    "question_id": "261",
+    "db_id": "vague_2cols_experience",
+    "prediction": "SELECT\n    j.\"minimum_years\",\n    j.\"preferred_years\"\nFROM \"jobs\" AS j\nORDER BY j.\"salary\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1126,
+      "completion_tokens": 70
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:262": {
+    "question_id": "262",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"title\" AS position_title,\n    p.\"description\" AS position_description,\n    sd.\"salary_range\" AS salary_range,\n    sd.\"hourly_rate\" AS hourly_rate\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%developer%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\n   OR LOWER(p.\"description\") LIKE '%software engineer%'\nORDER BY p.\"title\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1242,
+      "completion_tokens": 165
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:263": {
+    "question_id": "263",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT AVG(sd.\"hourly_rate\") AS \"avg_hourly_rate\"\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%developer%';",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1252,
+      "completion_tokens": 106
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:264": {
+    "question_id": "264",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"title\" AS \"position_title\",\n    s.\"salary_range\" AS \"salary_range\"\nFROM \"position\" p\nLEFT JOIN \"salarydetails\" s ON s.\"positionid\" = p.\"id\"\nORDER BY p.\"title\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1248,
+      "completion_tokens": 75
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:265": {
+    "question_id": "265",
+    "db_id": "vague_2cols_experience",
+    "prediction": "SELECT j.\"preferred_years\"\nFROM \"jobs\" j\nORDER BY j.\"salary\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1122,
+      "completion_tokens": 52
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:266": {
+    "question_id": "266",
+    "db_id": "vague_2cols_experience",
+    "prediction": "SELECT\n    j.\"jobtitle\",\n    j.\"minimum_years\",\n    j.\"preferred_years\",\n    j.\"salary\"\nFROM \"jobs\" j\nORDER BY j.\"salary\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1118,
+      "completion_tokens": 72
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:268": {
+    "question_id": "268",
+    "db_id": "vague_2cols_experience",
+    "prediction": "SELECT j.\"minimum_years\"\nFROM \"jobs\" j\nORDER BY j.\"salary\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1128,
+      "completion_tokens": 51
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:269": {
+    "question_id": "269",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT DISTINCT\n    sd.\"salary_range\"  \nFROM \"position\" p\nJOIN \"salarydetails\" sd\n    ON sd.\"positionid\" = p.\"id\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'  \n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"description\") LIKE '%software developer%'\nORDER BY sd.\"salary_range\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1246,
+      "completion_tokens": 132
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:270": {
+    "question_id": "270",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"title\" AS position_title,\n    sd.\"hourly_rate\" AS hourly_rate,\n    sd.\"salary_range\" AS annual_salary_range\nFROM \"position\" p\nJOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nWHERE LOWER(p.\"title\") LIKE '%software developer%'\n   OR LOWER(p.\"title\") LIKE '%software engineer%'\n   OR LOWER(p.\"title\") LIKE '%разработчик%'\nORDER BY p.\"title\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1260,
+      "completion_tokens": 135
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:273": {
+    "question_id": "273",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"title\" AS position_title,\n    sd.\"hourly_rate\" AS hourly_rate,\n    sd.\"salary_range\" AS salary_range\nFROM \"position\" p\nLEFT JOIN \"salarydetails\" sd ON sd.\"positionid\" = p.\"id\"\nORDER BY p.\"title\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1262,
+      "completion_tokens": 90
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:274": {
+    "question_id": "274",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"title\" AS position_title,\n    s.\"hourly_rate\" AS hourly_rate\nFROM \"position\" p\nLEFT JOIN \"salarydetails\" s ON s.\"positionid\" = p.\"id\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1246,
+      "completion_tokens": 69
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:280": {
+    "question_id": "280",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1216,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:282": {
+    "question_id": "282",
+    "db_id": "vague_2cols_compensation",
+    "prediction": "SELECT\n    p.\"id\" AS position_id,\n    p.\"title\" AS position_title,\n    p.\"description\" AS position_description,\n    s.\"salary_range\",\n    s.\"hourly_rate\"\nFROM \"position\" p\nLEFT JOIN \"salarydetails\" s ON s.\"positionid\" = p.\"id\"\nORDER BY p.\"id\";",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1244,
+      "completion_tokens": 90
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:283": {
+    "question_id": "283",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT\n    a.\"name\",\n    a.\"email\",\n    e.\"number_of_completed_projects\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1208,
+      "completion_tokens": 94
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:284": {
+    "question_id": "284",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    jt.\"typename\" AS job_type,\n    j.\"benefits\" AS benefits\nFROM \"jobs\" j\nJOIN \"jobtypes\" jt ON jt.\"id\" = j.\"jobtypeid\"\nWHERE j.\"benefits\" IS NOT NULL\n  AND TRIM(j.\"benefits\") <> ''\nORDER BY jt.\"typename\", j.\"benefits\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1238,
+      "completion_tokens": 104
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:285": {
+    "question_id": "285",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1206,
+      "completion_tokens": 80
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:291": {
+    "question_id": "291",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    l.\"locationname\" AS location,\n    j.\"base_pay_range\" AS base_pay_range,\n    j.\"benefits\" AS benefits\nFROM \"jobs\" j\nLEFT JOIN \"locations\" l ON j.\"locationid\" = l.\"id\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1248,
+      "completion_tokens": 85
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:292": {
+    "question_id": "292",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    l.\"locationname\" AS location,\n    j.\"benefits\" AS benefits\nFROM \"jobs\" j\nLEFT JOIN \"locations\" l ON j.\"locationid\" = l.\"id\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1240,
+      "completion_tokens": 64
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:293": {
+    "question_id": "293",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    jt.\"typename\" AS job_type,\n    COUNT(j.\"id\") AS offer_count\nFROM \"jobtypes\" jt\nLEFT JOIN \"jobs\" j ON j.\"jobtypeid\" = jt.\"id\"\nGROUP BY jt.\"typename\"\nORDER BY offer_count DESC NULLS LAST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1236,
+      "completion_tokens": 86
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:294": {
+    "question_id": "294",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    jt.\"typename\" AS job_type,\n    AVG(j.\"base_pay_range\") AS avg_base_pay_range,\n    STRING_AGG(DISTINCT j.\"benefits\", '; ') AS benefits\nFROM \"jobs\" j\nJOIN \"jobtypes\" jt ON jt.\"id\" = j.\"jobtypeid\"\nGROUP BY jt.\"typename\"\nORDER BY jt.\"typename\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1246,
+      "completion_tokens": 118
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:295": {
+    "question_id": "295",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    l.\"locationname\" AS location,\n    j.\"base_pay_range\" AS base_pay_range\nFROM \"jobs\" j\nLEFT JOIN \"locations\" l ON j.\"locationid\" = l.\"id\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1244,
+      "completion_tokens": 72
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:296": {
+    "question_id": "296",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT a.\"name\", a.\"phone\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"number_of_completed_projects\" ASC NULLS FIRST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1220,
+      "completion_tokens": 82
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:297": {
+    "question_id": "297",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    l.\"locationname\" AS location,\n    COUNT(j.\"id\") AS offers_count\nFROM \"jobs\" j\nJOIN \"locations\" l ON l.\"id\" = j.\"locationid\"\nGROUP BY l.\"locationname\"\nORDER BY offers_count DESC NULLS LAST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1232,
+      "completion_tokens": 73
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:306": {
+    "question_id": "306",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nGROUP BY a.\"id\", a.\"name\", a.\"email\"\nORDER BY SUM(e.\"years_of_experience\") DESC NULLS LAST\nLIMIT 1;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1204,
+      "completion_tokens": 98
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:307": {
+    "question_id": "307",
+    "db_id": "vague_2cols_experience_level",
+    "prediction": "SELECT a.\"name\", a.\"email\"\nFROM \"applicants\" a\nJOIN \"experiences\" e ON e.\"applicant_id\" = a.\"id\"\nORDER BY e.\"years_of_experience\" DESC NULLS LAST\nLIMIT 1;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1208,
+      "completion_tokens": 75
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:308": {
+    "question_id": "308",
+    "db_id": "vague_2cols_offer",
+    "prediction": "SELECT\n    jt.\"typename\" AS job_type,\n    AVG(j.\"base_pay_range\") AS avg_base_pay_range\nFROM \"jobs\" j\nJOIN \"jobtypes\" jt ON jt.\"id\" = j.\"jobtypeid\"\nGROUP BY jt.\"typename\"\nORDER BY avg_base_pay_range DESC NULLS LAST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1242,
+      "completion_tokens": 93
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:310": {
+    "question_id": "310",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    h.\"hotelid\",\n    h.\"name\",\n    AVG(r.\"number_of_stars\") AS avg_rating\nFROM \"hotels\" h\nLEFT JOIN \"reviews\" r ON r.\"hotelid\" = h.\"hotelid\"\nGROUP BY h.\"hotelid\", h.\"name\"\nORDER BY avg_rating DESC NULLS LAST;",
+    "score": 0.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1326,
+      "completion_tokens": 102
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:323": {
+    "question_id": "323",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    h.\"hotelid\",\n    h.\"name\" AS hotel_name,\n    c.\"fullname\" AS customer_name,\n    r.\"customer_reviews\",\n    r.\"number_of_stars\"\nFROM \"reviews\" r\nJOIN \"hotels\" h ON h.\"hotelid\" = r.\"hotelid\"\nJOIN \"customers\" c ON c.\"customerid\" = r.\"customerid\"\nORDER BY h.\"hotelid\", r.\"date_of_review\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1350,
+      "completion_tokens": 131
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:324": {
+    "question_id": "324",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    c.\"customerid\",\n    c.\"fullname\",\n    AVG(r.\"number_of_stars\") AS avg_stars\nFROM \"customers\" c\nJOIN \"reviews\" r ON r.\"customerid\" = c.\"customerid\"\nGROUP BY c.\"customerid\", c.\"fullname\"\nORDER BY c.\"customerid\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1328,
+      "completion_tokens": 102
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:325": {
+    "question_id": "325",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    h.\"hotelid\",\n    h.\"name\",\n    AVG(r.\"number_of_stars\") AS avg_stars\nFROM \"hotels\" h\nJOIN \"reviews\" r ON r.\"hotelid\" = h.\"hotelid\"\nGROUP BY h.\"hotelid\", h.\"name\"\nORDER BY avg_stars DESC NULLS LAST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1330,
+      "completion_tokens": 96
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:326": {
+    "question_id": "326",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    r.\"customer_reviews\",\n    r.\"number_of_stars\",\n    c.\"fullname\" AS customer\nFROM \"reviews\" r\nJOIN \"customers\" c ON c.\"customerid\" = r.\"customerid\";",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1332,
+      "completion_tokens": 79
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:327": {
+    "question_id": "327",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "ambiguous",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 1,
+      "prompt_tokens": 505,
+      "completion_tokens": 123
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:328": {
+    "question_id": "328",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    r.\"reviewid\",\n    r.\"customer_reviews\",\n    r.\"number_of_stars\",\n    r.\"date_of_review\",\n    c.\"customerid\",\n    c.\"fullname\",\n    c.\"emailaddress\",\n    c.\"phonenumber\"\nFROM \"reviews\" r\nJOIN \"customers\" c ON r.\"customerid\" = c.\"customerid\"\nORDER BY r.\"date_of_review\" DESC NULLS LAST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1324,
+      "completion_tokens": 114
+    }
+  },
+  "confirm:b09095669a55e50734bd03f8d1a24a5849423fa61f646ba7e34bafe2adac11af:hybrid:False:ambrosia:334": {
+    "question_id": "334",
+    "db_id": "vague_2cols_rating1",
+    "prediction": "SELECT\n    h.\"hotelid\",\n    h.\"name\" AS hotel_name,\n    AVG(r.\"number_of_stars\") AS avg_stars,\n    COUNT(r.\"reviewid\") AS review_count\nFROM \"hotels\" h\nLEFT JOIN \"reviews\" r ON r.\"hotelid\" = h.\"hotelid\"\nGROUP BY h.\"hotelid\", h.\"name\"\nORDER BY avg_stars DESC NULLS LAST;",
+    "score": 1.0,
+    "error": null,
+    "effective_demo_ids": [],
+    "usage": {
+      "task_calls": 2,
+      "prompt_tokens": 1328,
+      "completion_tokens": 114
+    }
+  }
+}

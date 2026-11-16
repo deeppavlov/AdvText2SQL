@@ -16,6 +16,13 @@ from sqlalchemy.engine import Engine, Result
 from sqlglot import Dialects, exp, parse_one
 from sqlglot.errors import ParseError
 
+from adv_text2sql.safe_logging import (
+    database_label, protect_logger, redact_secrets, register_database_url,
+)
+from adv_text2sql.sql_safety import read_only_connection
+from adv_text2sql.sql_text import clean_sql
+from adv_text2sql.ambiguity import parse_taxonomy
+
 from .prompts import (
     AMBIGUITY_PROMPT_TEMPLATE,
     AMBIGUITY_PROMPT_SIMPLE,
@@ -66,7 +73,7 @@ FEAT_32 = os.getenv("FEAT_32", "false").lower() == "true"  # #32 AmbiSQL Stage 1
 FEAT_33 = os.getenv("FEAT_33", "false").lower() == "true"  # #33 AmbiSQL Stage 2a: clarification questions
 FEAT_34 = os.getenv("FEAT_34", "false").lower() == "true"  # #34 AmbiSQL Stage 2b: query rewriting
 FEAT_35 = os.getenv("FEAT_35", "true").lower()  == "true"  # #35 TSV schema format (token-efficient)
-FEAT_36 = os.getenv("FEAT_36", "true").lower()  == "true"  # #36 smart LIMIT 101 injection (N+1 pagination)
+FEAT_36 = os.getenv("FEAT_36", "true").lower()  == "true"  # reserved: automatic LIMIT disabled (AUD-011)
 FEAT_25 = os.getenv("FEAT_25", "false").lower() == "true"  # #25 per-question schema pruning (1 extra LLM call)
 FEAT_26 = os.getenv("FEAT_26", "false").lower() == "true"  # #26 learnt_hints — persist successful patterns
 FEAT_28 = os.getenv("FEAT_28", "false").lower() == "true"  # #28 self-consistency — 3 samples + majority vote
@@ -76,6 +83,7 @@ FEAT_30 = os.getenv("FEAT_30", "false").lower() == "true"  # #30 CoT sub-questio
 
 
 logger = logging.getLogger("text2sql_tool")
+protect_logger(logger)
 
 
 class JSONFormatter(logging.Formatter):
@@ -85,19 +93,22 @@ class JSONFormatter(logging.Formatter):
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger": record.name,
-            "message": record.getMessage(),
+            "message": redact_secrets(record.getMessage()),
             "module": record.module,
             "function": record.funcName,
             "line": record.lineno,
         }
         if record.exc_info and record.exc_info[0] is not None:
-            log_entry["exception"] = self.formatException(record.exc_info)
+            log_entry["exception"] = redact_secrets(self.formatException(record.exc_info))
+        elif record.exc_text:
+            log_entry["exception"] = redact_secrets(record.exc_text)
         return json_module.dumps(log_entry, ensure_ascii=False)
 
 
 def setup_logging(log_file: str = "text2sql_debug.log"):
     """Configure logging: console (INFO) + JSON file (DEBUG)."""
     root_logger = logging.getLogger("text2sql_tool")
+    protect_logger(root_logger)
     if root_logger.handlers:
         return  # Already configured
     root_logger.setLevel(logging.DEBUG)
@@ -116,52 +127,9 @@ def setup_logging(log_file: str = "text2sql_debug.log"):
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(JSONFormatter())
         root_logger.addHandler(file_handler)
+    protect_logger(root_logger)
 
 
-def _fix_round_numeric(sql: str) -> str:
-    """Inject ::NUMERIC into ROUND(expr, n) so PostgreSQL accepts float first args.
-
-    Walks each ROUND( occurrence, counts parens to find the top-level separator comma,
-    then appends ::NUMERIC to the first argument if not already cast.
-    Skips if first arg already ends with ::NUMERIC or ::numeric.
-    """
-    result = []
-    i = 0
-    upper = sql.upper()
-    while i < len(sql):
-        pos = upper.find("ROUND(", i)
-        if pos == -1:
-            result.append(sql[i:])
-            break
-        result.append(sql[i:pos + 6])  # up to and including "ROUND("
-        i = pos + 6
-        # Walk from i to find the top-level comma separating first arg from precision
-        depth = 1
-        j = i
-        sep = -1
-        while j < len(sql) and depth > 0:
-            ch = sql[j]
-            if ch == "(":
-                depth += 1
-            elif ch == ")":
-                depth -= 1
-                if depth == 0:
-                    break
-            elif ch == "," and depth == 1:
-                sep = j
-                break
-            j += 1
-        if sep == -1:
-            # No separator found — not a two-arg ROUND, skip
-            continue
-        first_arg = sql[i:sep].rstrip()
-        if not re.search(r"::numeric\b", first_arg, re.IGNORECASE):
-            result.append(first_arg + "::NUMERIC")
-        else:
-            result.append(first_arg)
-        result.append(sql[sep])  # the comma
-        i = sep + 1
-    return "".join(result)
 
 
 class Text2SQLGenerator:
@@ -174,6 +142,7 @@ class Text2SQLGenerator:
             llm_client (openai.AsyncOpenAI): An initialized asynchronous OpenAI client.
         """
         self.db_uri = db_uri
+        register_database_url(db_uri)
         self.engine: Engine = create_engine(
             db_uri,
             pool_pre_ping=True,
@@ -188,8 +157,9 @@ class Text2SQLGenerator:
 
     async def build(self):
         start = time.time()
-        self._db_id = self.db_uri.rsplit("/", 1)[-1]
-        logger.info(f"Build started for {self.db_uri}")
+        from sqlalchemy.engine import make_url
+        self._db_id = make_url(self.db_uri).database
+        logger.info("Build started for %s", database_label(self.db_uri))
         logger.info(
             f"Feature flags: "
             f"FEAT_1={FEAT_1} FEAT_2={FEAT_2} FEAT_3={FEAT_3} FEAT_4={FEAT_4} "
@@ -236,7 +206,7 @@ class Text2SQLGenerator:
             similar_cols = self._find_similar_columns()
             if similar_cols:
                 self.system_prompt += f"\n\n### Возможные неявные связи колонок (MinHash):\n{similar_cols}"
-                logger.info(f"FEAT_21: added MinHash column hints")
+                logger.info("FEAT_21: added MinHash column hints")
 
         # FEAT_23: NL table descriptions — append to system prompt (cached per db_id)
         if FEAT_23:
@@ -266,6 +236,7 @@ class Text2SQLGenerator:
 
     async def _update_db_schema(self, db_uri):
         self.db_uri = db_uri
+        register_database_url(db_uri)
         self.engine.dispose()
         self.engine = create_engine(db_uri, pool_pre_ping=True)
         await self.build()
@@ -381,7 +352,7 @@ class Text2SQLGenerator:
         # print(self.db_uri)
         tables = inspector.get_table_names(schema="public")
         if not tables:
-            print("this db failed: ", self.db_uri)
+            logger.error("No tables in public schema for %s", database_label(self.db_uri))
             raise RuntimeError("No tables found in public schema")
 
         for table in tables:
@@ -401,9 +372,9 @@ class Text2SQLGenerator:
         inspector = inspect(self.engine)
         tables = inspector.get_table_names(schema="public")
         if not tables:
-            import sys as _sys
-            print(f"[ERROR] No tables in public schema for: {self.db_uri}", file=_sys.stderr, flush=True)
-            raise RuntimeError(f"No tables found in public schema for {self.db_uri}")
+            label = database_label(self.db_uri)
+            logger.error("No tables in public schema for %s", label)
+            raise RuntimeError(f"No tables found in public schema for {label}")
 
         rows = ["table\tcolumn\ttype"]
         for table in tables:
@@ -894,7 +865,7 @@ class Text2SQLGenerator:
             response_text = result.content.strip()
 
             if response_text.strip().split('\n')[0].strip().strip('*').rstrip('.!?,').lower() == "ok":
-                logger.info(f"Ambiguity check: OK")
+                logger.info("Ambiguity check: OK")
                 return {"status": "success", "ambiguous": False}
             else:
                 logger.info(f"Ambiguity check: ambiguous — {response_text[:100]}")
@@ -904,7 +875,7 @@ class Text2SQLGenerator:
                     "clarification_needed": response_text,
                 }
 
-        except Exception as e:
+        except Exception:
             logger.exception(f"Failed to check ambiguity for query: {user_query}")
             return {"status": "error"}
 
@@ -935,40 +906,14 @@ class Text2SQLGenerator:
         )
 
     async def _detect_ambiguity_by_taxonomy(self, user_query: str) -> dict[str, Any]:
-        """Stage 1: классифицирует запрос по таксономии AmbiSQL (A1-A6). FEAT_32."""
         if self._taxonomy_stop_filter(user_query):
-            logger.info("Taxonomy stop-filter matched: is_ambiguous=False (no LLM call)")
             return {"is_ambiguous": False, "ambiguity_type": None, "reason": "stop-filter"}
-
-        prompt = TAXONOMY_DETECTION_PROMPT.format(
-            db_schema=self.db_schema,
-            user_query=user_query,
-        )
-        messages = [
-            SystemMessage(content=prompt),
-            UserMessage(source="user", content="Classify the query."),
-        ]
-        try:
-            result = await self._llm_call_with_retry(messages)
-            text = result.content.strip()
-            text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.IGNORECASE).strip()
-            start = text.find("{")
-            end = text.rfind("}") + 1
-            if 0 <= start < end:
-                text = text[start:end]
-            try:
-                data = json_module.loads(text)
-            except json_module.JSONDecodeError:
-                # Replace all control chars (incl. newlines) with space —
-                # safe because space is valid JSON whitespace between tokens
-                # and harmless inside string values.
-                sanitized = re.sub(r"[\x00-\x1f]", " ", text)
-                data = json_module.loads(sanitized)
-            logger.info(f"Taxonomy detection: is_ambiguous={data.get('is_ambiguous')} type={data.get('ambiguity_type')}")
-            return data
-        except Exception:
-            logger.exception(f"Taxonomy detection failed for: {user_query}")
-            return {"is_ambiguous": False, "ambiguity_type": None, "reason": ""}
+        prompt = TAXONOMY_DETECTION_PROMPT.format(db_schema=self.db_schema, user_query=user_query)
+        messages = [SystemMessage(content=prompt), UserMessage(source="user", content="Classify the query.")]
+        result = await self._llm_call_with_retry(messages)
+        data = parse_taxonomy(result.content)
+        logger.info("Taxonomy detection: is_ambiguous=%s type=%s", data["is_ambiguous"], data["ambiguity_type"])
+        return data
 
     async def _generate_clarification_question(
         self, user_query: str, ambiguity_type: str, reason: str
@@ -1022,11 +967,7 @@ class Text2SQLGenerator:
             return user_query
 
     def _strip_sql_comments(self, sql: str) -> str:
-        sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
-        sql = re.sub(r"--.*?$", "", sql, flags=re.MULTILINE)
-        sql = re.sub(r"^```(?:sql)?\s*|\s*```$", "", sql.strip(), flags=re.IGNORECASE)
-
-        return sql.strip()
+        return clean_sql(sql)
 
     def _is_sql_complete(self, sql: str) -> bool:
         upper = sql.upper().strip()
@@ -1070,41 +1011,10 @@ class Text2SQLGenerator:
             return False
 
     def sanitize_sql(self, sql: str) -> str:
-        """
-        Minimal SQL sanitizer for Postgres execution.
-        Fixes common LLM-generated SQL issues:
-        1. Strips markdown/code fences
-        2. Removes misplaced DISTINCT after comma in SELECT list
-        3. Normalizes CAST and NULLIF usage
-        """
-        sql = sql.strip()
-
-        # Remove markdown/code fences
-        sql = re.sub(r"^```[a-z]*|```$", "", sql, flags=re.IGNORECASE).strip()
-
-        # Remove DISTINCT when misplaced after a comma in SELECT list
-        # e.g. "SELECT SUM(x), DISTINCT col" -> "SELECT SUM(x), col"
-        sql = re.sub(r",\s*DISTINCT\s+", ", ", sql, flags=re.IGNORECASE)
-
-        # Replace CAST(... AS REAL) if inside math operations
-        sql = re.sub(
-            r"CAST\((.*?)\s+AS\s+REAL\)", r"\1::REAL", sql, flags=re.IGNORECASE
-        )
-        # Remove invalid nested NULLIF patterns like NULLIF(NULLIF,0)(x)
-        sql = re.sub(
-            r"NULLIF\(NULLIF,0\)\((.*?)\)", r"NULLIF(\1,0)", sql, flags=re.IGNORECASE
-        )
-
-        # remove multiple newlines
-        sql = re.sub(r"\n\s*\n", "\n", sql)
-
-        # FEAT_36: inject LIMIT 101 (N+1) when SELECT has no LIMIT/FETCH clause
+        """Remove presentation wrappers only; never change the full SQL answer."""
         if FEAT_15 and FEAT_36:
-            if re.search(r'\bSELECT\b', sql, re.IGNORECASE) and \
-               not re.search(r'\b(LIMIT|FETCH)\b', sql, re.IGNORECASE):
-                sql = sql.rstrip('; \t\n') + '\nLIMIT 101'
-
-        return sql
+            logger.warning("FEAT_36 automatic LIMIT is disabled: full-result evaluation")
+        return clean_sql(sql)
 
     def _classify_query_complexity(self, question: str) -> str:
         """FEAT_29: keyword heuristic — no extra LLM call, zero latency."""
@@ -1184,29 +1094,8 @@ class Text2SQLGenerator:
             raw_sql = result.content.strip()
             raw_sql_attempted = raw_sql  # preserve for FEAT_27 retry context
 
-            # FEAT_15: sanitize LLM output (markdown, DISTINCT, CAST fixes)
+            # FEAT_15: remove presentation wrappers without rewriting SQL semantics.
             sanitized_sql = self.sanitize_sql(raw_sql) if FEAT_15 else raw_sql
-
-            # Unconditional semantic fixes (always on, regardless of FEAT_15):
-            # 1. TO_DATE on DATE columns → strip to bare column ref (PG errors on DATE arg)
-            sanitized_sql = re.sub(
-                r"\bTO_DATE\(\s*((?:\w+\.)?(?:\"[^\"]+\"|\b[a-zA-Z_]\w*\b))\s*,\s*'[^']+'\)",
-                r"\1", sanitized_sql, flags=re.IGNORECASE
-            )
-            # 2. NULLS ordering: PG default (DESC→NULLS FIRST) is opposite SQLite (DESC→NULLS LAST)
-            sanitized_sql = re.sub(r'\bDESC\b(?!\s+NULLS)', 'DESC NULLS LAST', sanitized_sql, flags=re.IGNORECASE)
-            sanitized_sql = re.sub(r'\bASC\b(?!\s+NULLS)', 'ASC NULLS FIRST', sanitized_sql, flags=re.IGNORECASE)
-            # 3. ROUND(float_expr, n) → ROUND(float_expr::NUMERIC, n) — PG requires NUMERIC
-            sanitized_sql = _fix_round_numeric(sanitized_sql)
-            # 4. Lowercase simple quoted identifiers: "cardKingdomFoilId" → "cardkingdomfoilid"
-            # PG folds unquoted names to lowercase at CREATE TABLE time; quoted names are
-            # case-sensitive and fail if the column was created without quotes.
-            # Identifiers with spaces/special chars are left untouched (they need their quotes).
-            sanitized_sql = re.sub(
-                r'"([A-Za-z_]\w*)"',
-                lambda m: f'"{m.group(1).lower()}"',
-                sanitized_sql,
-            )
 
             sanitized_sql = self._strip_sql_comments(sanitized_sql)
 
@@ -1418,7 +1307,7 @@ class Text2SQLGenerator:
             if not self._validate_sql(sanitized_sql):
                 raise ValueError("Запрос не прошел валидацию")
 
-            with self.engine.connect() as conn:
+            with read_only_connection(self.engine, sanitized_sql) as conn:
                 result: Result = conn.execute(text(sanitized_sql))
                 rows = result.fetchall()
 
@@ -1440,7 +1329,7 @@ class Text2SQLGenerator:
             logger.exception(f"Failed to execute query {sql}.")
             return {
                 "status": "error",
-                "error": str(e),
+                "error": redact_secrets(e),
                 "sql_attempted": sql,
             }
 
@@ -1517,19 +1406,9 @@ class Text2SQLGenerator:
                             return {"status": "ambiguous"}
                     else:
                         return {"status": "ambiguous"}
-            except Exception as _ambisql_err:
-                logger.warning(f"AmbiSQL pipeline failed ({_ambisql_err}), falling back to classic check")
-                ambiguity_check = await self._check_ambiguity(user_query)
-                was_flagged_ambiguous = (
-                    ambiguity_check["status"] == "success" and ambiguity_check["ambiguous"]
-                )
-                if was_flagged_ambiguous:
-                    logger.info(f"Запрос неоднозначен: {ambiguity_check['clarification_needed']}")
-                    if not FEAT_12:
-                        return {"status": "ambiguous"}
-                    logger.info("Optimistic fallback включён после сбоя AmbiSQL")
-                if ambiguity_check["status"] == "error":
-                    logger.warning("Ambiguity check failed, proceeding with SQL generation")
+            except Exception as error:
+                logger.warning("Ambiguity detection failed (%s); no unambiguous verdict inferred", type(error).__name__)
+                return {"status": "error", "error_code": "ambiguity_detection_failed"}
         else:
             ambiguity_check = await self._check_ambiguity(user_query)
             was_flagged_ambiguous = (
@@ -1541,7 +1420,7 @@ class Text2SQLGenerator:
                     return {"status": "ambiguous"}
                 logger.info("Optimistic fallback включён — пробуем сгенерировать SQL несмотря на флаг ambiguous")
             if ambiguity_check["status"] == "error":
-                logger.warning("Ambiguity check failed, proceeding with SQL generation")
+                return {"status": "error", "error_code": "ambiguity_detection_failed"}
 
         # Main query generation
         retries = 0
@@ -1594,15 +1473,6 @@ class Text2SQLGenerator:
                 continue
 
             raw_sql = generation_result["sql_query"]
-            # Извлекает SQL-запрос из markdown блока, если ответ полностью обернут в ```
-            if raw_sql[:3] == "```":
-                raw_sql = re.sub(
-                    r"^```(?:sql)?\s*|\s*```$",
-                    "",
-                    raw_sql.strip(),
-                    flags=re.IGNORECASE,
-                )
-
             # FEAT_20: LLM verification — check SQL matches the user's intent
             if FEAT_20:
                 verify_result = await self._verify_sql_against_query(user_query, raw_sql)

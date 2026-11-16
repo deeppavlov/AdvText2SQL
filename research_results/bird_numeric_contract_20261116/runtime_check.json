@@ -1,0 +1,438 @@
+{
+  "source_manifest_sha256": "9735ad7ce10dbcba7d977cc987b7ccad4f7e79cc310e64a912cf09bccdc6a6f9",
+  "checked_at_utc": "2026-11-16T13:50:56.271033+00:00",
+  "scope": "two-question live runtime verification, not a new benchmark run",
+  "llm_calls": 0,
+  "original_scores_updated": false,
+  "questions": {
+    "1473": {
+      "db_id": "debit_card_specializing",
+      "repeats": [
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            }
+          }
+        },
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            }
+          }
+        },
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "float",
+                  "repr": "459.95626421124274"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            }
+          }
+        }
+      ],
+      "real_session": {
+        "historical": {
+          "score": 1.0,
+          "error": null,
+          "comparison": {
+            "evaluation_policy": "bird-exact-set-v1",
+            "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+            "exact_equal": true,
+            "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+            "numeric_diagnostic_equal": true,
+            "numeric_precision_warning": false
+          }
+        },
+        "fresh": {
+          "score": 1.0,
+          "error": null,
+          "comparison": {
+            "evaluation_policy": "bird-exact-set-v1",
+            "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+            "exact_equal": true,
+            "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+            "numeric_diagnostic_equal": true,
+            "numeric_precision_warning": false
+          }
+        }
+      }
+    },
+    "34": {
+      "db_id": "california_schools",
+      "repeats": [
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": false,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": true
+            }
+          }
+        },
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": false,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": true
+            }
+          }
+        },
+        {
+          "settings": [
+            "on",
+            "repeatable read",
+            "0"
+          ],
+          "values": {
+            "gold": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "historical": [
+              [
+                {
+                  "type": "float",
+                  "repr": "0.20174165"
+                }
+              ]
+            ],
+            "fresh": [
+              [
+                {
+                  "type": "Decimal",
+                  "repr": "Decimal('0.20174165457184325109')"
+                }
+              ]
+            ]
+          },
+          "comparisons": {
+            "historical": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": true,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": false
+            },
+            "fresh": {
+              "evaluation_policy": "bird-exact-set-v1",
+              "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+              "exact_equal": false,
+              "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+              "numeric_diagnostic_equal": true,
+              "numeric_precision_warning": true
+            }
+          }
+        }
+      ],
+      "real_session": {
+        "historical": {
+          "score": 1.0,
+          "error": null,
+          "comparison": {
+            "evaluation_policy": "bird-exact-set-v1",
+            "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+            "exact_equal": true,
+            "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+            "numeric_diagnostic_equal": true,
+            "numeric_precision_warning": false
+          }
+        },
+        "fresh": {
+          "score": 0.0,
+          "error": null,
+          "comparison": {
+            "evaluation_policy": "bird-exact-set-v1",
+            "execution_policy": "bird-postgres-serial-repeatable-read-v1",
+            "exact_equal": false,
+            "numeric_diagnostic_policy": "postgres-numeric-warning-v1",
+            "numeric_diagnostic_equal": true,
+            "numeric_precision_warning": true
+          }
+        }
+      }
+    }
+  },
+  "current_runtime_sha256": {
+    "scripts/static_hybrid_search.py": "186290f3a037d3ddad86661c8aeb677987e2fd214f030cc02be9a55254323c61",
+    "scripts/static_hybrid_runtime.py": "5e148437f0dc5a9e8342a91501d9eb369d1abd9453fc50743e565f436f867e9d",
+    "scripts/audit_static_hybrid.py": "f2c79b26666792d8c6cb557eff92c8b7047c276852bb3963a9ad79bc18840bf7",
+    "scripts/run_feature_ablation.py": "c669a25cd054b67a16ff4cc8db93900ff539f814301d8b858f2022f02ee167bb",
+    "scripts/run_openrouter_baseline.py": "434c147c3c89875282cbd84485827a2db7b66e7e14ef373d39b605fb5941366e",
+    "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+    "scripts/atomic_artifacts.py": "887c37f4899d627d8dabb969722a542f9e95b2d53cb9d9ed5297422dcb9d0846",
+    "scripts/feature_presets.py": "2a0c82a0a42f53d4d4335510efed4b7cc54690d074cfb4448cd07a0e612d169f",
+    "scripts/research_metrics.py": "d2bdc071497419ebf354e7e31daf2ac357d5a2c2c21d909e6cfbe8c45e8f6374",
+    "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+    "scripts/build_multilabel_dataset.py": "456b20da781515b02e48218a9024bbb1e821b39c1135f0b8b8f8c5d1064af5f3",
+    "scripts/build_configuration_dataset.py": "639d53f41387436df197359d9c320a378166710e9b169c287b40514a8248fe04",
+    "scripts/multilabel_targets.py": "a5d1c40625f12673fe23daeaffbef209c107ae5241a1a587f2f5abcd7b86bde9",
+    "scripts/configuration_splits.py": "6afabea901055884628d280ff279772fed0310394a3758529ca17ac769cd4497",
+    "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+    "scripts/ablation_maintenance.py": "424bde5244c2f5afd35af1ac4069bfd8364e0f52b55464bb9af778317248da43",
+    "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "benchmarks/ambrosia.py": "d83e2bdbac5c8bc2fafc081c809ebfb00075686bacc64c98faacfda505ff8e9c",
+    "benchmarks/base.py": "4f987f083aa20d4a1cccbab6f344c47aa9f9791e00e8267beeb52e7929a00cf1",
+    "benchmarks/bird.py": "a0a5f142f4e0cb2613d44fd4a1a7d6cc9b364b42fad2fbddedc243c493f23bfc",
+    "benchmarks/checkpoint.py": "788377f9e2ffd5c1019163adf9364361a8dd2e3124896cef1198d72d0f97a8fe",
+    "benchmarks/evaluate_ambrosia.py": "fbd5f0fa09932f89201c203fd6a22723e248bef393b2ac1f487067a2896d8924",
+    "benchmarks/evaluate_bird.py": "380c80c99ac341537115873503b16bbb44ff9743f7c75ab29cae9ad72bab6234",
+    "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+    "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+    "src/adv_text2sql/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/adv_text2sql/ambiguity.py": "073df2fec84dc902d2a6acae076850f3975d5e51a77c275d56e540f658de4374",
+    "src/adv_text2sql/baseline_agent.py": "4c6bc7dcb291b594b52a650292a2b7bebc6435ad7c936bd42f308c249087e0bb",
+    "src/adv_text2sql/bird_results.py": "306f540daabe1bfa374e0082a7fb0c5983885cb87e14b1fff5e35e9051b24bcc",
+    "src/adv_text2sql/evaluation.py": "a871fbdadd39936f5e962e9eb8d1f4697c0f692499b474cd36aecf5a09dbb45a",
+    "src/adv_text2sql/safe_logging.py": "ecd72ac51021c75ee0a349719b3c8adcb650a51b3eaa9d0536dee067451fb7c9",
+    "src/adv_text2sql/sql_safety.py": "1048aa3d19b062dada28de044efc72d8076113cbde8906f899b529660bb700c5",
+    "src/adv_text2sql/sql_text.py": "b24d4c3ea06f4d98f94515e1c8e05499954aff25bfa3e98bf223c7ba27fea695",
+    "src/adv_text2sql/web.py": "02d1182c3543acf3c16b9d9131256c4928b178fb45e83e5bc5c07a534afeab68",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/configuration_classifier_v2.py": "182eebf78769895223b83b3608c723fa65038222787df542cb0075da5f513018",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/configuration_utility.py": "942a64484f286df1cb3eb863d9e14c8180a841c517239c3bce017d7ae1598a0a",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_catalog_v2.py": "8c067f103dc02c831385702ec996ec62c950e5808394260651380c4d7b8094cf",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_selector.py": "8222fce833d20f0085a1bd7f33bbd186ba8e90fd14bf3977e50b616a554cdb57",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/multilabel_classifier.py": "583ae16d474c1ada5d15e0f7d7f9e0704169f759e86432486474729a4ee1bb98",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/multilabel_generator.py": "636444a1fc7e6c597936c71e6ea693731449320b584fb7330b424c0054d1605b",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/selective_generator.py": "4a5aa62f9e8c6575190091931d07537f0a06f15dad6570b117fdbdb339307771",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "7ab21a7561daaee05c79e7227ea255bfc0129b2cc033422369c69810ce1a1226",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d",
+    "scripts/static_pipeline_regression.py": "24b92fc815ce5977444f4093ff0f488791a2d5c3f6846a339856f8ad5180981e",
+    "scripts/prompt_comparison.py": "0ddff1299aa0e2aa7e3289dc051ecfd3b1b38c06ccf0e44eaf04839c1f805d2c",
+    "scripts/prompt_comparison_runtime.py": "ff7798e58f80079549c8dcdd5578d13dfc43c8e7c1067f84607f22c8b98af3a5",
+    "scripts/prompt_pilot.py": "eaea24329f9ebfd4563afe71f40f5ee0098bcf9af369338a6b5f753d8cd2905b",
+    "scripts/prompt_pilot_runtime.py": "f4e0453580b0f880a0f85b97c49dc1f860af8259f3b0e36c177a0730ea7154e2",
+    "scripts/prompt_pilot_budget.py": "7a069674bb5643f716a077765b1b3b2c3527b27557c1d8f04b025273192fc6a4",
+    "scripts/bird_compact_transfer.py": "3684f85d7d41cc0144036fc5f1a5d9c4e39fd93240324288b5c45ef785d9c096",
+    "scripts/durable_prompt_store.py": "ee2d42c843465ec299fc2a1a8c08affbd924f1b9e57feaaed34cc8df6e766633",
+    "scripts/sql_output_contract.py": "937c21c7be3b1168a09e3579724802c7647fe0b90eb950e17492f2e2be79a198",
+    "scripts/transport_safe_runtime.py": "abe98b528392c29b6c9afd1bfdd5e42321a72fb78760f0356be28d0170282de4",
+    "scripts/resilient_hybrid_runtime.py": "388223f88e68165cc6c0a6488fb9b052438b33c30a274655aed308987d2efe48",
+    "scripts/guarded_hybrid_runtime.py": "3794586ff0ffbf2ccc1c1b8d40bc47c2b20a8464e71c22a772b00d1653baedcc",
+    "local/run_static_pipeline_regression.sh": "8414f35ff4ccdc67120e740d99fbea2f72ecf9ef35118048f148543fc364a46c"
+  },
+  "status": "passed"
+}

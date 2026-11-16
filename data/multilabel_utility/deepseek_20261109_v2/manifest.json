@@ -1,0 +1,240 @@
+{
+  "version": "configuration-utility-v2-draft",
+  "collection_manifest_sha256": "6efad2bbb5bc7967fb0dd7db4aa2009fefdc792c965a4f8851280c3596e3936d",
+  "catalog": {
+    "version": "feature-catalog-v2",
+    "head_features": [
+      1,
+      2,
+      7,
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      21,
+      23,
+      25,
+      28,
+      29,
+      30,
+      32,
+      35
+    ],
+    "max_features": 5,
+    "dependencies": {
+      "7": [
+        2
+      ]
+    },
+    "conflicts": [
+      [
+        14,
+        29
+      ],
+      [
+        20,
+        28
+      ],
+      [
+        12,
+        32
+      ]
+    ],
+    "configurations": {
+      "baseline": [],
+      "rules": [
+        14
+      ],
+      "rules_taxonomy": [
+        14,
+        32
+      ],
+      "hybrid": [
+        14,
+        32,
+        35
+      ],
+      "statistics_hybrid": [
+        2,
+        14,
+        32,
+        35
+      ],
+      "compact": [
+        2,
+        7,
+        14,
+        32,
+        35
+      ],
+      "compact_without_taxonomy": [
+        2,
+        7,
+        14,
+        35
+      ],
+      "compact_without_rules": [
+        2,
+        7,
+        32,
+        35
+      ]
+    },
+    "task_configurations": {
+      "bird": [
+        "baseline",
+        "rules_taxonomy",
+        "hybrid",
+        "statistics_hybrid",
+        "compact"
+      ],
+      "ambrosia": [
+        "baseline",
+        "rules",
+        "rules_taxonomy",
+        "hybrid"
+      ]
+    },
+    "active_features_in_first_collection": [
+      2,
+      7,
+      14,
+      32,
+      35
+    ]
+  },
+  "coverage": {
+    "train": {
+      "bird": {
+        "questions": 131,
+        "observed_scores": 655,
+        "fully_observed_questions": 131
+      },
+      "ambrosia": {
+        "questions": 120,
+        "observed_scores": 480,
+        "fully_observed_questions": 120
+      }
+    },
+    "dev": {
+      "bird": {
+        "questions": 55,
+        "observed_scores": 275,
+        "fully_observed_questions": 55
+      },
+      "ambrosia": {
+        "questions": 46,
+        "observed_scores": 184,
+        "fully_observed_questions": 46
+      }
+    }
+  },
+  "ready_for_training": true,
+  "training_blockers": [],
+  "conditional_pairs": 2856,
+  "test_included": false,
+  "source_files_sha256": {
+    "research_results/bird_prompt_full_20261107/experiment.json": "6b658d94dd7f5ac0357e171bb152df891c6f5e48b0a4058acfb38f148f3d5f68",
+    "research_results/bird_prompt_full_20261107/report.json": "a0290676cfd721ed5627d8aec34ce176e989db76368998911b0e0020d9eb9ce4",
+    "research_results/ambrosia_prompt_full_20261107/experiment.json": "13ec2de5841d9d19a7b666e351b3d4d1b8e4b66cae87d58033959f7b8a1d48de",
+    "research_results/ambrosia_prompt_full_20261107/report.json": "46d843cf14bbafca051203537c01b6965af065e9ef55ab39e9386c0d97cfc8aa",
+    "research_results/bird_prompt_full_20261107/jobs/bird_full__paired/evaluations.json": "4a12167f487b83bc1d9c1e709cbab095a7d7d73f903390b565c1a1e7d43e3361",
+    "research_results/ambrosia_prompt_full_20261107/jobs/ambrosia_full__control/evaluations.json": "40da14656710a51d60cbcb8f21b1d8cb2d9f0329f29ccdaba62437a09706a888",
+    "data/multilabel_utility/deepseek_20261029/manifest.json": "1271ccf6962d104db5732ed661b2a8f1eac83c60455a205fc29e03b028f1f9ad",
+    "data/multilabel_utility/deepseek_20261029/records.jsonl": "51a438e875d04028788fe8eed0dfa4ac94ff9bde14175c357ce95ee7ecda2d4f",
+    "data/multilabel_utility/deepseek_20261029/splits.json": "cdc89c01b0031c0fd955bd2462cfb2172137557f9ee4f43be3292cd87d873198",
+    "research_results/prompt_stage_summary_20261107.json": "8c64046397e23a83134ef6af1bad8028832e1a4599b419f1cd1315c5bf0dcf8d",
+    "research_results/multilabel_classifier_deepseek_20261029/model.json": "add39262b8285ebe8e69136bbe259f7b1b4191f642be9e6cc1a79e35974c740a",
+    "research_results/bird_prompt_full_20261107/jobs/bird_full__paired/confirm/metadata.json": "c2400cf91f27af5d42a6f1efe9905bf9db7eac0ac3da94d804761b3e5a4db0e2",
+    "research_results/ambrosia_prompt_full_20261107/jobs/ambrosia_full__control/confirm/metadata.json": "2bc90f44058ad98a52f6919accd2f6afe757e9b99c2615c1251586caf296bdc3",
+    "research_results/prompt_optimization_comparison_20261105/experiment.json": "ac77afd4bcbc522b283b984049b5b9a1d9a9bd5bf74d215ff04406505d2fd3d9",
+    "research_results/prompt_optimization_comparison_20261105/jobs/sql__mipro_few__r2/evaluations.json": "c4bb4f759d8f655e665145ae6c533cb71d45bdd07b1a93939478e153bb487b8c",
+    "research_results/prompt_optimization_comparison_20261105/jobs/sql__mipro_few__r2/search/metadata.json": "e7bab896d09fc3ccc115408868c1f4da9bc4d324876da19110b44cd83c3633d4",
+    "research_results/bird_compact_prompt_transfer_20261107/experiment.json": "93c04b89f365c9d63698a4b31dfbc71c3ff6a4beec71ed78d434bcff8d8d043a",
+    "research_results/ambrosia_prompt_dev_20261107/experiment.json": "6883c2af8256a197c677250e7e6e8bfdfe1d98cd81ef810b61bd640f6a867802",
+    "research_results/deepseek_full_static_20261103/experiment.json": "f4f764551b5556e96e64a79a299aa1cb5088c6c781d5a2d19dabaa2b91c06af1",
+    "scripts/static_hybrid_search.py": "10512a8c7c811ccf0f43e56bdcac42f17bd0e90d6f05256d1836e23ae99ff01f",
+    "scripts/static_hybrid_runtime.py": "5e148437f0dc5a9e8342a91501d9eb369d1abd9453fc50743e565f436f867e9d",
+    "scripts/audit_static_hybrid.py": "f2c79b26666792d8c6cb557eff92c8b7047c276852bb3963a9ad79bc18840bf7",
+    "scripts/run_feature_ablation.py": "c669a25cd054b67a16ff4cc8db93900ff539f814301d8b858f2022f02ee167bb",
+    "scripts/run_openrouter_baseline.py": "2766cde951ac3c5705d6a62add6ea145ad1e023aacaff9aac2e2054a668bd0e8",
+    "scripts/baseline_connection.py": "9e3b81c6e8da2c3013a2692dca73edaec3117ee4fb667dea002795a4d6335a9f",
+    "scripts/atomic_artifacts.py": "887c37f4899d627d8dabb969722a542f9e95b2d53cb9d9ed5297422dcb9d0846",
+    "scripts/feature_presets.py": "2a0c82a0a42f53d4d4335510efed4b7cc54690d074cfb4448cd07a0e612d169f",
+    "scripts/research_metrics.py": "09f18d46f9d12663c958799608f807120356403e7257d354f3583768c0dd5a7c",
+    "scripts/llm_endpoints.py": "51aee23e026b6de9fcd50891ad8e2d5ab30ba4f3f8c5b7f4a6c04cbee7f6e4f3",
+    "scripts/build_multilabel_dataset.py": "bf52e4b6055c59d2729ce3506ca737f7440ec7f5897cb56c22a5e2d011f97cf9",
+    "scripts/build_configuration_dataset.py": "2e22c9d88344f8b2b22aecc5b6dadbc40819a6a38ca1d9ff0adc477b6e4b7d57",
+    "scripts/multilabel_targets.py": "a5d1c40625f12673fe23daeaffbef209c107ae5241a1a587f2f5abcd7b86bde9",
+    "scripts/configuration_splits.py": "6afabea901055884628d280ff279772fed0310394a3758529ca17ac769cd4497",
+    "scripts/research_paths.py": "f8b7d0a9e57a4b7a2222d20aa0c1453497fc1f5fbd2489198a9042a4797ba60f",
+    "scripts/ablation_maintenance.py": "424bde5244c2f5afd35af1ac4069bfd8364e0f52b55464bb9af778317248da43",
+    "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "benchmarks/ambrosia.py": "08ed411f9c02b195293d4521f531765f066d66bf453e2193f06bca66e0fda76c",
+    "benchmarks/base.py": "9c420425286675380e7cbd3e7b8c3b0be0d0cc40124229dcc681e4e9957a4588",
+    "benchmarks/bird.py": "2f6ce1c9b189c3b8840b30c7b6f71ea85ba91f8986b2e0e4201b20143e53a700",
+    "benchmarks/evaluate_ambrosia.py": "c0c0f8a344c06450afd87507f4c838a35be54d1e0985a2a7c96dd3c52fc54959",
+    "benchmarks/evaluate_bird.py": "634ca48ae08741cf1cc20f863f7b639a1bb3fbb670c9655aaf826daa3d6e54cb",
+    "benchmarks/response.py": "f2effa112e8d261c0be548e81f2ee60f0599395cc28ce8eaa657df258fe4dff0",
+    "benchmarks/token_tracking.py": "747488cb59d830aea2ba7ab5978a78d902c5a87af0fc6c661877a2126cd1384d",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_selector.py": "8222fce833d20f0085a1bd7f33bbd186ba8e90fd14bf3977e50b616a554cdb57",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/multilabel_classifier.py": "583ae16d474c1ada5d15e0f7d7f9e0704169f759e86432486474729a4ee1bb98",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/multilabel_generator.py": "636444a1fc7e6c597936c71e6ea693731449320b584fb7330b424c0054d1605b",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/prompts.py": "ea945290190037c696a198d7b66310079e5eaa868b30ab6c1d92034ad2b5f22a",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/selective_generator.py": "4a5aa62f9e8c6575190091931d07537f0a06f15dad6570b117fdbdb339307771",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/text2sql_implementation.py": "b0c23ba9e7ff6a27890d283550dd5df7c3962360b5eb95f5583fa1cce6277c20",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/utils.py": "9a15f3264550703b42c79c41025d27f7d5b52c742e410203df35acd35ebe4c5d",
+    "scripts/guarded_hybrid_search.py": "5fdadb4da28221446b1c93a05c7c1120ae690b4f6d95d80e8d7e58cd67376c63",
+    "scripts/guarded_hybrid_runtime.py": "3794586ff0ffbf2ccc1c1b8d40bc47c2b20a8464e71c22a772b00d1653baedcc",
+    "scripts/sql_output_contract.py": "937c21c7be3b1168a09e3579724802c7647fe0b90eb950e17492f2e2be79a198",
+    "scripts/audit_question_schemas.py": "146180ad039641e1b678ac08f8ea2199e6d58749d1b6483c1448393886729df0",
+    "scripts/static_hybrid_campaign.py": "e742e8a071317dfcd9ec336d1eb0b478f093c74e35fc1128a92654342b0b2e24",
+    "scripts/resilient_hybrid_campaign.py": "1a0274b8066d95c31472a0e58b7c34e28e162b7eceb0a1447c0b98ff2b7295c5",
+    "scripts/resilient_hybrid_runtime.py": "388223f88e68165cc6c0a6488fb9b052438b33c30a274655aed308987d2efe48",
+    "scripts/transport_safe_runtime.py": "abe98b528392c29b6c9afd1bfdd5e42321a72fb78760f0356be28d0170282de4",
+    "scripts/transport_safe_campaign.py": "566b1e80bbc7d14ebe8d1075fdb4389b8b51aa162aa58ab98dacca59ad6fde65",
+    "scripts/prompt_comparison.py": "854a9672c66e0fd3063e738bba297cbc9713686a332351122330cfc98afeb384",
+    "scripts/prompt_comparison_runtime.py": "f5a98735f0f0ecc92e59c9ed9e0743eded8019d086198974dfae115149ff0c36",
+    "scripts/prompt_comparison_methods.py": "7dbe6862ea4a50f1f50384f27df1f175e1c17ef162e8f7cedf37de8482cfc84c",
+    "scripts/prompt_pilot.py": "477b0609a145f52548a690816db1486bf73850f5a4b1f8c43f0e7323716b4e0b",
+    "scripts/prompt_pilot_guardfix.py": "40a43c67b392b1b12eec5c7599121d745a9e36dd9c24554716ed7ca4a978c2f4",
+    "scripts/prompt_pilot_runtime.py": "b60a1788809ba1f9b748ed65195ecbb38520672f4e0b9307db762e827182851c",
+    "scripts/prompt_pilot_budget.py": "7a069674bb5643f716a077765b1b3b2c3527b27557c1d8f04b025273192fc6a4",
+    "scripts/bird_compact_transfer.py": "d073671ccf620541021c51de2a9e14cf437cb3b22c0ed437c43524e13695b3d0",
+    "scripts/durable_prompt_store.py": "ee2d42c843465ec299fc2a1a8c08affbd924f1b9e57feaaed34cc8df6e766633",
+    "scripts/recover_prompt_timeout.py": "200ac70ec5aa3ac1a5b14b81a16fece03c7796165c694c1b57723f01c01711cc",
+    "scripts/bird_prompt_full.py": "669d72cf3049e6b3289c499dafc169969b8fbb7fc90b22dfaa33476bc9db3ac0",
+    "scripts/prepare_classifier_v2.py": "67cce3ca2756d96aaebae14240bb33cb5a8ae4a4142eaf6f140b1adb56835efe",
+    "scripts/collect_classifier_v2.py": "e8a791d56becb9334acaea976d3ea3728ded9d4b5c488d2ae039bd341329c5ea",
+    "src/adv_text2sql/mcp_servers/text2sql_tool/src/feature_catalog_v2.py": "8c067f103dc02c831385702ec996ec62c950e5808394260651380c4d7b8094cf",
+    "local/run_classifier_v2.sh": "6ff31d4d42f2aa19b26951c0d8187f10c35fd0663cedaaf0dfbecea06283de77",
+    "scripts/audit_classifier_refresh.py": "9d2c80510b68f911c619f0aea529471838c538a295f363d6be3e58de095c8078",
+    "local/start_tunnel.sh": "9597412431db7b352197cd05237f48db35a191cbef9ea03679e09c5381f78762"
+  },
+  "observation_files_sha256": {
+    "research_results/ambrosia_prompt_full_20261107/jobs/ambrosia_full__control/evaluations.json": "40da14656710a51d60cbcb8f21b1d8cb2d9f0329f29ccdaba62437a09706a888",
+    "research_results/bird_prompt_full_20261107/jobs/bird_full__paired/evaluations.json": "4a12167f487b83bc1d9c1e709cbab095a7d7d73f903390b565c1a1e7d43e3361",
+    "research_results/classifier_v2_20261109/jobs/dev__ambrosia__baseline/evaluations.json": "84c99dfd3ae7c2c1ab1379d229350464b08195e6b5acdfe21c4b09d19c7be6bb",
+    "research_results/classifier_v2_20261109/jobs/dev__ambrosia__hybrid/evaluations.json": "5493097a300547a8f11578f364b50bed0e231ac5ba6618eaec943b796b51f1d5",
+    "research_results/classifier_v2_20261109/jobs/dev__ambrosia__rules/evaluations.json": "9c8eeca9fe2ed2e9531684cc85fb56f0e00d878b6e19f3dcbef0c782c4102d81",
+    "research_results/classifier_v2_20261109/jobs/dev__bird__baseline/evaluations.json": "7fe02ae5ec6d820de19b623d0697cc9108d1c95d1e25192978826693db7d336b",
+    "research_results/classifier_v2_20261109/jobs/dev__bird__hybrid/evaluations.json": "715e47397abcef43645edf1d700801b97379ec75c032fd32b117d5922e61734e",
+    "research_results/classifier_v2_20261109/jobs/dev__bird__rules_taxonomy/evaluations.json": "9d4fb7f5a369c3dde972e4c8b13422b953737fb03752e20589eae1d75033957d",
+    "research_results/classifier_v2_20261109/jobs/dev__bird__statistics_hybrid/evaluations.json": "0cf9ea16726ad88417e73417c318d1421b387adbb2fd8d108cfa5a4648d81f1c",
+    "research_results/classifier_v2_20261109/jobs/train__ambrosia__baseline/evaluations.json": "f237fd0636dae38ddbc4a8878bb807b59fa74f562a2c3d584ebfe01b2a89d20b",
+    "research_results/classifier_v2_20261109/jobs/train__ambrosia__hybrid/evaluations.json": "8e18c22d432199ef99c336460b1316485ae04b918f4e7d24ba4337e195e2bfd0",
+    "research_results/classifier_v2_20261109/jobs/train__ambrosia__rules/evaluations.json": "c62056c6253ffb39ac62671456e1a5cb44e9215d7d7024035f8bde16ab2c113b",
+    "research_results/classifier_v2_20261109/jobs/train__bird__baseline/evaluations.json": "b309fe25c76aac3a34eef866f223d4da6cae0e48d886e3ebf6067867d55c0572",
+    "research_results/classifier_v2_20261109/jobs/train__bird__hybrid/evaluations.json": "2e90e49c5c2f48caf7712744d9d881b3680fc743bc2c2dd9fa8c0c577493e48e",
+    "research_results/classifier_v2_20261109/jobs/train__bird__rules_taxonomy/evaluations.json": "9efd82d602b333062866ffb53ab6b4466b9831fa78fb2572007c980ec0ffa1b2",
+    "research_results/classifier_v2_20261109/jobs/train__bird__statistics_hybrid/evaluations.json": "cf759b5869d85e5fc2ad9463bb479506b0b82a0ee58fee813990417bef781a5b",
+    "research_results/prompt_optimization_comparison_20261105/jobs/sql__mipro_few__r2/evaluations.json": "c4bb4f759d8f655e665145ae6c533cb71d45bdd07b1a93939478e153bb487b8c"
+  },
+  "output_files_sha256": {
+    "examples.jsonl": "2201fcb29b33e4571361f07bae9f1fc8cc56d418d287fff47b15d7757dfa94e4",
+    "conditional_pairs.jsonl": "6b264e3c345bf0b8836fd1d9d40d8cff2883ffca8cb330d3ab41ba7adb8d9dbf"
+  }
+}

@@ -1,0 +1,394 @@
+{
+  "format": "configuration-quality-classifier-v2",
+  "selected": {
+    "weight_decay": 0.01,
+    "pair_weight": 0.0,
+    "margin": 0.15
+  },
+  "live_llm_calls": 0,
+  "test_used": false,
+  "scope": "saved-response replay; not a new LLM/evaluator execution",
+  "replay": {
+    "train": {
+      "all_false": {
+        "benchmarks": {
+          "bird": {
+            "questions": 131,
+            "correct": 70,
+            "accuracy": 53.43511450381679,
+            "selected_configurations": {
+              "baseline": 131
+            }
+          },
+          "ambrosia": {
+            "questions": 120,
+            "correct": 83,
+            "accuracy": 69.16666666666667,
+            "selected_configurations": {
+              "baseline": 120
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 69.16666666666667,
+            "total": 120,
+            "gold_ambiguous": 38,
+            "pred_ambiguous": 1,
+            "true_positive": 1,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 37,
+              "tn": 82,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 1.0,
+              "recall": 0.02631578947368421,
+              "f1": 0.05128205128205128,
+              "balanced_accuracy": 0.5131578947368421
+            }
+          }
+        },
+        "macro_accuracy": 61.30089058524173,
+        "saved_response_usage": {
+          "task_calls": 501,
+          "prompt_tokens": 348725,
+          "completion_tokens": 27770
+        },
+        "mean_features": 0.0
+      },
+      "task_anchor": {
+        "benchmarks": {
+          "bird": {
+            "questions": 131,
+            "correct": 82,
+            "accuracy": 62.595419847328245,
+            "selected_configurations": {
+              "compact": 131
+            }
+          },
+          "ambrosia": {
+            "questions": 120,
+            "correct": 96,
+            "accuracy": 80.0,
+            "selected_configurations": {
+              "rules_taxonomy": 120
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 80.0,
+            "total": 120,
+            "gold_ambiguous": 38,
+            "pred_ambiguous": 24,
+            "true_positive": 19,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 19,
+              "fp": 5,
+              "fn": 19,
+              "tn": 77,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 0.7916666666666666,
+              "recall": 0.5,
+              "f1": 0.6129032258064516,
+              "balanced_accuracy": 0.7195121951219512
+            }
+          }
+        },
+        "macro_accuracy": 71.29770992366412,
+        "saved_response_usage": {
+          "task_calls": 428,
+          "prompt_tokens": 977423,
+          "completion_tokens": 43460
+        },
+        "mean_features": 3.5657370517928286
+      },
+      "hybrid_14_32_35": {
+        "benchmarks": {
+          "bird": {
+            "questions": 131,
+            "correct": 74,
+            "accuracy": 56.48854961832061,
+            "selected_configurations": {
+              "hybrid": 131
+            }
+          },
+          "ambrosia": {
+            "questions": 120,
+            "correct": 93,
+            "accuracy": 77.5,
+            "selected_configurations": {
+              "hybrid": 120
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 77.5,
+            "total": 120,
+            "gold_ambiguous": 38,
+            "pred_ambiguous": 23,
+            "true_positive": 17,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 17,
+              "fp": 6,
+              "fn": 21,
+              "tn": 76,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 0.7391304347826086,
+              "recall": 0.4473684210526316,
+              "f1": 0.5573770491803278,
+              "balanced_accuracy": 0.6870988446726572
+            }
+          }
+        },
+        "macro_accuracy": 66.9942748091603,
+        "saved_response_usage": {
+          "task_calls": 429,
+          "prompt_tokens": 745172,
+          "completion_tokens": 44442
+        },
+        "mean_features": 3.0
+      },
+      "classifier_v2": {
+        "benchmarks": {
+          "bird": {
+            "questions": 131,
+            "correct": 87,
+            "accuracy": 66.41221374045801,
+            "selected_configurations": {
+              "compact": 123,
+              "baseline": 2,
+              "rules_taxonomy": 3,
+              "statistics_hybrid": 3
+            }
+          },
+          "ambrosia": {
+            "questions": 120,
+            "correct": 103,
+            "accuracy": 85.83333333333333,
+            "selected_configurations": {
+              "rules_taxonomy": 106,
+              "rules": 8,
+              "hybrid": 5,
+              "baseline": 1
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 85.83333333333333,
+            "total": 120,
+            "gold_ambiguous": 38,
+            "pred_ambiguous": 21,
+            "true_positive": 21,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 21,
+              "fp": 0,
+              "fn": 17,
+              "tn": 82,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 1.0,
+              "recall": 0.5526315789473685,
+              "f1": 0.711864406779661,
+              "balanced_accuracy": 0.7763157894736843
+            }
+          }
+        },
+        "macro_accuracy": 76.12277353689566,
+        "saved_response_usage": {
+          "task_calls": 433,
+          "prompt_tokens": 967246,
+          "completion_tokens": 43073
+        },
+        "mean_features": 3.458167330677291
+      }
+    },
+    "dev": {
+      "all_false": {
+        "benchmarks": {
+          "bird": {
+            "questions": 55,
+            "correct": 24,
+            "accuracy": 43.63636363636363,
+            "selected_configurations": {
+              "baseline": 55
+            }
+          },
+          "ambrosia": {
+            "questions": 46,
+            "correct": 34,
+            "accuracy": 73.91304347826087,
+            "selected_configurations": {
+              "baseline": 46
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 73.91304347826087,
+            "total": 46,
+            "gold_ambiguous": 13,
+            "pred_ambiguous": 1,
+            "true_positive": 1,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 12,
+              "tn": 33,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 1.0,
+              "recall": 0.07692307692307693,
+              "f1": 0.14285714285714285,
+              "balanced_accuracy": 0.5384615384615384
+            }
+          }
+        },
+        "macro_accuracy": 58.77470355731225,
+        "saved_response_usage": {
+          "task_calls": 201,
+          "prompt_tokens": 210237,
+          "completion_tokens": 13156
+        },
+        "mean_features": 0.0
+      },
+      "task_anchor": {
+        "benchmarks": {
+          "bird": {
+            "questions": 55,
+            "correct": 26,
+            "accuracy": 47.27272727272727,
+            "selected_configurations": {
+              "compact": 55
+            }
+          },
+          "ambrosia": {
+            "questions": 46,
+            "correct": 37,
+            "accuracy": 80.43478260869566,
+            "selected_configurations": {
+              "rules_taxonomy": 46
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 80.43478260869566,
+            "total": 46,
+            "gold_ambiguous": 13,
+            "pred_ambiguous": 10,
+            "true_positive": 7,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 7,
+              "fp": 3,
+              "fn": 6,
+              "tn": 30,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 0.7,
+              "recall": 0.5384615384615384,
+              "f1": 0.6086956521739131,
+              "balanced_accuracy": 0.7237762237762237
+            }
+          }
+        },
+        "macro_accuracy": 63.85375494071147,
+        "saved_response_usage": {
+          "task_calls": 170,
+          "prompt_tokens": 676626,
+          "completion_tokens": 18155
+        },
+        "mean_features": 3.633663366336634
+      },
+      "hybrid_14_32_35": {
+        "benchmarks": {
+          "bird": {
+            "questions": 55,
+            "correct": 26,
+            "accuracy": 47.27272727272727,
+            "selected_configurations": {
+              "hybrid": 55
+            }
+          },
+          "ambrosia": {
+            "questions": 46,
+            "correct": 36,
+            "accuracy": 78.26086956521739,
+            "selected_configurations": {
+              "hybrid": 46
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 78.26086956521739,
+            "total": 46,
+            "gold_ambiguous": 13,
+            "pred_ambiguous": 11,
+            "true_positive": 7,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 7,
+              "fp": 4,
+              "fn": 6,
+              "tn": 29,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 0.6363636363636364,
+              "recall": 0.5384615384615384,
+              "f1": 0.5833333333333334,
+              "balanced_accuracy": 0.7086247086247086
+            }
+          }
+        },
+        "macro_accuracy": 62.76679841897233,
+        "saved_response_usage": {
+          "task_calls": 169,
+          "prompt_tokens": 359632,
+          "completion_tokens": 18318
+        },
+        "mean_features": 3.0
+      },
+      "classifier_v2": {
+        "benchmarks": {
+          "bird": {
+            "questions": 55,
+            "correct": 24,
+            "accuracy": 43.63636363636363,
+            "selected_configurations": {
+              "compact": 50,
+              "rules_taxonomy": 4,
+              "baseline": 1
+            }
+          },
+          "ambrosia": {
+            "questions": 46,
+            "correct": 37,
+            "accuracy": 80.43478260869566,
+            "selected_configurations": {
+              "rules_taxonomy": 45,
+              "baseline": 1
+            },
+            "evaluation_policy": "ambrosia-strict-v1",
+            "legacy_accuracy": 80.43478260869566,
+            "total": 46,
+            "gold_ambiguous": 13,
+            "pred_ambiguous": 10,
+            "true_positive": 7,
+            "generation_errors": 0,
+            "ambiguity_metrics": {
+              "tp": 7,
+              "fp": 3,
+              "fn": 6,
+              "tn": 30,
+              "errors_ambiguous": 0,
+              "errors_unambiguous": 0,
+              "precision": 0.7,
+              "recall": 0.5384615384615384,
+              "f1": 0.6086956521739131,
+              "balanced_accuracy": 0.7237762237762237
+            }
+          }
+        },
+        "macro_accuracy": 62.03557312252964,
+        "saved_response_usage": {
+          "task_calls": 171,
+          "prompt_tokens": 657778,
+          "completion_tokens": 18249
+        },
+        "mean_features": 3.4455445544554455
+      }
+    }
+  }
+}

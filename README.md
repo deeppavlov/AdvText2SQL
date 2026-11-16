@@ -2,6 +2,10 @@
 
 This repository is made for testing student-written text2SQL tools with the help of different modern text2SQL benchmarks like BIRD and Ambrosia. BIRD benchmark tests **SQL generation**, while the Ambrosia benchmark tests for how a tool reacts to **ambiguity**.
 
+Audit fixes and reproducibility requirements are documented in
+[the pipeline audit report](docs/28_audit_pipeline_fixes.md). New experiments require a
+new protocol after these changes; historical checkpoints are not silently migrated.
+
 ## Establishing connection with database
 
 In order to connect to the database network, you need to type this command (requires a `user_name` and password from the teacher):

@@ -209,6 +209,8 @@ class Session(base.Session):
             "effective_demo_ids": demos,
             "usage": {k: self.ledger.data[k] - before[k] for k in before},
         }
+        if benchmark == "bird" and getattr(self, "last_bird_comparison", None) is not None:
+            result["bird_comparison"] = self.last_bird_comparison
         self.records[key] = result
         write_json(self.output / "evaluations.json", self.records)
         self.progress({"saved_evaluations": len(self.records)})

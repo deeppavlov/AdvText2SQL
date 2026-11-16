@@ -5,6 +5,7 @@ import os
 from typing import Any, Dict, List
 
 from .base import BenchmarkBase
+from .checkpoint import BenchmarkCheckpoint
 from .evaluate_bird import run_evaluation
 from .response import ToolResponse
 
@@ -30,15 +31,8 @@ class BenchmarkBIRD(BenchmarkBase):
         """Returns predictions in the expected format."""
         queries = self._load_queries()
 
-        # Checkpoint: resume from query_results.json if it exists
-        checkpoint_path = "./query_results.json"
-        predictions: Dict[str, str] = {}
-        if os.path.exists(checkpoint_path):
-            with open(checkpoint_path) as f:
-                predictions = json.load(f)
-            if predictions:
-                print(f"Resuming from checkpoint: {len(predictions)}/{len(queries)} done")
-
+        checkpoint = BenchmarkCheckpoint(self)
+        predictions = checkpoint.load()
         for i, item in enumerate(queries):
             qid = item["question_id"]
             db_id = item["db_id"]
@@ -70,9 +64,7 @@ class BenchmarkBIRD(BenchmarkBase):
             logger.info(f"[{i+1}/{len(queries)}] q_id={qid} -> {result.status}")
             predictions[str(qid)] = sql_query
 
-            # Save checkpoint after every question
-            with open(checkpoint_path, "w") as f:
-                json.dump(predictions, f, indent=2)
+            checkpoint.save(predictions)
 
             await asyncio.sleep(_BASE_INTERVAL + (_LLM_MIN_INTERVAL if _FEAT_19 else 0))
 

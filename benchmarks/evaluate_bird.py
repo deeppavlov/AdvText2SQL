@@ -3,73 +3,41 @@ import json
 import logging
 import sqlglot
 import decimal
-import re
+from adv_text2sql.sql_text import clean_sql
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from typing import Dict
 
+from adv_text2sql.sql_safety import UnsafeSQL, read_only_connection, validate_read_query
+from adv_text2sql.evaluation import database_failure
+from adv_text2sql.bird_results import (
+    EX_POLICY, EXECUTION_POLICY, DIAGNOSTIC_POLICY, bird_column_types,
+    compare_bird_results, prepare_bird_evaluation,
+)
+
 logger = logging.getLogger(__name__)
 
 
+class EvaluationUnavailable(RuntimeError):
+    """Evaluation is incomplete; no negative model label may be exported."""
+
+
 def sqlite_to_postgres(query: str) -> str:
-    # Strip ```sql``` and comments first if needed
-    query = re.sub(r"```sql|```", "", query, flags=re.IGNORECASE)
-    query = re.sub(r"/\*.*?\*/", "", query, flags=re.DOTALL).strip()
-
-    # Transpile using sqlglot
+    """Translate one SQLite statement through an AST; never patch SQL with regex."""
+    validate_read_query(query, dialect="sqlite")
     try:
-        query_pg = sqlglot.transpile(query, read='sqlite', write='postgres')[0]
-    except Exception as e:
-        print("SQLGlot parse error:", e)
-        query_pg = query
-
-    # Apply transforms only outside quoted identifiers ("...") and string literals ('...')
-    # to avoid corrupting column names like "Charter School (Y/N)" or date literals.
-    query_pg = _apply_outside_quotes(query_pg, _fix_division_and_dates)
-
-    return query_pg
+        statements = sqlglot.transpile(clean_sql(query, dialect="sqlite"), read="sqlite", write="postgres",
+                                      unsupported_level=sqlglot.ErrorLevel.RAISE)
+    except (sqlglot.errors.SqlglotError, ValueError):
+        raise ValueError("SQLite reference cannot be translated safely") from None
+    if len(statements) != 1 or not statements[0].strip():
+        raise ValueError("Expected exactly one SQLite reference statement")
+    return statements[0]
 
 
-def _fix_division_and_dates(segment: str) -> str:
-    # Fix division by zero — negative lookahead avoids wrapping function calls like COUNT(...)
-    segment = re.sub(r"(\b\w+\b)\s*/\s*(\b\w+\b)(?!\s*\()", r"\1 / NULLIF(\2, 0)", segment)
-    # Fix TO_DATE on bare (unquoted) column references — column is already DATE type
-    segment = re.sub(
-        r"\bTO_DATE\(\s*(\b[a-zA-Z_]\w*\b)\s*,\s*'[^']+'\)",
-        r"\1", segment, flags=re.IGNORECASE
-    )
-    return segment
 
 
-def _apply_outside_quotes(sql: str, transform) -> str:
-    """Apply transform() only to unquoted segments of sql (outside "..." and '...')."""
-    result = []
-    i = 0
-    while i < len(sql):
-        ch = sql[i]
-        if ch == '"':
-            end = sql.find('"', i + 1)
-            end = end if end != -1 else len(sql) - 1
-            result.append(sql[i:end + 1])
-            i = end + 1
-        elif ch == "'":
-            j = i + 1
-            while j < len(sql):
-                if sql[j] == "'" and (j + 1 >= len(sql) or sql[j + 1] != "'"):
-                    break
-                j += 1
-            result.append(sql[i:j + 1])
-            i = j + 1
-        else:
-            next_q = len(sql)
-            for qc in ('"', "'"):
-                pos = sql.find(qc, i)
-                if pos != -1:
-                    next_q = min(next_q, pos)
-            result.append(transform(sql[i:next_q]))
-            i = next_q
-    return "".join(result)
 
 
 def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
@@ -120,30 +88,34 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
         if db_id not in engines:
             engines[db_id] = create_engine(db_uri)
 
+        stage = "reference"
         try:
             gold_sql = sqlite_to_postgres(gold_sql)
             engine = engines[db_id]
 
-            with engine.connect() as conn:
-                conn.execute(text("SET statement_timeout = '30s'"))
-
-                gold_res = conn.execute(text(gold_sql)).fetchall()
+            # sqlite_to_postgres validated the original gold in its input dialect.
+            validate_read_query(gold_sql)
+            stage = "prediction"
+            validate_read_query(predicted_sql)
+            stage = "connection"
+            with read_only_connection(engine, gold_sql, predicted_sql) as conn:
+                prepare_bird_evaluation(conn)
+                stage = "reference"
+                gold_result = conn.execute(text(gold_sql))
+                gold_types = bird_column_types(gold_result)
+                gold_res = gold_result.fetchall()
                 all_gold[question_id] = [list(row) for row in gold_res]
 
-                pred_res = conn.execute(text(predicted_sql)).fetchall()
+                stage = "prediction"
+                pred_result = conn.execute(text(predicted_sql))
+                pred_types = bird_column_types(pred_result)
+                pred_res = pred_result.fetchall()
+                stage = "connection"  # Transaction cleanup failures are not SQL mistakes.
                 all_predicted[question_id] = [list(row) for row in pred_res]
 
-            def _to_hashable(v):
-                if isinstance(v, list):
-                    return tuple(_to_hashable(i) for i in v)
-                if isinstance(v, dict):
-                    return tuple(sorted((k, _to_hashable(val)) for k, val in v.items()))
-                return v
-
-            def _normalize(row):
-                return tuple(_to_hashable(v) for v in row)
-
-            score = set(_normalize(r) for r in pred_res) == set(_normalize(r) for r in gold_res)
+            comparison = compare_bird_results(pred_res, gold_res, predicted_types=pred_types,
+                                              reference_types=gold_types)
+            score = comparison["exact_equal"]
 
             results.append(
                 {
@@ -152,10 +124,18 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
                     "predicted_sql": predicted_sql,
                     "score": score,
                     "difficulty": difficulty,
+                    "bird_comparison": comparison,
                 }
             )
 
-        except SQLAlchemyError as e:
+        except (SQLAlchemyError, UnsafeSQL) as e:
+            details = ({"failure_kind": "query", "sqlstate": None, "error_type": "UnsafeSQL"}
+                       if isinstance(e, UnsafeSQL) else database_failure(e))
+            if stage != "prediction" or details["failure_kind"] != "query":
+                raise EvaluationUnavailable(
+                    f"BIRD evaluation stopped at {stage} ({details['failure_kind']}, "
+                    f"{details['error_type']}); no model label saved"
+                ) from None
             logger.info(
                 f"Failed to process sql query for question {question_id}: '{predicted_sql}'"
             )
@@ -166,7 +146,9 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
                     "predicted_sql": predicted_sql,
                     "score": 0,
                     "difficulty": difficulty,
-                    "error": str(e),
+                    "error": f"{details['error_type']} (SQLSTATE {details['sqlstate'] or 'none'})",
+                    "execution_stage": stage,
+                    **details,
                 }
             )
 
@@ -201,6 +183,9 @@ def run_evaluation(predictions: Dict[str, str], answer_file: str, db_url: str):
 
     print(results)
     report = {
+        "evaluation_policy": EX_POLICY,
+        "postgresql_execution_policy": EXECUTION_POLICY,
+        "numeric_diagnostic_policy": DIAGNOSTIC_POLICY,
         "overall_accuracy": total_acc,
         "accuracy_by_difficulty": by_difficulty,
         "false_ambiguous": false_ambiguous,

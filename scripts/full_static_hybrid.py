@@ -25,7 +25,6 @@ PROFILES = {
 FILES = (
     "scripts/full_static_hybrid.py",
     "scripts/full_static_hybrid_runtime.py",
-    "local/run_full_static_hybrid.ps1",
     "local/run_full_static_hybrid.sh",
 )
 VERSION = "descriptive-full-static-v1"

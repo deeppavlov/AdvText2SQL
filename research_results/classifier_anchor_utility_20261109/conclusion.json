@@ -1,0 +1,18 @@
+{
+  "version": "anchor-utility-conclusion-v1",
+  "experiment_sha256": "8636a69be6d0c25b87e84adf70259310859545b48ff0ca74fff59215ac8ab0f3",
+  "report_sha256": "8d232920400703a8ece62d223b4da75be76ad8e8b8a7eb273f0d965594a79c54",
+  "oof_choices_sha256": "ce2591eb8c9dc274972fd359f8b7e7693c4a49883012cfe88bc82bb99d0b651e",
+  "fold_models_sha256": "299080147dfef397d3aa91d5d22e5202ec870eba1427bff1c35ac0b6f13a8925",
+  "adopt_as_default": false,
+  "nominations": {
+    "bird": "task_anchor",
+    "ambrosia": "task_anchor"
+  },
+  "reason": "None of four fixed variants passed the predeclared per-task train-CV screening gate.",
+  "next_step": "Audit new train-database coverage and uncertainty of informative configuration outcomes; keep dev/test assignments and frozen observations intact.",
+  "limits": "One bounded model/feature experiment; no proof that utility regression or schema grounding cannot work. Not an independent holdout result.",
+  "live_llm_calls": 0,
+  "dev_evaluated": false,
+  "test_used": false
+}

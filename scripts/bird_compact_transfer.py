@@ -43,7 +43,6 @@ GLOBAL_LIMITS = dict(
 )
 FILES = (
     "scripts/bird_compact_transfer.py",
-    "local/run_bird_compact_transfer.ps1",
     "local/run_bird_compact_transfer.sh",
     "scripts/durable_prompt_store.py",
     "scripts/recover_prompt_timeout.py",

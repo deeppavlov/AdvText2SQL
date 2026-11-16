@@ -1,0 +1,457 @@
+{
+  "version": "classifier-v2-progress-v1",
+  "manifest_sha256": "6efad2bbb5bc7967fb0dd7db4aa2009fefdc792c965a4f8851280c3596e3936d",
+  "completed_jobs": [
+    "train__bird__baseline",
+    "train__bird__rules_taxonomy",
+    "train__bird__hybrid",
+    "train__bird__statistics_hybrid",
+    "train__ambrosia__baseline",
+    "train__ambrosia__rules",
+    "train__ambrosia__hybrid",
+    "dev__bird__baseline",
+    "dev__bird__rules_taxonomy",
+    "dev__bird__hybrid",
+    "dev__bird__statistics_hybrid",
+    "dev__ambrosia__baseline",
+    "dev__ambrosia__rules",
+    "dev__ambrosia__hybrid"
+  ],
+  "coverage": {
+    "train": {
+      "bird": {
+        "questions": 131,
+        "observed_scores": 655,
+        "fully_observed_questions": 131
+      },
+      "ambrosia": {
+        "questions": 120,
+        "observed_scores": 480,
+        "fully_observed_questions": 120
+      }
+    },
+    "dev": {
+      "bird": {
+        "questions": 55,
+        "observed_scores": 275,
+        "fully_observed_questions": 55
+      },
+      "ambrosia": {
+        "questions": 46,
+        "observed_scores": 184,
+        "fully_observed_questions": 46
+      }
+    }
+  },
+  "ready_for_training": true,
+  "conditional_pairs": 2856,
+  "observed_scores": 1594,
+  "remaining_evaluations": 0,
+  "current_paid_budget": {
+    "task_calls": 2230,
+    "teacher_calls": 0,
+    "tokens": 4127702,
+    "examples": 1174,
+    "active_seconds": 10004.999000000127,
+    "prompt_tokens": 3945073,
+    "completion_tokens": 182629,
+    "task_tokens": 4127702,
+    "teacher_tokens": 0
+  },
+  "pending_api_reservations": 0,
+  "train_bird_comparison": {
+    "questions": 131,
+    "baseline_correct": 70.0,
+    "baseline_accuracy": 0.5343511450381679,
+    "compact_correct": 82.0,
+    "compact_accuracy": 0.6259541984732825,
+    "rescued": 15,
+    "harmed": 3,
+    "scope": "train_only_single_saved_passes_not_independent_classifier_evaluation"
+  },
+  "remaining_jobs": [],
+  "source_sha256": {
+    "data_manifest": "0f2d09598af022b7334a9c8f0d8afa7a7ca07b58393f9ead796ec65eb53e6227",
+    "root_budget": "625869d8d7398aa10b46b5a09aeac1c5d6c6ef9029384903d7e6cf6061b22097",
+    "baseline_evaluations": "b309fe25c76aac3a34eef866f223d4da6cae0e48d886e3ebf6067867d55c0572",
+    "rules_taxonomy_evaluations": "9efd82d602b333062866ffb53ab6b4466b9831fa78fb2572007c980ec0ffa1b2",
+    "hybrid_evaluations": "2e90e49c5c2f48caf7712744d9d881b3680fc743bc2c2dd9fa8c0c577493e48e",
+    "statistics_hybrid_evaluations": "cf759b5869d85e5fc2ad9463bb479506b0b82a0ee58fee813990417bef781a5b",
+    "train__bird__baseline_evaluations": "b309fe25c76aac3a34eef866f223d4da6cae0e48d886e3ebf6067867d55c0572",
+    "train__bird__rules_taxonomy_evaluations": "9efd82d602b333062866ffb53ab6b4466b9831fa78fb2572007c980ec0ffa1b2",
+    "train__bird__hybrid_evaluations": "2e90e49c5c2f48caf7712744d9d881b3680fc743bc2c2dd9fa8c0c577493e48e",
+    "train__bird__statistics_hybrid_evaluations": "cf759b5869d85e5fc2ad9463bb479506b0b82a0ee58fee813990417bef781a5b",
+    "train__ambrosia__baseline_evaluations": "f237fd0636dae38ddbc4a8878bb807b59fa74f562a2c3d584ebfe01b2a89d20b",
+    "train__ambrosia__rules_evaluations": "c62056c6253ffb39ac62671456e1a5cb44e9215d7d7024035f8bde16ab2c113b",
+    "train__ambrosia__hybrid_evaluations": "8e18c22d432199ef99c336460b1316485ae04b918f4e7d24ba4337e195e2bfd0",
+    "dev__ambrosia__baseline_evaluations": "84c99dfd3ae7c2c1ab1379d229350464b08195e6b5acdfe21c4b09d19c7be6bb",
+    "dev__ambrosia__rules_evaluations": "9c8eeca9fe2ed2e9531684cc85fb56f0e00d878b6e19f3dcbef0c782c4102d81",
+    "dev__ambrosia__hybrid_evaluations": "5493097a300547a8f11578f364b50bed0e231ac5ba6618eaec943b796b51f1d5",
+    "dev__bird__baseline_evaluations": "7fe02ae5ec6d820de19b623d0697cc9108d1c95d1e25192978826693db7d336b",
+    "dev__bird__rules_taxonomy_evaluations": "9d4fb7f5a369c3dde972e4c8b13422b953737fb03752e20589eae1d75033957d",
+    "dev__bird__hybrid_evaluations": "715e47397abcef43645edf1d700801b97379ec75c032fd32b117d5922e61734e",
+    "dev__bird__statistics_hybrid_evaluations": "0cf9ea16726ad88417e73417c318d1421b387adbb2fd8d108cfa5a4648d81f1c"
+  },
+  "train_bird_profiles": [
+    {
+      "configuration": "baseline",
+      "correct": 70.0,
+      "questions": 131,
+      "scope": "train_only_mixed_archival_and_new_passes"
+    },
+    {
+      "configuration": "rules_taxonomy",
+      "correct": 75.0,
+      "questions": 131,
+      "scope": "train_only_mixed_archival_and_new_passes"
+    },
+    {
+      "configuration": "hybrid",
+      "correct": 74.0,
+      "questions": 131,
+      "scope": "train_only_mixed_archival_and_new_passes"
+    },
+    {
+      "configuration": "statistics_hybrid",
+      "correct": 81.0,
+      "questions": 131,
+      "scope": "train_only_mixed_archival_and_new_passes"
+    },
+    {
+      "configuration": "compact",
+      "correct": 82.0,
+      "questions": 131,
+      "scope": "train_only_mixed_archival_and_new_passes"
+    }
+  ],
+  "ambrosia_comparison": {
+    "train": {
+      "profiles": {
+        "baseline": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 69.16666666666667,
+          "legacy_accuracy": 69.16666666666667,
+          "total": 120,
+          "gold_ambiguous": 38,
+          "pred_ambiguous": 1,
+          "true_positive": 1,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 37,
+            "tn": 82,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 1.0,
+            "recall": 0.02631578947368421,
+            "f1": 0.05128205128205128,
+            "balanced_accuracy": 0.5131578947368421
+          }
+        },
+        "rules": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 70.83333333333333,
+          "legacy_accuracy": 70.83333333333333,
+          "total": 120,
+          "gold_ambiguous": 38,
+          "pred_ambiguous": 3,
+          "true_positive": 3,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 35,
+            "tn": 82,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 1.0,
+            "recall": 0.07894736842105263,
+            "f1": 0.14634146341463414,
+            "balanced_accuracy": 0.5394736842105263
+          }
+        },
+        "rules_taxonomy": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 80.0,
+          "legacy_accuracy": 80.0,
+          "total": 120,
+          "gold_ambiguous": 38,
+          "pred_ambiguous": 24,
+          "true_positive": 19,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 19,
+            "fp": 5,
+            "fn": 19,
+            "tn": 77,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7916666666666666,
+            "recall": 0.5,
+            "f1": 0.6129032258064516,
+            "balanced_accuracy": 0.7195121951219512
+          }
+        },
+        "hybrid": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 77.5,
+          "legacy_accuracy": 77.5,
+          "total": 120,
+          "gold_ambiguous": 38,
+          "pred_ambiguous": 23,
+          "true_positive": 17,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 17,
+            "fp": 6,
+            "fn": 21,
+            "tn": 76,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7391304347826086,
+            "recall": 0.4473684210526316,
+            "f1": 0.5573770491803278,
+            "balanced_accuracy": 0.6870988446726572
+          }
+        }
+      },
+      "pairs": [
+        {
+          "from": "baseline",
+          "to": "rules",
+          "rescued": 2,
+          "harmed": 0
+        },
+        {
+          "from": "rules",
+          "to": "rules_taxonomy",
+          "rescued": 18,
+          "harmed": 7
+        },
+        {
+          "from": "rules_taxonomy",
+          "to": "hybrid",
+          "rescued": 2,
+          "harmed": 5
+        }
+      ]
+    },
+    "dev": {
+      "profiles": {
+        "baseline": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 73.91304347826087,
+          "legacy_accuracy": 73.91304347826087,
+          "total": 46,
+          "gold_ambiguous": 13,
+          "pred_ambiguous": 1,
+          "true_positive": 1,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 12,
+            "tn": 33,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 1.0,
+            "recall": 0.07692307692307693,
+            "f1": 0.14285714285714285,
+            "balanced_accuracy": 0.5384615384615384
+          }
+        },
+        "rules": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 73.91304347826087,
+          "legacy_accuracy": 73.91304347826087,
+          "total": 46,
+          "gold_ambiguous": 13,
+          "pred_ambiguous": 1,
+          "true_positive": 1,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 12,
+            "tn": 33,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 1.0,
+            "recall": 0.07692307692307693,
+            "f1": 0.14285714285714285,
+            "balanced_accuracy": 0.5384615384615384
+          }
+        },
+        "rules_taxonomy": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 80.43478260869566,
+          "legacy_accuracy": 80.43478260869566,
+          "total": 46,
+          "gold_ambiguous": 13,
+          "pred_ambiguous": 10,
+          "true_positive": 7,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 7,
+            "fp": 3,
+            "fn": 6,
+            "tn": 30,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.7,
+            "recall": 0.5384615384615384,
+            "f1": 0.6086956521739131,
+            "balanced_accuracy": 0.7237762237762237
+          }
+        },
+        "hybrid": {
+          "evaluation_policy": "ambrosia-strict-v1",
+          "accuracy": 78.26086956521739,
+          "legacy_accuracy": 78.26086956521739,
+          "total": 46,
+          "gold_ambiguous": 13,
+          "pred_ambiguous": 11,
+          "true_positive": 7,
+          "generation_errors": 0,
+          "ambiguity_metrics": {
+            "tp": 7,
+            "fp": 4,
+            "fn": 6,
+            "tn": 29,
+            "errors_ambiguous": 0,
+            "errors_unambiguous": 0,
+            "precision": 0.6363636363636364,
+            "recall": 0.5384615384615384,
+            "f1": 0.5833333333333334,
+            "balanced_accuracy": 0.7086247086247086
+          }
+        }
+      },
+      "pairs": [
+        {
+          "from": "baseline",
+          "to": "rules",
+          "rescued": 0,
+          "harmed": 0
+        },
+        {
+          "from": "rules",
+          "to": "rules_taxonomy",
+          "rescued": 7,
+          "harmed": 4
+        },
+        {
+          "from": "rules_taxonomy",
+          "to": "hybrid",
+          "rescued": 0,
+          "harmed": 1
+        }
+      ]
+    }
+  },
+  "dev_bird_profiles": [
+    {
+      "configuration": "baseline",
+      "correct": 24.0,
+      "questions": 55,
+      "scope": "dev_saved_outcomes_not_trained_classifier_result"
+    },
+    {
+      "configuration": "rules_taxonomy",
+      "correct": 23.0,
+      "questions": 55,
+      "scope": "dev_saved_outcomes_not_trained_classifier_result"
+    },
+    {
+      "configuration": "hybrid",
+      "correct": 26.0,
+      "questions": 55,
+      "scope": "dev_saved_outcomes_not_trained_classifier_result"
+    },
+    {
+      "configuration": "statistics_hybrid",
+      "correct": 26.0,
+      "questions": 55,
+      "scope": "dev_saved_outcomes_not_trained_classifier_result"
+    },
+    {
+      "configuration": "compact",
+      "correct": 26.0,
+      "questions": 55,
+      "scope": "dev_saved_outcomes_not_trained_classifier_result"
+    }
+  ],
+  "dev_bird_conditional_pairs": [
+    {
+      "control": "baseline",
+      "treatment": "rules_taxonomy",
+      "rescued": 1,
+      "harmed": 2
+    },
+    {
+      "control": "rules_taxonomy",
+      "treatment": "hybrid",
+      "rescued": 5,
+      "harmed": 2
+    },
+    {
+      "control": "hybrid",
+      "treatment": "statistics_hybrid",
+      "rescued": 2,
+      "harmed": 2
+    },
+    {
+      "control": "statistics_hybrid",
+      "treatment": "compact",
+      "rescued": 3,
+      "harmed": 3
+    },
+    {
+      "control": "baseline",
+      "treatment": "compact",
+      "rescued": 5,
+      "harmed": 3
+    }
+  ],
+  "dev_bird_oracle": {
+    "correct": 32,
+    "questions": 55,
+    "scope": "reference_based_ceiling_on_saved_candidates_not_classifier_result"
+  },
+  "training": {
+    "status": "trained_and_replayed",
+    "directory": "research_results/classifier_v2_training_20261109",
+    "model_sha256": "84767e68cd93ae1990ec2cb2332702e22f943cd2c4cfaf59979ce47566b8bafe",
+    "conclusion_sha256": "57b765aef7ef10b5e4ca59c03bd80738bb73828140469b03bdf3179a12d98a5a",
+    "adopt_as_default": false,
+    "live_llm_calls": 0
+  },
+  "diagnosis": {
+    "status": "completed",
+    "directory": "research_results/classifier_v2_diagnosis_20261109",
+    "conclusion_sha256": "30c2b35cee97de4a13d88ec865683f14d131bc75a34af0941b90bbe852c3716b",
+    "paid_calls": 0,
+    "new_model_adopted": false
+  },
+  "anchor_utility_experiment": {
+    "status": "completed",
+    "directory": "research_results/classifier_anchor_utility_20261109",
+    "conclusion_sha256": "e43081df63c09871280a264850ea22699758f8393143cffa8dae352a35eec1bf",
+    "nominations": {
+      "bird": "task_anchor",
+      "ambrosia": "task_anchor"
+    },
+    "live_llm_calls": 0,
+    "dev_evaluated": false
+  },
+  "data_expansion": {
+    "directory": "research_results/classifier_data_expansion_20261110",
+    "status": "schema_screened_not_collected",
+    "source_audit_sha256": "b9a97233e6b7adb93c5c1269a56698aabcae62a4671dc50f410c960c4fbef2d4",
+    "live_llm_calls": 0,
+    "schema_review_sha256": "a6903c75e17d9c7a0f531685c5160ea3ff3d5fc3d9cd2b4c73af95399f31b9a5",
+    "structurally_screened_questions": 111,
+    "structurally_screened_databases": 37
+  }
+}

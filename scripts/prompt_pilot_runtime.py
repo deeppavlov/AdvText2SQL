@@ -16,6 +16,9 @@ import static_hybrid_search as search
 from static_hybrid_runtime import append
 from transport_safe_runtime import TransportRecordingClient
 from run_openrouter_baseline import ProviderUnavailable, Tee
+from adv_text2sql.bird_results import (
+    bird_column_types, compare_bird_results, normalize_bird_rows, prepare_bird_evaluation,
+)
 
 REFLECTION = """Improve general zero-shot SQL rules for PostgreSQL.
 Only edit the rule text below. Question/evidence, schema, SQL dialect, the
@@ -50,15 +53,7 @@ def settings(module, features, instruction=None, profile="hybrid", original=Fals
 
 
 def normalize(rows):
-    # Same unordered set semantics as benchmarks.evaluate_bird, including arrays/JSON.
-    def hashable(v):
-        if isinstance(v, list):
-            return tuple(hashable(x) for x in v)
-        if isinstance(v, dict):
-            return tuple(sorted((k, hashable(x)) for k, x in v.items()))
-        return v
-
-    return {tuple(hashable(v) for v in row) for row in rows}
+    return normalize_bird_rows(rows)
 
 
 class Session:
@@ -126,6 +121,7 @@ class Session:
 
         sys.path[:0] = [str(pilot.ROOT), str(pilot.ROOT / "src")]
         from benchmarks.evaluate_bird import sqlite_to_postgres
+        from adv_text2sql.sql_safety import read_only_connection
 
         for b, items in (
             ("bird", self.bird_items),
@@ -161,11 +157,14 @@ class Session:
                     )
                 )
             try:
-                with self.engines[db].connect() as conn:
-                    conn.exec_driver_sql("SET TRANSACTION READ ONLY")
-                    rows = conn.execute(
-                        text(sqlite_to_postgres(item["SQL"]))
-                    ).fetchall()
+                gold_sql = sqlite_to_postgres(item["SQL"])
+                with read_only_connection(self.engines[db], gold_sql) as conn:
+                    prepare_bird_evaluation(conn)
+                    result = conn.execute(text(gold_sql))
+                    if not hasattr(self, "gold_type_oids"):
+                        self.gold_type_oids = {}
+                    self.gold_type_oids[str(item["question_id"])] = bird_column_types(result)
+                    rows = result.fetchall()
                 self.golds[str(item["question_id"])] = normalize(rows)
             except Exception as error:
                 raise RuntimeError(
@@ -243,6 +242,7 @@ class Session:
             )
 
     def score(self, item, prediction, benchmark):
+        self.last_bird_comparison = None
         if prediction == "error":
             return 0.0, "generation_error"
         if benchmark == "ambrosia":
@@ -253,25 +253,30 @@ class Session:
             return 0.0, "false_ambiguity"
         from sqlalchemy import text
         from sqlalchemy.exc import SQLAlchemyError
+        from adv_text2sql.sql_safety import UnsafeSQL, read_only_connection
 
         try:
-            with self.engines[item["db_id"]].connect() as conn:
-                conn.exec_driver_sql("SET TRANSACTION READ ONLY")
-                predicted = normalize(conn.execute(text(prediction)).fetchall())
-            return float(predicted == self.golds[str(item["question_id"])]), None
+            with read_only_connection(self.engines[item["db_id"]], prediction) as conn:
+                prepare_bird_evaluation(conn)
+                result = conn.execute(text(prediction))
+                predicted_types = bird_column_types(result)
+                predicted = result.fetchall()
+            self.last_bird_comparison = compare_bird_results(
+                predicted, self.golds[str(item["question_id"])], predicted_types=predicted_types,
+                reference_types=getattr(self, "gold_type_oids", {}).get(str(item["question_id"]), ()))
+            return float(self.last_bird_comparison["exact_equal"]), None
+        except UnsafeSQL:
+            return 0.0, "unsafe_sql"
         except SQLAlchemyError as error:
-            original = getattr(error, "orig", error)
-            code = getattr(original, "sqlstate", None)
-            if (
-                not code
-                or code.startswith(("08", "28"))
-                or code in ("3D000", "57P01", "57P02", "57P03")
-            ):
+            from adv_text2sql.evaluation import database_failure
+
+            details = database_failure(error)
+            if details["failure_kind"] != "query":
                 raise ProviderUnavailable(
                     "Database unavailable during evaluation; no model label saved"
                 ) from None
             # SQLSTATE gives actionable feedback without including connection strings.
-            return 0.0, f"postgresql:{code}:{type(original).__name__}"
+            return 0.0, f"postgresql:{details['sqlstate']}:{details['error_type']}"
 
     def evaluate(
         self, item, instruction, profile="hybrid", original=False, benchmark="bird"
@@ -344,6 +349,8 @@ class Session:
             "error": issue or execution_issue,
             "usage": {k: self.ledger.data[k] - before[k] for k in before},
         }
+        if benchmark == "bird" and getattr(self, "last_bird_comparison", None) is not None:
+            result["bird_comparison"] = self.last_bird_comparison
         self.records[key] = result
         write_json(self.output / "evaluations.json", self.records)
         self.progress({"saved_evaluations": len(self.records)})

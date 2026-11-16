@@ -1,0 +1,2888 @@
+[
+  {
+    "id": "candidate:ambrosia:f45329b8698a50370b10",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_accommodation1",
+    "source_question_id": "544",
+    "item": {
+      "question_id": 544,
+      "question": "List both youth hostels and hotels with rooms that cost 50.",
+      "db_id": "attachment_1tab_ref_accommodation1",
+      "SQL": "SELECT hotels.name \r\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\r\nWHERE (hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\") AND rooms.price = 50.0",
+      "ambig_queries": "['SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE (hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\") AND rooms.price = 50.0', 'SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\" AND rooms.price = 50.0']",
+      "ambig_question": "Show youth hostels and hotels where rooms cost 50."
+    },
+    "inputs": {
+      "question": "List both youth hostels and hotels with rooms that cost 50."
+    },
+    "family_keys": [
+      "ambrosia:45f940699dbe5b079358",
+      "text:b02dc35058c0b4b93619"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1fb81d49d53be96305ca",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:3d9abd48c7abd5ef30da",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_accommodation1",
+    "source_question_id": "546",
+    "item": {
+      "question_id": 546,
+      "question": "Show all youth hostels and also show the hotels, but only those with 50-priced rooms.",
+      "db_id": "attachment_1tab_ref_accommodation1",
+      "SQL": "SELECT hotels.name \r\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\r\nWHERE hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\" AND rooms.price = 50.0",
+      "ambig_queries": "['SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE (hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\") AND rooms.price = 50.0', 'SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\" AND rooms.price = 50.0']",
+      "ambig_question": "Show youth hostels and hotels where rooms cost 50."
+    },
+    "inputs": {
+      "question": "Show all youth hostels and also show the hotels, but only those with 50-priced rooms."
+    },
+    "family_keys": [
+      "ambrosia:45f940699dbe5b079358",
+      "text:daac19167b002dea8c75"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1fb81d49d53be96305ca",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:c60978e465772849df2e",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_accommodation1",
+    "source_question_id": "545",
+    "item": {
+      "question_id": 545,
+      "question": "Show youth hostels and hotels where rooms cost 50.",
+      "db_id": "attachment_1tab_ref_accommodation1",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE (hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\") AND rooms.price = 50.0', 'SELECT hotels.name \\r\\nFROM hotels JOIN rooms ON hotels.id = rooms.hotel_id\\r\\nWHERE hotels.accommodation_type = \"Youth Hostel\" OR hotels.accommodation_type = \"Hotel\" AND rooms.price = 50.0']",
+      "ambig_question": "Show youth hostels and hotels where rooms cost 50."
+    },
+    "inputs": {
+      "question": "Show youth hostels and hotels where rooms cost 50."
+    },
+    "family_keys": [
+      "ambrosia:45f940699dbe5b079358",
+      "text:45f940699dbe5b079358"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1fb81d49d53be96305ca",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:05e57d29c39504cba903",
+    "benchmark": "ambrosia",
+    "db_id": "scope_product_managers_metrics",
+    "source_question_id": "1436",
+    "item": {
+      "question_id": 1436,
+      "question": "What values are associated with each product manager's metrics?",
+      "db_id": "scope_product_managers_metrics",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Metrics.value  from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id   GROUP BY Product_Managers_Metrics.metrics_id HAVING COUNT(DISTINCT Product_Managers_Metrics.product_manager_id) = (SELECT COUNT(*) FROM  Product_Managers)', 'select product_managers.name , metrics.value from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id']",
+      "ambig_question": "What values are associated with each product manager's metrics?"
+    },
+    "inputs": {
+      "question": "What values are associated with each product manager's metrics?"
+    },
+    "family_keys": [
+      "ambrosia:948a63e7252d2cdfe153",
+      "text:948a63e7252d2cdfe153"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bd8bc9280e85de3b0ae7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:c0af973fc718427494ff",
+    "benchmark": "ambrosia",
+    "db_id": "scope_product_managers_metrics",
+    "source_question_id": "1439",
+    "item": {
+      "question_id": 1439,
+      "question": "Which value of metrics is common across all product managers?",
+      "db_id": "scope_product_managers_metrics",
+      "SQL": "SELECT Metrics.value  from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id   GROUP BY Product_Managers_Metrics.metrics_id HAVING COUNT(DISTINCT Product_Managers_Metrics.product_manager_id) = (SELECT COUNT(*) FROM  Product_Managers)",
+      "ambig_queries": "['SELECT Metrics.value  from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id   GROUP BY Product_Managers_Metrics.metrics_id HAVING COUNT(DISTINCT Product_Managers_Metrics.product_manager_id) = (SELECT COUNT(*) FROM  Product_Managers)', 'select product_managers.name , metrics.value from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id']",
+      "ambig_question": "What values are associated with each product manager's metrics?"
+    },
+    "inputs": {
+      "question": "Which value of metrics is common across all product managers?"
+    },
+    "family_keys": [
+      "ambrosia:948a63e7252d2cdfe153",
+      "text:a2c621199890bd511b33"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bd8bc9280e85de3b0ae7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:2c9070355d026aa2446c",
+    "benchmark": "ambrosia",
+    "db_id": "scope_product_managers_metrics",
+    "source_question_id": "1437",
+    "item": {
+      "question_id": 1437,
+      "question": "Display the metrics common to all product managers.",
+      "db_id": "scope_product_managers_metrics",
+      "SQL": "SELECT Metrics.metric_name  from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id   GROUP BY Product_Managers_Metrics.metrics_id HAVING COUNT(DISTINCT Product_Managers_Metrics.product_manager_id) = (SELECT COUNT(*) FROM  Product_Managers)",
+      "ambig_queries": "['SELECT Metrics.metric_name  from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id   GROUP BY Product_Managers_Metrics.metrics_id HAVING COUNT(DISTINCT Product_Managers_Metrics.product_manager_id) = (SELECT COUNT(*) FROM  Product_Managers)', 'select product_managers.name , metrics.metric_name from Product_Managers_Metrics join Metrics on Product_Managers_Metrics.metrics_id = Metrics.id join Product_Managers on Product_Managers_Metrics.product_manager_id = Product_Managers.id']",
+      "ambig_question": "Show me the metrics associated with each product manager."
+    },
+    "inputs": {
+      "question": "Display the metrics common to all product managers."
+    },
+    "family_keys": [
+      "ambrosia:eea6e63a7b3f08d882c5",
+      "text:f418d709b87cd1a15a4f"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bd8bc9280e85de3b0ae7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:ec65a13718b38a2cec83",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_film_creator",
+    "source_question_id": "2855",
+    "item": {
+      "question_id": 2855,
+      "question": "List all the movie titles, their studios, lead actors and the roles each actor played.",
+      "db_id": "vague_2cols_film_creator",
+      "SQL": "SELECT \r\nMovie.title,\r\nActor.name,\r\nRole.character,\r\nStudio.name\r\nFROM Movie\r\nJOIN Role ON Role.Movie_ID = Movie.id\r\nJOIN Actor ON Actor.id = Role.actor_id\r\nJOIN Studio ON Studio.id = Movie.studio_id",
+      "ambig_queries": "['SELECT \\r\\nMovie.title,\\r\\nActor.name,\\r\\nRole.character,\\r\\nStudio.name\\r\\nFROM Movie\\r\\nJOIN Role ON Role.Movie_ID = Movie.id\\r\\nJOIN Actor ON Actor.id = Role.actor_id\\r\\nJOIN Studio ON Studio.id = Movie.studio_id', 'SELECT \\r\\nMovie.title,\\r\\nActor.name,\\r\\nRole.character,\\r\\nDirector.name\\r\\nFROM Movie\\r\\nJOIN Role ON Role.Movie_ID = Movie.id\\r\\nJOIN Actor ON Actor.id = Role.actor_id\\r\\nJOIN Director ON Director.id = Movie.director_id', 'SELECT \\r\\nMovie.title,\\r\\nActor.name,\\r\\nRole.character,\\r\\nStudio.name, Director.name\\r\\nFROM Movie\\r\\nJOIN Role ON Role.Movie_ID = Movie.id\\r\\nJOIN Actor ON Actor.id = Role.actor_id\\r\\nJOIN Studio ON Studio.id = Movie.studio_id JOIN Director ON Director.id = Movie.director_id']",
+      "ambig_question": "List all the movies, their creators, the lead actors and the roles that they played."
+    },
+    "inputs": {
+      "question": "List all the movie titles, their studios, lead actors and the roles each actor played."
+    },
+    "family_keys": [
+      "ambrosia:ad569e64ffcbb0602d9d",
+      "text:878071ec2a2a3272e1cd"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:01d8bab0dab53a61251e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:c89a0f99be895733f1b2",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_film_creator",
+    "source_question_id": "2799",
+    "item": {
+      "question_id": 2799,
+      "question": "Show me every film, the genre, release year and who the director was.",
+      "db_id": "vague_2cols_film_creator",
+      "SQL": "SELECT \r\nMovie.title,\r\nMovie.genre,\r\nMovie.release_year,\r\nDirector.name\r\nFROM Movie\r\nJOIN Director ON Director.id = Movie.director_id",
+      "ambig_queries": "['SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nStudio.name\\r\\nFROM Movie\\r\\nJOIN Studio ON Studio.id = Movie.studio_id', 'SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nDirector.name\\r\\nFROM Movie\\r\\nJOIN Director ON Director.id = Movie.director_id', 'SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nStudio.name, Director.name\\r\\nFROM Movie\\r\\nJOIN Studio ON Studio.id = Movie.studio_id JOIN Director ON Director.id = Movie.director_id']",
+      "ambig_question": "List all the films, genres, release years and the film creators who made them."
+    },
+    "inputs": {
+      "question": "Show me every film, the genre, release year and who the director was."
+    },
+    "family_keys": [
+      "ambrosia:a2a49eccc3553a8fd845",
+      "text:aa8c34ff29aec42292dd"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:01d8bab0dab53a61251e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:6cf0626e9cd1b5332210",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_film_creator",
+    "source_question_id": "2856",
+    "item": {
+      "question_id": 2856,
+      "question": "Provide a list of all films with the genre, release year, film studio and director.",
+      "db_id": "vague_2cols_film_creator",
+      "SQL": "SELECT \r\nMovie.title,\r\nMovie.genre,\r\nMovie.release_year,\r\nStudio.name, Director.name\r\nFROM Movie\r\nJOIN Studio ON Studio.id = Movie.studio_id JOIN Director ON Director.id = Movie.director_id",
+      "ambig_queries": "['SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nStudio.name\\r\\nFROM Movie\\r\\nJOIN Studio ON Studio.id = Movie.studio_id', 'SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nDirector.name\\r\\nFROM Movie\\r\\nJOIN Director ON Director.id = Movie.director_id', 'SELECT \\r\\nMovie.title,\\r\\nMovie.genre,\\r\\nMovie.release_year,\\r\\nStudio.name, Director.name\\r\\nFROM Movie\\r\\nJOIN Studio ON Studio.id = Movie.studio_id JOIN Director ON Director.id = Movie.director_id']",
+      "ambig_question": "List all the films, genres, release years and the film creators who made them."
+    },
+    "inputs": {
+      "question": "Provide a list of all films with the genre, release year, film studio and director."
+    },
+    "family_keys": [
+      "ambrosia:a2a49eccc3553a8fd845",
+      "text:eee009aeb41cac1c4531"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:01d8bab0dab53a61251e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:48ffc411ab8509c33d41",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_hospitality_staff",
+    "source_question_id": "425",
+    "item": {
+      "question_id": 425,
+      "question": "Show the chefs and servers who speak English.",
+      "db_id": "attachment_2tab_ref_hospitality_staff",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"', 'SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"']",
+      "ambig_question": "Show the chefs and servers who speak English."
+    },
+    "inputs": {
+      "question": "Show the chefs and servers who speak English."
+    },
+    "family_keys": [
+      "ambrosia:85e503a45f18176638a3",
+      "text:85e503a45f18176638a3"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:773a0679d839d7f2d2c8",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:e7082d29daf6f16acc32",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_hospitality_staff",
+    "source_question_id": "424",
+    "item": {
+      "question_id": 424,
+      "question": "List the chefs and also list the servers who speak English.",
+      "db_id": "attachment_2tab_ref_hospitality_staff",
+      "SQL": "SELECT Chefs.lastname\r\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\r\nUNION\r\nSELECT Servers.lastname\r\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\r\nWHERE Languages.LanguageName = \"English\"",
+      "ambig_queries": "['SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"', 'SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"']",
+      "ambig_question": "Show the chefs and servers who speak English."
+    },
+    "inputs": {
+      "question": "List the chefs and also list the servers who speak English."
+    },
+    "family_keys": [
+      "ambrosia:85e503a45f18176638a3",
+      "text:de20dafadcc8e9602612"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:773a0679d839d7f2d2c8",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:41256346179e41dd1ebf",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_hospitality_staff",
+    "source_question_id": "426",
+    "item": {
+      "question_id": 426,
+      "question": "What are the chefs who speak English and servers who speak English?",
+      "db_id": "attachment_2tab_ref_hospitality_staff",
+      "SQL": "SELECT Chefs.lastname\r\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\r\nWHERE Languages.LanguageName = \"English\"\r\nUNION\r\nSELECT Servers.lastname\r\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\r\nWHERE Languages.LanguageName = \"English\"",
+      "ambig_queries": "['SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"', 'SELECT Chefs.lastname\\r\\nFROM Languages JOIN Chefs ON Languages.LanguageID = Chefs.LanguageID\\r\\nUNION\\r\\nSELECT Servers.lastname\\r\\nFROM Languages JOIN Servers ON Languages.LanguageID = Servers.LanguageID\\r\\nWHERE Languages.LanguageName = \"English\"']",
+      "ambig_question": "Show the chefs and servers who speak English."
+    },
+    "inputs": {
+      "question": "What are the chefs who speak English and servers who speak English?"
+    },
+    "family_keys": [
+      "ambrosia:85e503a45f18176638a3",
+      "text:b4ea62fa3c55e1c9db74"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:773a0679d839d7f2d2c8",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:7b7e3a3fa2d5473cde79",
+    "benchmark": "ambrosia",
+    "db_id": "scope_land_trusts_properties",
+    "source_question_id": "1547",
+    "item": {
+      "question_id": 1547,
+      "question": "For each land trust, give me the type of property it offers.",
+      "db_id": "scope_land_trusts_properties",
+      "SQL": "select land_trusts.trustname , properties.typeofproperty from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id",
+      "ambig_queries": "['SELECT Properties.typeOfProperty  from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id   GROUP BY Land_Trusts_Properties.propertyId HAVING COUNT(DISTINCT Land_Trusts_Properties.landTrustId) = (SELECT COUNT(*) FROM  Land_Trusts)', 'select land_trusts.trustname , properties.typeofproperty from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id']",
+      "ambig_question": "Give me the type of property that every land trust has."
+    },
+    "inputs": {
+      "question": "For each land trust, give me the type of property it offers."
+    },
+    "family_keys": [
+      "ambrosia:4dda483f661a3700ffa4",
+      "text:2bc839309f50068a8cd1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:593d51b50419ba346efa",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b65d8cc140842f017aef",
+    "benchmark": "ambrosia",
+    "db_id": "scope_land_trusts_properties",
+    "source_question_id": "1546",
+    "item": {
+      "question_id": 1546,
+      "question": "What type of property is common to all land trusts?",
+      "db_id": "scope_land_trusts_properties",
+      "SQL": "SELECT Properties.typeOfProperty  from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id   GROUP BY Land_Trusts_Properties.propertyId HAVING COUNT(DISTINCT Land_Trusts_Properties.landTrustId) = (SELECT COUNT(*) FROM  Land_Trusts)",
+      "ambig_queries": "['SELECT Properties.typeOfProperty  from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id   GROUP BY Land_Trusts_Properties.propertyId HAVING COUNT(DISTINCT Land_Trusts_Properties.landTrustId) = (SELECT COUNT(*) FROM  Land_Trusts)', 'select land_trusts.trustname , properties.typeofproperty from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id']",
+      "ambig_question": "Give me the type of property that every land trust has."
+    },
+    "inputs": {
+      "question": "What type of property is common to all land trusts?"
+    },
+    "family_keys": [
+      "ambrosia:4dda483f661a3700ffa4",
+      "text:c07cd034531e5340106e"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:593d51b50419ba346efa",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:76bc980c35b67e512048",
+    "benchmark": "ambrosia",
+    "db_id": "scope_land_trusts_properties",
+    "source_question_id": "1545",
+    "item": {
+      "question_id": 1545,
+      "question": "Give me the type of property that every land trust has.",
+      "db_id": "scope_land_trusts_properties",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Properties.typeOfProperty  from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id   GROUP BY Land_Trusts_Properties.propertyId HAVING COUNT(DISTINCT Land_Trusts_Properties.landTrustId) = (SELECT COUNT(*) FROM  Land_Trusts)', 'select land_trusts.trustname , properties.typeofproperty from Land_Trusts_Properties join Properties on Land_Trusts_Properties.propertyId = Properties.propertyId join Land_Trusts on Land_Trusts_Properties.landTrustId = Land_Trusts.id']",
+      "ambig_question": "Give me the type of property that every land trust has."
+    },
+    "inputs": {
+      "question": "Give me the type of property that every land trust has."
+    },
+    "family_keys": [
+      "ambrosia:4dda483f661a3700ffa4",
+      "text:4dda483f661a3700ffa4"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:593d51b50419ba346efa",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:3577069c8b585f37d008",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_developer",
+    "source_question_id": "2834",
+    "item": {
+      "question_id": 2834,
+      "question": "show me all the medical devices and the companies who made them?",
+      "db_id": "vague_2cols_developer",
+      "SQL": "SELECT MedicalDevices.deviceName,  Companies.name  FROM DeviceDevelopment JOIN  Companies ON Companies.id = DeviceDevelopment.companyId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId",
+      "ambig_queries": "['SELECT MedicalDevices.deviceName,  Scientists.fullname  FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId', 'SELECT MedicalDevices.deviceName,  Companies.name  FROM DeviceDevelopment JOIN  Companies ON Companies.id = DeviceDevelopment.companyId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId', 'SELECT MedicalDevices.deviceName,  Scientists.fullname, Companies.name  FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId  JOIN  Companies ON Companies.id = DeviceDevelopment.companyId']",
+      "ambig_question": "Show me all the medical devices and their makers."
+    },
+    "inputs": {
+      "question": "show me all the medical devices and the companies who made them?"
+    },
+    "family_keys": [
+      "ambrosia:61f8e0cb735edda5895f",
+      "text:1d78dd2fac57e539b88d"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1830101b968c681fb76d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:224254a858d0fd0549af",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_developer",
+    "source_question_id": "2847",
+    "item": {
+      "question_id": 2847,
+      "question": "Which company made the cheapest device?",
+      "db_id": "vague_2cols_developer",
+      "SQL": "SELECT Companies.name FROM DeviceDevelopment JOIN  Companies ON Companies.id = DeviceDevelopment.companyId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1",
+      "ambig_queries": "['SELECT Scientists.fullname FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1', 'SELECT Companies.name FROM DeviceDevelopment JOIN  Companies ON Companies.id = DeviceDevelopment.companyId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1', 'SELECT Scientists.fullname, Companies.name FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId  JOIN  Companies ON Companies.id = DeviceDevelopment.companyId ORDER BY price ASC LIMIT 1']",
+      "ambig_question": "Who made the cheapest device?"
+    },
+    "inputs": {
+      "question": "Which company made the cheapest device?"
+    },
+    "family_keys": [
+      "ambrosia:2efb09ae99c975c34e9d",
+      "text:e3edad95cea0ce2f8b53"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1830101b968c681fb76d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b2f033cc77618981b76a",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_developer",
+    "source_question_id": "2838",
+    "item": {
+      "question_id": 2838,
+      "question": "Which scientist made the cheapest device?",
+      "db_id": "vague_2cols_developer",
+      "SQL": "SELECT Scientists.fullname FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1",
+      "ambig_queries": "['SELECT Scientists.fullname FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1', 'SELECT Companies.name FROM DeviceDevelopment JOIN  Companies ON Companies.id = DeviceDevelopment.companyId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId ORDER BY price ASC LIMIT 1', 'SELECT Scientists.fullname, Companies.name FROM DeviceDevelopment JOIN  Scientists ON Scientists.id = DeviceDevelopment.scientistId JOIN MedicalDevices ON MedicalDevices.id = DeviceDevelopment.medicalDeviceId  JOIN  Companies ON Companies.id = DeviceDevelopment.companyId ORDER BY price ASC LIMIT 1']",
+      "ambig_question": "Who made the cheapest device?"
+    },
+    "inputs": {
+      "question": "Which scientist made the cheapest device?"
+    },
+    "family_keys": [
+      "ambrosia:2efb09ae99c975c34e9d",
+      "text:d8ab4597891609c875b0"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1830101b968c681fb76d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:7f53aaf497947bdbbdd1",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_animation_studio",
+    "source_question_id": "509",
+    "item": {
+      "question_id": 509,
+      "question": "Show all of the Pixar and DreamWorks cartoons that have won an Oscar.",
+      "db_id": "attachment_1tab_ref_animation_studio",
+      "SQL": "SELECT MovieDetails.movieTitle \r\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\r\nWHERE AnimationStudios.studioName = \"Pixar\" AND Awards.awardName = \"Oscar\"\nUNION\nSELECT MovieDetails.movieTitle \r\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\r\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"",
+      "ambig_queries": "['SELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"Pixar\" AND Awards.awardName = \"Oscar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"', 'SELECT MovieDetails.movieTitle \\r\\nFROM MovieDetails JOIN AnimationStudios ON MovieDetails.animationStudioId = AnimationStudios.id WHERE AnimationStudios.studioName = \"Pixar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"']",
+      "ambig_question": "Show me all the Oscar-winning DreamWorks cartoons and Pixar cartoons."
+    },
+    "inputs": {
+      "question": "Show all of the Pixar and DreamWorks cartoons that have won an Oscar."
+    },
+    "family_keys": [
+      "ambrosia:ff0ee7b34c79f29ca573",
+      "text:7fa1b69b8f8b0fb77935"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b51b6d52efbcc9e3fc9c",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:9b03c57a2386efcb7f0a",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_animation_studio",
+    "source_question_id": "508",
+    "item": {
+      "question_id": 508,
+      "question": "Show me all the Oscar-winning DreamWorks cartoons and Pixar cartoons.",
+      "db_id": "attachment_1tab_ref_animation_studio",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"Pixar\" AND Awards.awardName = \"Oscar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"', 'SELECT MovieDetails.movieTitle \\r\\nFROM MovieDetails JOIN AnimationStudios ON MovieDetails.animationStudioId = AnimationStudios.id WHERE AnimationStudios.studioName = \"Pixar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"']",
+      "ambig_question": "Show me all the Oscar-winning DreamWorks cartoons and Pixar cartoons."
+    },
+    "inputs": {
+      "question": "Show me all the Oscar-winning DreamWorks cartoons and Pixar cartoons."
+    },
+    "family_keys": [
+      "ambrosia:ff0ee7b34c79f29ca573",
+      "text:ff0ee7b34c79f29ca573"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b51b6d52efbcc9e3fc9c",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:1cd5181b481463dfc286",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_animation_studio",
+    "source_question_id": "510",
+    "item": {
+      "question_id": 510,
+      "question": "Display all of the Pixar cartoons and also show all of the DreamWorks cartoons that have won an Oscar.",
+      "db_id": "attachment_1tab_ref_animation_studio",
+      "SQL": "SELECT MovieDetails.movieTitle \r\nFROM MovieDetails JOIN AnimationStudios ON MovieDetails.animationStudioId = AnimationStudios.id WHERE AnimationStudios.studioName = \"Pixar\"\nUNION\nSELECT MovieDetails.movieTitle \r\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\r\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"",
+      "ambig_queries": "['SELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"Pixar\" AND Awards.awardName = \"Oscar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"', 'SELECT MovieDetails.movieTitle \\r\\nFROM MovieDetails JOIN AnimationStudios ON MovieDetails.animationStudioId = AnimationStudios.id WHERE AnimationStudios.studioName = \"Pixar\"\\nUNION\\nSELECT MovieDetails.movieTitle \\r\\nFROM AnimationStudios JOIN MovieDetails ON AnimationStudios.id = MovieDetails.animationStudioId JOIN MovieAwards ON MovieDetails.id = MovieAwards.movieId JOIN Awards ON MovieAwards.awardId = Awards.id\\r\\nWHERE AnimationStudios.studioName = \"DreamWorks\" AND Awards.awardName = \"Oscar\"']",
+      "ambig_question": "Show me all the Oscar-winning DreamWorks cartoons and Pixar cartoons."
+    },
+    "inputs": {
+      "question": "Display all of the Pixar cartoons and also show all of the DreamWorks cartoons that have won an Oscar."
+    },
+    "family_keys": [
+      "ambrosia:ff0ee7b34c79f29ca573",
+      "text:14b1a0bb5c18dc5c38e3"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b51b6d52efbcc9e3fc9c",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:6bdceb01d4eb62bc1e6e",
+    "benchmark": "ambrosia",
+    "db_id": "scope_patient_advocates_issues",
+    "source_question_id": "1408",
+    "item": {
+      "question_id": 1408,
+      "question": "Give me the issue description of each patient advocate.",
+      "db_id": "scope_patient_advocates_issues",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Issues.description  from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id   GROUP BY Patient_Advocates_Issues.issue_id HAVING COUNT(DISTINCT Patient_Advocates_Issues.patient_advocate_id) = (SELECT COUNT(*) FROM  Patient_Advocates)', 'select patient_advocates.name , issues.description from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id']",
+      "ambig_question": "Give me the issue description of each patient advocate."
+    },
+    "inputs": {
+      "question": "Give me the issue description of each patient advocate."
+    },
+    "family_keys": [
+      "ambrosia:7f9abe895bd29fe16595",
+      "text:7f9abe895bd29fe16595"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a6bffe3a98545fc14fd2",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d353a9969928eaaec75e",
+    "benchmark": "ambrosia",
+    "db_id": "scope_patient_advocates_issues",
+    "source_question_id": "1410",
+    "item": {
+      "question_id": 1410,
+      "question": "For each patient advocate, provide the corresponding issues.",
+      "db_id": "scope_patient_advocates_issues",
+      "SQL": "select patient_advocates.name , issues.issue_name from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id",
+      "ambig_queries": "['SELECT Issues.issue_name  from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id   GROUP BY Patient_Advocates_Issues.issue_id HAVING COUNT(DISTINCT Patient_Advocates_Issues.patient_advocate_id) = (SELECT COUNT(*) FROM  Patient_Advocates)', 'select patient_advocates.name , issues.issue_name from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id']",
+      "ambig_question": "What issues are associated with each patient advocate?"
+    },
+    "inputs": {
+      "question": "For each patient advocate, provide the corresponding issues."
+    },
+    "family_keys": [
+      "ambrosia:156834b4c8b3259bc275",
+      "text:b83695def3c7106c72af"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a6bffe3a98545fc14fd2",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:88e4666569e0614894a9",
+    "benchmark": "ambrosia",
+    "db_id": "scope_patient_advocates_issues",
+    "source_question_id": "1404",
+    "item": {
+      "question_id": 1404,
+      "question": "For each patient advocate, show me the issue name and description.",
+      "db_id": "scope_patient_advocates_issues",
+      "SQL": "select patient_advocates.name , issues.issue_name , issues.description from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id",
+      "ambig_queries": "['SELECT Issues.issue_name, Issues.description  from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id   GROUP BY Patient_Advocates_Issues.issue_id HAVING COUNT(DISTINCT Patient_Advocates_Issues.patient_advocate_id) = (SELECT COUNT(*) FROM  Patient_Advocates)', 'select patient_advocates.name , issues.issue_name , issues.description from Patient_Advocates_Issues join Issues on Patient_Advocates_Issues.issue_id = Issues.id join Patient_Advocates on Patient_Advocates_Issues.patient_advocate_id = Patient_Advocates.id']",
+      "ambig_question": "Give me the issue name and description for each patient advocate."
+    },
+    "inputs": {
+      "question": "For each patient advocate, show me the issue name and description."
+    },
+    "family_keys": [
+      "ambrosia:0b4c135ad664dfdc9205",
+      "text:db2913b31908f086ceaf"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a6bffe3a98545fc14fd2",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:8de833e18fc0b4e8c982",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_cost",
+    "source_question_id": "2842",
+    "item": {
+      "question_id": 2842,
+      "question": "What are the surgical procedures listed in descending order of cost?",
+      "db_id": "vague_2cols_cost",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Description, InsuranceCovered\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered DESC;', 'SELECT Description, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY OutOfPocketExpense DESC;', 'SELECT Description, InsuranceCovered, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered, OutOfPocketExpense DESC;']",
+      "ambig_question": "What are the surgical procedures listed in descending order of cost?"
+    },
+    "inputs": {
+      "question": "What are the surgical procedures listed in descending order of cost?"
+    },
+    "family_keys": [
+      "ambrosia:2d42d21e1dab1c57684d",
+      "text:2d42d21e1dab1c57684d"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2685f4ea9d6ba3c32e45",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:600ac553a4b625fcf516",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_cost",
+    "source_question_id": "2843",
+    "item": {
+      "question_id": 2843,
+      "question": "In descending order of out of pocket expenses and insurance covered, list the surgical procedures.",
+      "db_id": "vague_2cols_cost",
+      "SQL": "SELECT Description, InsuranceCovered, OutOfPocketExpense\r\nFROM SurgicalProcedures\r\nORDER BY InsuranceCovered, OutOfPocketExpense DESC;",
+      "ambig_queries": "['SELECT Description, InsuranceCovered\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered DESC;', 'SELECT Description, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY OutOfPocketExpense DESC;', 'SELECT Description, InsuranceCovered, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered, OutOfPocketExpense DESC;']",
+      "ambig_question": "What are the surgical procedures listed in descending order of cost?"
+    },
+    "inputs": {
+      "question": "In descending order of out of pocket expenses and insurance covered, list the surgical procedures."
+    },
+    "family_keys": [
+      "ambrosia:2d42d21e1dab1c57684d",
+      "text:4b5a4b88732fefb499c1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2685f4ea9d6ba3c32e45",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:0aa0a2a0a75a0476e59c",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_cost",
+    "source_question_id": "2844",
+    "item": {
+      "question_id": 2844,
+      "question": "In descending order of the cost of insurance covered, list the surgical procedures.",
+      "db_id": "vague_2cols_cost",
+      "SQL": "SELECT Description, InsuranceCovered\r\nFROM SurgicalProcedures\r\nORDER BY InsuranceCovered DESC;",
+      "ambig_queries": "['SELECT Description, InsuranceCovered\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered DESC;', 'SELECT Description, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY OutOfPocketExpense DESC;', 'SELECT Description, InsuranceCovered, OutOfPocketExpense\\r\\nFROM SurgicalProcedures\\r\\nORDER BY InsuranceCovered, OutOfPocketExpense DESC;']",
+      "ambig_question": "What are the surgical procedures listed in descending order of cost?"
+    },
+    "inputs": {
+      "question": "In descending order of the cost of insurance covered, list the surgical procedures."
+    },
+    "family_keys": [
+      "ambrosia:2d42d21e1dab1c57684d",
+      "text:0ff7a389b97f8c5749ce"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2685f4ea9d6ba3c32e45",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d603008053a4efc7a8f4",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_val_genre3",
+    "source_question_id": "520",
+    "item": {
+      "question_id": 520,
+      "question": "Please list horrors and thrillers with a $20M budget.",
+      "db_id": "attachment_1tab_val_genre3",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE (Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\") AND Movies.Budget = \"20 million USD\"', 'SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\" AND Movies.Budget = \"20 million USD\"']",
+      "ambig_question": "Please list horrors and thrillers with a $20M budget."
+    },
+    "inputs": {
+      "question": "Please list horrors and thrillers with a $20M budget."
+    },
+    "family_keys": [
+      "ambrosia:623b2f2fd488159aa6bd",
+      "text:623b2f2fd488159aa6bd"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6949ee7c1c596d3c024f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:a32af4253647cd59c0b1",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_val_genre3",
+    "source_question_id": "553",
+    "item": {
+      "question_id": 553,
+      "question": "Show all horror films, also show just the thrillers with a $20M budget.",
+      "db_id": "attachment_1tab_val_genre3",
+      "SQL": "SELECT Movies.Title \r\nFROM Movies\r\nWHERE Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\" AND Movies.Budget = \"20 million USD\"",
+      "ambig_queries": "['SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE (Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\") AND Movies.Budget = \"20 million USD\"', 'SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\" AND Movies.Budget = \"20 million USD\"']",
+      "ambig_question": "Please list horrors and thrillers with a $20M budget."
+    },
+    "inputs": {
+      "question": "Show all horror films, also show just the thrillers with a $20M budget."
+    },
+    "family_keys": [
+      "ambrosia:623b2f2fd488159aa6bd",
+      "text:cdeba06b1d2a95fbbb00"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6949ee7c1c596d3c024f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:657085cbde7a6c3f0c06",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_val_genre3",
+    "source_question_id": "486",
+    "item": {
+      "question_id": 486,
+      "question": "List both horror and thriller films where either have a $20M budget.",
+      "db_id": "attachment_1tab_val_genre3",
+      "SQL": "SELECT Movies.Title \r\nFROM Movies\r\nWHERE (Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\") AND Movies.Budget = \"20 million USD\"",
+      "ambig_queries": "['SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE (Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\") AND Movies.Budget = \"20 million USD\"', 'SELECT Movies.Title \\r\\nFROM Movies\\r\\nWHERE Movies.Genre = \"Horror\" OR Movies.Genre = \"Thriller\" AND Movies.Budget = \"20 million USD\"']",
+      "ambig_question": "Please list horrors and thrillers with a $20M budget."
+    },
+    "inputs": {
+      "question": "List both horror and thriller films where either have a $20M budget."
+    },
+    "family_keys": [
+      "ambrosia:623b2f2fd488159aa6bd",
+      "text:b1517e382aabf1ca1a40"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6949ee7c1c596d3c024f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:a490c50db39133bd39d7",
+    "benchmark": "ambrosia",
+    "db_id": "scope_housing_finance_agencies_loan_programs",
+    "source_question_id": "1553",
+    "item": {
+      "question_id": 1553,
+      "question": "Give me the loan program interest rate for each housing finance agency.",
+      "db_id": "scope_housing_finance_agencies_loan_programs",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Loan_Programs.interest_rate  from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id   GROUP BY Housing_Finance_Agencies_Loan_Programs.loan_program_id HAVING COUNT(DISTINCT Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id) = (SELECT COUNT(*) FROM  Housing_Finance_Agencies)', 'select housing_finance_agencies.name , loan_programs.interest_rate from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id']",
+      "ambig_question": "Give me the loan program interest rate for each housing finance agency."
+    },
+    "inputs": {
+      "question": "Give me the loan program interest rate for each housing finance agency."
+    },
+    "family_keys": [
+      "ambrosia:f58587350beb7b8c4b9c",
+      "text:f58587350beb7b8c4b9c"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ef2357e02ada1f699d09",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:75a69ab1f6393180ba72",
+    "benchmark": "ambrosia",
+    "db_id": "scope_housing_finance_agencies_loan_programs",
+    "source_question_id": "1550",
+    "item": {
+      "question_id": 1550,
+      "question": "Show me the interest rates and descriptions of the loan programs every finance agency offers.",
+      "db_id": "scope_housing_finance_agencies_loan_programs",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Loan_Programs.description, Loan_Programs.interest_rate  from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id   GROUP BY Housing_Finance_Agencies_Loan_Programs.loan_program_id HAVING COUNT(DISTINCT Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id) = (SELECT COUNT(*) FROM  Housing_Finance_Agencies)', 'select housing_finance_agencies.name , loan_programs.description , loan_programs.interest_rate from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id']",
+      "ambig_question": "Show me the interest rates and descriptions of the loan programs every finance agency offers."
+    },
+    "inputs": {
+      "question": "Show me the interest rates and descriptions of the loan programs every finance agency offers."
+    },
+    "family_keys": [
+      "ambrosia:e3e082f15923f75a1c88",
+      "text:e3e082f15923f75a1c88"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ef2357e02ada1f699d09",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b209b62315eec1cd1829",
+    "benchmark": "ambrosia",
+    "db_id": "scope_housing_finance_agencies_loan_programs",
+    "source_question_id": "1556",
+    "item": {
+      "question_id": 1556,
+      "question": "What are the descriptions of the loan programs that are common to all finance agencies?",
+      "db_id": "scope_housing_finance_agencies_loan_programs",
+      "SQL": "SELECT Loan_Programs.description  from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id   GROUP BY Housing_Finance_Agencies_Loan_Programs.loan_program_id HAVING COUNT(DISTINCT Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id) = (SELECT COUNT(*) FROM  Housing_Finance_Agencies)",
+      "ambig_queries": "['SELECT Loan_Programs.description  from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id   GROUP BY Housing_Finance_Agencies_Loan_Programs.loan_program_id HAVING COUNT(DISTINCT Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id) = (SELECT COUNT(*) FROM  Housing_Finance_Agencies)', 'select housing_finance_agencies.name , loan_programs.description from Housing_Finance_Agencies_Loan_Programs join Loan_Programs on Housing_Finance_Agencies_Loan_Programs.loan_program_id = Loan_Programs.program_id join Housing_Finance_Agencies on Housing_Finance_Agencies_Loan_Programs.housing_finance_agency_id = Housing_Finance_Agencies.agency_id']",
+      "ambig_question": "Show me the descriptions of the loan programs that each finance agency offers."
+    },
+    "inputs": {
+      "question": "What are the descriptions of the loan programs that are common to all finance agencies?"
+    },
+    "family_keys": [
+      "ambrosia:c8c764eacaf7b46da2ed",
+      "text:cc6f6793a77c65a96c79"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ef2357e02ada1f699d09",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d92473cc0a6f2984c02e",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_writer",
+    "source_question_id": "580",
+    "item": {
+      "question_id": 580,
+      "question": "Show the screenwriters and playwrights from American Film Institute.",
+      "db_id": "attachment_2tab_ref_writer",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"', 'SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"']",
+      "ambig_question": "Show the screenwriters and playwrights from American Film Institute."
+    },
+    "inputs": {
+      "question": "Show the screenwriters and playwrights from American Film Institute."
+    },
+    "family_keys": [
+      "ambrosia:f9dc4b78b691a4f3af9a",
+      "text:f9dc4b78b691a4f3af9a"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4707e975ba21f57fcb9b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5db34c4b027dfc841dca",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_writer",
+    "source_question_id": "579",
+    "item": {
+      "question_id": 579,
+      "question": "Provide a list of the screenwriters as well as a list of the playwrights but only who are from American Film Institute.",
+      "db_id": "attachment_2tab_ref_writer",
+      "SQL": "SELECT Screenwriter.name\r\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\r\nUNION\r\nSELECT Playwright.name\r\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\r\nWHERE Education.institution = \"American Film Institute\"",
+      "ambig_queries": "['SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"', 'SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"']",
+      "ambig_question": "Show the screenwriters and playwrights from American Film Institute."
+    },
+    "inputs": {
+      "question": "Provide a list of the screenwriters as well as a list of the playwrights but only who are from American Film Institute."
+    },
+    "family_keys": [
+      "ambrosia:f9dc4b78b691a4f3af9a",
+      "text:d0dd61aea9d688e12efc"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4707e975ba21f57fcb9b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5b1297ce27bcea6ad3a7",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_writer",
+    "source_question_id": "581",
+    "item": {
+      "question_id": 581,
+      "question": "Who are the screenwriters from American Film Institute and playwrights from there too?",
+      "db_id": "attachment_2tab_ref_writer",
+      "SQL": "SELECT Screenwriter.name\r\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\r\nWHERE Education.institution = \"American Film Institute\"\r\nUNION\r\nSELECT Playwright.name\r\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\r\nWHERE Education.institution = \"American Film Institute\"",
+      "ambig_queries": "['SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"', 'SELECT Screenwriter.name\\r\\nFROM Education JOIN Screenwriter ON Education.id = Screenwriter.educationId\\r\\nUNION\\r\\nSELECT Playwright.name\\r\\nFROM Education JOIN Playwright ON Education.id = Playwright.educationId\\r\\nWHERE Education.institution = \"American Film Institute\"']",
+      "ambig_question": "Show the screenwriters and playwrights from American Film Institute."
+    },
+    "inputs": {
+      "question": "Who are the screenwriters from American Film Institute and playwrights from there too?"
+    },
+    "family_keys": [
+      "ambrosia:f9dc4b78b691a4f3af9a",
+      "text:f2abe8031e4e0cf7e08a"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4707e975ba21f57fcb9b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:6b418578bc2792d231b6",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photographers_styles",
+    "source_question_id": "1402",
+    "item": {
+      "question_id": 1402,
+      "question": "Show me the style each photographer uses.",
+      "db_id": "scope_photographers_styles",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Styles.styleName  from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id   GROUP BY Photographers_Styles.styleId HAVING COUNT(DISTINCT Photographers_Styles.photographerId) = (SELECT COUNT(*) FROM  Photographers)', 'select photographers.name , styles.stylename from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id']",
+      "ambig_question": "Show me the style each photographer uses."
+    },
+    "inputs": {
+      "question": "Show me the style each photographer uses."
+    },
+    "family_keys": [
+      "ambrosia:811e209286ef6940f358",
+      "text:811e209286ef6940f358"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:91effce4d1d272f76b15",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:002c90a05032196a4e4c",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photographers_styles",
+    "source_question_id": "1403",
+    "item": {
+      "question_id": 1403,
+      "question": "For every photographer, list the styles they use.",
+      "db_id": "scope_photographers_styles",
+      "SQL": "select photographers.name , styles.stylename from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id",
+      "ambig_queries": "['SELECT Styles.styleName  from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id   GROUP BY Photographers_Styles.styleId HAVING COUNT(DISTINCT Photographers_Styles.photographerId) = (SELECT COUNT(*) FROM  Photographers)', 'select photographers.name , styles.stylename from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id']",
+      "ambig_question": "Show me the style each photographer uses."
+    },
+    "inputs": {
+      "question": "For every photographer, list the styles they use."
+    },
+    "family_keys": [
+      "ambrosia:811e209286ef6940f358",
+      "text:44c2f55a50bba0f9187a"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:91effce4d1d272f76b15",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:501b69b66edb6e51ff87",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photographers_styles",
+    "source_question_id": "1411",
+    "item": {
+      "question_id": 1411,
+      "question": "What styles are common to all photographers?",
+      "db_id": "scope_photographers_styles",
+      "SQL": "SELECT Styles.styleName  from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id   GROUP BY Photographers_Styles.styleId HAVING COUNT(DISTINCT Photographers_Styles.photographerId) = (SELECT COUNT(*) FROM  Photographers)",
+      "ambig_queries": "['SELECT Styles.styleName  from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id   GROUP BY Photographers_Styles.styleId HAVING COUNT(DISTINCT Photographers_Styles.photographerId) = (SELECT COUNT(*) FROM  Photographers)', 'select photographers.name , styles.stylename from Photographers_Styles join Styles on Photographers_Styles.styleId = Styles.id join Photographers on Photographers_Styles.photographerId = Photographers.id']",
+      "ambig_question": "Show me the style each photographer uses."
+    },
+    "inputs": {
+      "question": "What styles are common to all photographers?"
+    },
+    "family_keys": [
+      "ambrosia:811e209286ef6940f358",
+      "text:68292b5398ab2f4e03d0"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:91effce4d1d272f76b15",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:da0295fb30f075fc82b1",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_production",
+    "source_question_id": "2898",
+    "item": {
+      "question_id": 2898,
+      "question": "Who made each production? Split by movie",
+      "db_id": "vague_2cols_production",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT a.title, b.name FROM Movie a JOIN Studio b ON a.studio_id = b.id', 'SELECT a.title, c.Full_name FROM Movie a JOIN Producer c ON a.producer_id = c.id', 'SELECT a.title, c.name, p.full_name FROM Movie a JOIN Studio c ON a.studio_id = c.id JOIN Producer p ON p.id = a.producer_id']",
+      "ambig_question": "Who made each production? Split by movie"
+    },
+    "inputs": {
+      "question": "Who made each production? Split by movie"
+    },
+    "family_keys": [
+      "ambrosia:26c869f5d8f040ff3fa7",
+      "text:26c869f5d8f040ff3fa7"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:d2820d04ff43b090a329",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b51faac9bf8768ebbbf2",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_production",
+    "source_question_id": "2889",
+    "item": {
+      "question_id": 2889,
+      "question": "Which producer made each production? Split by movie",
+      "db_id": "vague_2cols_production",
+      "SQL": "SELECT a.title, c.Full_name FROM Movie a JOIN Producer c ON a.producer_id = c.id",
+      "ambig_queries": "['SELECT a.title, b.name FROM Movie a JOIN Studio b ON a.studio_id = b.id', 'SELECT a.title, c.Full_name FROM Movie a JOIN Producer c ON a.producer_id = c.id', 'SELECT a.title, c.name, p.full_name FROM Movie a JOIN Studio c ON a.studio_id = c.id JOIN Producer p ON p.id = a.producer_id']",
+      "ambig_question": "Who made each production? Split by movie"
+    },
+    "inputs": {
+      "question": "Which producer made each production? Split by movie"
+    },
+    "family_keys": [
+      "ambrosia:26c869f5d8f040ff3fa7",
+      "text:1628b8584ac0e4a80cc1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:d2820d04ff43b090a329",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:a1d7616376fac30a4cec",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_production",
+    "source_question_id": "2890",
+    "item": {
+      "question_id": 2890,
+      "question": "List the comments, split by movies and their studio id.",
+      "db_id": "vague_2cols_production",
+      "SQL": "SELECT a.title, b.comments, c.name FROM Movie a JOIN Review b ON a.id = b.movie_id JOIN Studio c ON c.id = a.studio_id",
+      "ambig_queries": "['SELECT a.title, b.comments, c.name FROM Movie a JOIN Review b ON a.id = b.movie_id JOIN Studio c ON c.id = a.studio_id', 'SELECT a.title, b.comments, c.Full_name FROM Movie a JOIN Review b ON a.id = b.movie_id JOIN Producer c ON c.id = a.producer_id', 'SELECT a.title, b.comments, c.name, p.full_name FROM Movie a JOIN Review b ON a.id = b.movie_id JOIN Studio c ON c.id = a.studio_id JOIN Producer p ON p.id = a.producer_id']",
+      "ambig_question": "What were the comments split by movies and their productions?"
+    },
+    "inputs": {
+      "question": "List the comments, split by movies and their studio id."
+    },
+    "family_keys": [
+      "ambrosia:bcc42f40c5f25a702647",
+      "text:e77e214b0576d265eb70"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:d2820d04ff43b090a329",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d12fcfad0b37ee8fe867",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_film_type",
+    "source_question_id": "516",
+    "item": {
+      "question_id": 516,
+      "question": "Display documentaries and short films with a budget of 700000.0.",
+      "db_id": "attachment_1tab_ref_film_type",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE (film_type.type = \"Documentary\" OR film_type.type = \"Short Film\") AND budget.amount = 700000.0', 'SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE film_type.type = \"Documentary\" OR film_type.type = \"Short Film\" AND budget.amount = 700000.0']",
+      "ambig_question": "Display documentaries and short films with a budget of 700000.0."
+    },
+    "inputs": {
+      "question": "Display documentaries and short films with a budget of 700000.0."
+    },
+    "family_keys": [
+      "ambrosia:78b6086ab8ab841a4859",
+      "text:78b6086ab8ab841a4859"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f84e905fe410d425340d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:1afb132973834e76a6b5",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_film_type",
+    "source_question_id": "515",
+    "item": {
+      "question_id": 515,
+      "question": "Which documentaries had a budget of 700000.0 and which short films had the same amount of budget?",
+      "db_id": "attachment_1tab_ref_film_type",
+      "SQL": "SELECT filmmaking.name \r\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\r\nWHERE (film_type.type = \"Documentary\" OR film_type.type = \"Short Film\") AND budget.amount = 700000.0",
+      "ambig_queries": "['SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE (film_type.type = \"Documentary\" OR film_type.type = \"Short Film\") AND budget.amount = 700000.0', 'SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE film_type.type = \"Documentary\" OR film_type.type = \"Short Film\" AND budget.amount = 700000.0']",
+      "ambig_question": "Display documentaries and short films with a budget of 700000.0."
+    },
+    "inputs": {
+      "question": "Which documentaries had a budget of 700000.0 and which short films had the same amount of budget?"
+    },
+    "family_keys": [
+      "ambrosia:78b6086ab8ab841a4859",
+      "text:9db0d2c4237dc9dbfada"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f84e905fe410d425340d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:6a6dc1073ef935dcf7dd",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_film_type",
+    "source_question_id": "514",
+    "item": {
+      "question_id": 514,
+      "question": "Provide a list of all documentaries and also provide a list of short films with a budget of 700000.0.",
+      "db_id": "attachment_1tab_ref_film_type",
+      "SQL": "SELECT filmmaking.name \r\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\r\nWHERE film_type.type = \"Documentary\" OR film_type.type = \"Short Film\" AND budget.amount = 700000.0",
+      "ambig_queries": "['SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE (film_type.type = \"Documentary\" OR film_type.type = \"Short Film\") AND budget.amount = 700000.0', 'SELECT filmmaking.name \\r\\nFROM film_type JOIN film_details ON film_type.id = film_details.film_typeId JOIN budget ON film_details.budgetId = budget.id JOIN filmmaking ON filmmaking.id = film_details.filmmakingId\\r\\nWHERE film_type.type = \"Documentary\" OR film_type.type = \"Short Film\" AND budget.amount = 700000.0']",
+      "ambig_question": "Display documentaries and short films with a budget of 700000.0."
+    },
+    "inputs": {
+      "question": "Provide a list of all documentaries and also provide a list of short films with a budget of 700000.0."
+    },
+    "family_keys": [
+      "ambrosia:78b6086ab8ab841a4859",
+      "text:a0ffe68fe517dbdf575e"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f84e905fe410d425340d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:1e6472d4f80e9e92963f",
+    "benchmark": "ambrosia",
+    "db_id": "scope_national_parks_trails",
+    "source_question_id": "1504",
+    "item": {
+      "question_id": 1504,
+      "question": "What are the IDs, difficulties and lengths of the trails common to all national parks.",
+      "db_id": "scope_national_parks_trails",
+      "SQL": "SELECT Trails.trail_id, Trails.difficulty, Trails.length  from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id   GROUP BY National_Parks_Trails.trail_id HAVING COUNT(DISTINCT National_Parks_Trails.national_park_id) = (SELECT COUNT(*) FROM  National_Parks)",
+      "ambig_queries": "['SELECT Trails.trail_id, Trails.difficulty, Trails.length  from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id   GROUP BY National_Parks_Trails.trail_id HAVING COUNT(DISTINCT National_Parks_Trails.national_park_id) = (SELECT COUNT(*) FROM  National_Parks)', 'select national_parks.name , trails.trail_id , trails.difficulty , trails.length from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id']",
+      "ambig_question": "Show me the IDs, difficulties and lengths of the trails every national park has."
+    },
+    "inputs": {
+      "question": "What are the IDs, difficulties and lengths of the trails common to all national parks."
+    },
+    "family_keys": [
+      "ambrosia:b7e2c1299fa7099051ba",
+      "text:b9d835c52d785b08bb6f"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ca9d5b55cae5f72c6563",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:098b0fb26e6420de0497",
+    "benchmark": "ambrosia",
+    "db_id": "scope_national_parks_trails",
+    "source_question_id": "1509",
+    "item": {
+      "question_id": 1509,
+      "question": "which trail IDs and difficulties are associated with every national park?",
+      "db_id": "scope_national_parks_trails",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Trails.trail_id, Trails.difficulty  from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id   GROUP BY National_Parks_Trails.trail_id HAVING COUNT(DISTINCT National_Parks_Trails.national_park_id) = (SELECT COUNT(*) FROM  National_Parks)', 'select national_parks.name , trails.trail_id , trails.difficulty from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id']",
+      "ambig_question": "which trail IDs and difficulties are associated with every national park?"
+    },
+    "inputs": {
+      "question": "which trail IDs and difficulties are associated with every national park?"
+    },
+    "family_keys": [
+      "ambrosia:bf47c806bcaa257d845b",
+      "text:bf47c806bcaa257d845b"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ca9d5b55cae5f72c6563",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:dfefb21b1312c573d0e9",
+    "benchmark": "ambrosia",
+    "db_id": "scope_national_parks_trails",
+    "source_question_id": "1505",
+    "item": {
+      "question_id": 1505,
+      "question": "Show me the IDs, difficulties and lengths of the trails every national park has.",
+      "db_id": "scope_national_parks_trails",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Trails.trail_id, Trails.difficulty, Trails.length  from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id   GROUP BY National_Parks_Trails.trail_id HAVING COUNT(DISTINCT National_Parks_Trails.national_park_id) = (SELECT COUNT(*) FROM  National_Parks)', 'select national_parks.name , trails.trail_id , trails.difficulty , trails.length from National_Parks_Trails join Trails on National_Parks_Trails.trail_id = Trails.trail_id join National_Parks on National_Parks_Trails.national_park_id = National_Parks.park_id']",
+      "ambig_question": "Show me the IDs, difficulties and lengths of the trails every national park has."
+    },
+    "inputs": {
+      "question": "Show me the IDs, difficulties and lengths of the trails every national park has."
+    },
+    "family_keys": [
+      "ambrosia:b7e2c1299fa7099051ba",
+      "text:b7e2c1299fa7099051ba"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:ca9d5b55cae5f72c6563",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:806274391640fd45d581",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_place_of_origin",
+    "source_question_id": "2909",
+    "item": {
+      "question_id": 2909,
+      "question": "What manufacturing company and country are the devices made?",
+      "db_id": "vague_2tabs_place_of_origin",
+      "SQL": "Select device_name, name, company_name from Country join Medical_Device on Medical_Device.country_id = Country.id join Manufacturing_Company on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id  where device_name = 'Insulin Pen'",
+      "ambig_queries": "[\"Select device_name, name from Country join Medical_Device on Medical_Device.country_id = Country.id where device_name = 'Insulin Pen'\", \"Select device_name, company_name from Manufacturing_Company join Medical_Device on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'\", \"Select device_name, name, company_name from Country join Medical_Device on Medical_Device.country_id = Country.id join Manufacturing_Company on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id  where device_name = 'Insulin Pen'\"]",
+      "ambig_question": "Show me the devices and where they are made."
+    },
+    "inputs": {
+      "question": "What manufacturing company and country are the devices made?"
+    },
+    "family_keys": [
+      "ambrosia:3794564c95ca328f5dec",
+      "text:49212eac8c192f348a9f"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b22469337c7bcd644cfc",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:60e6ccab808a8418fd55",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_place_of_origin",
+    "source_question_id": "2910",
+    "item": {
+      "question_id": 2910,
+      "question": "What company manufactures the insulin pen, and in what country?",
+      "db_id": "vague_2tabs_place_of_origin",
+      "SQL": "Select name, company_name from Country join Medical_Device on Medical_Device.country_id = Country.id join Manufacturing_Company on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'",
+      "ambig_queries": "[\"Select name from Country join Medical_Device on Medical_Device.country_id = Country.id where device_name = 'Insulin Pen'\", \"Select company_name from Manufacturing_Company join Medical_Device on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'\", \"Select name, company_name from Country join Medical_Device on Medical_Device.country_id = Country.id join Manufacturing_Company on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'\"]",
+      "ambig_question": "Where is the insulin pen made?"
+    },
+    "inputs": {
+      "question": "What company manufactures the insulin pen, and in what country?"
+    },
+    "family_keys": [
+      "ambrosia:1c67b847fbf3fbfac9e3",
+      "text:5e54a61cf5728bce66d3"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b22469337c7bcd644cfc",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:3e891309175204fb1768",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_place_of_origin",
+    "source_question_id": "2908",
+    "item": {
+      "question_id": 2908,
+      "question": "Where is the insulin pen made?",
+      "db_id": "vague_2tabs_place_of_origin",
+      "SQL": "ambiguous",
+      "ambig_queries": "[\"Select name from Country join Medical_Device on Medical_Device.country_id = Country.id where device_name = 'Insulin Pen'\", \"Select company_name from Manufacturing_Company join Medical_Device on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'\", \"Select name, company_name from Country join Medical_Device on Medical_Device.country_id = Country.id join Manufacturing_Company on Medical_Device.Manufacturing_Company_id = Manufacturing_Company.id where device_name = 'Insulin Pen'\"]",
+      "ambig_question": "Where is the insulin pen made?"
+    },
+    "inputs": {
+      "question": "Where is the insulin pen made?"
+    },
+    "family_keys": [
+      "ambrosia:1c67b847fbf3fbfac9e3",
+      "text:1c67b847fbf3fbfac9e3"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b22469337c7bcd644cfc",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:9080d0bb72989f95d2b6",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_activity",
+    "source_question_id": "436",
+    "item": {
+      "question_id": 436,
+      "question": "Provide a list of all tourist attractions and also provide a list of local markets in London.",
+      "db_id": "attachment_2tab_val_activity",
+      "SQL": "SELECT Tourist_Attractions.name\r\nFROM Tourist_Attractions\r\nUNION\r\nSELECT Local_Markets.name\r\nFROM Local_Markets\r\nWHERE Local_Markets.Location = \"London\"",
+      "ambig_queries": "['SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nWHERE Tourist_Attractions.Location = \"London\"\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"', 'SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"']",
+      "ambig_question": "Show tourist attractions and local markets in London."
+    },
+    "inputs": {
+      "question": "Provide a list of all tourist attractions and also provide a list of local markets in London."
+    },
+    "family_keys": [
+      "ambrosia:7d8b02750be07bbc1c59",
+      "text:b57e51d6bb06f7fada06"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:68ff17293a7445742499",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:47ddd2f520e8779b8250",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_activity",
+    "source_question_id": "452",
+    "item": {
+      "question_id": 452,
+      "question": "What tourist attractions are in London and what local markets are in the same location?",
+      "db_id": "attachment_2tab_val_activity",
+      "SQL": "SELECT Tourist_Attractions.name\r\nFROM Tourist_Attractions\r\nWHERE Tourist_Attractions.Location = \"London\"\r\nUNION\r\nSELECT Local_Markets.name\r\nFROM Local_Markets\r\nWHERE Local_Markets.Location = \"London\"",
+      "ambig_queries": "['SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nWHERE Tourist_Attractions.Location = \"London\"\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"', 'SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"']",
+      "ambig_question": "Show tourist attractions and local markets in London."
+    },
+    "inputs": {
+      "question": "What tourist attractions are in London and what local markets are in the same location?"
+    },
+    "family_keys": [
+      "ambrosia:7d8b02750be07bbc1c59",
+      "text:aaaa1ccc3d55d4f3f195"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:68ff17293a7445742499",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:6029025900372007db30",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_activity",
+    "source_question_id": "437",
+    "item": {
+      "question_id": 437,
+      "question": "Show tourist attractions and local markets in London.",
+      "db_id": "attachment_2tab_val_activity",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nWHERE Tourist_Attractions.Location = \"London\"\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"', 'SELECT Tourist_Attractions.name\\r\\nFROM Tourist_Attractions\\r\\nUNION\\r\\nSELECT Local_Markets.name\\r\\nFROM Local_Markets\\r\\nWHERE Local_Markets.Location = \"London\"']",
+      "ambig_question": "Show tourist attractions and local markets in London."
+    },
+    "inputs": {
+      "question": "Show tourist attractions and local markets in London."
+    },
+    "family_keys": [
+      "ambrosia:7d8b02750be07bbc1c59",
+      "text:7d8b02750be07bbc1c59"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:68ff17293a7445742499",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:cc4505caee7795cc91c4",
+    "benchmark": "ambrosia",
+    "db_id": "scope_apartment_buildings_units",
+    "source_question_id": "1467",
+    "item": {
+      "question_id": 1467,
+      "question": "For every apartment building, show the unit types that they contain.",
+      "db_id": "scope_apartment_buildings_units",
+      "SQL": "select apartment_buildings.name , units.unit_type from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id",
+      "ambig_queries": "['SELECT Units.unit_type  from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id   GROUP BY Apartment_Buildings_Units.unit_id HAVING COUNT(DISTINCT Apartment_Buildings_Units.building_id) = (SELECT COUNT(*) FROM  Apartment_Buildings)', 'select apartment_buildings.name , units.unit_type from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id']",
+      "ambig_question": "Give me the type of unit for each apartment building."
+    },
+    "inputs": {
+      "question": "For every apartment building, show the unit types that they contain."
+    },
+    "family_keys": [
+      "ambrosia:7a86e0ca8189ac9b035b",
+      "text:d5c001fb3ac4aa775e8b"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bc373b8d419b2d027e98",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:2f9daee219de552a43f2",
+    "benchmark": "ambrosia",
+    "db_id": "scope_apartment_buildings_units",
+    "source_question_id": "1447",
+    "item": {
+      "question_id": 1447,
+      "question": "For each apartment building, list the unit type and descriptions they have.",
+      "db_id": "scope_apartment_buildings_units",
+      "SQL": "select apartment_buildings.name , units.unit_type , units.description from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id",
+      "ambig_queries": "['SELECT Units.unit_type, Units.description  from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id   GROUP BY Apartment_Buildings_Units.unit_id HAVING COUNT(DISTINCT Apartment_Buildings_Units.building_id) = (SELECT COUNT(*) FROM  Apartment_Buildings)', 'select apartment_buildings.name , units.unit_type , units.description from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id']",
+      "ambig_question": "Give me the types and descriptions of units that are in each apartment building."
+    },
+    "inputs": {
+      "question": "For each apartment building, list the unit type and descriptions they have."
+    },
+    "family_keys": [
+      "ambrosia:d256332d9916644aac74",
+      "text:3331170a4813800bdced"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bc373b8d419b2d027e98",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:53e33b22ad8fc5926363",
+    "benchmark": "ambrosia",
+    "db_id": "scope_apartment_buildings_units",
+    "source_question_id": "1487",
+    "item": {
+      "question_id": 1487,
+      "question": "For all apartment buildings, show me a description of the units it contains",
+      "db_id": "scope_apartment_buildings_units",
+      "SQL": "select apartment_buildings.name , units.description from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id",
+      "ambig_queries": "['SELECT Units.description  from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id   GROUP BY Apartment_Buildings_Units.unit_id HAVING COUNT(DISTINCT Apartment_Buildings_Units.building_id) = (SELECT COUNT(*) FROM  Apartment_Buildings)', 'select apartment_buildings.name , units.description from Apartment_Buildings_Units join Units on Apartment_Buildings_Units.unit_id = Units.id join Apartment_Buildings on Apartment_Buildings_Units.building_id = Apartment_Buildings.id']",
+      "ambig_question": "What unit descriptions do we have for every apartment building?"
+    },
+    "inputs": {
+      "question": "For all apartment buildings, show me a description of the units it contains"
+    },
+    "family_keys": [
+      "ambrosia:39b352794f381cb4b69c",
+      "text:a77d10bcd8c3a507cce5"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:bc373b8d419b2d027e98",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:7e1b1d29a96740ad6c1d",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_lead",
+    "source_question_id": "2894",
+    "item": {
+      "question_id": 2894,
+      "question": "Can you show the name and id of the main actor with the most films?",
+      "db_id": "vague_2cols_lead",
+      "SQL": "SELECT Actor.id, Actor.Fullname FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname HAVING COUNT(Movie.id) = (SELECT MAX(MovieCount) FROm (SELECT Count(Movie.id) AS MovieCount FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname))",
+      "ambig_queries": "['SELECT Actor.id, Actor.Fullname FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname HAVING COUNT(Movie.id) = (SELECT MAX(MovieCount) FROm (SELECT Count(Movie.id) AS MovieCount FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname))', 'SELECT Actress.id, Actress.Fullname FROM Actress JOIN Movie ON Actress.id = Movie.LeadActressId GROUP BY Actress.id, Actress.Fullname HAVING COUNT(Movie.id) = (SELECT MAX(MovieCount) FROm (SELECT Count(Movie.id) AS MovieCount FROM Actress JOIN Movie ON Actress.id = Movie.LeadActressId GROUP BY Actress.id, Actress.Fullname))', 'SELECT Actor.id, Actor.Fullname FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname HAVING COUNT(Movie.id) = (SELECT MAX(MovieCount) FROm (SELECT Count(Movie.id) AS MovieCount FROM Actor JOIN Movie ON Actor.id = Movie.LeadActorId GROUP BY Actor.id, Actor.Fullname)) UNION SELECT Actress.id, Actress.Fullname FROM Actress JOIN Movie ON Actress.id = Movie.LeadActressId GROUP BY Actress.id, Actress.Fullname HAVING COUNT(Movie.id) = (SELECT MAX(MovieCount) FROm (SELECT Count(Movie.id) AS MovieCount FROM Actress JOIN Movie ON Actress.id = Movie.LeadActressId GROUP BY Actress.id, Actress.Fullname))']",
+      "ambig_question": "Show me the name and id of the lead actor with the most films"
+    },
+    "inputs": {
+      "question": "Can you show the name and id of the main actor with the most films?"
+    },
+    "family_keys": [
+      "ambrosia:5decaca68a2953d14fa4",
+      "text:45b9e16ee1772b7ca350"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4d49fe92c77ff861a93b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:08d6992c087dd09cce22",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_lead",
+    "source_question_id": "2897",
+    "item": {
+      "question_id": 2897,
+      "question": "Show me the film starring the oldest lead actor",
+      "db_id": "vague_2cols_lead",
+      "SQL": "ambiguous",
+      "ambig_queries": "['Select Title, Fullname FROM Movie JOIN Actor on Actor.id = Movie.LeadActorId ORDER BY DateOfBirth ASC LIMIT 1', 'Select Title, Fullname FROM Movie JOIN Actress on Actress.id = Movie.LeadActressId ORDER BY DateOfBirth ASC LIMIT 1', 'Select Title, Actor.Fullname, Actress.Fullname FROM Movie JOIN Actor on Actor.id = Movie.LeadActorId JOIN Actress on Actress.id = Movie.LeadActressId ORDER BY Actor.DateOfBirth, Actress.DateOfBirth ASC LIMIT 1']",
+      "ambig_question": "Show me the film starring the oldest lead actor"
+    },
+    "inputs": {
+      "question": "Show me the film starring the oldest lead actor"
+    },
+    "family_keys": [
+      "ambrosia:c891cf99970f62c616f0",
+      "text:c891cf99970f62c616f0"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4d49fe92c77ff861a93b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:4f78b4beb19fdc6236c5",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_lead",
+    "source_question_id": "2895",
+    "item": {
+      "question_id": 2895,
+      "question": "Give me the name of a film with the oldest lead actor. What film has the oldest lead actress?",
+      "db_id": "vague_2cols_lead",
+      "SQL": "Select Title, Actor.Fullname, Actress.Fullname FROM Movie JOIN Actor on Actor.id = Movie.LeadActorId JOIN Actress on Actress.id = Movie.LeadActressId ORDER BY Actor.DateOfBirth, Actress.DateOfBirth ASC LIMIT 1",
+      "ambig_queries": "['Select Title, Fullname FROM Movie JOIN Actor on Actor.id = Movie.LeadActorId ORDER BY DateOfBirth ASC LIMIT 1', 'Select Title, Fullname FROM Movie JOIN Actress on Actress.id = Movie.LeadActressId ORDER BY DateOfBirth ASC LIMIT 1', 'Select Title, Actor.Fullname, Actress.Fullname FROM Movie JOIN Actor on Actor.id = Movie.LeadActorId JOIN Actress on Actress.id = Movie.LeadActressId ORDER BY Actor.DateOfBirth, Actress.DateOfBirth ASC LIMIT 1']",
+      "ambig_question": "Show me the film starring the oldest lead actor"
+    },
+    "inputs": {
+      "question": "Give me the name of a film with the oldest lead actor. What film has the oldest lead actress?"
+    },
+    "family_keys": [
+      "ambrosia:c891cf99970f62c616f0",
+      "text:2cf57ea500a6bf89e9d5"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4d49fe92c77ff861a93b",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:1c825b17f7f87292e994",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre4",
+    "source_question_id": "460",
+    "item": {
+      "question_id": 460,
+      "question": "List all sci-fi films and also list fantasy films that were filmed in New Zealand.",
+      "db_id": "attachment_1tab_ref_genre4",
+      "SQL": "SELECT Films.title \r\nFROM Genres JOIN Films ON Genres.id = Films.genreId\r\nWHERE Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\" AND Films.filmingLocation = \"New Zealand\"",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE (Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\") AND Films.filmingLocation = \"New Zealand\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\" AND Films.filmingLocation = \"New Zealand\"']",
+      "ambig_question": "Show sci-fi films and fantasy films filmed in New Zealand."
+    },
+    "inputs": {
+      "question": "List all sci-fi films and also list fantasy films that were filmed in New Zealand."
+    },
+    "family_keys": [
+      "ambrosia:bfc869601d45f11f4144",
+      "text:fcee1b03fc10d6d35e13"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f87c13e55a2a6049485d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:ef1627f3c2d16e5a8e22",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre4",
+    "source_question_id": "459",
+    "item": {
+      "question_id": 459,
+      "question": "Show sci-fi films and fantasy films filmed in New Zealand.",
+      "db_id": "attachment_1tab_ref_genre4",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE (Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\") AND Films.filmingLocation = \"New Zealand\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\" AND Films.filmingLocation = \"New Zealand\"']",
+      "ambig_question": "Show sci-fi films and fantasy films filmed in New Zealand."
+    },
+    "inputs": {
+      "question": "Show sci-fi films and fantasy films filmed in New Zealand."
+    },
+    "family_keys": [
+      "ambrosia:bfc869601d45f11f4144",
+      "text:bfc869601d45f11f4144"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f87c13e55a2a6049485d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:f6b010e198247ca0e9ff",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre4",
+    "source_question_id": "458",
+    "item": {
+      "question_id": 458,
+      "question": "What sci-fi films were filmed in New Zealand and what fantasy films were filmed in the same location?",
+      "db_id": "attachment_1tab_ref_genre4",
+      "SQL": "SELECT Films.title \r\nFROM Genres JOIN Films ON Genres.id = Films.genreId\r\nWHERE (Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\") AND Films.filmingLocation = \"New Zealand\"",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE (Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\") AND Films.filmingLocation = \"New Zealand\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Films ON Genres.id = Films.genreId\\r\\nWHERE Genres.genreName = \"Sci-Fi\" OR Genres.genreName = \"Fantasy\" AND Films.filmingLocation = \"New Zealand\"']",
+      "ambig_question": "Show sci-fi films and fantasy films filmed in New Zealand."
+    },
+    "inputs": {
+      "question": "What sci-fi films were filmed in New Zealand and what fantasy films were filmed in the same location?"
+    },
+    "family_keys": [
+      "ambrosia:bfc869601d45f11f4144",
+      "text:83333562c24446e8f8e1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f87c13e55a2a6049485d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:92e7acf5a160319d773d",
+    "benchmark": "ambrosia",
+    "db_id": "scope_theme_parks_attractions",
+    "source_question_id": "1490",
+    "item": {
+      "question_id": 1490,
+      "question": "What types and descriptions of attractions are available at each theme park?",
+      "db_id": "scope_theme_parks_attractions",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Attractions.type, Attractions.description  from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id   GROUP BY Theme_Parks_Attractions.attraction_id HAVING COUNT(DISTINCT Theme_Parks_Attractions.theme_park_id) = (SELECT COUNT(*) FROM  Theme_Parks)', 'select theme_parks.name , attractions.type , attractions.description from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id']",
+      "ambig_question": "What types and descriptions of attractions are available at each theme park?"
+    },
+    "inputs": {
+      "question": "What types and descriptions of attractions are available at each theme park?"
+    },
+    "family_keys": [
+      "ambrosia:dbe718b623bde7846720",
+      "text:dbe718b623bde7846720"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:7e8ab90f2d18bd4131b4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:20490cc632e9f0bbc276",
+    "benchmark": "ambrosia",
+    "db_id": "scope_theme_parks_attractions",
+    "source_question_id": "1515",
+    "item": {
+      "question_id": 1515,
+      "question": "Show me the attraction types every theme park has.",
+      "db_id": "scope_theme_parks_attractions",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Attractions.type  from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id   GROUP BY Theme_Parks_Attractions.attraction_id HAVING COUNT(DISTINCT Theme_Parks_Attractions.theme_park_id) = (SELECT COUNT(*) FROM  Theme_Parks)', 'select theme_parks.name , attractions.type from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id']",
+      "ambig_question": "Show me the attraction types every theme park has."
+    },
+    "inputs": {
+      "question": "Show me the attraction types every theme park has."
+    },
+    "family_keys": [
+      "ambrosia:0175f51e9ba8c163b126",
+      "text:0175f51e9ba8c163b126"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:7e8ab90f2d18bd4131b4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:f7751272e35abb8d0d37",
+    "benchmark": "ambrosia",
+    "db_id": "scope_theme_parks_attractions",
+    "source_question_id": "1491",
+    "item": {
+      "question_id": 1491,
+      "question": "For each theme park, what are the descriptions of the attractions?",
+      "db_id": "scope_theme_parks_attractions",
+      "SQL": "select theme_parks.name , attractions.description from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id",
+      "ambig_queries": "['SELECT Attractions.description  from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id   GROUP BY Theme_Parks_Attractions.attraction_id HAVING COUNT(DISTINCT Theme_Parks_Attractions.theme_park_id) = (SELECT COUNT(*) FROM  Theme_Parks)', 'select theme_parks.name , attractions.description from Theme_Parks_Attractions join Attractions on Theme_Parks_Attractions.attraction_id = Attractions.attraction_id join Theme_Parks on Theme_Parks_Attractions.theme_park_id = Theme_Parks.park_id']",
+      "ambig_question": "what are the descriptions of the attractions that each theme park has?"
+    },
+    "inputs": {
+      "question": "For each theme park, what are the descriptions of the attractions?"
+    },
+    "family_keys": [
+      "ambrosia:3f5046240ca35aa493a6",
+      "text:4148245f93fa60c15a32"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:7e8ab90f2d18bd4131b4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:1f9032daf97723ca9e49",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_soundtrack",
+    "source_question_id": "464",
+    "item": {
+      "question_id": 464,
+      "question": "Provide films listed with sound design and also show films where John Williams composed the music score.",
+      "db_id": "attachment_1tab_ref_soundtrack",
+      "SQL": "SELECT Movie_Elements.movie_title \r\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\r\nWHERE Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\" AND Composer.creator = \"John Williams\"",
+      "ambig_queries": "['SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE (Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\") AND Composer.creator = \"John Williams\"', 'SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\" AND Composer.creator = \"John Williams\"']",
+      "ambig_question": "Which films are listed with sound design and music score composed by John Williams?"
+    },
+    "inputs": {
+      "question": "Provide films listed with sound design and also show films where John Williams composed the music score."
+    },
+    "family_keys": [
+      "ambrosia:d9f3ba3ae39827ef4fea",
+      "text:5dd329e1710f7acf139d"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:73827969c0d271409c6e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:a268647948cb809551cc",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_soundtrack",
+    "source_question_id": "465",
+    "item": {
+      "question_id": 465,
+      "question": "Which films are listed with sound design and music score composed by John Williams?",
+      "db_id": "attachment_1tab_ref_soundtrack",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE (Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\") AND Composer.creator = \"John Williams\"', 'SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\" AND Composer.creator = \"John Williams\"']",
+      "ambig_question": "Which films are listed with sound design and music score composed by John Williams?"
+    },
+    "inputs": {
+      "question": "Which films are listed with sound design and music score composed by John Williams?"
+    },
+    "family_keys": [
+      "ambrosia:d9f3ba3ae39827ef4fea",
+      "text:d9f3ba3ae39827ef4fea"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:73827969c0d271409c6e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:c3a4d524ee74694cffb6",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_soundtrack",
+    "source_question_id": "466",
+    "item": {
+      "question_id": 466,
+      "question": "Display the films where John Williams composed the sound design or music score.",
+      "db_id": "attachment_1tab_ref_soundtrack",
+      "SQL": "SELECT Movie_Elements.movie_title \r\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\r\nWHERE (Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\") AND Composer.creator = \"John Williams\"",
+      "ambig_queries": "['SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE (Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\") AND Composer.creator = \"John Williams\"', 'SELECT Movie_Elements.movie_title \\r\\nFROM Movie_Elements JOIN Composer ON Movie_Elements.composer_id = Composer.id\\r\\nWHERE Movie_Elements.element_type = \"Sound Design\" OR Movie_Elements.element_type = \"Music Score\" AND Composer.creator = \"John Williams\"']",
+      "ambig_question": "Which films are listed with sound design and music score composed by John Williams?"
+    },
+    "inputs": {
+      "question": "Display the films where John Williams composed the sound design or music score."
+    },
+    "family_keys": [
+      "ambrosia:d9f3ba3ae39827ef4fea",
+      "text:782f9caf1675f900058f"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:73827969c0d271409c6e",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:bb90c4cde62e9500b586",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photography_workshops_techniques",
+    "source_question_id": "1494",
+    "item": {
+      "question_id": 1494,
+      "question": "What techniques do we have in common for every photography workshop?",
+      "db_id": "scope_photography_workshops_techniques",
+      "SQL": "SELECT Techniques.technique_name  from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id   GROUP BY Photography_Workshops_Techniques.technique_id HAVING COUNT(DISTINCT Photography_Workshops_Techniques.photography_workshop_id) = (SELECT COUNT(*) FROM  Photography_Workshops)",
+      "ambig_queries": "['SELECT Techniques.technique_name  from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id   GROUP BY Photography_Workshops_Techniques.technique_id HAVING COUNT(DISTINCT Photography_Workshops_Techniques.photography_workshop_id) = (SELECT COUNT(*) FROM  Photography_Workshops)', 'select photography_workshops.workshop_id , techniques.technique_name from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id']",
+      "ambig_question": "What techniques do we have for every photography workshop?"
+    },
+    "inputs": {
+      "question": "What techniques do we have in common for every photography workshop?"
+    },
+    "family_keys": [
+      "ambrosia:9effc63ca78107b915be",
+      "text:a83a519f843922c81f28"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a12535518f194b236604",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b975eac73315daa01a0b",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photography_workshops_techniques",
+    "source_question_id": "1492",
+    "item": {
+      "question_id": 1492,
+      "question": "What techniques do we have for every photography workshop?",
+      "db_id": "scope_photography_workshops_techniques",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Techniques.technique_name  from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id   GROUP BY Photography_Workshops_Techniques.technique_id HAVING COUNT(DISTINCT Photography_Workshops_Techniques.photography_workshop_id) = (SELECT COUNT(*) FROM  Photography_Workshops)', 'select photography_workshops.workshop_id , techniques.technique_name from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id']",
+      "ambig_question": "What techniques do we have for every photography workshop?"
+    },
+    "inputs": {
+      "question": "What techniques do we have for every photography workshop?"
+    },
+    "family_keys": [
+      "ambrosia:9effc63ca78107b915be",
+      "text:9effc63ca78107b915be"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a12535518f194b236604",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:065e8b8af1d14acb0f26",
+    "benchmark": "ambrosia",
+    "db_id": "scope_photography_workshops_techniques",
+    "source_question_id": "1493",
+    "item": {
+      "question_id": 1493,
+      "question": "For every photography workshop, what are the corresponding techniques?",
+      "db_id": "scope_photography_workshops_techniques",
+      "SQL": "select photography_workshops.workshop_id , techniques.technique_name from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id",
+      "ambig_queries": "['SELECT Techniques.technique_name  from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id   GROUP BY Photography_Workshops_Techniques.technique_id HAVING COUNT(DISTINCT Photography_Workshops_Techniques.photography_workshop_id) = (SELECT COUNT(*) FROM  Photography_Workshops)', 'select photography_workshops.workshop_id , techniques.technique_name from Photography_Workshops_Techniques join Techniques on Photography_Workshops_Techniques.technique_id = Techniques.technique_id join Photography_Workshops on Photography_Workshops_Techniques.photography_workshop_id = Photography_Workshops.workshop_id']",
+      "ambig_question": "What techniques do we have for every photography workshop?"
+    },
+    "inputs": {
+      "question": "For every photography workshop, what are the corresponding techniques?"
+    },
+    "family_keys": [
+      "ambrosia:9effc63ca78107b915be",
+      "text:810e2d814dc90ea36bc9"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a12535518f194b236604",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:802fe9af3df86c3ddf4d",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_distribution_channels",
+    "source_question_id": "2870",
+    "item": {
+      "question_id": 2870,
+      "question": "List platforms and countries along with the movies they are showing and their release year.",
+      "db_id": "vague_2cols_distribution_channels",
+      "SQL": "SELECT\r\nStreamingDetails.Platforms, Countries,\r\nStreamingDetails.Movies,\r\nFilms.ReleaseYear\r\nFROM StreamingDetails\r\nJOIN Films ON Films.Title = StreamingDetails.Movies",
+      "ambig_queries": "['SELECT\\r\\nStreamingDetails.Platforms,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies', 'SELECT\\r\\nStreamingDetails.Countries,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies', 'SELECT\\r\\nStreamingDetails.Platforms, Countries,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies']",
+      "ambig_question": "Show a list of distribution channels and movies that they are showing along with the release year."
+    },
+    "inputs": {
+      "question": "List platforms and countries along with the movies they are showing and their release year."
+    },
+    "family_keys": [
+      "ambrosia:55ad817ae46fdecd6dd2",
+      "text:14bf0ff67395f77f1106"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:29ce37a56a4b82793ffe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d09596bcfe97fe4ed3e0",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_distribution_channels",
+    "source_question_id": "2871",
+    "item": {
+      "question_id": 2871,
+      "question": "List all movies, along with the directors and streaming countries.",
+      "db_id": "vague_2cols_distribution_channels",
+      "SQL": "SELECT\r\nStreamingDetails.Countries,\r\nStreamingDetails.Movies,\r\nDirectors.Name\r\nFROM StreamingDetails\r\nJOIN Films ON Films.Title = StreamingDetails.Movies\r\nJOIN Directors ON Directors.DirectorID = Films.DirectorID",
+      "ambig_queries": "['SELECT\\r\\nStreamingDetails.Platforms,\\r\\nStreamingDetails.Movies,\\r\\nDirectors.Name\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies\\r\\nJOIN Directors ON Directors.DirectorID = Films.DirectorID', 'SELECT\\r\\nStreamingDetails.Countries,\\r\\nStreamingDetails.Movies,\\r\\nDirectors.Name\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies\\r\\nJOIN Directors ON Directors.DirectorID = Films.DirectorID', 'SELECT\\r\\nStreamingDetails.Platforms, Countries,\\r\\nStreamingDetails.Movies,\\r\\nDirectors.Name\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies\\r\\nJOIN Directors ON Directors.DirectorID = Films.DirectorID']",
+      "ambig_question": "Show a list of movies along with the directors and the distribution channels."
+    },
+    "inputs": {
+      "question": "List all movies, along with the directors and streaming countries."
+    },
+    "family_keys": [
+      "ambrosia:f26af2ae76d28f95ef38",
+      "text:215c0748ae332d9eefe8"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:29ce37a56a4b82793ffe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:8033c72fc9c48f645bc1",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_distribution_channels",
+    "source_question_id": "2869",
+    "item": {
+      "question_id": 2869,
+      "question": "Show a list of distribution channels and movies that they are showing along with the release year.",
+      "db_id": "vague_2cols_distribution_channels",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT\\r\\nStreamingDetails.Platforms,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies', 'SELECT\\r\\nStreamingDetails.Countries,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies', 'SELECT\\r\\nStreamingDetails.Platforms, Countries,\\r\\nStreamingDetails.Movies,\\r\\nFilms.ReleaseYear\\r\\nFROM StreamingDetails\\r\\nJOIN Films ON Films.Title = StreamingDetails.Movies']",
+      "ambig_question": "Show a list of distribution channels and movies that they are showing along with the release year."
+    },
+    "inputs": {
+      "question": "Show a list of distribution channels and movies that they are showing along with the release year."
+    },
+    "family_keys": [
+      "ambrosia:55ad817ae46fdecd6dd2",
+      "text:55ad817ae46fdecd6dd2"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:29ce37a56a4b82793ffe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:084af514fe9468e15939",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_leisure_features",
+    "source_question_id": "427",
+    "item": {
+      "question_id": 427,
+      "question": "What size are the swimming pools in Miami and what size are the hot tubs there?",
+      "db_id": "attachment_2tab_ref_leisure_features",
+      "SQL": "SELECT SwimmingPool.Size\r\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\r\nWHERE City.Name = 'Miami'\r\nUNION\r\nSELECT HotTub.Capacity\r\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\r\nWHERE City.Name = 'Miami'",
+      "ambig_queries": "[\"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nWHERE City.Name = 'Miami'\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\", \"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\"]",
+      "ambig_question": "What size are all swimming pools and hot tubs in Miami?"
+    },
+    "inputs": {
+      "question": "What size are the swimming pools in Miami and what size are the hot tubs there?"
+    },
+    "family_keys": [
+      "ambrosia:2b8d20f810428398ddd1",
+      "text:821e079b3f2ef8900910"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f7d2700428784067ef8d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:e1c526263adcbde71782",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_leisure_features",
+    "source_question_id": "428",
+    "item": {
+      "question_id": 428,
+      "question": "Can you show me the sizes of all hot tubs in Miami along with the sizes of all swimming pools in any given location?",
+      "db_id": "attachment_2tab_ref_leisure_features",
+      "SQL": "SELECT SwimmingPool.Size\r\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\r\nUNION\r\nSELECT HotTub.Capacity\r\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\r\nWHERE City.Name = 'Miami'",
+      "ambig_queries": "[\"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nWHERE City.Name = 'Miami'\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\", \"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\"]",
+      "ambig_question": "What size are all swimming pools and hot tubs in Miami?"
+    },
+    "inputs": {
+      "question": "Can you show me the sizes of all hot tubs in Miami along with the sizes of all swimming pools in any given location?"
+    },
+    "family_keys": [
+      "ambrosia:2b8d20f810428398ddd1",
+      "text:118bec6432fb3e2679a5"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f7d2700428784067ef8d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:af359bd7cca3bef8f06d",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_ref_leisure_features",
+    "source_question_id": "429",
+    "item": {
+      "question_id": 429,
+      "question": "What size are all swimming pools and hot tubs in Miami?",
+      "db_id": "attachment_2tab_ref_leisure_features",
+      "SQL": "ambiguous",
+      "ambig_queries": "[\"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nWHERE City.Name = 'Miami'\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\", \"SELECT SwimmingPool.Size\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN SwimmingPool ON Hotel.ID = SwimmingPool.ID\\r\\nUNION\\r\\nSELECT HotTub.Capacity\\r\\nFROM City JOIN Hotel ON City.ID = Hotel.ID JOIN HotTub ON Hotel.ID = HotTub.ID\\r\\nWHERE City.Name = 'Miami'\"]",
+      "ambig_question": "What size are all swimming pools and hot tubs in Miami?"
+    },
+    "inputs": {
+      "question": "What size are all swimming pools and hot tubs in Miami?"
+    },
+    "family_keys": [
+      "ambrosia:2b8d20f810428398ddd1",
+      "text:2b8d20f810428398ddd1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f7d2700428784067ef8d",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:492168f48f42cce8890d",
+    "benchmark": "ambrosia",
+    "db_id": "scope_spa_treatments",
+    "source_question_id": "1521",
+    "item": {
+      "question_id": 1521,
+      "question": "For each spa, provide the corresponding names of treatments.",
+      "db_id": "scope_spa_treatments",
+      "SQL": "select spa.name , treatments.name from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id",
+      "ambig_queries": "['SELECT Treatments.name  from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id   GROUP BY Spa_Treatments.treatment_id HAVING COUNT(DISTINCT Spa_Treatments.spa_id) = (SELECT COUNT(*) FROM  Spa)', 'select spa.name , treatments.name from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id']",
+      "ambig_question": "What treatment options do we have for each spa?"
+    },
+    "inputs": {
+      "question": "For each spa, provide the corresponding names of treatments."
+    },
+    "family_keys": [
+      "ambrosia:6e4a7fac0fdc0d50f515",
+      "text:d9539c5089aadf59778d"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:51d8b052e926e6bbba23",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5d0174094bb940d71fa8",
+    "benchmark": "ambrosia",
+    "db_id": "scope_spa_treatments",
+    "source_question_id": "1517",
+    "item": {
+      "question_id": 1517,
+      "question": "Which treatments are common to all spas and what are their descriptions?",
+      "db_id": "scope_spa_treatments",
+      "SQL": "SELECT Treatments.name, Treatments.description  from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id   GROUP BY Spa_Treatments.treatment_id HAVING COUNT(DISTINCT Spa_Treatments.spa_id) = (SELECT COUNT(*) FROM  Spa)",
+      "ambig_queries": "['SELECT Treatments.name, Treatments.description  from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id   GROUP BY Spa_Treatments.treatment_id HAVING COUNT(DISTINCT Spa_Treatments.spa_id) = (SELECT COUNT(*) FROM  Spa)', 'select spa.name , treatments.name , treatments.description from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id']",
+      "ambig_question": "Give me the treatments that every spa has and their descriptions."
+    },
+    "inputs": {
+      "question": "Which treatments are common to all spas and what are their descriptions?"
+    },
+    "family_keys": [
+      "ambrosia:d03dff5789187bb08b89",
+      "text:1b95842873c6d08b1efb"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:51d8b052e926e6bbba23",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:65d32bf9a8734bfb0e33",
+    "benchmark": "ambrosia",
+    "db_id": "scope_spa_treatments",
+    "source_question_id": "1520",
+    "item": {
+      "question_id": 1520,
+      "question": "For each spa, what are the corresponding descriptions of treatments?",
+      "db_id": "scope_spa_treatments",
+      "SQL": "select spa.name , treatments.description from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id",
+      "ambig_queries": "['SELECT Treatments.description  from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id   GROUP BY Spa_Treatments.treatment_id HAVING COUNT(DISTINCT Spa_Treatments.spa_id) = (SELECT COUNT(*) FROM  Spa)', 'select spa.name , treatments.description from Spa_Treatments join Treatments on Spa_Treatments.treatment_id = Treatments.treatment_id join Spa on Spa_Treatments.spa_id = Spa.spa_id']",
+      "ambig_question": "Show me descriptions of treatments available for every spa."
+    },
+    "inputs": {
+      "question": "For each spa, what are the corresponding descriptions of treatments?"
+    },
+    "family_keys": [
+      "ambrosia:990d41e1bf8f06bf0f58",
+      "text:99bbec2e64f9bcff32e7"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:51d8b052e926e6bbba23",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:138649d59dd70c821858",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_release_date",
+    "source_question_id": "2848",
+    "item": {
+      "question_id": 2848,
+      "question": "show the streaming and theatrical release date for all movies",
+      "db_id": "vague_2cols_release_date",
+      "SQL": "select title, streaming_release_date, theatrical_release_date from movies",
+      "ambig_queries": "['select title, streaming_release_date from movies', 'select title, theatrical_release_date from movies', 'select title, streaming_release_date, theatrical_release_date from movies']",
+      "ambig_question": "when was a movie released"
+    },
+    "inputs": {
+      "question": "show the streaming and theatrical release date for all movies"
+    },
+    "family_keys": [
+      "ambrosia:39856a42180e9132fbd5",
+      "text:1de83f36e09fefedc313"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:3437a854a1d632d7a81f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:f6113bd506c8898618ce",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_release_date",
+    "source_question_id": "2850",
+    "item": {
+      "question_id": 2850,
+      "question": "When was Selma first available to stream and who was the director?",
+      "db_id": "vague_2cols_release_date",
+      "SQL": "select streaming_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'",
+      "ambig_queries": "[\"select streaming_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\", \"select theatrical_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\", \"select streaming_release_date, theatrical_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\"]",
+      "ambig_question": "who directed 'Selma' and when was it released?"
+    },
+    "inputs": {
+      "question": "When was Selma first available to stream and who was the director?"
+    },
+    "family_keys": [
+      "ambrosia:bfac6f3d6da81efe8796",
+      "text:dccd94e98e7a8d2e9aef"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:3437a854a1d632d7a81f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:a7094b5019e947b7bb8e",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2cols_release_date",
+    "source_question_id": "2835",
+    "item": {
+      "question_id": 2835,
+      "question": "When was Selma released in theatres and who directed it?",
+      "db_id": "vague_2cols_release_date",
+      "SQL": "select theatrical_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'",
+      "ambig_queries": "[\"select streaming_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\", \"select theatrical_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\", \"select streaming_release_date, theatrical_release_date, name from movies join Directors on Directors.id = movies.director_id where title = 'Selma'\"]",
+      "ambig_question": "who directed 'Selma' and when was it released?"
+    },
+    "inputs": {
+      "question": "When was Selma released in theatres and who directed it?"
+    },
+    "family_keys": [
+      "ambrosia:bfac6f3d6da81efe8796",
+      "text:0a65767ff3de7fb4b1eb"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:3437a854a1d632d7a81f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:3276e9b7b32e043f26d0",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre2",
+    "source_question_id": "503",
+    "item": {
+      "question_id": 503,
+      "question": "Provide all the action films, in addition, show the adventure films starring Tom Cruise.",
+      "db_id": "attachment_1tab_ref_genre2",
+      "SQL": "SELECT Films.title \r\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\r\nWHERE Genres.genre = \"Action\" OR Genres.genre = \"Adventure\" AND Stars.star_name = \"Tom Cruise\"",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE (Genres.genre = \"Action\" OR Genres.genre = \"Adventure\") AND Stars.star_name = \"Tom Cruise\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE Genres.genre = \"Action\" OR Genres.genre = \"Adventure\" AND Stars.star_name = \"Tom Cruise\"']",
+      "ambig_question": "Display action films and adventure films which star Tom Cruise."
+    },
+    "inputs": {
+      "question": "Provide all the action films, in addition, show the adventure films starring Tom Cruise."
+    },
+    "family_keys": [
+      "ambrosia:8b81cbec96f3245ad5ce",
+      "text:eaf43d6770504976e4d8"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6ab1216774219936349a",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:c03a8edce6a682f7a9b9",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre2",
+    "source_question_id": "487",
+    "item": {
+      "question_id": 487,
+      "question": "Give me the Tom Cruise films classed in either action or adventure genre.",
+      "db_id": "attachment_1tab_ref_genre2",
+      "SQL": "SELECT Films.title \r\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\r\nWHERE (Genres.genre = \"Action\" OR Genres.genre = \"Adventure\") AND Stars.star_name = \"Tom Cruise\"",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE (Genres.genre = \"Action\" OR Genres.genre = \"Adventure\") AND Stars.star_name = \"Tom Cruise\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE Genres.genre = \"Action\" OR Genres.genre = \"Adventure\" AND Stars.star_name = \"Tom Cruise\"']",
+      "ambig_question": "Display action films and adventure films which star Tom Cruise."
+    },
+    "inputs": {
+      "question": "Give me the Tom Cruise films classed in either action or adventure genre."
+    },
+    "family_keys": [
+      "ambrosia:8b81cbec96f3245ad5ce",
+      "text:8fe26f57da0dfd112259"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6ab1216774219936349a",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:336c046d212dad4a16f5",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_1tab_ref_genre2",
+    "source_question_id": "469",
+    "item": {
+      "question_id": 469,
+      "question": "Display action films and adventure films which star Tom Cruise.",
+      "db_id": "attachment_1tab_ref_genre2",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE (Genres.genre = \"Action\" OR Genres.genre = \"Adventure\") AND Stars.star_name = \"Tom Cruise\"', 'SELECT Films.title \\r\\nFROM Genres JOIN Film_Genres ON Genres.id = Film_Genres.film_genre_id JOIN Films ON Film_Genres.film_id = Films.film_id JOIN Film_Stars ON Films.film_id = Film_Stars.film_id JOIN Stars ON Film_Stars.film_star_id = Stars.id\\r\\nWHERE Genres.genre = \"Action\" OR Genres.genre = \"Adventure\" AND Stars.star_name = \"Tom Cruise\"']",
+      "ambig_question": "Display action films and adventure films which star Tom Cruise."
+    },
+    "inputs": {
+      "question": "Display action films and adventure films which star Tom Cruise."
+    },
+    "family_keys": [
+      "ambrosia:8b81cbec96f3245ad5ce",
+      "text:8b81cbec96f3245ad5ce"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:6ab1216774219936349a",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:4acac23544bf9383e211",
+    "benchmark": "ambrosia",
+    "db_id": "scope_resorts_activities",
+    "source_question_id": "1512",
+    "item": {
+      "question_id": 1512,
+      "question": "List the activities that are common to all resorts.",
+      "db_id": "scope_resorts_activities",
+      "SQL": "SELECT Activities.activityName  from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id   GROUP BY Resorts_Activities.activityID HAVING COUNT(DISTINCT Resorts_Activities.resortID) = (SELECT COUNT(*) FROM  Resorts)",
+      "ambig_queries": "['SELECT Activities.activityName  from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id   GROUP BY Resorts_Activities.activityID HAVING COUNT(DISTINCT Resorts_Activities.resortID) = (SELECT COUNT(*) FROM  Resorts)', 'select resorts.name , activities.activityname from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id']",
+      "ambig_question": "List the activities offered by every resort."
+    },
+    "inputs": {
+      "question": "List the activities that are common to all resorts."
+    },
+    "family_keys": [
+      "ambrosia:d86c83c39c002bfa4abe",
+      "text:5d8eb55c242f49334957"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1ca2821eabcf1e96ec22",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:8ab20baf7c4f8a57c22b",
+    "benchmark": "ambrosia",
+    "db_id": "scope_resorts_activities",
+    "source_question_id": "1510",
+    "item": {
+      "question_id": 1510,
+      "question": "List the activities offered by every resort.",
+      "db_id": "scope_resorts_activities",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Activities.activityName  from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id   GROUP BY Resorts_Activities.activityID HAVING COUNT(DISTINCT Resorts_Activities.resortID) = (SELECT COUNT(*) FROM  Resorts)', 'select resorts.name , activities.activityname from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id']",
+      "ambig_question": "List the activities offered by every resort."
+    },
+    "inputs": {
+      "question": "List the activities offered by every resort."
+    },
+    "family_keys": [
+      "ambrosia:d86c83c39c002bfa4abe",
+      "text:d86c83c39c002bfa4abe"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1ca2821eabcf1e96ec22",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5d7f5c1e8950eb9281b8",
+    "benchmark": "ambrosia",
+    "db_id": "scope_resorts_activities",
+    "source_question_id": "1511",
+    "item": {
+      "question_id": 1511,
+      "question": "List the activities for each resort.",
+      "db_id": "scope_resorts_activities",
+      "SQL": "select resorts.name , activities.activityname from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id",
+      "ambig_queries": "['SELECT Activities.activityName  from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id   GROUP BY Resorts_Activities.activityID HAVING COUNT(DISTINCT Resorts_Activities.resortID) = (SELECT COUNT(*) FROM  Resorts)', 'select resorts.name , activities.activityname from Resorts_Activities join Activities on Resorts_Activities.activityID = Activities.activityID join Resorts on Resorts_Activities.resortID = Resorts.id']",
+      "ambig_question": "List the activities offered by every resort."
+    },
+    "inputs": {
+      "question": "List the activities for each resort."
+    },
+    "family_keys": [
+      "ambrosia:d86c83c39c002bfa4abe",
+      "text:faa690dee60ef562bf51"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1ca2821eabcf1e96ec22",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:81647587746c3862c0c8",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_qualifications",
+    "source_question_id": "2798",
+    "item": {
+      "question_id": 2798,
+      "question": "What qualification and certification are required for which posted jobs?",
+      "db_id": "vague_2tabs_qualifications",
+      "SQL": "select title, level_name, cert_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id join Certification on Job_Post.Certification_id = Certification.id",
+      "ambig_queries": "['select title, level_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id', 'select title, cert_name from Job_Post join Certification on Job_Post.Certification_id = Certification.id', 'select title, level_name, cert_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id join Certification on Job_Post.Certification_id = Certification.id']",
+      "ambig_question": "Which posted jobs require which qualifications?"
+    },
+    "inputs": {
+      "question": "What qualification and certification are required for which posted jobs?"
+    },
+    "family_keys": [
+      "ambrosia:5d19ba0270ecdd698796",
+      "text:15de0577487641f837d8"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f20342de95cd7c985af4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:35700394fef1fee9bd47",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_qualifications",
+    "source_question_id": "2788",
+    "item": {
+      "question_id": 2788,
+      "question": "List all degrees and certifications and the number of jobs available for each degree and certification.",
+      "db_id": "vague_2tabs_qualifications",
+      "SQL": "select level_name, cert_name, count(*) from Degree_Level join Job_Post on Job_Post.degree_level_id = Degree_Level.id join Certification on Job_Post.Certification_id = Certification.id group by level_name, cert_name",
+      "ambig_queries": "['select level_name, count(*) from Degree_Level join Job_Post on Job_Post.degree_level_id = Degree_Level.id group by level_name', 'select cert_name, count(*) from Certification join Job_Post on Job_Post.Certification_id = Certification.id group by cert_name', 'select level_name, cert_name, count(*) from Degree_Level join Job_Post on Job_Post.degree_level_id = Degree_Level.id join Certification on Job_Post.Certification_id = Certification.id group by level_name, cert_name']",
+      "ambig_question": "Display a list of qualifications and the number of available jobs for each"
+    },
+    "inputs": {
+      "question": "List all degrees and certifications and the number of jobs available for each degree and certification."
+    },
+    "family_keys": [
+      "ambrosia:e2c0031810c265c9a21d",
+      "text:44a981aea21923f0e50d"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f20342de95cd7c985af4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:d9246af3d08a3b0799c2",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_qualifications",
+    "source_question_id": "2792",
+    "item": {
+      "question_id": 2792,
+      "question": "What qualification is required for which posted jobs?",
+      "db_id": "vague_2tabs_qualifications",
+      "SQL": "select title, level_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id",
+      "ambig_queries": "['select title, level_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id', 'select title, cert_name from Job_Post join Certification on Job_Post.Certification_id = Certification.id', 'select title, level_name, cert_name from Job_Post join Degree_Level on Job_Post.degree_level_id = Degree_Level.id join Certification on Job_Post.Certification_id = Certification.id']",
+      "ambig_question": "Which posted jobs require which qualifications?"
+    },
+    "inputs": {
+      "question": "What qualification is required for which posted jobs?"
+    },
+    "family_keys": [
+      "ambrosia:5d19ba0270ecdd698796",
+      "text:f48577d01994940d17fa"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:f20342de95cd7c985af4",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:23c67fc5174649c54fdc",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_cleaning_professional",
+    "source_question_id": "444",
+    "item": {
+      "question_id": 444,
+      "question": "List all housekeepers and also display laundry service attendants working at The Grand Hotel.",
+      "db_id": "attachment_2tab_val_cleaning_professional",
+      "SQL": "SELECT Housekeeping.housekeeper as name\r\nFROM Housekeeping\r\nUNION\r\nSELECT LaundryService.laundry_attendant as name\r\nFROM LaundryService\r\nWHERE LaundryService.hotel = \"The Grand Hotel\"",
+      "ambig_queries": "['SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nWHERE Housekeeping.hotel = \"The Grand Hotel\"\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"', 'SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"']",
+      "ambig_question": "Display housekeepers and laundry service attendants working at the Grand Hotel."
+    },
+    "inputs": {
+      "question": "List all housekeepers and also display laundry service attendants working at The Grand Hotel."
+    },
+    "family_keys": [
+      "ambrosia:00c4735ebb1bb8535769",
+      "text:6e758f116c413ff8b754"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1a2dbc178098dd90271f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:b03e10a48dedee56ebb9",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_cleaning_professional",
+    "source_question_id": "446",
+    "item": {
+      "question_id": 446,
+      "question": "Display housekeepers and laundry service attendants working at the Grand Hotel.",
+      "db_id": "attachment_2tab_val_cleaning_professional",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nWHERE Housekeeping.hotel = \"The Grand Hotel\"\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"', 'SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"']",
+      "ambig_question": "Display housekeepers and laundry service attendants working at the Grand Hotel."
+    },
+    "inputs": {
+      "question": "Display housekeepers and laundry service attendants working at the Grand Hotel."
+    },
+    "family_keys": [
+      "ambrosia:00c4735ebb1bb8535769",
+      "text:00c4735ebb1bb8535769"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1a2dbc178098dd90271f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:25fcb6a06e3a59b00b0b",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_cleaning_professional",
+    "source_question_id": "445",
+    "item": {
+      "question_id": 445,
+      "question": "What housekeepers and laundry service attendants are employed at the Grand Hotel?",
+      "db_id": "attachment_2tab_val_cleaning_professional",
+      "SQL": "SELECT Housekeeping.housekeeper as name\r\nFROM Housekeeping\r\nWHERE Housekeeping.hotel = \"The Grand Hotel\"\r\nUNION\r\nSELECT LaundryService.laundry_attendant as name\r\nFROM LaundryService\r\nWHERE LaundryService.hotel = \"The Grand Hotel\"",
+      "ambig_queries": "['SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nWHERE Housekeeping.hotel = \"The Grand Hotel\"\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"', 'SELECT Housekeeping.housekeeper as name\\r\\nFROM Housekeeping\\r\\nUNION\\r\\nSELECT LaundryService.laundry_attendant as name\\r\\nFROM LaundryService\\r\\nWHERE LaundryService.hotel = \"The Grand Hotel\"']",
+      "ambig_question": "Display housekeepers and laundry service attendants working at the Grand Hotel."
+    },
+    "inputs": {
+      "question": "What housekeepers and laundry service attendants are employed at the Grand Hotel?"
+    },
+    "family_keys": [
+      "ambrosia:00c4735ebb1bb8535769",
+      "text:d26eb1b74a6d6c63f8f3"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:1a2dbc178098dd90271f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:595ce76bf73877c4c9f9",
+    "benchmark": "ambrosia",
+    "db_id": "scope_preservation_societies_projects",
+    "source_question_id": "1541",
+    "item": {
+      "question_id": 1541,
+      "question": "Tell me the type, cost and description of projects that each preservation society has.",
+      "db_id": "scope_preservation_societies_projects",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Projects.Type, Projects.Description, Projects.Cost  from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID   GROUP BY Preservation_Societies_Projects.Projects_ID HAVING COUNT(DISTINCT Preservation_Societies_Projects.Societies_ID) = (SELECT COUNT(*) FROM  Preservation_Societies)', 'select preservation_societies.name , projects.type , projects.description , projects.cost from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID']",
+      "ambig_question": "Tell me the type, cost and description of projects that each preservation society has."
+    },
+    "inputs": {
+      "question": "Tell me the type, cost and description of projects that each preservation society has."
+    },
+    "family_keys": [
+      "ambrosia:39cb0dccfa335fc0a919",
+      "text:39cb0dccfa335fc0a919"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b76524ad747f709a91fe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:009fd27f106ec4727054",
+    "benchmark": "ambrosia",
+    "db_id": "scope_preservation_societies_projects",
+    "source_question_id": "1558",
+    "item": {
+      "question_id": 1558,
+      "question": "For each preservation society, list the corresponding project types and costs.",
+      "db_id": "scope_preservation_societies_projects",
+      "SQL": "select preservation_societies.name , projects.type , projects.cost from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID",
+      "ambig_queries": "['SELECT Projects.Type, Projects.Cost  from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID   GROUP BY Preservation_Societies_Projects.Projects_ID HAVING COUNT(DISTINCT Preservation_Societies_Projects.Societies_ID) = (SELECT COUNT(*) FROM  Preservation_Societies)', 'select preservation_societies.name , projects.type , projects.cost from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID']",
+      "ambig_question": "which project types and costs are associated with each preservation society?"
+    },
+    "inputs": {
+      "question": "For each preservation society, list the corresponding project types and costs."
+    },
+    "family_keys": [
+      "ambrosia:2733b10bdaffbae0837f",
+      "text:28b401093d02f7fcf592"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b76524ad747f709a91fe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:0d8a24dc02dc91934400",
+    "benchmark": "ambrosia",
+    "db_id": "scope_preservation_societies_projects",
+    "source_question_id": "1543",
+    "item": {
+      "question_id": 1543,
+      "question": "What are the descriptions of the projects that all preservation societies have in common?",
+      "db_id": "scope_preservation_societies_projects",
+      "SQL": "SELECT Projects.Description  from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID   GROUP BY Preservation_Societies_Projects.Projects_ID HAVING COUNT(DISTINCT Preservation_Societies_Projects.Societies_ID) = (SELECT COUNT(*) FROM  Preservation_Societies)",
+      "ambig_queries": "['SELECT Projects.Description  from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID   GROUP BY Preservation_Societies_Projects.Projects_ID HAVING COUNT(DISTINCT Preservation_Societies_Projects.Societies_ID) = (SELECT COUNT(*) FROM  Preservation_Societies)', 'select preservation_societies.name , projects.description from Preservation_Societies_Projects join Projects on Preservation_Societies_Projects.Projects_ID = Projects.ID join Preservation_Societies on Preservation_Societies_Projects.Societies_ID = Preservation_Societies.ID']",
+      "ambig_question": "Give me the descriptions of the projects that every preservation society has."
+    },
+    "inputs": {
+      "question": "What are the descriptions of the projects that all preservation societies have in common?"
+    },
+    "family_keys": [
+      "ambrosia:032dc68d82eb1cd222ee",
+      "text:ce3103bf2056df43792e"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:b76524ad747f709a91fe",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:61b6f10289e1038f4145",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_production",
+    "source_question_id": "2823",
+    "item": {
+      "question_id": 2823,
+      "question": "Provide all the movies, the producers and studios.",
+      "db_id": "vague_2tabs_production",
+      "SQL": "select Movies.title, Studio.name, Producer.Full_name  from Studio join Movies on Studio.studio_id=Movies.studio_id  join Producer on Producer.producer_id=Movies.studio_id",
+      "ambig_queries": "['select Movies.title, Studio.name from Studio join Movies on Studio.studio_id=Movies.studio_id', 'select Movies.title, Producer.Full_name  from Producer join Movies on Producer.producer_id=Movies.studio_id', 'select Movies.title, Studio.name, Producer.Full_name  from Studio join Movies on Studio.studio_id=Movies.studio_id  join Producer on Producer.producer_id=Movies.studio_id']",
+      "ambig_question": "Display a list of movies and who produced them"
+    },
+    "inputs": {
+      "question": "Provide all the movies, the producers and studios."
+    },
+    "family_keys": [
+      "ambrosia:2e3ce3218058fc0901e4",
+      "text:5485c8ab7bf2ddab6300"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a3ca8a6cbe06371decb7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:8a002cd6ac57e2d07c8b",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_production",
+    "source_question_id": "2824",
+    "item": {
+      "question_id": 2824,
+      "question": "Who produced Inception and in which studio?",
+      "db_id": "vague_2tabs_production",
+      "SQL": "select name, Full_name  from Studio join Movies on Studio.studio_id=Movies.studio_id  join Producer on Producer.producer_id=Movies.studio_id where Movies.title='Inception'",
+      "ambig_queries": "[\"select name from Studio join Movies on Studio.studio_id=Movies.studio_id where Movies.title='Inception'\", \"select Full_name from Producer join Movies on Producer.producer_id=Movies.studio_id where Movies.title='Inception'\", \"select name, Full_name  from Studio join Movies on Studio.studio_id=Movies.studio_id  join Producer on Producer.producer_id=Movies.studio_id where Movies.title='Inception'\"]",
+      "ambig_question": "Who produced Inception?"
+    },
+    "inputs": {
+      "question": "Who produced Inception and in which studio?"
+    },
+    "family_keys": [
+      "ambrosia:e509e185980af8f059b1",
+      "text:33f7c9d7843a6ac7f5d0"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a3ca8a6cbe06371decb7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5f085e9af69827ed1bbf",
+    "benchmark": "ambrosia",
+    "db_id": "vague_2tabs_production",
+    "source_question_id": "2800",
+    "item": {
+      "question_id": 2800,
+      "question": "Who produced Inception?",
+      "db_id": "vague_2tabs_production",
+      "SQL": "ambiguous",
+      "ambig_queries": "[\"select name from Studio join Movies on Studio.studio_id=Movies.studio_id where Movies.title='Inception'\", \"select Full_name from Producer join Movies on Producer.producer_id=Movies.studio_id where Movies.title='Inception'\", \"select name, Full_name  from Studio join Movies on Studio.studio_id=Movies.studio_id  join Producer on Producer.producer_id=Movies.studio_id where Movies.title='Inception'\"]",
+      "ambig_question": "Who produced Inception?"
+    },
+    "inputs": {
+      "question": "Who produced Inception?"
+    },
+    "family_keys": [
+      "ambrosia:e509e185980af8f059b1",
+      "text:e509e185980af8f059b1"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a3ca8a6cbe06371decb7",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:67ffa6047d3ba91b074a",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_genre1",
+    "source_question_id": "554",
+    "item": {
+      "question_id": 554,
+      "question": "What action movies is Leonardo DiCaprio in and what adventure movies have the same star?",
+      "db_id": "attachment_2tab_val_genre1",
+      "SQL": "SELECT Action_Movies.title\r\nFROM Action_Movies\r\nWHERE Action_Movies.Stars = \"Leonardo DiCaprio\"\r\nUNION\r\nSELECT Adventure_Movies.title\r\nFROM Adventure_Movies\r\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"",
+      "ambig_queries": "['SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nWHERE Action_Movies.Stars = \"Leonardo DiCaprio\"\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"', 'SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"']",
+      "ambig_question": "Show action movies and adventure movies with Leonardo DiCaprio."
+    },
+    "inputs": {
+      "question": "What action movies is Leonardo DiCaprio in and what adventure movies have the same star?"
+    },
+    "family_keys": [
+      "ambrosia:d87b43665776eaa2b390",
+      "text:42170355b07044357790"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2d042c780b52cd7fb418",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:afd4143e651dfed7dc78",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_genre1",
+    "source_question_id": "522",
+    "item": {
+      "question_id": 522,
+      "question": "Show action movies and adventure movies with Leonardo DiCaprio.",
+      "db_id": "attachment_2tab_val_genre1",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nWHERE Action_Movies.Stars = \"Leonardo DiCaprio\"\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"', 'SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"']",
+      "ambig_question": "Show action movies and adventure movies with Leonardo DiCaprio."
+    },
+    "inputs": {
+      "question": "Show action movies and adventure movies with Leonardo DiCaprio."
+    },
+    "family_keys": [
+      "ambrosia:d87b43665776eaa2b390",
+      "text:d87b43665776eaa2b390"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2d042c780b52cd7fb418",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:f2883e3ecba04a250664",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_genre1",
+    "source_question_id": "536",
+    "item": {
+      "question_id": 536,
+      "question": "Provide a list of all action movies and also list adventure movies that star Leonardo DiCaprio.",
+      "db_id": "attachment_2tab_val_genre1",
+      "SQL": "SELECT Action_Movies.title\r\nFROM Action_Movies\r\nUNION\r\nSELECT Adventure_Movies.title\r\nFROM Adventure_Movies\r\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"",
+      "ambig_queries": "['SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nWHERE Action_Movies.Stars = \"Leonardo DiCaprio\"\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"', 'SELECT Action_Movies.title\\r\\nFROM Action_Movies\\r\\nUNION\\r\\nSELECT Adventure_Movies.title\\r\\nFROM Adventure_Movies\\r\\nWHERE Adventure_Movies.Stars = \"Leonardo DiCaprio\"']",
+      "ambig_question": "Show action movies and adventure movies with Leonardo DiCaprio."
+    },
+    "inputs": {
+      "question": "Provide a list of all action movies and also list adventure movies that star Leonardo DiCaprio."
+    },
+    "family_keys": [
+      "ambrosia:d87b43665776eaa2b390",
+      "text:bb6653d1bffda07fe1bf"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:2d042c780b52cd7fb418",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:8626a1800c606de0dd12",
+    "benchmark": "ambrosia",
+    "db_id": "scope_scuba_diving_centers_dive_sites",
+    "source_question_id": "1533",
+    "item": {
+      "question_id": 1533,
+      "question": "What dive sites are used by every scuba diving center?",
+      "db_id": "scope_scuba_diving_centers_dive_sites",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Dive_Sites.site_name  from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id   GROUP BY Bookings.dive_site_id HAVING COUNT(DISTINCT Bookings.scuba_center_id) = (SELECT COUNT(*) FROM  Scuba_Diving_Centers)', 'select scuba_diving_centers.name , dive_sites.site_name from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id']",
+      "ambig_question": "What dive sites are used by every scuba diving center?"
+    },
+    "inputs": {
+      "question": "What dive sites are used by every scuba diving center?"
+    },
+    "family_keys": [
+      "ambrosia:428636e7039466d09bcc",
+      "text:428636e7039466d09bcc"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4fd2819b4412f1bbd00f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:59df1a49445e3fa8eca0",
+    "benchmark": "ambrosia",
+    "db_id": "scope_scuba_diving_centers_dive_sites",
+    "source_question_id": "1526",
+    "item": {
+      "question_id": 1526,
+      "question": "Which type of dive site is shared by all scuba diving centers?",
+      "db_id": "scope_scuba_diving_centers_dive_sites",
+      "SQL": "SELECT Dive_Sites.type  from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id   GROUP BY Bookings.dive_site_id HAVING COUNT(DISTINCT Bookings.scuba_center_id) = (SELECT COUNT(*) FROM  Scuba_Diving_Centers)",
+      "ambig_queries": "['SELECT Dive_Sites.type  from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id   GROUP BY Bookings.dive_site_id HAVING COUNT(DISTINCT Bookings.scuba_center_id) = (SELECT COUNT(*) FROM  Scuba_Diving_Centers)', 'select scuba_diving_centers.name , dive_sites.type from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id']",
+      "ambig_question": "What types of dive sites are available at each scuba diving center?"
+    },
+    "inputs": {
+      "question": "Which type of dive site is shared by all scuba diving centers?"
+    },
+    "family_keys": [
+      "ambrosia:697ca3a3ea41f397fa1f",
+      "text:886ed3a60dc0060827cf"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4fd2819b4412f1bbd00f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:bdc860d71926d2d9b305",
+    "benchmark": "ambrosia",
+    "db_id": "scope_scuba_diving_centers_dive_sites",
+    "source_question_id": "1530",
+    "item": {
+      "question_id": 1530,
+      "question": "For each scuba diving center, what types of dive sites are available?",
+      "db_id": "scope_scuba_diving_centers_dive_sites",
+      "SQL": "select scuba_diving_centers.name , dive_sites.type from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id",
+      "ambig_queries": "['SELECT Dive_Sites.type  from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id   GROUP BY Bookings.dive_site_id HAVING COUNT(DISTINCT Bookings.scuba_center_id) = (SELECT COUNT(*) FROM  Scuba_Diving_Centers)', 'select scuba_diving_centers.name , dive_sites.type from Bookings join Dive_Sites on Bookings.dive_site_id = Dive_Sites.id join Scuba_Diving_Centers on Bookings.scuba_center_id = Scuba_Diving_Centers.id']",
+      "ambig_question": "What types of dive sites are available at each scuba diving center?"
+    },
+    "inputs": {
+      "question": "For each scuba diving center, what types of dive sites are available?"
+    },
+    "family_keys": [
+      "ambrosia:697ca3a3ea41f397fa1f",
+      "text:319d2a994fe424c92b0f"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:4fd2819b4412f1bbd00f",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:009bfeaee1508799959b",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_commercial_appliances",
+    "source_question_id": "447",
+    "item": {
+      "question_id": 447,
+      "question": "Provide a list of all espresso machines and also provide a list of blenders in high-end residential apartment.",
+      "db_id": "attachment_2tab_val_commercial_appliances",
+      "SQL": "SELECT Espresso_Machine.model\r\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\r\nUNION\r\nSELECT Blender.model\r\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\r\nWHERE Apartments.name = \"High-end Residential\"",
+      "ambig_queries": "['SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"', 'SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"']",
+      "ambig_question": "Show me all espresso machines and blenders in high-end residential apartments."
+    },
+    "inputs": {
+      "question": "Provide a list of all espresso machines and also provide a list of blenders in high-end residential apartment."
+    },
+    "family_keys": [
+      "ambrosia:9ebfaa0d065f7ce7eabc",
+      "text:4befada77aa8461bb471"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a4b1dfc759b1802a4f64",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:846fae906580fcbc622f",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_commercial_appliances",
+    "source_question_id": "449",
+    "item": {
+      "question_id": 449,
+      "question": "Show me all espresso machines and blenders in high-end residential apartments.",
+      "db_id": "attachment_2tab_val_commercial_appliances",
+      "SQL": "ambiguous",
+      "ambig_queries": "['SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"', 'SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"']",
+      "ambig_question": "Show me all espresso machines and blenders in high-end residential apartments."
+    },
+    "inputs": {
+      "question": "Show me all espresso machines and blenders in high-end residential apartments."
+    },
+    "family_keys": [
+      "ambrosia:9ebfaa0d065f7ce7eabc",
+      "text:9ebfaa0d065f7ce7eabc"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a4b1dfc759b1802a4f64",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  },
+  {
+    "id": "candidate:ambrosia:5c16c44d98c58dd17a9e",
+    "benchmark": "ambrosia",
+    "db_id": "attachment_2tab_val_commercial_appliances",
+    "source_question_id": "448",
+    "item": {
+      "question_id": 448,
+      "question": "Which espresso machines are in high-end residential apartments and which blenders are located there?",
+      "db_id": "attachment_2tab_val_commercial_appliances",
+      "SQL": "SELECT Espresso_Machine.model\r\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\r\nWHERE Apartments.name = \"High-end Residential\"\r\nUNION\r\nSELECT Blender.model\r\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\r\nWHERE Apartments.name = \"High-end Residential\"",
+      "ambig_queries": "['SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"', 'SELECT Espresso_Machine.model\\r\\nFROM Espresso_Machine JOIN Apartments ON Espresso_Machine.apartment_id = Apartments.id\\r\\nUNION\\r\\nSELECT Blender.model\\r\\nFROM Blender JOIN Apartments ON Blender.apartment_id = Apartments.id\\r\\nWHERE Apartments.name = \"High-end Residential\"']",
+      "ambig_question": "Show me all espresso machines and blenders in high-end residential apartments."
+    },
+    "inputs": {
+      "question": "Which espresso machines are in high-end residential apartments and which blenders are located there?"
+    },
+    "family_keys": [
+      "ambrosia:9ebfaa0d065f7ce7eabc",
+      "text:37ecb2afb9a546e4c7ef"
+    ],
+    "new_database": true,
+    "duplicate_old_input": false,
+    "audit_component": "group:a4b1dfc759b1802a4f64",
+    "old_partitions_in_component": [],
+    "status": "eligible_train_candidate"
+  }
+]

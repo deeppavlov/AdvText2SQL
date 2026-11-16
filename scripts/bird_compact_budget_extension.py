@@ -13,7 +13,6 @@ LOCAL_TOKENS = 4_500_000
 GLOBAL_TOKENS = 11_000_000
 FILES = (
     "scripts/bird_compact_budget_extension.py",
-    "local/run_bird_compact_budget_extension.ps1",
     "local/run_bird_compact_budget_extension.sh",
 )
 

@@ -1,0 +1,52 @@
+{
+  "version": "classifier-data-source-audit-v1",
+  "source_sha256": {
+    "research_results/classifier_v2_20261109/experiment.json": "f4974acb3f847c58972db9eb42a675ad5d9d772fcc3bb18317e2407562e7ff31",
+    "data/multilabel_utility/deepseek_20261029/records.jsonl": "51a438e875d04028788fe8eed0dfa4ac94ff9bde14175c357ce95ee7ecda2d4f",
+    "data/multilabel_utility/deepseek_20261109_v2/examples.jsonl": "2201fcb29b33e4571361f07bae9f1fc8cc56d418d287fff47b15d7757dfa94e4",
+    "research_results/classifier_v2_diagnosis_20261109/archive_repeat_audit.json": "d4a954f7bbbaf1155e2aaeec6e4c8024264aff3f3cbdadca26436eed00102029",
+    "data/multilabel_utility/deepseek_20261109_v2/manifest.json": "0f2d09598af022b7334a9c8f0d8afa7a7ca07b58393f9ead796ec65eb53e6227",
+    "data/train_queries.json": "a98ffda0d2e39c905aea3e938385482884e1362f232822cfdaf03ce453d59a95",
+    "data/ambrosia_train.json": "e51cc4bd1e3fbd326877cd167678dcaa809fd1450140bad1be09c5d08de45bce",
+    "scripts/prepare_classifier_data_stage.py": "7b0d9e8a6e0cbecaf519b943b88049ca7ef594618544951f975fd1566ad90ee7",
+    "scripts/classifier_data_stage.py": "4c13b45dd36cb92f4efd168c507918ac97d4f284db6fb0877bcc71117346d8f1",
+    "local/run_classifier_data_stage.sh": "863ba33b5bab51068a17e383d4ed922d22a1e388848c7653b7e3a170c68f940b",
+    "scripts/configuration_splits.py": "6afabea901055884628d280ff279772fed0310394a3758529ca17ac769cd4497",
+    "scripts/audit_question_schemas.py": "146180ad039641e1b678ac08f8ea2199e6d58749d1b6483c1448393886729df0"
+  },
+  "candidate_fingerprint": "16e806a1234e932f8aa04c59fc02fee43eaaab7f7dcb81fda66d7df00898f6ac",
+  "pilot_fingerprint": "b5034bc3c89085811d0d778df63ab1db2cac825e91ab23eec8cdc6c36abe931b",
+  "old_split_policy": "preserve all old train/dev/test; block old holdout DB/family/near-duplicate components",
+  "sources": {
+    "bird": {
+      "path": "data/train_queries.json",
+      "questions": 357,
+      "statuses": {
+        "blocked_holdout_component": 158,
+        "eligible_train_candidate": 199
+      },
+      "eligible_databases": 4,
+      "new_databases": 0
+    },
+    "ambrosia": {
+      "path": "data/ambrosia_train.json",
+      "questions": 480,
+      "statuses": {
+        "eligible_train_candidate": 480
+      },
+      "eligible_databases": 104,
+      "new_databases": 104
+    }
+  },
+  "near_duplicate_edges": [
+    [
+      "candidate:ambrosia:b21eddba14ebff93fd26",
+      "candidate:ambrosia:d12fcfad0b37ee8fe867"
+    ]
+  ],
+  "pilot_questions": 120,
+  "pilot_databases": 40,
+  "pilot_status": "requires_live_schema_and_reference_name_audit; not_training_labels",
+  "no_new_bird_database_locally": true,
+  "live_llm_calls": 0
+}

@@ -297,7 +297,8 @@ class SelectionAndResumeTests(unittest.TestCase):
         item = {"db_id": "db", "question_id": "1"}
         error = SQLAlchemyError("redacted")
         error.orig = SimpleNamespace(sqlstate=None)
-        session.engines = {"db": Mock(connect=Mock(side_effect=error))}
+        session.engines = {"db": Mock(dialect=SimpleNamespace(name="postgresql"),
+                                      connect=Mock(side_effect=error))}
         with self.assertRaises(runtime.ProviderUnavailable):
             session.score(item, "SELECT 1", "bird")
         error.orig.sqlstate = "42601"

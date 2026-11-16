@@ -2,6 +2,8 @@
 
 Единое место хранения исходных ответов, логов, абляций и диагностик.
 Краткие выводы по этапам находятся в [`docs/`](../docs/README.md).
+Проверка меток после AUD-007/008: [`evaluation_labels_audit_20261113/`](evaluation_labels_audit_20261113/impact.json),
+актуальные 1 594 наблюдения v2 подтверждены без изменений; [отчёт](../docs/28_evaluation_and_label_audit.md).
 Текстовые логи и JSONL-журналы запросов/попыток/диагностики пишутся локально
 в подпапки соответствующих прогонов и исключены через [`.gitignore`](../.gitignore).
 В Git сохраняем итоговые отчёты, metadata, манифесты и ответы для датасетов.
@@ -13,6 +15,12 @@ JSONL-датасеты и решения селектора не относят�
 
 | Папка | Содержимое |
 | --- | --- |
+| `classifier_refresh_20261109/` | Офлайн-аудит готовности v2: train 251 / dev 101 / прежний test 100; 251 train-наблюдение выбранных профилей, без новых utility-меток и обучения; [следующий этап](../docs/25_classifier_refresh.md) |
+| `classifier_v2_20261109/` | Сбор train/dev закрыт: 1594 наблюдения / 2856 условных пар, ready=true. Новые collection jobs: 4 127 702 токена, teacher=0. Обученная версия хранится отдельно ниже; [отчёт 25](../docs/25_classifier_refresh.md) |
+| `classifier_v2_training_20261109/` | Голова v2, frozen MiniLM + 6 счётчиков, 3519 параметров; grouped train CV, model/head/report/diagnostics. Dev replay BIRD 24/55 против 26/55 у compact, Ambrosia 37/46 — равенство опоре. `adopt_as_default=false`, 0 API-запросов; [отчёт 25](../docs/25_classifier_refresh.md) |
+| `classifier_v2_diagnosis_20261109/` | Разбор потерь BIRD №4/9, сдвига схем и вкладов линейной головы; четыре абляции входов на train CV и аудит повторных архивных оценок. Устойчивый выигрыш над постоянным профилем не показан. Исходные метки/модель не менялись, 0 API-запросов; [отчёт 25](../docs/25_classifier_refresh.md) |
+| `classifier_anchor_utility_20261109/` | Фиксированные 4 варианта quality/utility × исходные/grounded-входы, только train grouped CV. Ни один не прошёл фильтр; сохранены план, 16 fold-heads, scaler и OOF-решения. Рабочие опоры сохранены, dev/test/API не запускались; [отчёт 25](../docs/25_classifier_refresh.md) |
+| `classifier_data_expansion_20261110/` | Аудит 837 кандидатов; snapshot новых схем выполнен пользователем. Из 120/40 прошли структурную проверку 111/37; девять отложены. Inventory, review и отдельный 111-вопросный кандидатный набор сохранены. repeats/ — отдельная очередь 18 job / 644 оценки, paid ещё не запускался; [отчёт 26](../docs/26_classifier_data_expansion.md) |
 | `ambrosia_prompt_full_20261107/` | Завершён свежий full: 171/211 (81,04%), F1 60,78%, recall 49,21%; 14+32, исходные промпты, 498 448 токенов, pending пусты; [итоги](../docs/24_ambrosia_prompt_full.md) |
 | `prompt_stage_summary_20261107.json` | Итоговая совместимая опора следующего этапа: BIRD compact + SQL seed 43 (132/241), Ambrosia 14+32 с исходным промптом (171/211); candidate identity/source SHA, лимиты интерпретации, deployed=false |
 | `bird_prompt_full_20261107/` | Завершены 482 оценки: новый SQL seed 43 — 132/241 (54,77%) против исходных 126/241 (52,28%), +2,49 п.п.; 17 исправлено / 11 ухудшено, 3,22 млн токенов; conclusion и integrity review; [результаты](../docs/23_bird_prompt_full.md) |

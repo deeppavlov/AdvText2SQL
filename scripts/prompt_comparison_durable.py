@@ -16,7 +16,6 @@ import static_hybrid_runtime as static_runtime
 FILES = (
     "scripts/durable_prompt_store.py",
     "scripts/prompt_comparison_durable.py",
-    "local/run_prompt_comparison_durable.ps1",
     "local/run_prompt_comparison_durable.sh",
 )
 

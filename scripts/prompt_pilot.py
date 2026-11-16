@@ -23,7 +23,6 @@ FILES = (
     "scripts/prompt_pilot.py",
     "scripts/prompt_pilot_runtime.py",
     "scripts/prompt_pilot_budget.py",
-    "local/run_prompt_pilot.ps1",
     "local/run_prompt_pilot.sh",
     "requirements-prompt-optimization.txt",
 )

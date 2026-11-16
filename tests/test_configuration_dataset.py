@@ -92,12 +92,12 @@ class ConfigurationDatasetTests(unittest.TestCase):
     def test_reference_execution_failure_is_not_a_model_failure_label(self):
         items = [{"question_id": 1, "SQL": "SELECT broken_gold"}]
         row = {"question_id": 1, "gold_sql": "SELECT broken_gold", "predicted_sql": "SELECT 1", "score": False,
-               "error": "SQL error\n[SQL: SELECT broken_gold]\n(Background on this error: example)"}
+               "error": "(psycopg.errors.SyntaxError) SQL error\n[SQL: SELECT broken_gold]\n(Background on this error: example)"}
         observed = builder.observations(items, {"1": "SELECT 1"}, {"results": [row]}, "bird")["1"]
         self.assertFalse(observed["observed"])
         self.assertIsNone(observed["correct"])
         self.assertEqual(observed["evaluation_error_kind"], "reference")
-        row.update(error="SQL error\n[SQL: SELECT 1]\n(Background on this error: example)")
+        row.update(error="(psycopg.errors.SyntaxError) SQL error\n[SQL: SELECT 1]\n(Background on this error: example)")
         observed = builder.observations(items, {"1": "SELECT 1"}, {"results": [row]}, "bird")["1"]
         self.assertTrue(observed["observed"])
         self.assertFalse(observed["correct"])

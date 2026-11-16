@@ -67,12 +67,13 @@ def code_paths():
                "configuration_splits.py", "research_paths.py", "ablation_maintenance.py")
     return [*(ROOT / "scripts" / p for p in scripts),
             *sorted((ROOT / "benchmarks").glob("*.py")),
+            *sorted((ROOT / "src/adv_text2sql").glob("*.py")),
             *sorted((ROOT / "src/adv_text2sql/mcp_servers/text2sql_tool/src").glob("*.py"))]
 
 
 def current_protocol(model):
     paths = [*code_paths(), ROOT / "local/run_static_hybrid_search.sh",
-             ROOT / "local/run_static_hybrid_search.ps1", ROOT / "local/start_tunnel.sh",
+             ROOT / "local/start_tunnel.sh",
              DATASET / "manifest.json", DATASET / "records.jsonl", *(ROOT / p for p in DATA_FILES.values())]
     return {"version": "static-hybrid-search-v2", "model": model,
             "evaluation_policy": "ambrosia-strict-v1", "scope_policy": "grouped train search; dev confirmation; full exploratory",

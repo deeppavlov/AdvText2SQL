@@ -120,8 +120,12 @@ def fit_head(train_x, train_y, train_mask, dev_x, dev_y, dev_mask, *, epochs=200
                          "positive_weights_train_only": weights.tolist(), "history": history}
 
 
-def load_rows(dataset):
-    manifest = dataset_builder.verify(dataset)
+def load_rows(dataset, *, verify_sources=False):
+    # A training consumer verifies the complete committed bundle and its label/
+    # split derivations. Full upstream replay additionally requires archived raw
+    # responses; select it explicitly rather than silently skipping missing files.
+    manifest = dict(dataset_builder.verify(dataset, verify_sources=verify_sources))
+    manifest["verification_scope"] = "full_source_audit" if verify_sources else "training_bundle"
     if manifest["target_features"] != [f"FEAT_{n}" for n in HEAD_FEATURES]:
         raise ValueError("Dataset target order differs from classifier")
     return manifest, dataset_builder.lines(dataset / "records.jsonl")
@@ -161,6 +165,7 @@ def train(dataset, encoder_folder, output, *, epochs=200, patience=30, max_featu
         "test_used_for_selection": False, "test_already_viewed_in_phase1": True,
         "dataset": dataset.relative_to(ROOT).as_posix(), "dataset_manifest_sha256": digest(dataset / "manifest.json"),
         "generator_model": manifest["model"], "head_sha256": digest(output / "head.npz"),
+        "dataset_verification_scope": manifest["verification_scope"],
         "source_files_sha256": {name: digest(ROOT / name) for name in SOURCES},
         "versions": {name: importlib.metadata.version(name) for name in ("torch", "transformers", "numpy", "safetensors")},
         "downstream_quality_measured": False,
@@ -234,10 +239,11 @@ def main():
     if args.epochs < 1 or args.patience < 1 or not 1 <= args.max_features <= len(HEAD_FEATURES):
         parser.error("Invalid epochs, patience or feature budget")
     if args.dry_run:
-        _, rows = load_rows(dataset)
+        manifest, rows = load_rows(dataset)
         print(json.dumps({"rows": len(rows), "train": sum(r["split"] == "train" for r in rows),
                           "dev": sum(r["split"] == "dev" for r in rows), "heads": len(HEAD_FEATURES),
-                          "encoder": str(encoder), "output": str(output), "paid_calls": 0}, indent=2))
+                          "encoder": str(encoder), "output": str(output), "paid_calls": 0,
+                          "verification_scope": manifest["verification_scope"]}, indent=2))
     elif args.action == "train":
         info = train(dataset, encoder, output, epochs=args.epochs, patience=args.patience,
                      max_features=args.max_features, seed=args.seed)
